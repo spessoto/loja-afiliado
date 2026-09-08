@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 
-export default function ProductCard({ p, priceColor = "#F05A00", to = "/produto" }) {
+export default function ProductCard({ p, priceColor = "#F05A00", to }) {
+  const target = to || (p.id ? `/produto/${p.id}` : "/produto");
   return (
-    <Link to={to} className="product-card" style={{ display: "flex", flexDirection: "column", background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden" }}>
+    <Link to={target} className="product-card" style={{ display: "flex", flexDirection: "column", background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden" }}>
       <div style={{ position: "relative", padding: "16px 16px 0" }}>
         {(p.desconto || p.selo) && (
           <div style={{ position: "absolute", top: 16, left: 16, zIndex: 2, display: "flex", flexDirection: "column", gap: 6, alignItems: "flex-start" }}>
@@ -10,9 +11,15 @@ export default function ProductCard({ p, priceColor = "#F05A00", to = "/produto"
             {p.selo && <span style={{ background: "#012746", color: "#fff", font: "700 10px Montserrat", letterSpacing: ".08em", padding: "4px 8px", borderRadius: 4 }}>{p.selo}</span>}
           </div>
         )}
-        <div style={{ aspectRatio: "1/1", borderRadius: 8, background: "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 16, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8" }}>
-          FOTO DO PRODUTO<br />fundo branco
-        </div>
+        {p.image_url ? (
+          <div style={{ aspectRatio: "1/1", borderRadius: 8, overflow: "hidden" }}>
+            <img src={p.image_url} alt={p.nome} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          </div>
+        ) : (
+          <div style={{ aspectRatio: "1/1", borderRadius: 8, background: "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 16, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8" }}>
+            FOTO DO PRODUTO<br />fundo branco
+          </div>
+        )}
       </div>
       <div style={{ padding: "14px 16px 18px", display: "flex", flexDirection: "column", flex: 1 }}>
         <div style={{ font: "600 11px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 5 }}>{p.marca}</div>

@@ -18,6 +18,7 @@ export default function App() {
       <Route path="/blog" element={<Blog />} />
       <Route path="/post" element={<Post />} />
       <Route path="/produto" element={<Produto />} />
+      <Route path="/produto/:id" element={<Produto />} />
       <Route path="/contato" element={<Contato />} />
       <Route path="/politica-de-cookies" element={<PoliticaCookies />} />
       <Route path="/politica-de-privacidade" element={<PoliticaPrivacidade />} />

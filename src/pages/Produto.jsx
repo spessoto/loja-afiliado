@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterCompact } from "../components/Footer.jsx";
 import { pagamentos } from "../data/footerColumns.js";
+import { useProduct, formatBRL } from "../lib/products.js";
 
 const fotos = [
   "produto inteiro, 3/4, fundo branco",
@@ -79,11 +80,13 @@ const relacionados = [
 const restante = 12;
 
 export default function Produto() {
+  const { id } = useParams();
+  const { product, loading } = useProduct(id);
   const [foto, setFoto] = useState(0);
 
   useEffect(() => {
-    document.title = "Aspirador Vertical Sem Fio Vertax V12 Ciclônico 450W — Promo Aspiradores";
-  }, []);
+    document.title = product ? `${product.name} — Promo Aspiradores` : "Produto — Promo Aspiradores";
+  }, [product]);
 
   const galeria = labels.map((label, i) => ({
     label,
@@ -91,6 +94,28 @@ export default function Produto() {
     pick: () => setFoto(i)
   }));
   const barra = Math.round((restante / 40) * 100) + "%";
+
+  const nome = product?.name || "Aspirador Vertical Sem Fio Vertax V12 Ciclônico 450W";
+  const marca = product?.brand || "VERTAX";
+  const precoDe = product ? formatBRL(product.price_from) : "R$ 1.029,90";
+  const precoPor = product ? formatBRL(product.price_to) || "R$ 699,90" : "R$ 699,90";
+  const parcela = product?.installment || "10x de R$ 69,99";
+  const descricao = product?.description;
+  const afiliado = product?.affiliate_url || "#afiliado";
+  const buyProps = product ? { href: afiliado, target: "_blank", rel: "noopener noreferrer" } : { href: "#afiliado" };
+
+  if (!loading && id && !product) {
+    return (
+      <>
+        <Header marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL"]} sticky={false} />
+        <div style={{ maxWidth: 640, margin: "80px auto", textAlign: "center", padding: "0 24px" }}>
+          <h1 style={{ font: "800 28px Montserrat, sans-serif", color: "#012746" }}>Produto não encontrado</h1>
+          <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", marginTop: 16, height: 48, padding: "0 24px", alignItems: "center", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat" }}>Ver aspiradores</Link>
+        </div>
+        <FooterCompact payment={pagamentos} />
+      </>
+    );
+  }
 
   return (
     <>
@@ -102,9 +127,9 @@ export default function Produto() {
       <div style={{ borderBottom: "1px solid #F1F5F9", background: "#F8FAFC" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "11px 24px", display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", font: "400 13px Inter", color: "#475569" }}>
           <Link to="/">Home</Link><span style={{ color: "#94A3B8" }}>/</span>
-          <Link to="/produto">Aspiradores</Link><span style={{ color: "#94A3B8" }}>/</span>
-          <Link to="/produto">Vertical sem fio</Link><span style={{ color: "#94A3B8" }}>/</span>
-          <span style={{ color: "#012746", fontWeight: 500 }}>Vertax V12 Ciclônico 450W</span>
+          <Link to="/categoria">Aspiradores</Link><span style={{ color: "#94A3B8" }}>/</span>
+          <Link to="/categoria">Vertical sem fio</Link><span style={{ color: "#94A3B8" }}>/</span>
+          <span style={{ color: "#012746", fontWeight: 500 }}>{nome}</span>
         </div>
       </div>
 
@@ -119,12 +144,16 @@ export default function Produto() {
             </div>
             <div>
               <div style={{ position: "relative", border: "1px solid #E2E8F0", borderRadius: 16, overflow: "hidden", background: "#fff" }}>
-                <span style={{ position: "absolute", top: 16, left: 16, zIndex: 2, background: "#F05A00", color: "#fff", font: "800 14px Montserrat", padding: "7px 12px", borderRadius: 4 }}>-32%</span>
-                <span style={{ position: "absolute", top: 16, right: 16, zIndex: 2, background: "#012746", color: "#fff", font: "700 10.5px Montserrat", letterSpacing: ".08em", padding: "6px 10px", borderRadius: 4 }}>MAIS VENDIDO</span>
-                <div style={{ aspectRatio: "1/1", background: "repeating-linear-gradient(135deg,#F8FAFC 0 10px,#F1F5F9 10px 20px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: 32 }}>
-                  <span style={{ font: "500 12px ui-monospace,monospace", letterSpacing: ".1em", color: "#94A3B8" }}>FOTO DO PRODUTO</span>
-                  <span style={{ font: "400 12px ui-monospace,monospace", color: "#94A3B8", maxWidth: 260, lineHeight: 1.6 }}>{fotos[foto]}</span>
-                </div>
+                {product?.image_url ? (
+                  <div style={{ aspectRatio: "1/1" }}>
+                    <img src={product.image_url} alt={nome} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  </div>
+                ) : (
+                  <div style={{ aspectRatio: "1/1", background: "repeating-linear-gradient(135deg,#F8FAFC 0 10px,#F1F5F9 10px 20px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: 32 }}>
+                    <span style={{ font: "500 12px ui-monospace,monospace", letterSpacing: ".1em", color: "#94A3B8" }}>FOTO DO PRODUTO</span>
+                    <span style={{ font: "400 12px ui-monospace,monospace", color: "#94A3B8", maxWidth: 260, lineHeight: 1.6 }}>{fotos[foto]}</span>
+                  </div>
+                )}
               </div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 16 }}>
                 {tags.map((t, i) => (
@@ -138,8 +167,8 @@ export default function Produto() {
           </div>
 
           <div>
-            <div style={{ font: "600 11.5px Inter", letterSpacing: ".14em", color: "#94A3B8", marginBottom: 8 }}>VERTAX</div>
-            <h1 style={{ margin: "0 0 14px", font: "800 34px/1.18 Montserrat", color: "#012746", letterSpacing: "-.01em", textWrap: "balance" }}>Aspirador Vertical Sem Fio Vertax V12 Ciclônico 450W</h1>
+            <div style={{ font: "600 11.5px Inter", letterSpacing: ".14em", color: "#94A3B8", marginBottom: 8 }}>{marca}</div>
+            <h1 style={{ margin: "0 0 14px", font: "800 34px/1.18 Montserrat", color: "#012746", letterSpacing: "-.01em", textWrap: "balance" }}>{nome}</h1>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 14, marginBottom: 24 }}>
               <span style={{ font: "600 15px Inter", color: "#F05A00", letterSpacing: ".1em" }}>★★★★★</span>
               <a href="#avaliacoes" style={{ font: "500 13.5px Inter", color: "#475569", textDecoration: "underline" }}>4,8 · 1.284 avaliações</a>
@@ -149,16 +178,14 @@ export default function Produto() {
 
             <div style={{ border: "1px solid #E2E8F0", borderRadius: 16, padding: 24, boxShadow: "0 4px 20px rgba(1,39,70,.08)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                <span style={{ font: "400 15px Inter", color: "#64748B", textDecoration: "line-through" }}>R$ 1.029,90</span>
-                <span style={{ background: "#FFF1E8", color: "#F05A00", font: "700 12px Montserrat", padding: "3px 8px", borderRadius: 4 }}>ECONOMIZE R$ 330</span>
+                {precoDe && <span style={{ font: "400 15px Inter", color: "#64748B", textDecoration: "line-through" }}>{precoDe}</span>}
               </div>
               <div style={{ display: "flex", alignItems: "flex-end", gap: 12, flexWrap: "wrap" }}>
-                <span style={{ font: "800 46px Montserrat", color: "#F05A00", lineHeight: 1 }}>R$ 699<span style={{ fontSize: 26 }}>,90</span></span>
-                <span style={{ font: "500 14px Inter", color: "#475569", paddingBottom: 6 }}>no Pix</span>
+                <span style={{ font: "800 46px Montserrat", color: "#F05A00", lineHeight: 1 }}>{precoPor}</span>
               </div>
-              <div style={{ font: "500 15px Inter", color: "#1E293B", margin: "8px 0 20px" }}>ou <strong style={{ font: "700 15px Montserrat", color: "#012746" }}>10x de R$ 69,99</strong> sem juros no cartão</div>
+              {parcela && <div style={{ font: "500 15px Inter", color: "#1E293B", margin: "8px 0 20px" }}>ou <strong style={{ font: "700 15px Montserrat", color: "#012746" }}>{parcela}</strong> sem juros no cartão</div>}
 
-              <a href="#afiliado" className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, height: 56, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 17px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.3)" }}>
+              <a {...buyProps} className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, height: 56, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 17px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.3)" }}>
                 COMPRAR AGORA
                 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
               </a>
@@ -200,8 +227,14 @@ export default function Produto() {
         <section style={{ marginTop: 72, display: "grid", gridTemplateColumns: "minmax(0,1.15fr) minmax(320px,.85fr)", gap: 48, alignItems: "start" }}>
           <div>
             <h2 style={{ margin: "0 0 16px", font: "700 28px Montserrat", color: "#012746" }}>Mais potência, menos trabalho</h2>
-            <p style={{ margin: "0 0 14px", font: "400 16px/1.65 Inter", color: "#475569" }}>O Vertax V12 foi feito para a limpeza do dia a dia em casas e apartamentos brasileiros. O motor de 450W com tecnologia ciclônica mantém a sucção constante mesmo com o reservatório cheio, e a escova antiemaranhado dá conta de pelos de animais em tapetes e sofás.</p>
-            <p style={{ margin: "0 0 24px", font: "400 16px/1.65 Inter", color: "#475569" }}>A bateria de 2.500 mAh entrega até 45 minutos no modo padrão, o suficiente para limpar dois quartos e uma sala sem recarregar. Sem fio, sem saco e com filtro HEPA lavável, ele reduz a poeira que volta para o ar.</p>
+            {descricao ? (
+              <p style={{ margin: "0 0 24px", font: "400 16px/1.65 Inter", color: "#475569" }}>{descricao}</p>
+            ) : (
+              <>
+                <p style={{ margin: "0 0 14px", font: "400 16px/1.65 Inter", color: "#475569" }}>O Vertax V12 foi feito para a limpeza do dia a dia em casas e apartamentos brasileiros. O motor de 450W com tecnologia ciclônica mantém a sucção constante mesmo com o reservatório cheio, e a escova antiemaranhado dá conta de pelos de animais em tapetes e sofás.</p>
+                <p style={{ margin: "0 0 24px", font: "400 16px/1.65 Inter", color: "#475569" }}>A bateria de 2.500 mAh entrega até 45 minutos no modo padrão, o suficiente para limpar dois quartos e uma sala sem recarregar. Sem fio, sem saco e com filtro HEPA lavável, ele reduz a poeira que volta para o ar.</p>
+              </>
+            )}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(150px,1fr))", gap: 16 }}>
               {destaques.map((d, i) => (
                 <div key={i} style={{ padding: 18, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
@@ -251,7 +284,7 @@ export default function Produto() {
           <aside style={{ position: "sticky", top: 24, display: "grid", gap: 16 }}>
             <div style={{ background: "linear-gradient(160deg,#012746,#001B31)", borderRadius: 16, padding: 24, color: "#fff" }}>
               <div style={{ font: "700 11px Montserrat", letterSpacing: ".12em", color: "#F05A00", marginBottom: 10 }}>RESUMO DA OFERTA</div>
-              <div style={{ font: "800 24px/1.25 Montserrat", marginBottom: 16 }}>R$ 699,90 <span style={{ font: "400 14px Inter", color: "#B8C5D0" }}>no Pix</span></div>
+              <div style={{ font: "800 24px/1.25 Montserrat", marginBottom: 16 }}>{precoPor}</div>
               <div style={{ display: "grid", gap: 9, marginBottom: 20 }}>
                 {resumo.map((r, i) => (
                   <span key={i} style={{ display: "flex", justifyContent: "space-between", gap: 12, font: "400 13.5px Inter", color: "#B8C5D0" }}>
@@ -259,7 +292,7 @@ export default function Produto() {
                   </span>
                 ))}
               </div>
-              <a href="#afiliado" className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 50, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em" }}>IR PARA A OFERTA</a>
+              <a {...buyProps} className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 50, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em" }}>IR PARA A OFERTA</a>
             </div>
             <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 20 }}>
               <div style={{ font: "700 14px Montserrat", color: "#012746", marginBottom: 12 }}>Dúvida na escolha?</div>
@@ -318,7 +351,7 @@ export default function Produto() {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(238px,1fr))", gap: 24 }}>
             {relacionados.map((p, i) => (
-              <Link key={i} to="/produto" className="product-card" style={{ display: "flex", flexDirection: "column", background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden" }}>
+              <Link key={i} to="/categoria" className="product-card" style={{ display: "flex", flexDirection: "column", background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden" }}>
                 <div style={{ position: "relative", padding: "16px 16px 0" }}>
                   {p.desconto && <span style={{ position: "absolute", top: 16, left: 16, zIndex: 2, background: "#F05A00", color: "#fff", font: "800 12px Montserrat", padding: "5px 9px", borderRadius: 4 }}>{p.desconto}</span>}
                   <div style={{ aspectRatio: "1/1", borderRadius: 8, background: "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 16, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8" }}>FOTO DO PRODUTO<br />fundo branco</div>
@@ -345,16 +378,20 @@ export default function Produto() {
       <div style={{ position: "sticky", bottom: 0, zIndex: 40, background: "#fff", borderTop: "1px solid #E2E8F0", boxShadow: "0 -6px 24px rgba(1,39,70,.1)" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "12px 24px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, minWidth: 0 }}>
-            <div style={{ flex: "none", width: 52, height: 52, borderRadius: 8, border: "1px solid #E2E8F0", background: "repeating-linear-gradient(135deg,#F8FAFC 0 7px,#F1F5F9 7px 14px)" }}></div>
+            {product?.image_url ? (
+              <img src={product.image_url} alt={nome} style={{ flex: "none", width: 52, height: 52, borderRadius: 8, border: "1px solid #E2E8F0", objectFit: "cover" }} />
+            ) : (
+              <div style={{ flex: "none", width: 52, height: 52, borderRadius: 8, border: "1px solid #E2E8F0", background: "repeating-linear-gradient(135deg,#F8FAFC 0 7px,#F1F5F9 7px 14px)" }}></div>
+            )}
             <div style={{ minWidth: 0 }}>
-              <div style={{ font: "600 13.5px Inter", color: "#1E293B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 340 }}>Aspirador Vertical Sem Fio Vertax V12 Ciclônico 450W</div>
+              <div style={{ font: "600 13.5px Inter", color: "#1E293B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 340 }}>{nome}</div>
               <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                <span style={{ font: "800 20px Montserrat", color: "#F05A00" }}>R$ 699,90</span>
-                <span style={{ font: "400 12.5px Inter", color: "#475569" }}>10x de R$ 69,99</span>
+                <span style={{ font: "800 20px Montserrat", color: "#F05A00" }}>{precoPor}</span>
+                {parcela && <span style={{ font: "400 12.5px Inter", color: "#475569" }}>{parcela}</span>}
               </div>
             </div>
           </div>
-          <a href="#afiliado" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10, height: 50, padding: "0 34px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em" }}>
+          <a {...buyProps} className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10, height: 50, padding: "0 34px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em" }}>
             COMPRAR AGORA
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
           </a>

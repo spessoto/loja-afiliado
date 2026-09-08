@@ -5,6 +5,7 @@ import { FooterFull } from "../components/Footer.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import FaqAccordion from "../components/FaqAccordion.jsx";
 import { pagamentos } from "../data/footerColumns.js";
+import { useProducts, toCardProduct } from "../lib/products.js";
 
 const menu = ["Aspiradores", "Robôs", "Vertical", "Portáteis", "Extratoras", "Profissionais", "Acessórios"];
 const heroTrust = ["Frete grátis acima de R$ 299", "Até 10x sem juros", "Garantia e nota fiscal"];
@@ -18,13 +19,6 @@ const categorias = [
   { nome: "Profissionais", qtd: "45 modelos", ph: "aspirador pó e água" }
 ];
 
-const ofertas = [
-  { marca: "VERTAX", nome: "Aspirador Vertical Sem Fio Vertax V12 Ciclônico 450W", desconto: "-32%", selo: "MAIS VENDIDO", estrelas: "★★★★★", avaliacoes: "(1.284)", de: "R$ 1.029,90", por: "R$ 699,90", parcela: "ou 10x de R$ 69,99 sem juros" },
-  { marca: "NORDIKA", nome: "Robô Aspirador Nordika R7 com Mapeamento a Laser", desconto: "-25%", selo: "", estrelas: "★★★★★", avaliacoes: "(872)", de: "R$ 2.399,00", por: "R$ 1.799,00", parcela: "ou 10x de R$ 179,90 sem juros" },
-  { marca: "DOMUS", nome: "Aspirador Portátil Domus Mini 3 em 1 para Carro", desconto: "-40%", selo: "ÚLTIMAS UNIDADES", estrelas: "★★★★☆", avaliacoes: "(2.110)", de: "R$ 489,90", por: "R$ 289,90", parcela: "ou 10x de R$ 28,99 sem juros" },
-  { marca: "CYCLON PRO", nome: "Aspirador de Pó e Água Cyclon Pro 20L 1600W", desconto: "-28%", selo: "", estrelas: "★★★★★", avaliacoes: "(506)", de: "R$ 1.199,00", por: "R$ 859,00", parcela: "ou 10x de R$ 85,90 sem juros" }
-];
-
 const necessidades = [
   { i: "01", t: "Para pelos de animais", s: "Escova antiemaranhado" },
   { i: "02", t: "Para carros", s: "Portáteis e sem fio" },
@@ -32,13 +26,6 @@ const necessidades = [
   { i: "04", t: "Para apartamentos", s: "Compactos e silenciosos" },
   { i: "05", t: "Para limpeza pesada", s: "Pó e água, 20L ou mais" },
   { i: "06", t: "Para uso profissional", s: "Uso contínuo e garantia" }
-];
-
-const vendidos = [
-  { marca: "VERTAX", nome: "Aspirador Vertical Vertax V8 Sem Fio 2 Velocidades", selo: "TOP 1", estrelas: "★★★★★", avaliacoes: "(3.402)", por: "R$ 549,90", parcela: "ou 10x de R$ 54,99 sem juros" },
-  { marca: "NORDIKA", nome: "Robô Aspirador Nordika R4 com Estação de Recarga", selo: "TOP 2", estrelas: "★★★★★", avaliacoes: "(1.988)", por: "R$ 1.249,00", parcela: "ou 10x de R$ 124,90 sem juros" },
-  { marca: "LARIS", nome: "Extratora Laris Sofá & Estofados 1.400W 2L", selo: "TOP 3", estrelas: "★★★★☆", avaliacoes: "(741)", por: "R$ 799,00", parcela: "ou 10x de R$ 79,90 sem juros" },
-  { marca: "DOMUS", nome: "Aspirador de Pó Domus Compact 1200W com Filtro HEPA", selo: "TOP 4", estrelas: "★★★★★", avaliacoes: "(1.156)", por: "R$ 379,90", parcela: "ou 10x de R$ 37,99 sem juros" }
 ];
 
 const beneficios = [
@@ -73,6 +60,10 @@ function pad(n) {
 
 export default function Home() {
   const [left, setLeft] = useState(6 * 3600 + 42 * 60 + 15);
+  const { products } = useProducts();
+  const cards = products.map(toCardProduct);
+  const ofertas = cards.slice(0, 4);
+  const vendidos = cards.slice(4, 8);
 
   useEffect(() => {
     document.title = "Promo Aspiradores — Encontre o aspirador ideal para sua casa";
@@ -104,7 +95,7 @@ export default function Home() {
             <h1 style={{ margin: "0 0 20px", font: "800 54px/1.05 Montserrat", letterSpacing: "-.02em", color: "#012746", textWrap: "balance" }}>ENCONTRE O ASPIRADOR IDEAL PARA SUA CASA</h1>
             <p style={{ margin: "0 0 32px", maxWidth: 520, font: "400 17px/1.6 Inter", color: "#475569" }}>Modelos para todos os tipos de limpeza e necessidades. Nossa curadoria compara potência, autonomia e preço para você escolher em minutos.</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 36 }}>
-              <Link to="/produto" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 52, padding: "0 30px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.28)" }}>
+              <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 52, padding: "0 30px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.28)" }}>
                 VER ASPIRADORES
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
               </Link>
@@ -138,7 +129,7 @@ export default function Home() {
         <p style={{ margin: "0 0 32px", font: "400 16px Inter", color: "#475569" }}>Seis categorias, sem enrolação. Escolha pelo formato que combina com a sua casa.</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 24 }}>
           {categorias.map((c, i) => (
-            <Link key={i} to="/produto" className="card-hover" style={{ display: "flex", flexDirection: "column", gap: 14, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
+            <Link key={i} to="/categoria" className="card-hover" style={{ display: "flex", flexDirection: "column", gap: 14, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
               <div style={{ aspectRatio: "1/1", borderRadius: 8, background: "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 12, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8" }}>{c.ph}</div>
               <div>
                 <div style={{ font: "700 15px Montserrat", color: "#012746", marginBottom: 3 }}>{c.nome}</div>
@@ -168,9 +159,13 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(238px,1fr))", gap: 24 }}>
-          {ofertas.map((p, i) => <ProductCard key={i} p={p} />)}
-        </div>
+        {ofertas.length > 0 ? (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(238px,1fr))", gap: 24 }}>
+            {ofertas.map((p) => <ProductCard key={p.id} p={p} />)}
+          </div>
+        ) : (
+          <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto cadastrado ainda.</p>
+        )}
       </section>
 
       <section id="necessidade" style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 24px 0" }}>
@@ -178,7 +173,7 @@ export default function Home() {
         <p style={{ margin: "0 0 32px", font: "400 16px Inter", color: "#475569" }}>Diga o que incomoda na sua casa e a gente mostra só os modelos que resolvem.</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 16 }}>
           {necessidades.map((n, i) => (
-            <Link key={i} to="/produto" className="need-card" style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
+            <Link key={i} to="/categoria" className="need-card" style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
               <span style={{ flex: "none", width: 40, height: 40, borderRadius: 8, background: "#fff", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "center", font: "700 15px Montserrat", color: "#F05A00" }}>{n.i}</span>
               <span>
                 <span style={{ display: "block", font: "700 14.5px Montserrat", color: "#012746" }}>{n.t}</span>
@@ -195,11 +190,15 @@ export default function Home() {
             <h2 style={{ margin: "0 0 6px", font: "700 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Mais vendidos do mês</h2>
             <p style={{ margin: 0, font: "400 16px Inter", color: "#475569" }}>O que as famílias brasileiras estão levando para casa.</p>
           </div>
-          <Link to="/produto" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", gap: 8, height: 46, padding: "0 22px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 14px Montserrat" }}>VER RANKING COMPLETO</Link>
+          <Link to="/categoria" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", gap: 8, height: 46, padding: "0 22px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 14px Montserrat" }}>VER RANKING COMPLETO</Link>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(238px,1fr))", gap: 24 }}>
-          {vendidos.map((p, i) => <ProductCard key={i} p={p} priceColor="#012746" />)}
-        </div>
+        {vendidos.length > 0 ? (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(238px,1fr))", gap: 24 }}>
+            {vendidos.map((p) => <ProductCard key={p.id} p={p} priceColor="#012746" />)}
+          </div>
+        ) : (
+          <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto cadastrado ainda.</p>
+        )}
       </section>
 
       <section style={{ margin: "64px 0 0", background: "#F8FAFC", borderTop: "1px solid #E2E8F0", borderBottom: "1px solid #E2E8F0" }}>

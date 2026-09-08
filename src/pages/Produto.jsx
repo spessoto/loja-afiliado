@@ -79,6 +79,17 @@ const relacionados = [
 
 const restante = 12;
 
+function linhas(text) {
+  return (text || "").split("\n").map(s => s.trim()).filter(Boolean);
+}
+
+function parseSpecs(text) {
+  return linhas(text).map(line => {
+    const [k, ...rest] = line.split(":");
+    return { k: (k || "").trim(), v: rest.join(":").trim() };
+  }).filter(s => s.k && s.v);
+}
+
 export default function Produto() {
   const { id } = useParams();
   const { product, loading } = useProduct(id);
@@ -97,12 +108,22 @@ export default function Produto() {
 
   const nome = product?.name || "Aspirador Vertical Sem Fio Vertax V12 Ciclônico 450W";
   const marca = product?.brand || "VERTAX";
+  const categoria = product?.category || "Vertical sem fio";
   const precoDe = product ? formatBRL(product.price_from) : "R$ 1.029,90";
   const precoPor = product ? formatBRL(product.price_to) || "R$ 699,90" : "R$ 699,90";
   const parcela = product?.installment || "10x de R$ 69,99";
   const descricao = product?.description;
   const afiliado = product?.affiliate_url || "#afiliado";
   const buyProps = product ? { href: afiliado, target: "_blank", rel: "noopener noreferrer" } : { href: "#afiliado" };
+
+  const productTags = linhas(product?.tags);
+  const tagsExibidas = productTags.length > 0 ? productTags : (product ? [] : tags);
+  const productSpecs = parseSpecs(product?.specs);
+  const specsExibidas = productSpecs.length > 0 ? productSpecs.map((s, i) => ({ ...s, bg: i % 2 ? "#F8FAFC" : "#FFFFFF" })) : (product ? [] : specs);
+  const productIndicado = linhas(product?.indicado);
+  const indicadoExibido = productIndicado.length > 0 ? productIndicado : (product ? [] : indicado);
+  const productNaoIndicado = linhas(product?.nao_indicado);
+  const naoIndicadoExibido = productNaoIndicado.length > 0 ? productNaoIndicado : (product ? [] : naoIndicado);
 
   if (!loading && id && !product) {
     return (
@@ -128,7 +149,7 @@ export default function Produto() {
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "11px 24px", display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", font: "400 13px Inter", color: "#475569" }}>
           <Link to="/">Home</Link><span style={{ color: "#94A3B8" }}>/</span>
           <Link to="/categoria">Aspiradores</Link><span style={{ color: "#94A3B8" }}>/</span>
-          <Link to="/categoria">Vertical sem fio</Link><span style={{ color: "#94A3B8" }}>/</span>
+          <Link to="/categoria">{categoria}</Link><span style={{ color: "#94A3B8" }}>/</span>
           <span style={{ color: "#012746", fontWeight: 500 }}>{nome}</span>
         </div>
       </div>
@@ -137,10 +158,10 @@ export default function Produto() {
         <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1.15fr) minmax(340px,.85fr)", gap: 48, alignItems: "start" }}>
 
           <div style={{ display: "grid", gridTemplateColumns: "72px minmax(0,1fr)", gap: 16 }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12, maxHeight: galeria.length > 7 ? 576 : "none", overflowY: galeria.length > 7 ? "auto" : "visible", paddingRight: galeria.length > 7 ? 4 : 0 }}>
               {galeria.map((g, i) => (
-                <button key={i} onClick={g.pick} style={{ border: `1.5px solid ${g.borda}`, borderRadius: 8, background: g.url ? "#fff" : "repeating-linear-gradient(135deg,#F8FAFC 0 7px,#F1F5F9 7px 14px)", aspectRatio: "1/1", padding: g.url ? 0 : 6, cursor: "pointer", font: "400 8.5px ui-monospace,monospace", color: "#94A3B8", lineHeight: 1.3, textAlign: "center", overflow: "hidden" }}>
-                  {g.url ? <img src={g.url} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} /> : g.label}
+                <button key={i} onClick={g.pick} style={{ flex: "none", border: `1.5px solid ${g.borda}`, borderRadius: 8, background: g.url ? "#fff" : "repeating-linear-gradient(135deg,#F8FAFC 0 7px,#F1F5F9 7px 14px)", aspectRatio: "1/1", padding: g.url ? 0 : 6, cursor: "pointer", font: "400 8.5px ui-monospace,monospace", color: "#94A3B8", lineHeight: 1.3, textAlign: "center", overflow: "hidden" }}>
+                  {g.url ? <img src={g.url} alt="" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} /> : g.label}
                 </button>
               ))}
             </div>
@@ -148,7 +169,7 @@ export default function Produto() {
               <div style={{ position: "relative", border: "1px solid #E2E8F0", borderRadius: 16, overflow: "hidden", background: "#fff" }}>
                 {temGaleriaReal ? (
                   <div style={{ aspectRatio: "1/1" }}>
-                    <img src={imagens[foto] || imagens[0]} alt={nome} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                    <img src={imagens[foto] || imagens[0]} alt={nome} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
                   </div>
                 ) : (
                   <div style={{ aspectRatio: "1/1", background: "repeating-linear-gradient(135deg,#F8FAFC 0 10px,#F1F5F9 10px 20px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: 32 }}>
@@ -158,7 +179,7 @@ export default function Produto() {
                 )}
               </div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 16 }}>
-                {tags.map((t, i) => (
+                {tagsExibidas.map((t, i) => (
                   <span key={i} style={{ display: "flex", alignItems: "center", gap: 7, padding: "8px 13px", border: "1px solid #E2E8F0", borderRadius: 24, background: "#F8FAFC", font: "500 12.5px Inter", color: "#012746" }}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F05A00" strokeWidth="2.6" strokeLinecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
                     {t}
@@ -246,41 +267,53 @@ export default function Produto() {
               ))}
             </div>
 
-            <h3 style={{ margin: "40px 0 16px", font: "700 24px Montserrat", color: "#012746" }}>Especificações técnicas</h3>
-            <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden" }}>
-              {specs.map((s, i) => (
-                <div key={i} style={{ display: "grid", gridTemplateColumns: "minmax(0,.9fr) minmax(0,1.1fr)", gap: 16, padding: "13px 18px", borderBottom: "1px solid #F1F5F9" }}>
-                  <span style={{ font: "500 13.5px Inter", color: "#475569" }}>{s.k}</span>
-                  <span style={{ font: "600 13.5px Inter", color: "#1E293B" }}>{s.v}</span>
+            {specsExibidas.length > 0 && (
+              <>
+                <h3 style={{ margin: "40px 0 16px", font: "700 24px Montserrat", color: "#012746" }}>Especificações técnicas</h3>
+                <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden" }}>
+                  {specsExibidas.map((s, i) => (
+                    <div key={i} style={{ display: "grid", gridTemplateColumns: "minmax(0,.9fr) minmax(0,1.1fr)", gap: 16, padding: "13px 18px", borderBottom: "1px solid #F1F5F9" }}>
+                      <span style={{ font: "500 13.5px Inter", color: "#475569" }}>{s.k}</span>
+                      <span style={{ font: "600 13.5px Inter", color: "#1E293B" }}>{s.v}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </>
+            )}
 
-            <h3 style={{ margin: "40px 0 16px", font: "700 24px Montserrat", color: "#012746" }}>Este modelo é para você?</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 16 }}>
-              <div style={{ padding: 20, border: "1px solid #E2E8F0", borderRadius: 12 }}>
-                <div style={{ font: "700 14px Montserrat", color: "#012746", letterSpacing: ".04em", marginBottom: 12 }}>INDICADO PARA</div>
-                <div style={{ display: "grid", gap: 10 }}>
-                  {indicado.map((i2, i) => (
-                    <span key={i} style={{ display: "flex", gap: 9, alignItems: "flex-start", font: "400 14px/1.5 Inter", color: "#475569" }}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F05A00" strokeWidth="2.6" strokeLinecap="round" style={{ flex: "none", marginTop: 3 }}><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
-                      {i2}
-                    </span>
-                  ))}
+            {(indicadoExibido.length > 0 || naoIndicadoExibido.length > 0) && (
+              <>
+                <h3 style={{ margin: "40px 0 16px", font: "700 24px Montserrat", color: "#012746" }}>Este modelo é para você?</h3>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 16 }}>
+                  {indicadoExibido.length > 0 && (
+                    <div style={{ padding: 20, border: "1px solid #E2E8F0", borderRadius: 12 }}>
+                      <div style={{ font: "700 14px Montserrat", color: "#012746", letterSpacing: ".04em", marginBottom: 12 }}>INDICADO PARA</div>
+                      <div style={{ display: "grid", gap: 10 }}>
+                        {indicadoExibido.map((i2, i) => (
+                          <span key={i} style={{ display: "flex", gap: 9, alignItems: "flex-start", font: "400 14px/1.5 Inter", color: "#475569" }}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F05A00" strokeWidth="2.6" strokeLinecap="round" style={{ flex: "none", marginTop: 3 }}><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
+                            {i2}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {naoIndicadoExibido.length > 0 && (
+                    <div style={{ padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
+                      <div style={{ font: "700 14px Montserrat", color: "#012746", letterSpacing: ".04em", marginBottom: 12 }}>TALVEZ NÃO SEJA</div>
+                      <div style={{ display: "grid", gap: 10 }}>
+                        {naoIndicadoExibido.map((i2, i) => (
+                          <span key={i} style={{ display: "flex", gap: 9, alignItems: "flex-start", font: "400 14px/1.5 Inter", color: "#475569" }}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2.6" strokeLinecap="round" style={{ flex: "none", marginTop: 3 }}><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"></path></svg>
+                            {i2}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-              <div style={{ padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
-                <div style={{ font: "700 14px Montserrat", color: "#012746", letterSpacing: ".04em", marginBottom: 12 }}>TALVEZ NÃO SEJA</div>
-                <div style={{ display: "grid", gap: 10 }}>
-                  {naoIndicado.map((i2, i) => (
-                    <span key={i} style={{ display: "flex", gap: 9, alignItems: "flex-start", font: "400 14px/1.5 Inter", color: "#475569" }}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2.6" strokeLinecap="round" style={{ flex: "none", marginTop: 3 }}><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"></path></svg>
-                      {i2}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
 
           <aside style={{ position: "sticky", top: 24, display: "grid", gap: 16 }}>
@@ -381,7 +414,7 @@ export default function Produto() {
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "12px 24px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, minWidth: 0 }}>
             {product?.image_url ? (
-              <img src={product.image_url} alt={nome} style={{ flex: "none", width: 52, height: 52, borderRadius: 8, border: "1px solid #E2E8F0", objectFit: "cover" }} />
+              <img src={product.image_url} alt={nome} style={{ flex: "none", width: 52, height: 52, borderRadius: 8, border: "1px solid #E2E8F0", objectFit: "contain", background: "#fff" }} />
             ) : (
               <div style={{ flex: "none", width: 52, height: 52, borderRadius: 8, border: "1px solid #E2E8F0", background: "repeating-linear-gradient(135deg,#F8FAFC 0 7px,#F1F5F9 7px 14px)" }}></div>
             )}

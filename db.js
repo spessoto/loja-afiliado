@@ -26,10 +26,18 @@ export async function ensureSchema() {
       price_to DECIMAL(10,2),
       installment VARCHAR(120),
       badge VARCHAR(120),
+      tags TEXT,
+      specs TEXT,
+      indicado TEXT,
+      nao_indicado TEXT,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
   `);
   await pool.query(`ALTER TABLE products CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS images TEXT`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS tags TEXT`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS specs TEXT`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS indicado TEXT`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS nao_indicado TEXT`);
 }

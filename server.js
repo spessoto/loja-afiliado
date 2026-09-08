@@ -28,23 +28,24 @@ app.get("/api/products/:id", async (req, res) => {
   res.json(rows[0]);
 });
 
+const FIELDS = ["name", "brand", "category", "description", "image_url", "images", "affiliate_url", "price_from", "price_to", "installment", "badge", "tags", "specs", "indicado", "nao_indicado"];
+
 app.post("/api/products", requireAdmin, async (req, res) => {
-  const { name, brand, category, description, image_url, images, affiliate_url, price_from, price_to, installment, badge } = req.body;
-  if (!name || !affiliate_url) return res.status(422).json({ error: "name and affiliate_url are required" });
+  if (!req.body.name || !req.body.affiliate_url) return res.status(422).json({ error: "name and affiliate_url are required" });
+  const values = FIELDS.map(f => req.body[f] ?? null);
   const [result] = await pool.query(
-    `INSERT INTO products (name, brand, category, description, image_url, images, affiliate_url, price_from, price_to, installment, badge)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [name, brand ?? null, category ?? null, description ?? null, image_url ?? null, images ?? null, affiliate_url, price_from ?? null, price_to ?? null, installment ?? null, badge ?? null]
+    `INSERT INTO products (${FIELDS.join(", ")}) VALUES (${FIELDS.map(() => "?").join(", ")})`,
+    values
   );
   res.status(201).json({ id: result.insertId });
 });
 
 app.put("/api/products/:id", requireAdmin, async (req, res) => {
-  const { name, brand, category, description, image_url, images, affiliate_url, price_from, price_to, installment, badge } = req.body;
-  if (!name || !affiliate_url) return res.status(422).json({ error: "name and affiliate_url are required" });
+  if (!req.body.name || !req.body.affiliate_url) return res.status(422).json({ error: "name and affiliate_url are required" });
+  const values = FIELDS.map(f => req.body[f] ?? null);
   await pool.query(
-    `UPDATE products SET name=?, brand=?, category=?, description=?, image_url=?, images=?, affiliate_url=?, price_from=?, price_to=?, installment=?, badge=? WHERE id=?`,
-    [name, brand ?? null, category ?? null, description ?? null, image_url ?? null, images ?? null, affiliate_url, price_from ?? null, price_to ?? null, installment ?? null, badge ?? null, req.params.id]
+    `UPDATE products SET ${FIELDS.map(f => `${f}=?`).join(", ")} WHERE id=?`,
+    [...values, req.params.id]
   );
   res.json({ ok: true });
 });

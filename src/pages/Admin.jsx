@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const empty = { name: "", brand: "", category: "", description: "", image_url: "", images: "", affiliate_url: "", price_from: "", price_to: "", installment: "", badge: "" };
+const empty = { name: "", brand: "", category: "", description: "", image_url: "", images: "", affiliate_url: "", price_from: "", price_to: "", installment: "", badge: "", tags: "", specs: "", indicado: "", nao_indicado: "" };
 
 export default function Admin() {
   const [token, setToken] = useState(localStorage.getItem("admin_token") || "");
@@ -82,6 +82,10 @@ export default function Admin() {
         <input placeholder="Preço por (ex: 699.90)" value={form.price_to} onChange={e => setForm({ ...form, price_to: e.target.value })} style={inputStyle} />
         <input placeholder="Parcelamento (ex: 10x de R$ 69,99)" value={form.installment} onChange={e => setForm({ ...form, installment: e.target.value })} style={{ ...inputStyle, gridColumn: "1 / -1" }} />
         <textarea placeholder="Descrição" value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} style={{ ...inputStyle, gridColumn: "1 / -1", height: 90 }} />
+        <textarea placeholder="Tags (uma por linha, ex: Sem fio HEPA lavável)" value={form.tags} onChange={e => setForm({ ...form, tags: e.target.value })} style={{ ...inputStyle, gridColumn: "1 / -1", height: 70 }} />
+        <textarea placeholder="Especificações técnicas (uma por linha, formato: Chave: Valor)" value={form.specs} onChange={e => setForm({ ...form, specs: e.target.value })} style={{ ...inputStyle, gridColumn: "1 / -1", height: 110 }} />
+        <textarea placeholder="Indicado para (uma frase por linha)" value={form.indicado} onChange={e => setForm({ ...form, indicado: e.target.value })} style={{ ...inputStyle, height: 90 }} />
+        <textarea placeholder="Não indicado para (uma frase por linha)" value={form.nao_indicado} onChange={e => setForm({ ...form, nao_indicado: e.target.value })} style={{ ...inputStyle, height: 90 }} />
         <div style={{ gridColumn: "1 / -1", display: "flex", gap: 10 }}>
           <button type="submit" style={btnStyle}>{editingId ? "Salvar alterações" : "Adicionar produto"}</button>
           {editingId && <button type="button" onClick={resetForm} style={{ ...btnStyle, background: "#64748B" }}>Cancelar</button>}

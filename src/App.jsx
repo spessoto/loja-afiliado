@@ -8,6 +8,7 @@ import Contato from "./pages/Contato.jsx";
 import PoliticaCookies from "./pages/PoliticaCookies.jsx";
 import PoliticaPrivacidade from "./pages/PoliticaPrivacidade.jsx";
 import PoliticaUso from "./pages/PoliticaUso.jsx";
+import Admin from "./pages/Admin.jsx";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
       <Route path="/politica-de-cookies" element={<PoliticaCookies />} />
       <Route path="/politica-de-privacidade" element={<PoliticaPrivacidade />} />
       <Route path="/politica-de-uso" element={<PoliticaUso />} />
+      <Route path="/admin" element={<Admin />} />
     </Routes>
   );
 }

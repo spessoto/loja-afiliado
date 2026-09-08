@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; font-family: Inter, system-ui, sans-serif; color: #1E293B; -webkit-font-smoothing: antialiased; }
+  a { color: #012746; text-decoration: none; }
+  a:hover { color: #F05A00; }
+  * { box-sizing: border-box; }
+</style>
+</helmet>
+
+<div style="background:linear-gradient(90deg,#F05A00,#FF7A00)">
+  <div style="max-width:1280px;margin:0 auto;padding:9px 24px;display:flex;flex-wrap:wrap;gap:8px 40px;justify-content:center;font:600 12.5px Inter;color:#fff;letter-spacing:.06em">
+    <span>GUIAS DE COMPRA ESCRITOS POR ESPECIALISTAS</span><span>ATUALIZADOS TODA SEMANA</span>
+  </div>
+</div>
+
+<header style="position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid #E2E8F0;box-shadow:0 4px 20px rgba(1,39,70,.06)">
+  <div style="max-width:1280px;margin:0 auto;padding:16px 24px;display:grid;grid-template-columns:minmax(180px,232px) minmax(0,1fr) auto;align-items:center;gap:32px">
+    <a href="Home.dc.html" style="display:block"><img src="uploads/logo-principal.png" alt="Promo Aspiradores — qualidade para sua casa" style="width:100%;max-width:232px;height:auto;display:block" /></a>
+    <form onSubmit="{{ noSubmit }}" style="display:flex;align-items:center;background:#F1F5F9;border:1.5px solid #E2E8F0;border-radius:8px;height:50px;padding:0 4px 0 16px">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4.2-4.2"></path></svg>
+      <input placeholder="Buscar guias, comparativos e dicas" style="flex:1;min-width:0;border:0;background:transparent;outline:none;font:400 15px Inter;color:#1E293B;padding:0 12px" />
+      <button style="height:42px;padding:0 22px;border:0;border-radius:6px;background:#012746;color:#fff;font:700 13px Montserrat;letter-spacing:.06em;cursor:pointer" style-hover="background:#F05A00">BUSCAR</button>
+    </form>
+    <nav style="display:flex;flex-wrap:wrap;gap:22px">
+      <a href="Categoria.dc.html" style="font:500 14px Inter;color:#475569" style-hover="color:#F05A00">Aspiradores</a>
+      <a href="Blog.dc.html" style="font:600 14px Inter;color:#F05A00">Blog</a>
+      <a href="Contato.dc.html" style="font:500 14px Inter;color:#475569" style-hover="color:#F05A00">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<div style="border-bottom:1px solid #F1F5F9;background:#F8FAFC">
+  <div style="max-width:1280px;margin:0 auto;padding:11px 24px;display:flex;gap:8px;align-items:center;font:400 13px Inter;color:#475569">
+    <a href="Home.dc.html">Home</a><span style="color:#94A3B8">/</span><span style="color:#012746;font-weight:500">Blog</span>
+  </div>
+</div>
+
+<section style="background:#F8FAFC;border-bottom:1px solid #E2E8F0">
+  <div style="max-width:1280px;margin:0 auto;padding:44px 24px 40px">
+    <h1 style="margin:0 0 14px;font:800 42px/1.1 Montserrat;color:#012746;letter-spacing:-.02em;max-width:760px">Guias de compra e dicas de limpeza</h1>
+    <p style="margin:0 0 28px;max-width:680px;font:400 16.5px/1.65 Inter;color:#475569">Comparativos, testes e conteúdo prático para você escolher o aspirador certo e tirar o máximo dele. Escrito por quem usa e testa esses aparelhos todos os dias.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <sc-for list="{{ topicos }}" as="t" hint-placeholder-count="7">
+        <a href="Blog.dc.html" style="display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:24px;border:1.5px solid {{ t.borda }};background:{{ t.bg }};font:600 13.5px Inter;color:{{ t.cor }};white-space:nowrap">{{ t.nome }}</a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<main style="max-width:1280px;margin:0 auto;padding:48px 24px 0">
+
+  <article style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:40px;align-items:center;margin-bottom:64px">
+    <a href="Post.dc.html" style="display:block;border-radius:16px;overflow:hidden;border:1px solid #E2E8F0">
+      <div style="aspect-ratio:16/10;background:repeating-linear-gradient(135deg,#F1F5F9 0 10px,#E9EFF5 10px 20px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:24px">
+        <span style="font:500 12px ui-monospace,SFMono-Regular,monospace;letter-spacing:.1em;color:#94A3B8">IMAGEM DE DESTAQUE</span>
+        <span style="font:400 12px ui-monospace,monospace;color:#94A3B8;max-width:280px;line-height:1.6">1200×750, alt descritivo — cinco aspiradores verticais lado a lado sobre piso claro</span>
+      </div>
+    </a>
+    <div>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px">
+        <span style="background:#F05A00;color:#fff;font:800 11px Montserrat;letter-spacing:.1em;padding:5px 11px;border-radius:4px">EM DESTAQUE</span>
+        <a href="Blog.dc.html" style="font:600 12.5px Inter;letter-spacing:.06em;color:#012746">COMPARATIVOS</a>
+      </div>
+      <h2 style="margin:0 0 14px;font:800 34px/1.2 Montserrat;color:#012746;letter-spacing:-.01em;text-wrap:balance">
+        <a href="Post.dc.html" style="color:#012746" style-hover="color:#F05A00">Melhor aspirador vertical de 2026: 5 modelos testados por preço e potência</a>
+      </h2>
+      <p style="margin:0 0 20px;font:400 16px/1.7 Inter;color:#475569">Testamos cinco verticais sem fio nas mesmas condições: tapete, piso frio, pelo de animal e farinha. O resultado mostra que o modelo mais caro não foi o melhor em três dos quatro testes.</p>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-bottom:24px;font:400 13.5px Inter;color:#64748B">
+        <span style="font-weight:500;color:#012746">Por Marina Duarte</span>
+        <span style="color:#CBD5E1">•</span>
+        <span>Atualizado em 2 de setembro de 2026</span>
+        <span style="color:#CBD5E1">•</span>
+        <span>12 min de leitura</span>
+      </div>
+      <a href="Post.dc.html" style="display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 30px;border-radius:8px;background:#F05A00;color:#fff;font:700 15px Montserrat;letter-spacing:.04em;box-shadow:0 8px 24px rgba(240,90,0,.26)" style-hover="background:#FF6A00;color:#fff">LER O COMPARATIVO
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
+      </a>
+    </div>
+  </article>
+
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,308px);gap:56px;align-items:start">
+    <div>
+      <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:20px;border-bottom:2px solid #012746;margin-bottom:32px">
+        <h2 style="margin:0;font:700 26px Montserrat;color:#012746;letter-spacing:-.01em">Publicações recentes</h2>
+        <span style="font:400 13.5px Inter;color:#64748B">48 artigos publicados</span>
+      </div>
+
+      <div style="display:grid;gap:28px">
+        <sc-for list="{{ posts }}" as="p" hint-placeholder-count="6">
+          <article style="display:grid;grid-template-columns:minmax(160px,240px) minmax(0,1fr);gap:24px;align-items:start">
+            <a href="Post.dc.html" style="display:block;border-radius:12px;overflow:hidden;border:1px solid #E2E8F0">
+              <div style="aspect-ratio:4/3;background:repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px);display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;font:400 10.5px ui-monospace,monospace;letter-spacing:.06em;color:#94A3B8;line-height:1.5">{{ p.imagem }}</div>
+            </a>
+            <div>
+              <a href="Blog.dc.html" style="display:inline-block;font:600 11.5px Inter;letter-spacing:.1em;color:#F05A00;margin-bottom:8px">{{ p.categoria }}</a>
+              <h3 style="margin:0 0 10px;font:700 21px/1.32 Montserrat;color:#012746;text-wrap:pretty">
+                <a href="Post.dc.html" style="color:#012746" style-hover="color:#F05A00">{{ p.titulo }}</a>
+              </h3>
+              <p style="margin:0 0 12px;font:400 15px/1.7 Inter;color:#475569">{{ p.resumo }}</p>
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font:400 13px Inter;color:#64748B">
+                <span style="font-weight:500;color:#012746">{{ p.autor }}</span>
+                <span style="color:#CBD5E1">•</span>
+                <span>{{ p.data }}</span>
+                <span style="color:#CBD5E1">•</span>
+                <span>{{ p.leitura }}</span>
+              </div>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:20px;padding:48px 0 8px">
+        <button style="height:52px;padding:0 36px;border:1.5px solid #012746;border-radius:8px;background:#fff;font:700 14.5px Montserrat;letter-spacing:.04em;color:#012746;cursor:pointer" style-hover="background:#012746;color:#fff">CARREGAR MAIS ARTIGOS</button>
+        <nav style="display:flex;align-items:center;gap:8px">
+          <sc-for list="{{ paginas }}" as="pg" hint-placeholder-count="5">
+            <a href="Blog.dc.html" style="display:flex;align-items:center;justify-content:center;min-width:40px;height:40px;padding:0 10px;border:1.5px solid {{ pg.borda }};border-radius:8px;font:600 13.5px Inter;color:{{ pg.cor }};background:{{ pg.bg }}">{{ pg.n }}</a>
+          </sc-for>
+        </nav>
+      </div>
+    </div>
+
+    <aside style="display:grid;gap:20px">
+      <div style="border:1px solid #E2E8F0;border-radius:12px;padding:22px">
+        <div style="font:700 13px Montserrat;letter-spacing:.1em;color:#012746;margin-bottom:16px">MAIS LIDOS DA SEMANA</div>
+        <div style="display:grid;gap:16px">
+          <sc-for list="{{ maisLidos }}" as="m" hint-placeholder-count="5">
+            <a href="Post.dc.html" style="display:flex;gap:14px;align-items:flex-start">
+              <span style="flex:none;font:800 20px Montserrat;color:#E2E8F0;line-height:1.1;width:26px">{{ m.n }}</span>
+              <span style="font:600 14px/1.5 Inter;color:#1E293B" style-hover="color:#F05A00">{{ m.t }}</span>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="background:linear-gradient(160deg,#012746,#001B31);border-radius:16px;padding:24px;color:#fff">
+        <div style="font:700 11px Montserrat;letter-spacing:.12em;color:#F05A00;margin-bottom:10px">OFERTA DA SEMANA</div>
+        <div style="border-radius:10px;background:rgba(255,255,255,.06);border:1px solid #1E3A4D;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font:400 10.5px ui-monospace,monospace;color:#7A8B99;letter-spacing:.06em;margin-bottom:16px">FOTO DO PRODUTO<br />fundo escuro</div>
+        <div style="font:600 14.5px/1.5 Inter;margin-bottom:10px">Aspirador Vertical Vertax V12 Ciclônico 450W</div>
+        <div style="font:800 26px Montserrat;color:#F05A00;line-height:1.15">R$ 699,90</div>
+        <div style="font:400 13px Inter;color:#B8C5D0;margin-bottom:18px">ou 10x de R$ 69,99 sem juros</div>
+        <a href="Produto.dc.html" style="display:flex;align-items:center;justify-content:center;height:48px;border-radius:8px;background:#F05A00;color:#fff;font:700 14px Montserrat;letter-spacing:.05em" style-hover="background:#FF6A00;color:#fff">VER A OFERTA</a>
+      </div>
+
+      <div style="border:1px solid #E2E8F0;border-radius:12px;padding:22px;background:#F8FAFC">
+        <div style="font:700 15.5px Montserrat;color:#012746;margin-bottom:8px">Receba os comparativos por e-mail</div>
+        <p style="margin:0 0 16px;font:400 13.5px/1.6 Inter;color:#475569">Um e-mail por semana com os testes novos e as quedas de preço que valem a pena.</p>
+        <form onSubmit="{{ noSubmit }}" style="display:grid;gap:10px">
+          <input type="email" placeholder="seu@email.com.br" style="height:48px;padding:0 16px;border:1.5px solid #E2E8F0;border-radius:8px;background:#fff;font:400 14.5px Inter;color:#1E293B;outline:none" style-focus="border-color:#F05A00" />
+          <button style="height:48px;border:0;border-radius:8px;background:#012746;color:#fff;font:700 13.5px Montserrat;letter-spacing:.05em;cursor:pointer" style-hover="background:#F05A00">QUERO RECEBER</button>
+        </form>
+        <p style="margin:12px 0 0;font:400 12px/1.55 Inter;color:#94A3B8">Ao assinar você concorda com a <a href="Politica-de-Privacidade.dc.html" style="color:#F05A00;text-decoration:underline">Política de Privacidade</a>. Cancele quando quiser.</p>
+      </div>
+
+      <div style="border:1px solid #E2E8F0;border-radius:12px;padding:22px">
+        <div style="font:700 13px Montserrat;letter-spacing:.1em;color:#012746;margin-bottom:14px">BUSCAS FREQUENTES</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ tags }}" as="t" hint-placeholder-count="8">
+            <a href="Blog.dc.html" style="display:inline-flex;align-items:center;height:34px;padding:0 13px;border:1px solid #E2E8F0;border-radius:20px;background:#F8FAFC;font:500 12.5px Inter;color:#475569" style-hover="border-color:#F05A00;color:#F05A00">{{ t }}</a>
+          </sc-for>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <section style="margin-top:72px;padding-bottom:80px">
+    <h2 style="margin:0 0 10px;font:700 30px Montserrat;color:#012746;letter-spacing:-.01em">Comece pelos guias essenciais</h2>
+    <p style="margin:0 0 32px;max-width:640px;font:400 15.5px/1.65 Inter;color:#475569">Se você está começando a pesquisar, estes três conteúdos respondem quase tudo antes da compra.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px">
+      <sc-for list="{{ essenciais }}" as="e" hint-placeholder-count="3">
+        <a href="Post.dc.html" style="display:flex;flex-direction:column;gap:14px;padding:24px;border:1px solid #E2E8F0;border-radius:12px;background:#fff;transition:all .18s" style-hover="border-color:#F05A00;box-shadow:0 8px 24px rgba(1,39,70,.1);transform:translateY(-3px)">
+          <span style="width:44px;height:44px;border-radius:8px;background:#FFF1E8;display:flex;align-items:center;justify-content:center;font:800 15px Montserrat;color:#F05A00">{{ e.n }}</span>
+          <span style="font:700 18px/1.35 Montserrat;color:#012746">{{ e.t }}</span>
+          <span style="font:400 14.5px/1.65 Inter;color:#475569">{{ e.s }}</span>
+          <span style="font:600 13.5px Inter;color:#F05A00;margin-top:auto">Ler o guia →</span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+</main>
+
+<footer style="background:linear-gradient(180deg,#012746,#001B31);color:#B8C5D0">
+  <div style="max-width:1280px;margin:0 auto;padding:56px 24px 32px;display:grid;grid-template-columns:minmax(240px,1.2fr) repeat(3,minmax(0,1fr));gap:40px">
+    <div>
+      <img src="uploads/logo-fundo-escuro.png" alt="Promo Aspiradores" style="width:100%;max-width:230px;height:auto;display:block;margin-bottom:20px" />
+      <p style="margin:0 0 20px;font:400 14px/1.65 Inter;max-width:300px">Loja especializada em aspiradores de pó para casa e uso profissional. Curadoria de especialistas, preço competitivo e compra segura.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <sc-for list="{{ pagamentos }}" as="p" hint-placeholder-count="5">
+          <span style="padding:7px 11px;border:1px solid #1E3A4D;border-radius:4px;font:600 11px Inter;letter-spacing:.06em;color:#fff">{{ p }}</span>
+        </sc-for>
+      </div>
+    </div>
+    <sc-for list="{{ rodape }}" as="col" hint-placeholder-count="3">
+      <div>
+        <div style="font:700 13px Montserrat;letter-spacing:.1em;color:#fff;margin-bottom:16px">{{ col.t }}</div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <sc-for list="{{ col.links }}" as="l" hint-placeholder-count="5">
+            <a href="{{ l.href }}" style="font:400 14px Inter;color:#B8C5D0" style-hover="color:#F05A00">{{ l.t }}</a>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="border-top:1px solid #1E3A4D">
+    <div style="max-width:1280px;margin:0 auto;padding:20px 24px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font:400 12.5px Inter;color:#94A3B8">
+      <span>Promo Aspiradores — CNPJ 00.000.000/0001-00 • Preços e estoque sujeitos a alteração.</span>
+      <span>Esta página contém links de afiliados.</span>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  renderVals() {
+    const chip = (nome, ativo) => ({ nome, bg: ativo ? "#012746" : "#fff", cor: ativo ? "#fff" : "#012746", borda: ativo ? "#012746" : "#E2E8F0" });
+    const pg = (n, ativo) => ({ n, bg: ativo ? "#F05A00" : "#fff", cor: ativo ? "#fff" : "#475569", borda: ativo ? "#F05A00" : "#E2E8F0" });
+    return {
+      noSubmit: e => e.preventDefault(),
+      topicos: [chip("Todos", true), chip("Comparativos"), chip("Guias de compra"), chip("Aspirador robô"), chip("Pets em casa"), chip("Dicas de limpeza"), chip("Manutenção")],
+      posts: [
+        { categoria: "GUIAS DE COMPRA", titulo: "Aspirador robô vale a pena? O que ele resolve e o que ainda não", resumo: "Autonomia, mapeamento e limitação em tapete alto. Onde o robô substitui a limpeza manual e onde ele só ajuda a manter a casa em ordem entre as faxinas.", autor: "Marina Duarte", data: "28 de agosto de 2026", leitura: "9 min de leitura", imagem: "robô aspirador em sala com tapete" },
+        { categoria: "PETS EM CASA", titulo: "Como escolher aspirador para pelo de cachorro e gato", resumo: "A escova antiemaranhado é mais importante que a potência do motor. Explicamos por que e quais recursos realmente fazem diferença em casa com animais.", autor: "Rafael Nunes", data: "24 de agosto de 2026", leitura: "7 min de leitura", imagem: "escova com pelos de animal" },
+        { categoria: "COMPARATIVOS", titulo: "Aspirador com saco ou sem saco: qual custa menos no fim do ano", resumo: "Fizemos a conta do custo de manutenção em 12 meses considerando sacos, filtros e consumo de energia. A diferença surpreende em uso intenso.", autor: "Marina Duarte", data: "19 de agosto de 2026", leitura: "8 min de leitura", imagem: "reservatório ciclônico aberto" },
+        { categoria: "DICAS DE LIMPEZA", titulo: "A ordem certa de limpar a casa para gastar menos tempo", resumo: "Aspirar antes ou depois de passar pano? A sequência que os profissionais usam economiza cerca de 20 minutos em uma casa de dois quartos.", autor: "Camila Reis", data: "15 de agosto de 2026", leitura: "6 min de leitura", imagem: "pessoa aspirando sala" },
+        { categoria: "MANUTENÇÃO", titulo: "Como lavar o filtro HEPA sem perder a eficiência", resumo: "Água corrente fria, secagem completa e a frequência ideal de troca. Erros nessa etapa reduzem a sucção do aparelho em poucos meses.", autor: "Rafael Nunes", data: "11 de agosto de 2026", leitura: "5 min de leitura", imagem: "filtro HEPA sendo lavado" },
+        { categoria: "GUIAS DE COMPRA", titulo: "Aspirador de pó e água: quando o modelo profissional se paga", resumo: "Para obra, oficina e limpeza pós-reforma, o modelo de 20 litros resolve o que o vertical não alcança. Veja se o seu caso justifica o investimento.", autor: "Marina Duarte", data: "6 de agosto de 2026", leitura: "10 min de leitura", imagem: "aspirador industrial 20 litros" }
+      ],
+      paginas: [pg("1", true), pg("2"), pg("3"), pg("…"), pg("8")],
+      maisLidos: [
+        { n: "1", t: "Melhor aspirador vertical de 2026: 5 modelos testados" },
+        { n: "2", t: "Aspirador robô vale a pena? O que ele resolve" },
+        { n: "3", t: "Quantos watts de potência um aspirador precisa ter" },
+        { n: "4", t: "Como escolher aspirador para pelo de cachorro e gato" },
+        { n: "5", t: "Aspirador para apartamento pequeno: 6 modelos compactos" }
+      ],
+      tags: ["aspirador vertical", "aspirador robô", "sem fio", "para pets", "filtro HEPA", "pó e água", "até R$ 500", "apartamento"],
+      essenciais: [
+        { n: "01", t: "Como escolher um aspirador em 5 minutos", s: "O caminho mais curto entre o tipo de piso da sua casa e o modelo certo." },
+        { n: "02", t: "Potência, sucção e watts: o que olhar de verdade", s: "Por que watts no motor não é o mesmo que força de sucção no bico." },
+        { n: "03", t: "Quanto custa manter um aspirador por ano", s: "Filtros, sacos, baterias e energia. A conta completa antes de comprar." }
+      ],
+      pagamentos: ["PIX", "VISA", "MASTER", "ELO", "BOLETO"],
+      rodape: [
+        { t: "CATEGORIAS", links: [{ t: "Aspirador vertical", href: "Categoria.dc.html" }, { t: "Aspirador robô", href: "Categoria.dc.html" }, { t: "Aspirador portátil", href: "Categoria.dc.html" }, { t: "Extratoras", href: "Categoria.dc.html" }, { t: "Profissionais", href: "Categoria.dc.html" }] },
+        { t: "CONTEÚDO", links: [{ t: "Blog", href: "Blog.dc.html" }, { t: "Comparativos", href: "Blog.dc.html" }, { t: "Guias de compra", href: "Blog.dc.html" }, { t: "Dicas de limpeza", href: "Blog.dc.html" }, { t: "Fale com a gente", href: "Contato.dc.html" }] },
+        { t: "INSTITUCIONAL", links: [{ t: "Contato", href: "Contato.dc.html" }, { t: "Política de privacidade", href: "Politica-de-Privacidade.dc.html" }, { t: "Política de uso", href: "Politica-de-Uso.dc.html" }, { t: "Cookies e dados", href: "Politica-de-Cookies.dc.html" }, { t: "Home", href: "Home.dc.html" }] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

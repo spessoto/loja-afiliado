@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; font-family: Inter, system-ui, sans-serif; color: #1E293B; -webkit-font-smoothing: antialiased; }
+  a { color: #012746; text-decoration: none; }
+  a:hover { color: #F05A00; }
+  * { box-sizing: border-box; }
+  summary::-webkit-details-marker { display: none; }
+  summary { list-style: none; cursor: pointer; }
+</style>
+</helmet>
+
+<div style="background:linear-gradient(90deg,#F05A00,#FF7A00)">
+  <div style="max-width:1280px;margin:0 auto;padding:9px 24px;display:flex;flex-wrap:wrap;gap:8px 40px;justify-content:center;font:600 12.5px Inter;color:#fff;letter-spacing:.06em">
+    <span>FRETE GRÁTIS ACIMA DE R$ 299</span><span>ATÉ 10X SEM JUROS</span><span>COMPRA SEGURA E NOTA FISCAL</span>
+  </div>
+</div>
+
+<header style="background:#fff;border-bottom:1px solid #E2E8F0">
+  <div style="max-width:1280px;margin:0 auto;padding:16px 24px;display:grid;grid-template-columns:minmax(180px,232px) minmax(0,1fr) auto;align-items:center;gap:32px">
+    <a href="Home.dc.html" style="display:block"><img src="uploads/logo-principal.png" alt="Promo Aspiradores — qualidade para sua casa" style="width:100%;max-width:232px;height:auto;display:block" /></a>
+    <form onSubmit="{{ noSubmit }}" style="display:flex;align-items:center;background:#F1F5F9;border:1.5px solid #E2E8F0;border-radius:8px;height:50px;padding:0 4px 0 16px">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4.2-4.2"></path></svg>
+      <input placeholder="O que você está procurando?" style="flex:1;min-width:0;border:0;background:transparent;outline:none;font:400 15px Inter;color:#1E293B;padding:0 12px" />
+      <button style="height:42px;padding:0 22px;border:0;border-radius:6px;background:#012746;color:#fff;font:700 13px Montserrat;letter-spacing:.06em;cursor:pointer" style-hover="background:#F05A00">BUSCAR</button>
+    </form>
+    <div style="display:flex;align-items:center;gap:24px">
+      <a href="#conta" style="display:flex;align-items:center;gap:9px">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#012746" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.8 20c.6-3.6 3.6-5.6 7.2-5.6s6.6 2 7.2 5.6"></path></svg>
+        <span style="font:500 12.5px Inter;line-height:1.25;color:#475569">Entrar<br /><strong style="font:700 13px Montserrat;color:#012746">Minha conta</strong></span>
+      </a>
+      <a href="#favoritos" style="display:flex;align-items:center;gap:9px">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#012746" stroke-width="2" stroke-linecap="round"><path d="M12 20s-7.2-4.4-7.2-9.2A4 4 0 0112 8.8 4 4 0 0119.2 10.8C19.2 15.6 12 20 12 20z"></path></svg>
+        <span style="font:500 12.5px Inter;line-height:1.25;color:#475569">Lista de<br /><strong style="font:700 13px Montserrat;color:#012746">Favoritos</strong></span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<div style="border-bottom:1px solid #F1F5F9;background:#F8FAFC">
+  <div style="max-width:1280px;margin:0 auto;padding:11px 24px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font:400 13px Inter;color:#475569">
+    <a href="Home.dc.html">Home</a><span style="color:#94A3B8">/</span>
+    <a href="Produto.dc.html">Aspiradores</a><span style="color:#94A3B8">/</span>
+    <a href="Produto.dc.html">Vertical sem fio</a><span style="color:#94A3B8">/</span>
+    <span style="color:#012746;font-weight:500">Vertax V12 Ciclônico 450W</span>
+  </div>
+</div>
+
+<main style="max-width:1280px;margin:0 auto;padding:32px 24px 0">
+  <div style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);gap:48px;align-items:start">
+
+    <div style="display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ galeria }}" as="g" hint-placeholder-count="5">
+          <button onClick="{{ g.pick }}" style="border:1.5px solid {{ g.borda }};border-radius:8px;background:repeating-linear-gradient(135deg,#F8FAFC 0 7px,#F1F5F9 7px 14px);aspect-ratio:1/1;padding:6px;cursor:pointer;font:400 8.5px ui-monospace,monospace;color:#94A3B8;line-height:1.3;text-align:center">{{ g.label }}</button>
+        </sc-for>
+      </div>
+      <div>
+        <div style="position:relative;border:1px solid #E2E8F0;border-radius:16px;overflow:hidden;background:#fff">
+          <span style="position:absolute;top:16px;left:16px;z-index:2;background:#F05A00;color:#fff;font:800 14px Montserrat;padding:7px 12px;border-radius:4px">-32%</span>
+          <span style="position:absolute;top:16px;right:16px;z-index:2;background:#012746;color:#fff;font:700 10.5px Montserrat;letter-spacing:.08em;padding:6px 10px;border-radius:4px">MAIS VENDIDO</span>
+          <div style="aspect-ratio:1/1;background:repeating-linear-gradient(135deg,#F8FAFC 0 10px,#F1F5F9 10px 20px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:32px">
+            <span style="font:500 12px ui-monospace,monospace;letter-spacing:.1em;color:#94A3B8">FOTO DO PRODUTO</span>
+            <span style="font:400 12px ui-monospace,monospace;color:#94A3B8;max-width:260px;line-height:1.6">{{ fotoAtual }}</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
+          <sc-for list="{{ tags }}" as="t" hint-placeholder-count="4">
+            <span style="display:flex;align-items:center;gap:7px;padding:8px 13px;border:1px solid #E2E8F0;border-radius:24px;background:#F8FAFC;font:500 12.5px Inter;color:#012746">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F05A00" stroke-width="2.6" stroke-linecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
+              {{ t }}
+            </span>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font:600 11.5px Inter;letter-spacing:.14em;color:#94A3B8;margin-bottom:8px">VERTAX</div>
+      <h1 style="margin:0 0 14px;font:800 34px/1.18 Montserrat;color:#012746;letter-spacing:-.01em;text-wrap:balance">Aspirador Vertical Sem Fio Vertax V12 Ciclônico 450W</h1>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:24px">
+        <span style="font:600 15px Inter;color:#F05A00;letter-spacing:.1em">★★★★★</span>
+        <a href="#avaliacoes" style="font:500 13.5px Inter;color:#475569;text-decoration:underline">4,8 · 1.284 avaliações</a>
+        <span style="width:1px;height:16px;background:#E2E8F0"></span>
+        <span style="font:400 13.5px Inter;color:#475569">Cód. 8412-V12</span>
+      </div>
+
+      <div style="border:1px solid #E2E8F0;border-radius:16px;padding:24px;box-shadow:0 4px 20px rgba(1,39,70,.08)">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+          <span style="font:400 15px Inter;color:#64748B;text-decoration:line-through">R$ 1.029,90</span>
+          <span style="background:#FFF1E8;color:#F05A00;font:700 12px Montserrat;padding:3px 8px;border-radius:4px">ECONOMIZE R$ 330</span>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap">
+          <span style="font:800 46px Montserrat;color:#F05A00;line-height:1">R$ 699<span style="font-size:26px">,90</span></span>
+          <span style="font:500 14px Inter;color:#475569;padding-bottom:6px">no Pix</span>
+        </div>
+        <div style="font:500 15px Inter;color:#1E293B;margin:8px 0 20px">ou <strong style="font:700 15px Montserrat;color:#012746">10x de R$ 69,99</strong> sem juros no cartão</div>
+
+        <a href="#afiliado" style="display:flex;align-items:center;justify-content:center;gap:12px;height:56px;border-radius:8px;background:#F05A00;color:#fff;font:700 17px Montserrat;letter-spacing:.04em;box-shadow:0 8px 24px rgba(240,90,0,.3)" style-hover="background:#FF6A00;color:#fff">
+          COMPRAR AGORA
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
+        </a>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin:12px 0 18px;font:400 12.5px Inter;color:#475569;text-align:center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#012746" stroke-width="2" stroke-linecap="round"><path d="M12 3.5l7 2.6v5.4c0 4.3-2.9 7.3-7 9-4.1-1.7-7-4.7-7-9V6.1l7-2.6z"></path></svg>
+          Você finaliza a compra no site oficial da loja parceira
+        </div>
+        <a href="#comparar" style="display:flex;align-items:center;justify-content:center;height:48px;border-radius:8px;border:1.5px solid #012746;color:#012746;font:600 14.5px Montserrat" style-hover="background:#012746;color:#fff">COMPARAR COM OUTROS MODELOS</a>
+
+        <div style="height:1px;background:#E2E8F0;margin:22px 0"></div>
+        <div style="display:grid;gap:14px">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#012746" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px"><path d="M3 7.5h11v9H3zM14 10.5h4l3 3v3h-7z"></path><circle cx="7" cy="17.4" r="1.6"></circle><circle cx="17.5" cy="17.4" r="1.6"></circle></svg>
+            <span style="font:400 13.5px/1.5 Inter;color:#475569"><strong style="font:600 13.5px Inter;color:#012746">Frete grátis</strong> para todo o Brasil. Receba entre <strong>8 e 10 de setembro</strong>.</span>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#012746" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px"><path d="M12 3.5l2.6 1.9 3.2-.2.9 3.1 2.3 2.2-1.6 2.8.4 3.2-3.1 1-2 2.5-3-1.2-3 1.2-2-2.5-3.1-1 .4-3.2L2 10.5l2.3-2.2.9-3.1 3.2.2z"></path></svg>
+            <span style="font:400 13.5px/1.5 Inter;color:#475569"><strong style="font:600 13.5px Inter;color:#012746">12 meses de garantia</strong> do fabricante, com nota fiscal.</span>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#012746" stroke-width="2" stroke-linecap="round" style="flex:none;margin-top:1px"><path d="M12 4v8l5 3"></path><circle cx="12" cy="12" r="8.5"></circle></svg>
+            <span style="font:400 13.5px/1.5 Inter;color:#475569"><strong style="font:600 13.5px Inter;color:#012746">30 dias</strong> para trocar ou devolver sem custo.</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;border:1px solid #FFD9C2;background:#FFF7F2;border-radius:12px;padding:16px 18px">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px">
+          <span style="font:700 13.5px Montserrat;color:#012746">Últimas unidades neste preço</span>
+          <span style="font:600 13px Inter;color:#F05A00">{{ restante }} de 40</span>
+        </div>
+        <div style="height:8px;border-radius:4px;background:#FFE2D0;overflow:hidden">
+          <div style="height:100%;width:{{ barra }};background:linear-gradient(90deg,#F05A00,#FF7A00);border-radius:4px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section style="margin-top:72px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:48px;align-items:start">
+    <div>
+      <h2 style="margin:0 0 16px;font:700 28px Montserrat;color:#012746">Mais potência, menos trabalho</h2>
+      <p style="margin:0 0 14px;font:400 16px/1.65 Inter;color:#475569">O Vertax V12 foi feito para a limpeza do dia a dia em casas e apartamentos brasileiros. O motor de 450W com tecnologia ciclônica mantém a sucção constante mesmo com o reservatório cheio, e a escova antiemaranhado dá conta de pelos de animais em tapetes e sofás.</p>
+      <p style="margin:0 0 24px;font:400 16px/1.65 Inter;color:#475569">A bateria de 2.500 mAh entrega até 45 minutos no modo padrão, o suficiente para limpar dois quartos e uma sala sem recarregar. Sem fio, sem saco e com filtro HEPA lavável, ele reduz a poeira que volta para o ar.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px">
+        <sc-for list="{{ destaques }}" as="d" hint-placeholder-count="4">
+          <div style="padding:18px;border:1px solid #E2E8F0;border-radius:12px;background:#F8FAFC">
+            <div style="font:800 26px Montserrat;color:#012746;line-height:1;margin-bottom:6px">{{ d.v }}</div>
+            <div style="font:400 13px/1.45 Inter;color:#475569">{{ d.l }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <h3 style="margin:40px 0 16px;font:700 24px Montserrat;color:#012746">Especificações técnicas</h3>
+      <div style="border:1px solid #E2E8F0;border-radius:12px;overflow:hidden">
+        <sc-for list="{{ specs }}" as="s" hint-placeholder-count="8">
+          <div style="display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:16px;padding:13px 18px;border-bottom:1px solid #F1F5F9">
+            <span style="font:500 13.5px Inter;color:#475569">{{ s.k }}</span>
+            <span style="font:600 13.5px Inter;color:#1E293B">{{ s.v }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <h3 style="margin:40px 0 16px;font:700 24px Montserrat;color:#012746">Este modelo é para você?</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+        <div style="padding:20px;border:1px solid #E2E8F0;border-radius:12px">
+          <div style="font:700 14px Montserrat;color:#012746;letter-spacing:.04em;margin-bottom:12px">INDICADO PARA</div>
+          <div style="display:grid;gap:10px">
+            <sc-for list="{{ indicado }}" as="i" hint-placeholder-count="4">
+              <span style="display:flex;gap:9px;align-items:flex-start;font:400 14px/1.5 Inter;color:#475569">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F05A00" stroke-width="2.6" stroke-linecap="round" style="flex:none;margin-top:3px"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
+                {{ i }}
+              </span>
+            </sc-for>
+          </div>
+        </div>
+        <div style="padding:20px;border:1px solid #E2E8F0;border-radius:12px;background:#F8FAFC">
+          <div style="font:700 14px Montserrat;color:#012746;letter-spacing:.04em;margin-bottom:12px">TALVEZ NÃO SEJA</div>
+          <div style="display:grid;gap:10px">
+            <sc-for list="{{ naoIndicado }}" as="i" hint-placeholder-count="3">
+              <span style="display:flex;gap:9px;align-items:flex-start;font:400 14px/1.5 Inter;color:#475569">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.6" stroke-linecap="round" style="flex:none;margin-top:3px"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"></path></svg>
+                {{ i }}
+              </span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside style="position:sticky;top:24px;display:grid;gap:16px">
+      <div style="background:linear-gradient(160deg,#012746,#001B31);border-radius:16px;padding:24px;color:#fff">
+        <div style="font:700 11px Montserrat;letter-spacing:.12em;color:#F05A00;margin-bottom:10px">RESUMO DA OFERTA</div>
+        <div style="font:800 24px/1.25 Montserrat;margin-bottom:16px">R$ 699,90 <span style="font:400 14px Inter;color:#B8C5D0">no Pix</span></div>
+        <div style="display:grid;gap:9px;margin-bottom:20px">
+          <sc-for list="{{ resumo }}" as="r" hint-placeholder-count="4">
+            <span style="display:flex;justify-content:space-between;gap:12px;font:400 13.5px Inter;color:#B8C5D0">
+              <span>{{ r.k }}</span><strong style="font:600 13.5px Inter;color:#fff">{{ r.v }}</strong>
+            </span>
+          </sc-for>
+        </div>
+        <a href="#afiliado" style="display:flex;align-items:center;justify-content:center;height:50px;border-radius:8px;background:#F05A00;color:#fff;font:700 15px Montserrat;letter-spacing:.04em" style-hover="background:#FF6A00;color:#fff">IR PARA A OFERTA</a>
+      </div>
+      <div style="border:1px solid #E2E8F0;border-radius:12px;padding:20px">
+        <div style="font:700 14px Montserrat;color:#012746;margin-bottom:12px">Dúvida na escolha?</div>
+        <p style="margin:0 0 14px;font:400 13.5px/1.6 Inter;color:#475569">Nosso time é especialista em aspiradores e responde em minutos, de segunda a sábado.</p>
+        <a href="#whatsapp" style="display:flex;align-items:center;justify-content:center;height:46px;border-radius:8px;border:1.5px solid #012746;color:#012746;font:600 14px Montserrat" style-hover="background:#012746;color:#fff">FALAR COM ESPECIALISTA</a>
+      </div>
+    </aside>
+  </section>
+
+  <section id="avaliacoes" style="margin-top:72px">
+    <h2 style="margin:0 0 24px;font:700 28px Montserrat;color:#012746">Avaliações de quem comprou</h2>
+    <div style="display:grid;grid-template-columns:minmax(260px,.55fr) minmax(0,1.45fr);gap:40px;align-items:start">
+      <div style="border:1px solid #E2E8F0;border-radius:12px;padding:24px;background:#F8FAFC">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+          <span style="font:800 48px Montserrat;color:#012746;line-height:1">4,8</span>
+          <span>
+            <span style="display:block;font:600 15px Inter;color:#F05A00;letter-spacing:.1em">★★★★★</span>
+            <span style="display:block;font:400 13px Inter;color:#475569;margin-top:4px">1.284 avaliações</span>
+          </span>
+        </div>
+        <div style="display:grid;gap:9px">
+          <sc-for list="{{ distribuicao }}" as="d" hint-placeholder-count="5">
+            <span style="display:flex;align-items:center;gap:10px">
+              <span style="font:500 12.5px Inter;color:#475569;width:26px">{{ d.n }}★</span>
+              <span style="flex:1;height:7px;border-radius:4px;background:#E2E8F0;overflow:hidden"><span style="display:block;height:100%;width:{{ d.w }};background:#F05A00;border-radius:4px"></span></span>
+              <span style="font:400 12px Inter;color:#94A3B8;width:34px;text-align:right">{{ d.p }}</span>
+            </span>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:grid;gap:16px">
+        <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="3">
+          <div style="border:1px solid #E2E8F0;border-radius:12px;padding:20px">
+            <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px">
+              <span style="font:700 14.5px Montserrat;color:#012746">{{ r.nome }}</span>
+              <span style="font:600 13px Inter;color:#F05A00;letter-spacing:.08em">{{ r.estrelas }}</span>
+            </div>
+            <p style="margin:0 0 10px;font:400 14.5px/1.65 Inter;color:#475569">{{ r.texto }}</p>
+            <span style="display:inline-flex;align-items:center;gap:7px;font:500 12px Inter;color:#94A3B8">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.6" stroke-linecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
+              {{ r.meta }}
+            </span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="margin-top:72px;padding-bottom:80px">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:28px">
+      <div>
+        <h2 style="margin:0 0 6px;font:700 28px Montserrat;color:#012746">Quem viu este, também comprou</h2>
+        <p style="margin:0;font:400 15.5px Inter;color:#475569">Modelos da mesma faixa de preço com boa avaliação.</p>
+      </div>
+      <a href="Home.dc.html" style="display:inline-flex;align-items:center;height:46px;padding:0 22px;border-radius:8px;border:1.5px solid #012746;color:#012746;font:600 14px Montserrat" style-hover="background:#012746;color:#fff">VER TODAS AS OFERTAS</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:24px">
+      <sc-for list="{{ relacionados }}" as="p" hint-placeholder-count="4">
+        <a href="Produto.dc.html" style="display:flex;flex-direction:column;background:#fff;border:1px solid #E2E8F0;border-radius:12px;overflow:hidden;transition:all .18s" style-hover="border-color:#CBD5E1;box-shadow:0 8px 24px rgba(1,39,70,.1);transform:translateY(-3px)">
+          <div style="position:relative;padding:16px 16px 0">
+            <sc-if value="{{ p.desconto }}" hint-placeholder-val="{{ true }}">
+              <span style="position:absolute;top:16px;left:16px;z-index:2;background:#F05A00;color:#fff;font:800 12px Montserrat;padding:5px 9px;border-radius:4px">{{ p.desconto }}</span>
+            </sc-if>
+            <div style="aspect-ratio:1/1;border-radius:8px;background:repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px);display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font:400 10.5px ui-monospace,monospace;letter-spacing:.06em;color:#94A3B8">FOTO DO PRODUTO<br />fundo branco</div>
+          </div>
+          <div style="padding:14px 16px 18px;display:flex;flex-direction:column;flex:1">
+            <div style="font:600 11px Inter;letter-spacing:.1em;color:#94A3B8;margin-bottom:5px">{{ p.marca }}</div>
+            <div style="font:600 14.5px/1.45 Inter;color:#1E293B;margin-bottom:10px;min-height:42px">{{ p.nome }}</div>
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:12px">
+              <span style="font:600 12px Inter;color:#F05A00;letter-spacing:.08em">{{ p.estrelas }}</span>
+              <span style="font:400 12px Inter;color:#94A3B8">{{ p.avaliacoes }}</span>
+            </div>
+            <div style="margin-top:auto">
+              <div style="font:800 25px Montserrat;color:#F05A00;line-height:1.15">{{ p.por }}</div>
+              <div style="font:400 12.5px Inter;color:#475569;margin-bottom:14px">{{ p.parcela }}</div>
+              <span style="display:flex;align-items:center;justify-content:center;height:44px;border-radius:8px;background:#F05A00;color:#fff;font:700 13.5px Montserrat;letter-spacing:.06em">COMPRAR</span>
+            </div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+</main>
+
+<div style="position:sticky;bottom:0;z-index:40;background:#fff;border-top:1px solid #E2E8F0;box-shadow:0 -6px 24px rgba(1,39,70,.1)">
+  <div style="max-width:1280px;margin:0 auto;padding:12px 24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px">
+    <div style="display:flex;align-items:center;gap:14px;min-width:0">
+      <div style="flex:none;width:52px;height:52px;border-radius:8px;border:1px solid #E2E8F0;background:repeating-linear-gradient(135deg,#F8FAFC 0 7px,#F1F5F9 7px 14px)"></div>
+      <div style="min-width:0">
+        <div style="font:600 13.5px Inter;color:#1E293B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px">Aspirador Vertical Sem Fio Vertax V12 Ciclônico 450W</div>
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <span style="font:800 20px Montserrat;color:#F05A00">R$ 699,90</span>
+          <span style="font:400 12.5px Inter;color:#475569">10x de R$ 69,99</span>
+        </div>
+      </div>
+    </div>
+    <a href="#afiliado" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;height:50px;padding:0 34px;border-radius:8px;background:#F05A00;color:#fff;font:700 15px Montserrat;letter-spacing:.04em" style-hover="background:#FF6A00;color:#fff">COMPRAR AGORA
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
+    </a>
+  </div>
+</div>
+
+<footer style="background:linear-gradient(180deg,#012746,#001B31);color:#B8C5D0">
+  <div style="max-width:1280px;margin:0 auto;padding:48px 24px;display:grid;grid-template-columns:minmax(240px,1fr) auto;gap:32px;align-items:center">
+    <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <img src="uploads/logo-fundo-escuro.png" alt="Promo Aspiradores" style="width:210px;height:auto;display:block" />
+      <p style="margin:0;font:400 13.5px/1.6 Inter;max-width:320px">Especialista em aspiradores. Expert em boas compras. Esta página contém links de afiliados.</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <sc-for list="{{ pagamentos }}" as="p" hint-placeholder-count="5">
+        <span style="padding:7px 11px;border:1px solid #1E3A4D;border-radius:4px;font:600 11px Inter;letter-spacing:.06em;color:#fff">{{ p }}</span>
+      </sc-for>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { foto: 0 };
+  renderVals() {
+    const fotos = [
+      "produto inteiro, 3/4, fundo branco",
+      "detalhe da escova antiemaranhado",
+      "reservatório ciclônico aberto",
+      "em uso na sala, sobre tapete",
+      "acessórios inclusos lado a lado"
+    ];
+    const labels = ["produto 3/4", "escova", "reservatório", "em uso", "acessórios"];
+    const restante = 12;
+    return {
+      noSubmit: e => e.preventDefault(),
+      fotoAtual: fotos[this.state.foto],
+      restante: restante,
+      barra: Math.round((restante / 40) * 100) + "%",
+      galeria: labels.map((label, i) => ({
+        label,
+        borda: this.state.foto === i ? "#F05A00" : "#E2E8F0",
+        pick: () => this.setState({ foto: i })
+      })),
+      tags: ["Indicado para pets", "Sem saco", "Filtro HEPA lavável", "45 min de bateria"],
+      destaques: [
+        { v: "450W", l: "Potência de sucção ciclônica" },
+        { v: "45 min", l: "Autonomia no modo padrão" },
+        { v: "1,8 kg", l: "Peso, sobe escada tranquilo" },
+        { v: "72 dB", l: "Ruído, aprovado em apartamento" }
+      ],
+      specs: [
+        { k: "Tipo", v: "Vertical sem fio 2 em 1" },
+        { k: "Potência", v: "450W (motor digital)" },
+        { k: "Tecnologia", v: "Ciclônica multiestágio" },
+        { k: "Bateria", v: "Lítio 2.500 mAh removível" },
+        { k: "Tempo de recarga", v: "4 horas" },
+        { k: "Capacidade do reservatório", v: "0,8 L" },
+        { k: "Filtragem", v: "HEPA lavável, retém 99,9% das partículas" },
+        { k: "Acessórios inclusos", v: "Escova para tapete, bico de canto, escova para estofados, base de parede" },
+        { k: "Voltagem", v: "Bivolt automático" },
+        { k: "Garantia", v: "12 meses do fabricante" }
+      ].map((s, i) => ({ ...s, bg: i % 2 ? "#F8FAFC" : "#FFFFFF" })),
+      indicado: [
+        "Casas e apartamentos de até 100 m²",
+        "Quem tem cachorro ou gato em casa",
+        "Limpeza rápida do dia a dia, sem fio",
+        "Tapetes, sofás, cortinas e carro"
+      ],
+      naoIndicado: [
+        "Limpeza de líquidos ou obra (use pó e água)",
+        "Áreas acima de 150 m² em uma única carga",
+        "Uso profissional contínuo"
+      ],
+      resumo: [
+        { k: "Preço no Pix", v: "R$ 699,90" },
+        { k: "Parcelado", v: "10x R$ 69,99" },
+        { k: "Frete", v: "Grátis" },
+        { k: "Garantia", v: "12 meses" }
+      ],
+      distribuicao: [
+        { n: 5, w: "82%", p: "82%" },
+        { n: 4, w: "12%", p: "12%" },
+        { n: 3, w: "4%", p: "4%" },
+        { n: 2, w: "1%", p: "1%" },
+        { n: 1, w: "1%", p: "1%" }
+      ],
+      reviews: [
+        { nome: "Camila R. — Belo Horizonte, MG", estrelas: "★★★★★", texto: "Tenho dois gatos e o pelo era um problema no sofá. Esse resolveu. Leve, fácil de esvaziar e a bateria dá conta do apartamento todo de uma vez.", meta: "Compra verificada • há 2 semanas" },
+        { nome: "Rodrigo M. — Curitiba, PR", estrelas: "★★★★★", texto: "Custo-benefício muito bom. Comparei com dois modelos mais caros e a sucção é praticamente a mesma. Chegou antes do prazo.", meta: "Compra verificada • há 1 mês" },
+        { nome: "Fernanda L. — Recife, PE", estrelas: "★★★★☆", texto: "Ótimo para o dia a dia. Só senti falta de uma bateria extra, porque em dia de limpeza pesada acaba antes de eu terminar.", meta: "Compra verificada • há 1 mês" }
+      ],
+      relacionados: [
+        { marca: "VERTAX", nome: "Aspirador Vertical Vertax V8 Sem Fio 2 Velocidades", desconto: "-18%", estrelas: "★★★★★", avaliacoes: "(3.402)", por: "R$ 549,90", parcela: "ou 10x de R$ 54,99 sem juros" },
+        { marca: "NORDIKA", nome: "Robô Aspirador Nordika R4 com Estação de Recarga", desconto: "", estrelas: "★★★★★", avaliacoes: "(1.988)", por: "R$ 1.249,00", parcela: "ou 10x de R$ 124,90 sem juros" },
+        { marca: "DOMUS", nome: "Aspirador Portátil Domus Mini 3 em 1 para Carro", desconto: "-40%", estrelas: "★★★★☆", avaliacoes: "(2.110)", por: "R$ 289,90", parcela: "ou 10x de R$ 28,99 sem juros" },
+        { marca: "LARIS", nome: "Extratora Laris Sofá & Estofados 1.400W 2L", desconto: "-15%", estrelas: "★★★★☆", avaliacoes: "(741)", por: "R$ 799,00", parcela: "ou 10x de R$ 79,90 sem juros" }
+      ],
+      pagamentos: ["PIX", "VISA", "MASTER", "ELO", "BOLETO"]
+    };
+  }
+}
+</script>
+</body>
+</html>

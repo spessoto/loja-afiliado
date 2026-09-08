@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFFFF; font-family: Inter, system-ui, sans-serif; color: #1E293B; -webkit-font-smoothing: antialiased; }
+  a { color: #012746; text-decoration: none; }
+  a:hover { color: #F05A00; }
+  * { box-sizing: border-box; }
+  summary::-webkit-details-marker { display: none; }
+  summary { list-style: none; cursor: pointer; }
+</style>
+</helmet>
+
+<div style="background:linear-gradient(90deg,#F05A00,#FF7A00)">
+  <div style="max-width:1280px;margin:0 auto;padding:9px 24px;display:flex;flex-wrap:wrap;gap:8px 40px;justify-content:center;font:600 12.5px Inter;color:#fff;letter-spacing:.06em">
+    <span>FRETE GRÁTIS ACIMA DE R$ 299</span><span>ATÉ 10X SEM JUROS</span><span>COMPRA SEGURA E NOTA FISCAL</span>
+  </div>
+</div>
+
+<header style="position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid #E2E8F0;box-shadow:0 4px 20px rgba(1,39,70,.06)">
+  <div style="max-width:1280px;margin:0 auto;padding:16px 24px;display:grid;grid-template-columns:minmax(180px,232px) minmax(0,1fr) auto;align-items:center;gap:32px">
+    <a href="Home.dc.html" style="display:block"><img src="uploads/logo-principal.png" alt="Promo Aspiradores — qualidade para sua casa" style="width:100%;max-width:232px;height:auto;display:block" /></a>
+    <form onSubmit="{{ noSubmit }}" style="display:flex;align-items:center;background:#F1F5F9;border:1.5px solid #E2E8F0;border-radius:8px;height:50px;padding:0 4px 0 16px">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4.2-4.2"></path></svg>
+      <input placeholder="O que você está procurando?" style="flex:1;min-width:0;border:0;background:transparent;outline:none;font:400 15px Inter;color:#1E293B;padding:0 12px" />
+      <button style="height:42px;padding:0 22px;border:0;border-radius:6px;background:#012746;color:#fff;font:700 13px Montserrat;letter-spacing:.06em;cursor:pointer" style-hover="background:#F05A00">BUSCAR</button>
+    </form>
+    <div style="display:flex;align-items:center;gap:24px">
+      <a href="#conta" style="display:flex;align-items:center;gap:9px">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#012746" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.8 20c.6-3.6 3.6-5.6 7.2-5.6s6.6 2 7.2 5.6"></path></svg>
+        <span style="font:500 12.5px Inter;line-height:1.25;color:#475569">Entrar<br /><strong style="font:700 13px Montserrat;color:#012746">Minha conta</strong></span>
+      </a>
+      <a href="#favoritos" style="display:flex;align-items:center;gap:9px">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#012746" stroke-width="2" stroke-linecap="round"><path d="M12 20s-7.2-4.4-7.2-9.2A4 4 0 0112 8.8 4 4 0 0119.2 10.8C19.2 15.6 12 20 12 20z"></path></svg>
+        <span style="font:500 12.5px Inter;line-height:1.25;color:#475569">Lista de<br /><strong style="font:700 13px Montserrat;color:#012746">Favoritos</strong></span>
+      </a>
+    </div>
+  </div>
+  <nav style="border-top:1px solid #F1F5F9">
+    <div style="max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:28px;overflow-x:auto">
+      <sc-for list="{{ menu }}" as="item" hint-placeholder-count="7">
+        <a href="Categoria.dc.html" style="padding:13px 0;font:500 14px Inter;color:#475569;white-space:nowrap" style-hover="color:#F05A00">{{ item }}</a>
+      </sc-for>
+      <a href="Categoria.dc.html" style="margin-left:auto;padding:13px 0;font:800 13px Montserrat;letter-spacing:.05em;color:#F05A00;white-space:nowrap">OFERTAS DA SEMANA</a>
+    </div>
+  </nav>
+</header>
+
+<div style="border-bottom:1px solid #F1F5F9;background:#F8FAFC">
+  <div style="max-width:1280px;margin:0 auto;padding:11px 24px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font:400 13px Inter;color:#475569">
+    <a href="Home.dc.html">Home</a><span style="color:#94A3B8">/</span>
+    <a href="Categoria.dc.html">Aspiradores</a><span style="color:#94A3B8">/</span>
+    <span style="color:#012746;font-weight:500">Vertical sem fio</span>
+  </div>
+</div>
+
+<section style="background:#F8FAFC;border-bottom:1px solid #E2E8F0">
+  <div style="max-width:1280px;margin:0 auto;padding:36px 24px 32px">
+    <h1 style="margin:0 0 12px;font:800 40px/1.1 Montserrat;color:#012746;letter-spacing:-.02em">Aspiradores verticais sem fio</h1>
+    <p style="margin:0 0 24px;max-width:680px;font:400 16px/1.65 Inter;color:#475569">Leves, práticos e sem cabo para atrapalhar. São a melhor escolha para a limpeza rápida do dia a dia em casas e apartamentos, principalmente para quem tem pets. <strong style="font-weight:600;color:#012746">128 modelos</strong> disponíveis.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <sc-for list="{{ subcategorias }}" as="s" hint-placeholder-count="6">
+        <a href="Categoria.dc.html" style="display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:24px;border:1.5px solid #E2E8F0;background:#fff;font:500 13.5px Inter;color:#012746;white-space:nowrap" style-hover="border-color:#F05A00;color:#F05A00">{{ s }}</a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<main style="max-width:1280px;margin:0 auto;padding:32px 24px 0;display:grid;grid-template-columns:minmax(240px,268px) minmax(0,1fr);gap:40px;align-items:start">
+
+  <aside style="display:grid;gap:12px">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <span style="font:700 16px Montserrat;color:#012746">Filtrar</span>
+      <button onClick="{{ limpar }}" style="border:0;background:transparent;font:500 13px Inter;color:#F05A00;cursor:pointer;text-decoration:underline;padding:0">Limpar filtros</button>
+    </div>
+
+    <sc-if value="{{ temFiltro }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-wrap:wrap;gap:8px;padding-bottom:4px">
+        <sc-for list="{{ ativos }}" as="a" hint-placeholder-count="2">
+          <button onClick="{{ a.remove }}" style="display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border:1px solid #FFD9C2;border-radius:20px;background:#FFF7F2;font:500 12.5px Inter;color:#012746;cursor:pointer">
+            {{ a.label }}
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#F05A00" stroke-width="3" stroke-linecap="round"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"></path></svg>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-for list="{{ grupos }}" as="g" hint-placeholder-count="4">
+      <details open="{{ true }}" style="border:1px solid #E2E8F0;border-radius:12px;padding:16px 18px">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:12px;font:700 14px Montserrat;color:#012746;letter-spacing:.03em">
+          {{ g.titulo }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.4" stroke-linecap="round" style="flex:none"><path d="M6 10l6 5.5L18 10"></path></svg>
+        </summary>
+        <div style="display:grid;gap:11px;margin-top:14px">
+          <sc-for list="{{ g.opcoes }}" as="o" hint-placeholder-count="4">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font:400 13.5px Inter;color:#475569">
+              <input type="checkbox" checked="{{ o.on }}" onChange="{{ o.toggle }}" style="width:17px;height:17px;accent-color:#F05A00;cursor:pointer;flex:none" />
+              <span style="flex:1">{{ o.label }}</span>
+              <span style="font:400 12px Inter;color:#94A3B8">{{ o.qtd }}</span>
+            </label>
+          </sc-for>
+        </div>
+      </details>
+    </sc-for>
+
+    <div style="border:1px solid #E2E8F0;border-radius:12px;padding:16px 18px">
+      <div style="font:700 14px Montserrat;color:#012746;letter-spacing:.03em;margin-bottom:14px">FAIXA DE PREÇO</div>
+      <input type="range" min="200" max="3000" step="50" value="{{ preco }}" onChange="{{ setPreco }}" style="width:100%;accent-color:#F05A00;cursor:pointer" />
+      <div style="display:flex;justify-content:space-between;margin-top:10px;font:500 13px Inter;color:#475569">
+        <span>R$ 200</span>
+        <strong style="font:700 13.5px Montserrat;color:#F05A00">até {{ precoLabel }}</strong>
+      </div>
+    </div>
+
+    <div style="border:1px solid #E2E8F0;border-radius:12px;padding:20px;background:#F8FAFC">
+      <div style="font:700 15px Montserrat;color:#012746;margin-bottom:8px">Não sabe qual escolher?</div>
+      <p style="margin:0 0 14px;font:400 13.5px/1.6 Inter;color:#475569">Responda três perguntas e a gente indica o modelo certo para a sua casa.</p>
+      <a href="Contato.dc.html" style="display:flex;align-items:center;justify-content:center;height:44px;border-radius:8px;background:#012746;color:#fff;font:700 13.5px Montserrat;letter-spacing:.04em" style-hover="background:#F05A00;color:#fff">FALAR COM ESPECIALISTA</a>
+    </div>
+  </aside>
+
+  <div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-bottom:20px;border-bottom:1px solid #E2E8F0">
+      <span style="font:400 14px Inter;color:#475569"><strong style="font:600 14px Inter;color:#012746">{{ total }} produtos</strong> encontrados</span>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font:500 13.5px Inter;color:#475569">Ordenar por</span>
+        <select value="{{ ordem }}" onChange="{{ setOrdem }}" style="height:44px;padding:0 14px;border:1.5px solid #E2E8F0;border-radius:8px;background:#fff;font:500 13.5px Inter;color:#012746;cursor:pointer;outline:none">
+          <option>Mais relevantes</option>
+          <option>Menor preço</option>
+          <option>Maior preço</option>
+          <option>Mais vendidos</option>
+          <option>Melhor avaliados</option>
+          <option>Maior desconto</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:24px;padding:24px 0 0">
+      <sc-for list="{{ produtos }}" as="p" hint-placeholder-count="9">
+        <a href="Produto.dc.html" style="display:flex;flex-direction:column;background:#fff;border:1px solid #E2E8F0;border-radius:12px;overflow:hidden;transition:all .18s" style-hover="border-color:#CBD5E1;box-shadow:0 8px 24px rgba(1,39,70,.1);transform:translateY(-3px)">
+          <div style="position:relative;padding:16px 16px 0">
+            <div style="position:absolute;top:16px;left:16px;z-index:2;display:flex;flex-direction:column;gap:6px;align-items:flex-start">
+              <sc-if value="{{ p.desconto }}" hint-placeholder-val="{{ true }}">
+                <span style="background:#F05A00;color:#fff;font:800 12px Montserrat;padding:5px 9px;border-radius:4px">{{ p.desconto }}</span>
+              </sc-if>
+              <sc-if value="{{ p.selo }}" hint-placeholder-val="{{ true }}">
+                <span style="background:#012746;color:#fff;font:700 10px Montserrat;letter-spacing:.08em;padding:4px 8px;border-radius:4px">{{ p.selo }}</span>
+              </sc-if>
+            </div>
+            <div style="aspect-ratio:1/1;border-radius:8px;background:repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px);display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font:400 10.5px ui-monospace,monospace;letter-spacing:.06em;color:#94A3B8">FOTO DO PRODUTO<br />fundo branco</div>
+          </div>
+          <div style="padding:14px 16px 18px;display:flex;flex-direction:column;flex:1">
+            <div style="font:600 11px Inter;letter-spacing:.1em;color:#94A3B8;margin-bottom:5px">{{ p.marca }}</div>
+            <div style="font:600 14.5px/1.45 Inter;color:#1E293B;margin-bottom:10px;min-height:42px">{{ p.nome }}</div>
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:12px">
+              <span style="font:600 12px Inter;color:#F05A00;letter-spacing:.08em">{{ p.estrelas }}</span>
+              <span style="font:400 12px Inter;color:#94A3B8">{{ p.avaliacoes }}</span>
+            </div>
+            <div style="margin-top:auto">
+              <sc-if value="{{ p.de }}" hint-placeholder-val="{{ true }}">
+                <div style="font:400 13px Inter;color:#64748B;text-decoration:line-through">{{ p.de }}</div>
+              </sc-if>
+              <div style="font:800 25px Montserrat;color:#F05A00;line-height:1.15">{{ p.por }}</div>
+              <div style="font:400 12.5px Inter;color:#475569;margin-bottom:14px">{{ p.parcela }}</div>
+              <span style="display:flex;align-items:center;justify-content:center;height:44px;border-radius:8px;background:#F05A00;color:#fff;font:700 13.5px Montserrat;letter-spacing:.06em">COMPRAR</span>
+            </div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:20px;padding:40px 0 8px">
+      <div style="width:100%;max-width:320px">
+        <div style="height:7px;border-radius:4px;background:#E2E8F0;overflow:hidden"><div style="height:100%;width:33%;background:#F05A00;border-radius:4px"></div></div>
+        <div style="text-align:center;margin-top:10px;font:400 13px Inter;color:#475569">Mostrando 9 de 128 produtos</div>
+      </div>
+      <button style="height:52px;padding:0 36px;border:1.5px solid #012746;border-radius:8px;background:#fff;font:700 14.5px Montserrat;letter-spacing:.04em;color:#012746;cursor:pointer" style-hover="background:#012746;color:#fff">CARREGAR MAIS PRODUTOS</button>
+      <div style="display:flex;align-items:center;gap:8px">
+        <sc-for list="{{ paginas }}" as="pg" hint-placeholder-count="5">
+          <a href="Categoria.dc.html" style="display:flex;align-items:center;justify-content:center;min-width:40px;height:40px;padding:0 10px;border:1.5px solid #E2E8F0;border-radius:8px;font:600 13.5px Inter;color:#475569" style-hover="border-color:#F05A00;color:#F05A00">{{ pg }}</a>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</main>
+
+<section style="margin:64px 0 0;background:#F8FAFC;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0">
+  <div style="max-width:1280px;margin:0 auto;padding:48px 24px;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:48px">
+    <div>
+      <h2 style="margin:0 0 10px;font:700 30px Montserrat;color:#012746;letter-spacing:-.01em">Como escolher um aspirador vertical</h2>
+      <p style="margin:0;font:400 15.5px/1.65 Inter;color:#475569">Três critérios resolvem 90% da decisão. O resto é preferência.</p>
+    </div>
+    <div style="display:grid;gap:14px">
+      <sc-for list="{{ guia }}" as="g" hint-placeholder-count="3">
+        <div style="display:flex;gap:16px;padding:20px;background:#fff;border:1px solid #E2E8F0;border-radius:12px">
+          <span style="flex:none;width:40px;height:40px;border-radius:8px;background:#FFF1E8;display:flex;align-items:center;justify-content:center;font:800 15px Montserrat;color:#F05A00">{{ g.n }}</span>
+          <span>
+            <span style="display:block;font:700 15.5px Montserrat;color:#012746;margin-bottom:5px">{{ g.t }}</span>
+            <span style="display:block;font:400 14px/1.6 Inter;color:#475569">{{ g.s }}</span>
+          </span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<footer style="background:linear-gradient(180deg,#012746,#001B31);color:#B8C5D0">
+  <div style="max-width:1280px;margin:0 auto;padding:56px 24px 32px;display:grid;grid-template-columns:minmax(240px,1.2fr) repeat(3,minmax(0,1fr));gap:40px">
+    <div>
+      <img src="uploads/logo-fundo-escuro.png" alt="Promo Aspiradores" style="width:100%;max-width:230px;height:auto;display:block;margin-bottom:20px" />
+      <p style="margin:0 0 20px;font:400 14px/1.65 Inter;max-width:300px">Loja especializada em aspiradores de pó para casa e uso profissional. Curadoria de especialistas, preço competitivo e compra segura.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <sc-for list="{{ pagamentos }}" as="p" hint-placeholder-count="5">
+          <span style="padding:7px 11px;border:1px solid #1E3A4D;border-radius:4px;font:600 11px Inter;letter-spacing:.06em;color:#fff">{{ p }}</span>
+        </sc-for>
+      </div>
+    </div>
+    <sc-for list="{{ rodape }}" as="col" hint-placeholder-count="3">
+      <div>
+        <div style="font:700 13px Montserrat;letter-spacing:.1em;color:#fff;margin-bottom:16px">{{ col.t }}</div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <sc-for list="{{ col.links }}" as="l" hint-placeholder-count="5">
+            <a href="{{ l.href }}" style="font:400 14px Inter;color:#B8C5D0" style-hover="color:#F05A00">{{ l.t }}</a>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="border-top:1px solid #1E3A4D">
+    <div style="max-width:1280px;margin:0 auto;padding:20px 24px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font:400 12.5px Inter;color:#94A3B8">
+      <span>Promo Aspiradores — CNPJ 00.000.000/0001-00 • Preços e estoque sujeitos a alteração.</span>
+      <span>Esta página contém links de afiliados.</span>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { sel: {}, preco: 2000, ordem: "Mais relevantes" };
+  toggle(key) {
+    this.setState(s => ({ sel: { ...s.sel, [key]: !s.sel[key] } }));
+  }
+  renderVals() {
+    const defs = [
+      { titulo: "MARCA", opcoes: [["Vertax", "42"], ["Nordika", "28"], ["Domus", "24"], ["Laris", "19"], ["Cyclon Pro", "15"]] },
+      { titulo: "PARA QUEM TEM", opcoes: [["Pets em casa", "61"], ["Tapetes e carpetes", "48"], ["Apartamento pequeno", "37"], ["Carro", "29"]] },
+      { titulo: "AUTONOMIA", opcoes: [["Até 30 min", "34"], ["30 a 45 min", "52"], ["Acima de 45 min", "42"]] },
+      { titulo: "RECURSOS", opcoes: [["Filtro HEPA", "88"], ["Escova antiemaranhado", "54"], ["Base de parede", "47"], ["Bateria removível", "31"], ["Função pó e água", "22"]] }
+    ];
+    const ativos = [];
+    const grupos = defs.map(g => ({
+      titulo: g.titulo,
+      opcoes: g.opcoes.map(([label, qtd]) => {
+        const key = g.titulo + "|" + label;
+        const on = !!this.state.sel[key];
+        if (on) ativos.push({ label, remove: () => this.toggle(key) });
+        return { label, qtd, on, toggle: () => this.toggle(key) };
+      })
+    }));
+    const brl = n => "R$ " + n.toLocaleString("pt-BR") + ",00";
+    const base = [
+      { marca: "VERTAX", nome: "Aspirador Vertical Sem Fio Vertax V12 Ciclônico 450W", desconto: "-32%", selo: "MAIS VENDIDO", estrelas: "★★★★★", avaliacoes: "(1.284)", de: "R$ 1.029,90", por: "R$ 699,90", parcela: "ou 10x de R$ 69,99 sem juros" },
+      { marca: "VERTAX", nome: "Aspirador Vertical Vertax V8 Sem Fio 2 Velocidades", desconto: "-18%", selo: "", estrelas: "★★★★★", avaliacoes: "(3.402)", de: "R$ 669,90", por: "R$ 549,90", parcela: "ou 10x de R$ 54,99 sem juros" },
+      { marca: "NORDIKA", nome: "Aspirador Vertical Nordika Air 2 em 1 com Filtro HEPA", desconto: "", selo: "", estrelas: "★★★★☆", avaliacoes: "(618)", de: "", por: "R$ 459,00", parcela: "ou 10x de R$ 45,90 sem juros" },
+      { marca: "DOMUS", nome: "Aspirador Vertical Domus Turbo 600W com Base de Parede", desconto: "-24%", selo: "FRETE GRÁTIS", estrelas: "★★★★★", avaliacoes: "(940)", de: "R$ 1.199,00", por: "R$ 909,00", parcela: "ou 10x de R$ 90,90 sem juros" },
+      { marca: "LARIS", nome: "Aspirador Vertical Laris Pet Care Escova Antiemaranhado", desconto: "-15%", selo: "INDICADO PARA PETS", estrelas: "★★★★★", avaliacoes: "(1.117)", de: "R$ 899,00", por: "R$ 764,00", parcela: "ou 10x de R$ 76,40 sem juros" },
+      { marca: "CYCLON PRO", nome: "Aspirador Vertical Cyclon Pro Max Bateria Removível", desconto: "-29%", selo: "", estrelas: "★★★★★", avaliacoes: "(452)", de: "R$ 1.749,00", por: "R$ 1.239,00", parcela: "ou 10x de R$ 123,90 sem juros" },
+      { marca: "VERTAX", nome: "Aspirador Vertical Vertax Slim 350W Ultraleve 1,4 kg", desconto: "", selo: "MAIS LEVE", estrelas: "★★★★☆", avaliacoes: "(275)", de: "", por: "R$ 379,90", parcela: "ou 10x de R$ 37,99 sem juros" },
+      { marca: "NORDIKA", nome: "Aspirador Vertical Nordika Duo Pó e Água Sem Fio", desconto: "-21%", selo: "", estrelas: "★★★★★", avaliacoes: "(806)", de: "R$ 1.599,00", por: "R$ 1.259,00", parcela: "ou 10x de R$ 125,90 sem juros" },
+      { marca: "DOMUS", nome: "Aspirador Vertical Domus Home 3 em 1 com Kit Estofados", desconto: "-35%", selo: "ÚLTIMAS UNIDADES", estrelas: "★★★★☆", avaliacoes: "(1.503)", de: "R$ 749,00", por: "R$ 486,00", parcela: "ou 10x de R$ 48,60 sem juros" }
+    ];
+    return {
+      noSubmit: e => e.preventDefault(),
+      menu: ["Aspiradores", "Robôs", "Vertical", "Portáteis", "Extratoras", "Profissionais", "Acessórios"],
+      subcategorias: ["Sem fio", "2 em 1", "Para pets", "Pó e água", "Até R$ 500", "Com filtro HEPA"],
+      grupos, ativos, temFiltro: ativos.length > 0,
+      limpar: () => this.setState({ sel: {}, preco: 2000 }),
+      preco: this.state.preco,
+      precoLabel: brl(this.state.preco),
+      setPreco: e => this.setState({ preco: Number(e.target.value) }),
+      ordem: this.state.ordem,
+      setOrdem: e => this.setState({ ordem: e.target.value }),
+      total: "128",
+      produtos: base,
+      paginas: ["1", "2", "3", "…", "15"],
+      guia: [
+        { n: "01", t: "Potência real de sucção", s: "Não olhe só os watts do motor. Modelos ciclônicos mantêm a sucção constante mesmo com o reservatório cheio, o que faz mais diferença no dia a dia." },
+        { n: "02", t: "Autonomia da bateria", s: "Até 30 minutos serve para apartamentos pequenos. Acima de 100 m², procure 45 minutos ou bateria removível para trocar no meio da limpeza." },
+        { n: "03", t: "Escova certa para o seu piso", s: "Tapete e pelo de animal pedem escova motorizada antiemaranhado. Piso frio e laminado funcionam bem com escova macia comum." }
+      ],
+      pagamentos: ["PIX", "VISA", "MASTER", "ELO", "BOLETO"],
+      rodape: [
+        { t: "CATEGORIAS", links: [{ t: "Aspirador vertical", href: "Categoria.dc.html" }, { t: "Aspirador robô", href: "Categoria.dc.html" }, { t: "Aspirador portátil", href: "Categoria.dc.html" }, { t: "Extratoras", href: "Categoria.dc.html" }, { t: "Profissionais", href: "Categoria.dc.html" }] },
+        { t: "AJUDA", links: [{ t: "Fale com a gente", href: "Contato.dc.html" }, { t: "Prazos de entrega", href: "Contato.dc.html" }, { t: "Trocas e devoluções", href: "Politica-de-Uso.dc.html" }, { t: "Garantia", href: "Politica-de-Uso.dc.html" }, { t: "Formas de pagamento", href: "Contato.dc.html" }] },
+        { t: "INSTITUCIONAL", links: [{ t: "Contato", href: "Contato.dc.html" }, { t: "Política de privacidade", href: "Politica-de-Privacidade.dc.html" }, { t: "Política de uso", href: "Politica-de-Uso.dc.html" }, { t: "Cookies e dados", href: "Politica-de-Cookies.dc.html" }, { t: "Home", href: "Home.dc.html" }] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

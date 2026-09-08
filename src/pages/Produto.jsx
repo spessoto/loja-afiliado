@@ -357,11 +357,6 @@ export default function Produto() {
               </div>
               <a {...buyProps} className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 50, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em" }}>IR PARA A OFERTA</a>
             </div>
-            <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 20 }}>
-              <div style={{ font: "700 14px Montserrat", color: "#012746", marginBottom: 12 }}>Dúvida na escolha?</div>
-              <p style={{ margin: "0 0 14px", font: "400 13.5px/1.6 Inter", color: "#475569" }}>Nosso time é especialista em aspiradores e responde em minutos, de segunda a sábado.</p>
-              <a href="#whatsapp" className="btn-outline-navy" style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 46, borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 14px Montserrat" }}>FALAR COM ESPECIALISTA</a>
-            </div>
           </aside>
         </section>
 

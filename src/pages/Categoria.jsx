@@ -126,12 +126,6 @@ export default function Categoria() {
               <strong style={{ font: "700 13.5px Montserrat", color: "#F05A00" }}>até {brl(preco)}</strong>
             </div>
           </div>
-
-          <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 20, background: "#F8FAFC" }}>
-            <div style={{ font: "700 15px Montserrat", color: "#012746", marginBottom: 8 }}>Não sabe qual escolher?</div>
-            <p style={{ margin: "0 0 14px", font: "400 13.5px/1.6 Inter", color: "#475569" }}>Responda três perguntas e a gente indica o modelo certo para a sua casa.</p>
-            <Link to="/contato" className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 44, borderRadius: 8, background: "#012746", color: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".04em" }}>FALAR COM ESPECIALISTA</Link>
-          </div>
         </aside>
 
         <div>

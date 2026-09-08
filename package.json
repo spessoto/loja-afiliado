@@ -1,0 +1,21 @@
+{
+  "name": "loja-afiliado",
+  "version": "1.0.0",
+  "description": "Loja aspiradores - Site de produtos e afiliação",
+  "main": "support.js",
+  "scripts": {
+    "start": "echo 'Static site - serve the HTML files'",
+    "build": "echo 'No build step required for static site'"
+  },
+  "keywords": [
+    "loja",
+    "aspiradores",
+    "afiliado",
+    "e-commerce"
+  ],
+  "author": "Caio Spessoto",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

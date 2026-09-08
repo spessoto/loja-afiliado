@@ -1,0 +1,87 @@
+body {
+  margin: 0;
+  background: #FFFFFF;
+  font-family: Inter, system-ui, sans-serif;
+  color: #1E293B;
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  color: #012746;
+  text-decoration: none;
+}
+a:hover {
+  color: #F05A00;
+}
+* {
+  box-sizing: border-box;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+@keyframes marqueeSlide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Shared interactive-state classes (ported from style-hover / style-focus canvas attrs) */
+
+.btn-primary:hover {
+  background: #FF6A00 !important;
+  color: #fff !important;
+}
+
+.btn-outline-navy:hover {
+  background: #012746 !important;
+  color: #fff !important;
+}
+
+.btn-search:hover {
+  background: #F05A00 !important;
+}
+
+.hover-orange:hover {
+  color: #F05A00 !important;
+}
+
+.card-hover {
+  transition: all 0.18s;
+}
+.card-hover:hover {
+  border-color: #F05A00 !important;
+  box-shadow: 0 8px 24px rgba(1, 39, 70, 0.1);
+  transform: translateY(-3px);
+}
+
+.product-card {
+  transition: all 0.18s;
+}
+.product-card:hover {
+  border-color: #CBD5E1 !important;
+  box-shadow: 0 8px 24px rgba(1, 39, 70, 0.1);
+  transform: translateY(-3px);
+}
+
+.need-card:hover {
+  background: #fff !important;
+  border-color: #F05A00 !important;
+  box-shadow: 0 6px 20px rgba(1, 39, 70, 0.08);
+}
+
+.pill:hover {
+  border-color: #F05A00 !important;
+  color: #F05A00 !important;
+}
+
+.page-link:hover {
+  border-color: #F05A00 !important;
+  color: #F05A00 !important;
+}
+
+.input-field:focus {
+  border-color: #F05A00 !important;
+}

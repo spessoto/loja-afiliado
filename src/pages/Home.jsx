@@ -1,0 +1,262 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Header from "../components/Header.jsx";
+import { FooterFull } from "../components/Footer.jsx";
+import ProductCard from "../components/ProductCard.jsx";
+import FaqAccordion from "../components/FaqAccordion.jsx";
+import { pagamentos } from "../data/footerColumns.js";
+
+const menu = ["Aspiradores", "Robôs", "Vertical", "Portáteis", "Extratoras", "Profissionais", "Acessórios"];
+const heroTrust = ["Frete grátis acima de R$ 299", "Até 10x sem juros", "Garantia e nota fiscal"];
+
+const categorias = [
+  { nome: "Vertical", qtd: "128 modelos", ph: "aspirador vertical" },
+  { nome: "Robô", qtd: "64 modelos", ph: "aspirador robô" },
+  { nome: "Portátil", qtd: "91 modelos", ph: "aspirador portátil" },
+  { nome: "Tradicional", qtd: "73 modelos", ph: "aspirador de arraste" },
+  { nome: "Extratoras", qtd: "38 modelos", ph: "extratora de sofá" },
+  { nome: "Profissionais", qtd: "45 modelos", ph: "aspirador pó e água" }
+];
+
+const ofertas = [
+  { marca: "VERTAX", nome: "Aspirador Vertical Sem Fio Vertax V12 Ciclônico 450W", desconto: "-32%", selo: "MAIS VENDIDO", estrelas: "★★★★★", avaliacoes: "(1.284)", de: "R$ 1.029,90", por: "R$ 699,90", parcela: "ou 10x de R$ 69,99 sem juros" },
+  { marca: "NORDIKA", nome: "Robô Aspirador Nordika R7 com Mapeamento a Laser", desconto: "-25%", selo: "", estrelas: "★★★★★", avaliacoes: "(872)", de: "R$ 2.399,00", por: "R$ 1.799,00", parcela: "ou 10x de R$ 179,90 sem juros" },
+  { marca: "DOMUS", nome: "Aspirador Portátil Domus Mini 3 em 1 para Carro", desconto: "-40%", selo: "ÚLTIMAS UNIDADES", estrelas: "★★★★☆", avaliacoes: "(2.110)", de: "R$ 489,90", por: "R$ 289,90", parcela: "ou 10x de R$ 28,99 sem juros" },
+  { marca: "CYCLON PRO", nome: "Aspirador de Pó e Água Cyclon Pro 20L 1600W", desconto: "-28%", selo: "", estrelas: "★★★★★", avaliacoes: "(506)", de: "R$ 1.199,00", por: "R$ 859,00", parcela: "ou 10x de R$ 85,90 sem juros" }
+];
+
+const necessidades = [
+  { i: "01", t: "Para pelos de animais", s: "Escova antiemaranhado" },
+  { i: "02", t: "Para carros", s: "Portáteis e sem fio" },
+  { i: "03", t: "Para tapetes", s: "Alta sucção e batedor" },
+  { i: "04", t: "Para apartamentos", s: "Compactos e silenciosos" },
+  { i: "05", t: "Para limpeza pesada", s: "Pó e água, 20L ou mais" },
+  { i: "06", t: "Para uso profissional", s: "Uso contínuo e garantia" }
+];
+
+const vendidos = [
+  { marca: "VERTAX", nome: "Aspirador Vertical Vertax V8 Sem Fio 2 Velocidades", selo: "TOP 1", estrelas: "★★★★★", avaliacoes: "(3.402)", por: "R$ 549,90", parcela: "ou 10x de R$ 54,99 sem juros" },
+  { marca: "NORDIKA", nome: "Robô Aspirador Nordika R4 com Estação de Recarga", selo: "TOP 2", estrelas: "★★★★★", avaliacoes: "(1.988)", por: "R$ 1.249,00", parcela: "ou 10x de R$ 124,90 sem juros" },
+  { marca: "LARIS", nome: "Extratora Laris Sofá & Estofados 1.400W 2L", selo: "TOP 3", estrelas: "★★★★☆", avaliacoes: "(741)", por: "R$ 799,00", parcela: "ou 10x de R$ 79,90 sem juros" },
+  { marca: "DOMUS", nome: "Aspirador de Pó Domus Compact 1200W com Filtro HEPA", selo: "TOP 4", estrelas: "★★★★★", avaliacoes: "(1.156)", por: "R$ 379,90", parcela: "ou 10x de R$ 37,99 sem juros" }
+];
+
+const beneficios = [
+  { t: "Compra segura", s: "Pagamento protegido e dados criptografados em todo o processo.", d: "M12 3.5l7 2.6v5.4c0 4.3-2.9 7.3-7 9-4.1-1.7-7-4.7-7-9V6.1l7-2.6z" },
+  { t: "Envio para todo o Brasil", s: "Rastreio do pedido e frete grátis nas compras acima de R$ 299.", d: "M3 7.5h11v9H3zM14 10.5h4l3 3v3h-7zM7 19a1.6 1.6 0 100-3.2A1.6 1.6 0 007 19zM17.5 19a1.6 1.6 0 100-3.2 1.6 1.6 0 000 3.2z" },
+  { t: "Garantia e nota fiscal", s: "Produtos originais, garantia do fabricante e NF em todos os pedidos.", d: "M12 3.5l2.6 1.9 3.2-.2.9 3.1 2.3 2.2-1.6 2.8.4 3.2-3.1 1-2 2.5-3-1.2-3 1.2-2-2.5-3.1-1 .4-3.2L2 10.5l2.3-2.2.9-3.1 3.2.2z" },
+  { t: "Atendimento especializado", s: "Time que conhece aspirador e ajuda você a escolher pelo WhatsApp.", d: "M20 12a8 8 0 10-3.2 6.4L20 20l-1-3.2A7.9 7.9 0 0020 12z" }
+];
+
+const avaliacoes = [
+  { nome: "Camila R.", texto: "Comprei o vertical sem fio e a diferença nos pelos do gato é enorme. Chegou em três dias em Belo Horizonte.", meta: "Compra verificada • Aspirador Vertax V12" },
+  { nome: "Rodrigo M.", texto: "O time me ajudou a escolher pelo WhatsApp. Preço melhor do que eu tinha achado em outras lojas.", meta: "Compra verificada • Robô Nordika R7" },
+  { nome: "Fernanda L.", texto: "Uso na minha empresa de limpeza. Aguenta o dia inteiro e a nota fiscal veio junto, sem dor de cabeça.", meta: "Compra verificada • Cyclon Pro 20L" }
+];
+
+const faq = [
+  { q: "Qual aspirador serve para pelos de animais?", a: "Modelos verticais sem fio com escova antiemaranhado e filtro HEPA são os mais indicados. Na página de cada produto indicamos se ele é recomendado para pets." },
+  { q: "Em quantas vezes eu posso pagar?", a: "Até 10x sem juros no cartão de crédito. No Pix há desconto adicional à vista, informado no momento da finalização." },
+  { q: "Como funciona o frete?", a: "Enviamos para todo o Brasil com rastreio. Compras acima de R$ 299 têm frete grátis para as regiões atendidas." },
+  { q: "E se o produto apresentar defeito?", a: "Todos os itens têm garantia do fabricante e nota fiscal. Nosso atendimento acompanha o acionamento da garantia do começo ao fim." }
+];
+
+const rodape = [
+  { t: "CATEGORIAS", links: ["Aspirador vertical", "Aspirador robô", "Aspirador portátil", "Extratoras", "Profissionais"].map(t => ({ t })) },
+  { t: "AJUDA", links: ["Central de atendimento", "Prazos de entrega", "Trocas e devoluções", "Garantia", "Formas de pagamento"].map(t => ({ t })) },
+  { t: "A LOJA", links: ["Sobre a Promo Aspiradores", "Guia de compra", "Blog e comparativos", "Política de privacidade", "Fale no WhatsApp"].map(t => ({ t })) }
+];
+
+function pad(n) {
+  return String(n).padStart(2, "0");
+}
+
+export default function Home() {
+  const [left, setLeft] = useState(6 * 3600 + 42 * 60 + 15);
+
+  useEffect(() => {
+    document.title = "Promo Aspiradores — Encontre o aspirador ideal para sua casa";
+    const t = setInterval(() => setLeft((s) => (s > 0 ? s - 1 : 0)), 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  const countdown = [
+    { v: pad(Math.floor(left / 3600)), l: "HORAS" },
+    { v: pad(Math.floor(left / 60) % 60), l: "MIN" },
+    { v: pad(left % 60), l: "SEG" }
+  ];
+
+  return (
+    <>
+      <Header
+        marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL", "ENVIO PARA TODO O BRASIL", "CURADORIA DE ESPECIALISTAS"]}
+        animated
+        categoriesNav={{ menu, showAllCategories: true, allCategoriesTo: "#categorias", itemTo: "/produto", ofertaTo: "#ofertas" }}
+      />
+
+      <section style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "56px 24px 60px", display: "grid", gridTemplateColumns: "minmax(0,1.05fr) minmax(0,.95fr)", gap: 48, alignItems: "center" }}>
+          <div>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#fff", border: "1.5px solid #E2E8F0", borderRadius: 24, padding: "7px 16px 7px 8px", marginBottom: 24 }}>
+              <span style={{ background: "linear-gradient(90deg,#F05A00,#FF7A00)", color: "#fff", font: "800 11.5px Montserrat", letterSpacing: ".08em", padding: "4px 10px", borderRadius: 16 }}>ATÉ 40% OFF</span>
+              <span style={{ font: "600 13px Inter", color: "#012746" }}>Semana do Aspirador</span>
+            </div>
+            <h1 style={{ margin: "0 0 20px", font: "800 54px/1.05 Montserrat", letterSpacing: "-.02em", color: "#012746", textWrap: "balance" }}>ENCONTRE O ASPIRADOR IDEAL PARA SUA CASA</h1>
+            <p style={{ margin: "0 0 32px", maxWidth: 520, font: "400 17px/1.6 Inter", color: "#475569" }}>Modelos para todos os tipos de limpeza e necessidades. Nossa curadoria compara potência, autonomia e preço para você escolher em minutos.</p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 36 }}>
+              <Link to="/produto" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 52, padding: "0 30px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.28)" }}>
+                VER ASPIRADORES
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
+              </Link>
+              <a href="#necessidade" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", height: 52, padding: "0 26px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 15px Montserrat" }}>DESCOBRIR MEU MODELO</a>
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "12px 28px" }}>
+              {heroTrust.map((t, i) => (
+                <span key={i} style={{ display: "flex", alignItems: "center", gap: 8, font: "500 13.5px Inter", color: "#012746" }}>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F05A00" strokeWidth="2.4" strokeLinecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div style={{ position: "relative" }}>
+            <div style={{ aspectRatio: "4/3.4", borderRadius: 16, border: "1px solid #E2E8F0", background: "repeating-linear-gradient(135deg,#F1F5F9 0 9px,#E9EFF5 9px 18px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: 24 }}>
+              <span style={{ font: "500 12px ui-monospace,SFMono-Regular,monospace", letterSpacing: ".1em", color: "#94A3B8" }}>FOTO PRINCIPAL DO HERO</span>
+              <span style={{ font: "400 12px ui-monospace,monospace", color: "#94A3B8", maxWidth: 260, lineHeight: 1.6 }}>ambiente doméstico real — sala com tapete, aspirador vertical em uso, luz natural</span>
+            </div>
+            <div style={{ position: "absolute", left: -16, bottom: 28, background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, padding: "14px 18px", boxShadow: "0 8px 28px rgba(1,39,70,.12)" }}>
+              <div style={{ font: "500 11.5px Inter", color: "#475569", letterSpacing: ".04em" }}>A PARTIR DE</div>
+              <div style={{ font: "800 26px Montserrat", color: "#F05A00", lineHeight: 1.15 }}>R$ 289<span style={{ fontSize: 16 }}>,90</span></div>
+              <div style={{ font: "400 12px Inter", color: "#475569" }}>ou 10x de R$ 28,99</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="categorias" style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 24px 8px" }}>
+        <h2 style={{ margin: "0 0 8px", font: "700 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Compre por tipo de aspirador</h2>
+        <p style={{ margin: "0 0 32px", font: "400 16px Inter", color: "#475569" }}>Seis categorias, sem enrolação. Escolha pelo formato que combina com a sua casa.</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 24 }}>
+          {categorias.map((c, i) => (
+            <Link key={i} to="/produto" className="card-hover" style={{ display: "flex", flexDirection: "column", gap: 14, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
+              <div style={{ aspectRatio: "1/1", borderRadius: 8, background: "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 12, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8" }}>{c.ph}</div>
+              <div>
+                <div style={{ font: "700 15px Montserrat", color: "#012746", marginBottom: 3 }}>{c.nome}</div>
+                <div style={{ font: "400 13px Inter", color: "#475569" }}>{c.qtd}</div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section id="ofertas" style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 24px 0" }}>
+        <div style={{ background: "linear-gradient(100deg,#012746,#001B31)", borderRadius: 16, padding: "28px 32px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 24, marginBottom: 32 }}>
+          <div>
+            <div style={{ display: "inline-block", background: "#F05A00", color: "#fff", font: "800 11px Montserrat", letterSpacing: ".1em", padding: "5px 11px", borderRadius: 4, marginBottom: 12 }}>OFERTA DO DIA</div>
+            <h2 style={{ margin: 0, font: "800 32px Montserrat", color: "#fff", letterSpacing: "-.01em" }}>Descontos que acabam hoje</h2>
+            <p style={{ margin: "6px 0 0", font: "400 15px Inter", color: "#B8C5D0" }}>Preços válidos enquanto durar o estoque de cada modelo.</p>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <span style={{ font: "600 13px Inter", color: "#B8C5D0", maxWidth: 96, lineHeight: 1.35 }}>Termina em</span>
+            <div style={{ display: "flex", gap: 8 }}>
+              {countdown.map((u, i) => (
+                <div key={i} style={{ minWidth: 62, background: "rgba(255,255,255,.08)", border: "1px solid #1E3A4D", borderRadius: 8, padding: "10px 8px", textAlign: "center" }}>
+                  <div style={{ font: "800 24px Montserrat", color: "#fff", lineHeight: 1 }}>{u.v}</div>
+                  <div style={{ font: "500 10px Inter", letterSpacing: ".1em", color: "#94A3B8", marginTop: 4 }}>{u.l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(238px,1fr))", gap: 24 }}>
+          {ofertas.map((p, i) => <ProductCard key={i} p={p} />)}
+        </div>
+      </section>
+
+      <section id="necessidade" style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 24px 0" }}>
+        <h2 style={{ margin: "0 0 8px", font: "700 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Qual é o seu problema de limpeza?</h2>
+        <p style={{ margin: "0 0 32px", font: "400 16px Inter", color: "#475569" }}>Diga o que incomoda na sua casa e a gente mostra só os modelos que resolvem.</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 16 }}>
+          {necessidades.map((n, i) => (
+            <Link key={i} to="/produto" className="need-card" style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
+              <span style={{ flex: "none", width: 40, height: 40, borderRadius: 8, background: "#fff", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "center", font: "700 15px Montserrat", color: "#F05A00" }}>{n.i}</span>
+              <span>
+                <span style={{ display: "block", font: "700 14.5px Montserrat", color: "#012746" }}>{n.t}</span>
+                <span style={{ display: "block", font: "400 12.5px Inter", color: "#475569", marginTop: 2 }}>{n.s}</span>
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 24px 0" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 16, marginBottom: 32 }}>
+          <div>
+            <h2 style={{ margin: "0 0 6px", font: "700 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Mais vendidos do mês</h2>
+            <p style={{ margin: 0, font: "400 16px Inter", color: "#475569" }}>O que as famílias brasileiras estão levando para casa.</p>
+          </div>
+          <Link to="/produto" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", gap: 8, height: 46, padding: "0 22px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 14px Montserrat" }}>VER RANKING COMPLETO</Link>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(238px,1fr))", gap: 24 }}>
+          {vendidos.map((p, i) => <ProductCard key={i} p={p} priceColor="#012746" />)}
+        </div>
+      </section>
+
+      <section style={{ margin: "64px 0 0", background: "#F8FAFC", borderTop: "1px solid #E2E8F0", borderBottom: "1px solid #E2E8F0" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "44px 24px", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 32 }}>
+          {beneficios.map((b, i) => (
+            <div key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
+              <span style={{ flex: "none", width: 44, height: 44, borderRadius: 8, background: "#fff", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={b.d}></path></svg>
+              </span>
+              <span>
+                <span style={{ display: "block", font: "700 15px Montserrat", color: "#012746", marginBottom: 4 }}>{b.t}</span>
+                <span style={{ display: "block", font: "400 13.5px/1.55 Inter", color: "#475569" }}>{b.s}</span>
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 24px 0" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "minmax(0,.85fr) minmax(0,1.15fr)", gap: 48 }}>
+          <div>
+            <h2 style={{ margin: "0 0 8px", font: "700 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Quem comprou, aprovou</h2>
+            <p style={{ margin: "0 0 24px", font: "400 16px Inter", color: "#475569" }}>Média de 4,8 em 6.412 avaliações verificadas de clientes que receberam o produto.</p>
+            <div style={{ display: "flex", alignItems: "center", gap: 16, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
+              <div style={{ font: "800 48px Montserrat", color: "#012746", lineHeight: 1 }}>4,8</div>
+              <div>
+                <div style={{ font: "600 16px Inter", color: "#F05A00", letterSpacing: ".1em" }}>★★★★★</div>
+                <div style={{ font: "400 13px Inter", color: "#475569", marginTop: 4 }}>94% recomendam a loja</div>
+              </div>
+            </div>
+          </div>
+          <div style={{ display: "grid", gap: 16 }}>
+            {avaliacoes.map((a, i) => (
+              <div key={i} style={{ padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 10 }}>
+                  <span style={{ font: "700 14px Montserrat", color: "#012746" }}>{a.nome}</span>
+                  <span style={{ font: "600 13px Inter", color: "#F05A00", letterSpacing: ".08em" }}>★★★★★</span>
+                </div>
+                <p style={{ margin: "0 0 8px", font: "400 14.5px/1.6 Inter", color: "#475569" }}>{a.texto}</p>
+                <span style={{ font: "500 12px Inter", color: "#94A3B8" }}>{a.meta}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 24px 72px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "minmax(0,.7fr) minmax(0,1.3fr)", gap: 48 }}>
+          <div>
+            <h2 style={{ margin: "0 0 8px", font: "700 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Dúvidas frequentes</h2>
+            <p style={{ margin: 0, font: "400 16px Inter", color: "#475569" }}>Se ficar qualquer dúvida, fale com nosso atendimento especializado pelo WhatsApp.</p>
+          </div>
+          <FaqAccordion faq={faq} />
+        </div>
+      </section>
+
+      <FooterFull columns={rodape} payment={pagamentos} />
+    </>
+  );
+}

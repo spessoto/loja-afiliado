@@ -30,6 +30,10 @@ export async function ensureSchema() {
       specs TEXT,
       indicado TEXT,
       nao_indicado TEXT,
+      rating_avg DECIMAL(2,1),
+      rating_count INT,
+      rating_dist TEXT,
+      reviews TEXT,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
@@ -40,4 +44,8 @@ export async function ensureSchema() {
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS specs TEXT`);
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS indicado TEXT`);
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS nao_indicado TEXT`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS rating_avg DECIMAL(2,1)`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS rating_count INT`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS rating_dist TEXT`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS reviews TEXT`);
 }

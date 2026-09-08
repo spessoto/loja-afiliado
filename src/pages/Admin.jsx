@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const empty = { name: "", brand: "", category: "", description: "", image_url: "", images: "", affiliate_url: "", price_from: "", price_to: "", installment: "", badge: "", tags: "", specs: "", indicado: "", nao_indicado: "" };
+const empty = { name: "", brand: "", category: "", description: "", image_url: "", images: "", affiliate_url: "", price_from: "", price_to: "", installment: "", badge: "", tags: "", specs: "", indicado: "", nao_indicado: "", rating_avg: "", rating_count: "", rating_dist: "", reviews: "" };
 
 export default function Admin() {
   const [token, setToken] = useState(localStorage.getItem("admin_token") || "");
@@ -86,6 +86,10 @@ export default function Admin() {
         <textarea placeholder="Especificações técnicas (uma por linha, formato: Chave: Valor)" value={form.specs} onChange={e => setForm({ ...form, specs: e.target.value })} style={{ ...inputStyle, gridColumn: "1 / -1", height: 110 }} />
         <textarea placeholder="Indicado para (uma frase por linha)" value={form.indicado} onChange={e => setForm({ ...form, indicado: e.target.value })} style={{ ...inputStyle, height: 90 }} />
         <textarea placeholder="Não indicado para (uma frase por linha)" value={form.nao_indicado} onChange={e => setForm({ ...form, nao_indicado: e.target.value })} style={{ ...inputStyle, height: 90 }} />
+        <input placeholder="Nota média (ex: 4.8)" value={form.rating_avg} onChange={e => setForm({ ...form, rating_avg: e.target.value })} style={inputStyle} />
+        <input placeholder="Total de avaliações (ex: 18429)" value={form.rating_count} onChange={e => setForm({ ...form, rating_count: e.target.value })} style={inputStyle} />
+        <textarea placeholder="Distribuição por estrela (uma por linha, formato: 5:90.4)" value={form.rating_dist} onChange={e => setForm({ ...form, rating_dist: e.target.value })} style={{ ...inputStyle, gridColumn: "1 / -1", height: 90 }} />
+        <textarea placeholder={"Avaliações (bloco por review separado por linha \"---\":\nNome\nNota (1-5)\nTexto do depoimento\nMeta (ex: Compra verificada • há 2 semanas)"} value={form.reviews} onChange={e => setForm({ ...form, reviews: e.target.value })} style={{ ...inputStyle, gridColumn: "1 / -1", height: 160 }} />
         <div style={{ gridColumn: "1 / -1", display: "flex", gap: 10 }}>
           <button type="submit" style={btnStyle}>{editingId ? "Salvar alterações" : "Adicionar produto"}</button>
           {editingId && <button type="button" onClick={resetForm} style={{ ...btnStyle, background: "#64748B" }}>Cancelar</button>}

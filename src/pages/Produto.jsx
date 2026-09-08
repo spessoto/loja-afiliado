@@ -90,6 +90,26 @@ function parseSpecs(text) {
   }).filter(s => s.k && s.v);
 }
 
+function estrelasStr(nota) {
+  const cheias = Math.round(Number(nota) || 0);
+  return "★".repeat(cheias) + "☆".repeat(Math.max(0, 5 - cheias));
+}
+
+function parseDist(text) {
+  return linhas(text).map(line => {
+    const [n, pct] = line.split(":");
+    return { n: Number(n), p: (pct || "0").trim() + "%" };
+  }).filter(d => d.n).sort((a, b) => b.n - a.n);
+}
+
+function parseReviews(text) {
+  return (text || "").split(/\n-{3,}\n/).map(block => {
+    const l = block.split("\n").map(s => s.trim()).filter(Boolean);
+    if (l.length < 3) return null;
+    return { nome: l[0], estrelas: estrelasStr(l[1]), texto: l.slice(2, -1).join(" "), meta: l[l.length - 1] };
+  }).filter(Boolean);
+}
+
 export default function Produto() {
   const { id } = useParams();
   const { product, loading } = useProduct(id);
@@ -124,6 +144,14 @@ export default function Produto() {
   const indicadoExibido = productIndicado.length > 0 ? productIndicado : (product ? [] : indicado);
   const productNaoIndicado = linhas(product?.nao_indicado);
   const naoIndicadoExibido = productNaoIndicado.length > 0 ? productNaoIndicado : (product ? [] : naoIndicado);
+
+  const notaMedia = product?.rating_avg ? Number(product.rating_avg) : 4.8;
+  const totalAvaliacoes = product?.rating_count ? Number(product.rating_count) : 1284;
+  const productDist = parseDist(product?.rating_dist).map(d => ({ ...d, w: d.p }));
+  const distExibida = productDist.length > 0 ? productDist : (product ? [] : distribuicao);
+  const productReviews = parseReviews(product?.reviews);
+  const reviewsExibidos = productReviews.length > 0 ? productReviews : (product ? [] : reviews);
+  const temAvaliacoes = distExibida.length > 0 || reviewsExibidos.length > 0;
 
   if (!loading && id && !product) {
     return (
@@ -193,8 +221,8 @@ export default function Produto() {
             <div style={{ font: "600 11.5px Inter", letterSpacing: ".14em", color: "#94A3B8", marginBottom: 8 }}>{marca}</div>
             <h1 style={{ margin: "0 0 14px", font: "800 34px/1.18 Montserrat", color: "#012746", letterSpacing: "-.01em", textWrap: "balance" }}>{nome}</h1>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 14, marginBottom: 24 }}>
-              <span style={{ font: "600 15px Inter", color: "#F05A00", letterSpacing: ".1em" }}>★★★★★</span>
-              <a href="#avaliacoes" style={{ font: "500 13.5px Inter", color: "#475569", textDecoration: "underline" }}>4,8 · 1.284 avaliações</a>
+              <span style={{ font: "600 15px Inter", color: "#F05A00", letterSpacing: ".1em" }}>{estrelasStr(notaMedia)}</span>
+              <a href="#avaliacoes" style={{ font: "500 13.5px Inter", color: "#475569", textDecoration: "underline" }}>{String(notaMedia).replace(".", ",")} · {totalAvaliacoes.toLocaleString("pt-BR")} avaliações</a>
               <span style={{ width: 1, height: 16, background: "#E2E8F0" }}></span>
               <span style={{ font: "400 13.5px Inter", color: "#475569" }}>Cód. 8412-V12</span>
             </div>
@@ -337,44 +365,50 @@ export default function Produto() {
           </aside>
         </section>
 
-        <section id="avaliacoes" style={{ marginTop: 72 }}>
-          <h2 style={{ margin: "0 0 24px", font: "700 28px Montserrat", color: "#012746" }}>Avaliações de quem comprou</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(260px,.55fr) minmax(0,1.45fr)", gap: 40, alignItems: "start" }}>
-            <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 24, background: "#F8FAFC" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
-                <span style={{ font: "800 48px Montserrat", color: "#012746", lineHeight: 1 }}>4,8</span>
-                <span>
-                  <span style={{ display: "block", font: "600 15px Inter", color: "#F05A00", letterSpacing: ".1em" }}>★★★★★</span>
-                  <span style={{ display: "block", font: "400 13px Inter", color: "#475569", marginTop: 4 }}>1.284 avaliações</span>
-                </span>
-              </div>
-              <div style={{ display: "grid", gap: 9 }}>
-                {distribuicao.map((d, i) => (
-                  <span key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <span style={{ font: "500 12.5px Inter", color: "#475569", width: 26 }}>{d.n}★</span>
-                    <span style={{ flex: 1, height: 7, borderRadius: 4, background: "#E2E8F0", overflow: "hidden" }}><span style={{ display: "block", height: "100%", width: d.w, background: "#F05A00", borderRadius: 4 }}></span></span>
-                    <span style={{ font: "400 12px Inter", color: "#94A3B8", width: 34, textAlign: "right" }}>{d.p}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div style={{ display: "grid", gap: 16 }}>
-              {reviews.map((r, i) => (
-                <div key={i} style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 20 }}>
-                  <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 10, marginBottom: 10 }}>
-                    <span style={{ font: "700 14.5px Montserrat", color: "#012746" }}>{r.nome}</span>
-                    <span style={{ font: "600 13px Inter", color: "#F05A00", letterSpacing: ".08em" }}>{r.estrelas}</span>
+        {temAvaliacoes && (
+          <section id="avaliacoes" style={{ marginTop: 72 }}>
+            <h2 style={{ margin: "0 0 24px", font: "700 28px Montserrat", color: "#012746" }}>Avaliações de quem comprou</h2>
+            <div style={{ display: "grid", gridTemplateColumns: "minmax(260px,.55fr) minmax(0,1.45fr)", gap: 40, alignItems: "start" }}>
+              {distExibida.length > 0 && (
+                <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 24, background: "#F8FAFC" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
+                    <span style={{ font: "800 48px Montserrat", color: "#012746", lineHeight: 1 }}>{String(notaMedia).replace(".", ",")}</span>
+                    <span>
+                      <span style={{ display: "block", font: "600 15px Inter", color: "#F05A00", letterSpacing: ".1em" }}>{estrelasStr(notaMedia)}</span>
+                      <span style={{ display: "block", font: "400 13px Inter", color: "#475569", marginTop: 4 }}>{totalAvaliacoes.toLocaleString("pt-BR")} avaliações</span>
+                    </span>
                   </div>
-                  <p style={{ margin: "0 0 10px", font: "400 14.5px/1.65 Inter", color: "#475569" }}>{r.texto}</p>
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: 7, font: "500 12px Inter", color: "#94A3B8" }}>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2.6" strokeLinecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
-                    {r.meta}
-                  </span>
+                  <div style={{ display: "grid", gap: 9 }}>
+                    {distExibida.map((d, i) => (
+                      <span key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                        <span style={{ font: "500 12.5px Inter", color: "#475569", width: 26 }}>{d.n}★</span>
+                        <span style={{ flex: 1, height: 7, borderRadius: 4, background: "#E2E8F0", overflow: "hidden" }}><span style={{ display: "block", height: "100%", width: d.w, background: "#F05A00", borderRadius: 4 }}></span></span>
+                        <span style={{ font: "400 12px Inter", color: "#94A3B8", width: 34, textAlign: "right" }}>{d.p}</span>
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              ))}
+              )}
+              {reviewsExibidos.length > 0 && (
+                <div style={{ display: "grid", gap: 16 }}>
+                  {reviewsExibidos.map((r, i) => (
+                    <div key={i} style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 20 }}>
+                      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 10, marginBottom: 10 }}>
+                        <span style={{ font: "700 14.5px Montserrat", color: "#012746" }}>{r.nome}</span>
+                        <span style={{ font: "600 13px Inter", color: "#F05A00", letterSpacing: ".08em" }}>{r.estrelas}</span>
+                      </div>
+                      {r.texto && <p style={{ margin: "0 0 10px", font: "400 14.5px/1.65 Inter", color: "#475569" }}>{r.texto}</p>}
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: 7, font: "500 12px Inter", color: "#94A3B8" }}>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2.6" strokeLinecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
+                        {r.meta}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         <section style={{ marginTop: 72, paddingBottom: 80 }}>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 16, marginBottom: 28 }}>

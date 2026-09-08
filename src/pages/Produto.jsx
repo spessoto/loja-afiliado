@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterCompact } from "../components/Footer.jsx";
 import { pagamentos } from "../data/footerColumns.js";
-import { useProduct, formatBRL } from "../lib/products.js";
+import { useProduct, formatBRL, productImages } from "../lib/products.js";
 
 const fotos = [
   "produto inteiro, 3/4, fundo branco",
@@ -88,11 +88,11 @@ export default function Produto() {
     document.title = product ? `${product.name} — Promo Aspiradores` : "Produto — Promo Aspiradores";
   }, [product]);
 
-  const galeria = labels.map((label, i) => ({
-    label,
-    borda: foto === i ? "#F05A00" : "#E2E8F0",
-    pick: () => setFoto(i)
-  }));
+  const imagens = productImages(product);
+  const temGaleriaReal = imagens.length > 0;
+  const galeria = temGaleriaReal
+    ? imagens.map((url, i) => ({ url, borda: foto === i ? "#F05A00" : "#E2E8F0", pick: () => setFoto(i) }))
+    : labels.map((label, i) => ({ label, borda: foto === i ? "#F05A00" : "#E2E8F0", pick: () => setFoto(i) }));
   const barra = Math.round((restante / 40) * 100) + "%";
 
   const nome = product?.name || "Aspirador Vertical Sem Fio Vertax V12 Ciclônico 450W";
@@ -139,14 +139,16 @@ export default function Produto() {
           <div style={{ display: "grid", gridTemplateColumns: "72px minmax(0,1fr)", gap: 16 }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {galeria.map((g, i) => (
-                <button key={i} onClick={g.pick} style={{ border: `1.5px solid ${g.borda}`, borderRadius: 8, background: "repeating-linear-gradient(135deg,#F8FAFC 0 7px,#F1F5F9 7px 14px)", aspectRatio: "1/1", padding: 6, cursor: "pointer", font: "400 8.5px ui-monospace,monospace", color: "#94A3B8", lineHeight: 1.3, textAlign: "center" }}>{g.label}</button>
+                <button key={i} onClick={g.pick} style={{ border: `1.5px solid ${g.borda}`, borderRadius: 8, background: g.url ? "#fff" : "repeating-linear-gradient(135deg,#F8FAFC 0 7px,#F1F5F9 7px 14px)", aspectRatio: "1/1", padding: g.url ? 0 : 6, cursor: "pointer", font: "400 8.5px ui-monospace,monospace", color: "#94A3B8", lineHeight: 1.3, textAlign: "center", overflow: "hidden" }}>
+                  {g.url ? <img src={g.url} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} /> : g.label}
+                </button>
               ))}
             </div>
             <div>
               <div style={{ position: "relative", border: "1px solid #E2E8F0", borderRadius: 16, overflow: "hidden", background: "#fff" }}>
-                {product?.image_url ? (
+                {temGaleriaReal ? (
                   <div style={{ aspectRatio: "1/1" }}>
-                    <img src={product.image_url} alt={nome} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                    <img src={imagens[foto] || imagens[0]} alt={nome} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                   </div>
                 ) : (
                   <div style={{ aspectRatio: "1/1", background: "repeating-linear-gradient(135deg,#F8FAFC 0 10px,#F1F5F9 10px 20px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: 32 }}>

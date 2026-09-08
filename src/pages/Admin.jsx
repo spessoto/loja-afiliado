@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const empty = { name: "", brand: "", category: "", description: "", image_url: "", affiliate_url: "", price_from: "", price_to: "", installment: "", badge: "" };
+const empty = { name: "", brand: "", category: "", description: "", image_url: "", images: "", affiliate_url: "", price_from: "", price_to: "", installment: "", badge: "" };
 
 export default function Admin() {
   const [token, setToken] = useState(localStorage.getItem("admin_token") || "");
@@ -75,7 +75,8 @@ export default function Admin() {
         <input placeholder="Marca" value={form.brand} onChange={e => setForm({ ...form, brand: e.target.value })} style={inputStyle} />
         <input placeholder="Categoria" value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} style={inputStyle} />
         <input placeholder="Selo (ex: MAIS VENDIDO)" value={form.badge} onChange={e => setForm({ ...form, badge: e.target.value })} style={inputStyle} />
-        <input placeholder="URL da imagem" value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })} style={{ ...inputStyle, gridColumn: "1 / -1" }} />
+        <input placeholder="URL da imagem principal" value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })} style={{ ...inputStyle, gridColumn: "1 / -1" }} />
+        <textarea placeholder="Imagens da galeria (uma URL por linha)" value={form.images} onChange={e => setForm({ ...form, images: e.target.value })} style={{ ...inputStyle, gridColumn: "1 / -1", height: 90 }} />
         <input placeholder="URL de afiliado" value={form.affiliate_url} onChange={e => setForm({ ...form, affiliate_url: e.target.value })} required style={{ ...inputStyle, gridColumn: "1 / -1" }} />
         <input placeholder="Preço de (ex: 1029.90)" value={form.price_from} onChange={e => setForm({ ...form, price_from: e.target.value })} style={inputStyle} />
         <input placeholder="Preço por (ex: 699.90)" value={form.price_to} onChange={e => setForm({ ...form, price_to: e.target.value })} style={inputStyle} />

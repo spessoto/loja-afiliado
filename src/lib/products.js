@@ -29,6 +29,11 @@ export function useProduct(id) {
   return { product, loading };
 }
 
+export function productImages(p) {
+  const extra = (p?.images || "").split("\n").map(s => s.trim()).filter(Boolean);
+  return p?.image_url ? [p.image_url, ...extra.filter(u => u !== p.image_url)] : extra;
+}
+
 export function formatBRL(value) {
   const n = Number(value);
   if (!value || Number.isNaN(n)) return "";

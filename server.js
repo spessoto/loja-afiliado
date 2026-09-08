@@ -29,22 +29,22 @@ app.get("/api/products/:id", async (req, res) => {
 });
 
 app.post("/api/products", requireAdmin, async (req, res) => {
-  const { name, brand, category, description, image_url, affiliate_url, price_from, price_to, installment, badge } = req.body;
+  const { name, brand, category, description, image_url, images, affiliate_url, price_from, price_to, installment, badge } = req.body;
   if (!name || !affiliate_url) return res.status(422).json({ error: "name and affiliate_url are required" });
   const [result] = await pool.query(
-    `INSERT INTO products (name, brand, category, description, image_url, affiliate_url, price_from, price_to, installment, badge)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [name, brand ?? null, category ?? null, description ?? null, image_url ?? null, affiliate_url, price_from ?? null, price_to ?? null, installment ?? null, badge ?? null]
+    `INSERT INTO products (name, brand, category, description, image_url, images, affiliate_url, price_from, price_to, installment, badge)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [name, brand ?? null, category ?? null, description ?? null, image_url ?? null, images ?? null, affiliate_url, price_from ?? null, price_to ?? null, installment ?? null, badge ?? null]
   );
   res.status(201).json({ id: result.insertId });
 });
 
 app.put("/api/products/:id", requireAdmin, async (req, res) => {
-  const { name, brand, category, description, image_url, affiliate_url, price_from, price_to, installment, badge } = req.body;
+  const { name, brand, category, description, image_url, images, affiliate_url, price_from, price_to, installment, badge } = req.body;
   if (!name || !affiliate_url) return res.status(422).json({ error: "name and affiliate_url are required" });
   await pool.query(
-    `UPDATE products SET name=?, brand=?, category=?, description=?, image_url=?, affiliate_url=?, price_from=?, price_to=?, installment=?, badge=? WHERE id=?`,
-    [name, brand ?? null, category ?? null, description ?? null, image_url ?? null, affiliate_url, price_from ?? null, price_to ?? null, installment ?? null, badge ?? null, req.params.id]
+    `UPDATE products SET name=?, brand=?, category=?, description=?, image_url=?, images=?, affiliate_url=?, price_from=?, price_to=?, installment=?, badge=? WHERE id=?`,
+    [name, brand ?? null, category ?? null, description ?? null, image_url ?? null, images ?? null, affiliate_url, price_from ?? null, price_to ?? null, installment ?? null, badge ?? null, req.params.id]
   );
   res.json({ ok: true });
 });

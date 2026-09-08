@@ -6,6 +6,7 @@ export const pool = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+  charset: "utf8mb4",
   waitForConnections: true,
   connectionLimit: 5
 });
@@ -19,6 +20,7 @@ export async function ensureSchema() {
       category VARCHAR(120),
       description TEXT,
       image_url VARCHAR(500),
+      images TEXT,
       affiliate_url VARCHAR(500) NOT NULL,
       price_from DECIMAL(10,2),
       price_to DECIMAL(10,2),
@@ -26,6 +28,8 @@ export async function ensureSchema() {
       badge VARCHAR(120),
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    )
+    ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
   `);
+  await pool.query(`ALTER TABLE products CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS images TEXT`);
 }

@@ -2,8 +2,39 @@ import { useEffect, useState } from "react";
 
 const empty = { name: "", brand: "", category: "", description: "", image_url: "", images: "", affiliate_url: "", price_from: "", price_to: "", installment: "", badge: "", tags: "", specs: "", indicado: "", nao_indicado: "", rating_avg: "", rating_count: "", rating_dist: "", reviews: "" };
 
+function LoginForm({ onLogin }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  async function submit(e) {
+    e.preventDefault();
+    setError("");
+    const res = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ email, password })
+    });
+    if (!res.ok) return setError("E-mail ou senha inválidos");
+    onLogin();
+  }
+
+  return (
+    <div style={{ maxWidth: 360, margin: "80px auto", padding: "40px 24px", fontFamily: "Inter, system-ui, sans-serif" }}>
+      <h1 style={{ font: "800 24px Montserrat, sans-serif", color: "#012746", marginBottom: 20 }}>Admin — Login</h1>
+      <form onSubmit={submit} style={{ display: "grid", gap: 12 }}>
+        <input type="email" placeholder="E-mail" value={email} onChange={e => setEmail(e.target.value)} required style={inputStyle} />
+        <input type="password" placeholder="Senha" value={password} onChange={e => setPassword(e.target.value)} required style={inputStyle} />
+        {error && <p style={{ color: "#DC2626", margin: 0 }}>{error}</p>}
+        <button type="submit" style={btnStyle}>Entrar</button>
+      </form>
+    </div>
+  );
+}
+
 export default function Admin() {
-  const [token, setToken] = useState(localStorage.getItem("admin_token") || "");
+  const [authenticated, setAuthenticated] = useState(null);
   const [products, setProducts] = useState([]);
   const [form, setForm] = useState(empty);
   const [editingId, setEditingId] = useState(null);
@@ -14,15 +45,22 @@ export default function Admin() {
   }, []);
 
   useEffect(() => {
-    if (token) localStorage.setItem("admin_token", token);
-  }, [token]);
+    fetch("/api/session", { credentials: "include" })
+      .then(res => res.json())
+      .then(data => setAuthenticated(data.authenticated));
+  }, []);
+
+  async function logout() {
+    await fetch("/api/logout", { method: "POST", credentials: "include" });
+    setAuthenticated(false);
+  }
 
   async function loadProducts() {
     const res = await fetch("/api/products");
     setProducts(await res.json());
   }
 
-  useEffect(() => { loadProducts(); }, []);
+  useEffect(() => { if (authenticated) loadProducts(); }, [authenticated]);
 
   function startEdit(p) {
     setEditingId(p.id);
@@ -41,7 +79,8 @@ export default function Admin() {
     const url = editingId ? `/api/products/${editingId}` : "/api/products";
     const res = await fetch(url, {
       method,
-      headers: { "Content-Type": "application/json", "x-admin-token": token },
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify(form)
     });
     if (!res.ok) {
@@ -55,18 +94,19 @@ export default function Admin() {
 
   async function remove(id) {
     if (!confirm("Remover este produto?")) return;
-    await fetch(`/api/products/${id}`, { method: "DELETE", headers: { "x-admin-token": token } });
+    await fetch(`/api/products/${id}`, { method: "DELETE", credentials: "include" });
     loadProducts();
   }
 
+  if (authenticated === null) return null;
+  if (!authenticated) return <LoginForm onLogin={() => setAuthenticated(true)} />;
+
   return (
     <div style={{ maxWidth: 960, margin: "0 auto", padding: "40px 24px", fontFamily: "Inter, system-ui, sans-serif" }}>
-      <h1 style={{ font: "800 28px Montserrat, sans-serif", color: "#012746" }}>Admin — Produtos</h1>
-
-      <label style={{ display: "block", margin: "16px 0" }}>
-        Token de admin
-        <input value={token} onChange={e => setToken(e.target.value)} style={{ display: "block", width: "100%", height: 44, padding: "0 12px", border: "1.5px solid #E2E8F0", borderRadius: 8, marginTop: 6 }} />
-      </label>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <h1 style={{ font: "800 28px Montserrat, sans-serif", color: "#012746" }}>Admin — Produtos</h1>
+        <button onClick={logout} style={{ ...btnStyle, background: "#64748B" }}>Sair</button>
+      </div>
 
       {error && <p style={{ color: "#DC2626" }}>{error}</p>}
 

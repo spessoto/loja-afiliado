@@ -1,4 +1,17 @@
 import mysql from "mysql2/promise";
+import crypto from "node:crypto";
+
+export function hashPassword(password) {
+  const salt = crypto.randomBytes(16).toString("hex");
+  const hash = crypto.scryptSync(password, salt, 64).toString("hex");
+  return `${salt}:${hash}`;
+}
+
+export function verifyPassword(password, stored) {
+  const [salt, hash] = stored.split(":");
+  const check = crypto.scryptSync(password, salt, 64).toString("hex");
+  return crypto.timingSafeEqual(Buffer.from(hash, "hex"), Buffer.from(check, "hex"));
+}
 
 export const pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -48,4 +61,17 @@ export async function ensureSchema() {
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS rating_count INT`);
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS rating_dist TEXT`);
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS reviews TEXT`);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS admin_users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      email VARCHAR(255) NOT NULL UNIQUE,
+      password_hash VARCHAR(255) NOT NULL
+    ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+  `);
+  const seedEmail = "agencia@stagesix.com.br";
+  const [existing] = await pool.query("SELECT id FROM admin_users WHERE email = ?", [seedEmail]);
+  if (!existing.length) {
+    await pool.query("INSERT INTO admin_users (email, password_hash) VALUES (?, ?)", [seedEmail, hashPassword("23456")]);
+  }
 }

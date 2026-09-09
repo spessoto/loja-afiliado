@@ -59,7 +59,7 @@ export default function AdminShell({ title, children }) {
   }
 
   if (authenticated === null) return null;
-  if (!authenticated) return <LoginForm onLogin={() => setAuthenticated(true)} />;
+  if (!authenticated) return <LoginForm onLogin={() => window.location.reload()} />;
 
   return (
     <div style={{ display: "grid", gridTemplateColumns: "220px minmax(0,1fr)", minHeight: "100vh", fontFamily: "Inter, system-ui, sans-serif" }}>

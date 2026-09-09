@@ -207,14 +207,16 @@ export default function Produto() {
             </div>
           </div>
 
-          <div>
-            <div style={{ font: "600 11.5px Inter", letterSpacing: ".14em", color: "#94A3B8", marginBottom: 8 }}>{marca}</div>
-            <h1 style={{ margin: "0 0 14px", font: "800 34px/1.18 Montserrat", color: "#012746", letterSpacing: "-.01em", textWrap: "balance" }}>{nome}</h1>
-            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 14, marginBottom: 24 }}>
-              <span style={{ font: "600 15px Inter", color: "#F05A00", letterSpacing: ".1em" }}>{estrelasStr(notaMedia)}</span>
-              <a href="#avaliacoes" style={{ font: "500 13.5px Inter", color: "#475569", textDecoration: "underline" }}>{String(notaMedia).replace(".", ",")} · {totalAvaliacoes.toLocaleString("pt-BR")} avaliações</a>
-              <span style={{ width: 1, height: 16, background: "#E2E8F0" }}></span>
-              <span style={{ font: "400 13.5px Inter", color: "#475569" }}>Cód. 8412-V12</span>
+          <div className="product-info">
+            <div className="product-title-block">
+              <div style={{ font: "600 11.5px Inter", letterSpacing: ".14em", color: "#94A3B8", marginBottom: 8 }}>{marca}</div>
+              <h1 style={{ margin: "0 0 14px", font: "800 34px/1.18 Montserrat", color: "#012746", letterSpacing: "-.01em", textWrap: "balance" }}>{nome}</h1>
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 14, marginBottom: 24 }}>
+                <span style={{ font: "600 15px Inter", color: "#F05A00", letterSpacing: ".1em" }}>{estrelasStr(notaMedia)}</span>
+                <a href="#avaliacoes" style={{ font: "500 13.5px Inter", color: "#475569", textDecoration: "underline" }}>{String(notaMedia).replace(".", ",")} · {totalAvaliacoes.toLocaleString("pt-BR")} avaliações</a>
+                <span style={{ width: 1, height: 16, background: "#E2E8F0" }}></span>
+                <span style={{ font: "400 13.5px Inter", color: "#475569" }}>Cód. 8412-V12</span>
+              </div>
             </div>
 
             <div style={{ border: "1px solid #E2E8F0", borderRadius: 16, padding: 24, boxShadow: "0 4px 20px rgba(1,39,70,.08)" }}>

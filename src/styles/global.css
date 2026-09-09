@@ -159,4 +159,10 @@ summary {
   .gallery-image {
     order: -2;
   }
+  .product-info {
+    display: contents;
+  }
+  .product-title-block {
+    order: -3;
+  }
 }

@@ -218,7 +218,7 @@ export default function Produto() {
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
                 {precoDe && <span style={{ font: "400 15px Inter", color: "#64748B", textDecoration: "line-through" }}>{precoDe}</span>}
               </div>
-              <div style={{ display: "flex", alignItems: "flex-end", gap: 12, flexWrap: "wrap" }}>
+              <div style={{ display: "flex", alignItems: "flex-end", gap: 12, flexWrap: "wrap", marginBottom: 22 }}>
                 <span style={{ font: "800 46px Montserrat", color: "#F05A00", lineHeight: 1 }}>{precoPor}</span>
               </div>
 
@@ -226,12 +226,12 @@ export default function Produto() {
                 COMPRAR AGORA
                 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
               </a>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, margin: "12px 0 18px", font: "400 12.5px Inter", color: "#475569", textAlign: "center" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, margin: "14px 0", font: "400 12.5px Inter", color: "#475569", textAlign: "center" }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round"><path d="M12 3.5l7 2.6v5.4c0 4.3-2.9 7.3-7 9-4.1-1.7-7-4.7-7-9V6.1l7-2.6z"></path></svg>
                 Você finaliza a compra no site oficial da loja parceira
               </div>
-              <div style={{ height: 1, background: "#E2E8F0", margin: "22px 0" }}></div>
-              <div style={{ display: "grid", gap: 14 }}>
+              <div style={{ height: 1, background: "#E2E8F0", margin: "18px 0" }}></div>
+              <div style={{ display: "grid", gap: 16 }}>
                 <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                   <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "none", marginTop: 1 }}><path d="M3 7.5h11v9H3zM14 10.5h4l3 3v3h-7z"></path><circle cx="7" cy="17.4" r="1.6"></circle><circle cx="17.5" cy="17.4" r="1.6"></circle></svg>
                   <span style={{ font: "400 13.5px/1.5 Inter", color: "#475569" }}>O <strong style={{ font: "600 13.5px Inter", color: "#012746" }}>frete é calculado no site da loja parceira</strong>, na finalização da compra.</span>

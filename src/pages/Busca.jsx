@@ -4,7 +4,7 @@ import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import CompareBar from "../components/CompareBar.jsx";
-import { categoriasCol, ajudaCol, institucionalCol, pagamentos } from "../data/footerColumns.js";
+import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { categoriesMenu } from "../data/categoriesMenu.js";
 import { useProducts, toCardProduct, searchProducts } from "../lib/products.js";
 
@@ -43,7 +43,7 @@ export default function Busca() {
         )}
       </main>
 
-      <FooterFull columns={[categoriasCol, ajudaCol, institucionalCol]} payment={pagamentos} />
+      <FooterFull columns={[categoriasCol, institucionalCol]} />
       <CompareBar />
     </>
   );

@@ -3,18 +3,13 @@ import logoFundoEscuro from "../assets/logo-fundo-escuro.png";
 
 const pagamentosPadrao = ["PIX", "VISA", "MASTER", "ELO", "BOLETO"];
 
-export function FooterFull({ columns, payment = pagamentosPadrao }) {
+export function FooterFull({ columns }) {
   return (
     <footer style={{ background: "linear-gradient(180deg,#012746,#001B31)", color: "#B8C5D0" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "56px 24px 32px", display: "grid", gridTemplateColumns: "minmax(240px,1.2fr) repeat(3,minmax(0,1fr))", gap: 40 }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "56px 24px 32px", display: "grid", gridTemplateColumns: `minmax(240px,1.2fr) repeat(${columns.length},minmax(0,1fr))`, gap: 40 }}>
         <div>
           <img src={logoFundoEscuro} alt="Promo Aspiradores" style={{ width: "100%", maxWidth: 230, height: "auto", display: "block", marginBottom: 20 }} />
-          <p style={{ margin: "0 0 20px", font: "400 14px/1.65 Inter", maxWidth: 300 }}>Loja especializada em aspiradores de pó para casa e uso profissional. Curadoria de especialistas, preço competitivo e compra segura.</p>
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-            {payment.map((p, i) => (
-              <span key={i} style={{ padding: "7px 11px", border: "1px solid #1E3A4D", borderRadius: 4, font: "600 11px Inter", letterSpacing: ".06em", color: "#fff" }}>{p}</span>
-            ))}
-          </div>
+          <p style={{ margin: 0, font: "400 14px/1.65 Inter", maxWidth: 300 }}>Loja especializada em aspiradores de pó para casa e uso profissional. Curadoria de especialistas, preço competitivo e compra segura.</p>
         </div>
         {columns.map((col, i) => (
           <div key={i}>
@@ -33,7 +28,7 @@ export function FooterFull({ columns, payment = pagamentosPadrao }) {
       </div>
       <div style={{ borderTop: "1px solid #1E3A4D" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "20px 24px", display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "space-between", font: "400 12.5px Inter", color: "#94A3B8" }}>
-          <span>Promo Aspiradores — CNPJ 00.000.000/0001-00 • Preços e estoque sujeitos a alteração.</span>
+          <span>Promo Aspiradores — Preços e estoque sujeitos a alteração.</span>
           <span>Esta página contém links de afiliados.</span>
         </div>
       </div>

@@ -9,17 +9,6 @@ export const categoriasCol = {
   ]
 };
 
-export const ajudaCol = {
-  t: "AJUDA",
-  links: [
-    { t: "Fale com a gente", to: "/contato" },
-    { t: "Prazos de entrega", to: "/contato" },
-    { t: "Trocas e devoluções", to: "/politica-de-uso" },
-    { t: "Garantia", to: "/politica-de-uso" },
-    { t: "Formas de pagamento", to: "/contato" }
-  ]
-};
-
 export const conteudoCol = {
   t: "CONTEÚDO",
   links: [
@@ -34,6 +23,7 @@ export const conteudoCol = {
 export const institucionalCol = {
   t: "INSTITUCIONAL",
   links: [
+    { t: "Blog", to: "/blog" },
     { t: "Contato", to: "/contato" },
     { t: "Política de privacidade", to: "/politica-de-privacidade" },
     { t: "Política de uso", to: "/politica-de-uso" },

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import FaqAccordion from "../components/FaqAccordion.jsx";
-import { categoriasCol, ajudaCol, institucionalCol, pagamentos } from "../data/footerColumns.js";
+import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { categoriesMenu } from "../data/categoriesMenu.js";
 
 const canais = [
@@ -177,7 +177,7 @@ export default function Contato() {
         </section>
       </main>
 
-      <FooterFull columns={[categoriasCol, ajudaCol, institucionalCol]} payment={pagamentos} />
+      <FooterFull columns={[categoriasCol, institucionalCol]} />
     </>
   );
 }

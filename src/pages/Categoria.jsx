@@ -4,7 +4,7 @@ import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import CompareBar from "../components/CompareBar.jsx";
-import { categoriasCol, ajudaCol, institucionalCol, pagamentos } from "../data/footerColumns.js";
+import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useProducts, toCardProduct, formatBRL } from "../lib/products.js";
 import { categoriesMenu } from "../data/categoriesMenu.js";
 
@@ -255,7 +255,7 @@ export default function Categoria() {
         </div>
       </section>
 
-      <FooterFull columns={[categoriasCol, ajudaCol, institucionalCol]} payment={pagamentos} />
+      <FooterFull columns={[categoriasCol, institucionalCol]} />
       <CompareBar />
     </>
   );

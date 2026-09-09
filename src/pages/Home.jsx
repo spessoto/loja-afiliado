@@ -4,7 +4,7 @@ import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import FaqAccordion from "../components/FaqAccordion.jsx";
-import { pagamentos } from "../data/footerColumns.js";
+import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useProducts, toCardProduct, formatBRL, linhas, parseReviews } from "../lib/products.js";
 import { categoriesMenu } from "../data/categoriesMenu.js";
 
@@ -49,12 +49,6 @@ const faq = [
   { q: "Em quantas vezes eu posso pagar?", a: "Até 10x sem juros no cartão de crédito. No Pix há desconto adicional à vista, informado no momento da finalização." },
   { q: "Como funciona o frete?", a: "Enviamos para todo o Brasil com rastreio. Compras acima de R$ 299 têm frete grátis para as regiões atendidas." },
   { q: "E se o produto apresentar defeito?", a: "Todos os itens têm garantia do fabricante e nota fiscal. Nosso atendimento acompanha o acionamento da garantia do começo ao fim." }
-];
-
-const rodape = [
-  { t: "CATEGORIAS", links: ["Aspirador vertical", "Aspirador robô", "Aspirador portátil", "Extratoras", "Profissionais"].map(t => ({ t })) },
-  { t: "AJUDA", links: ["Central de atendimento", "Prazos de entrega", "Trocas e devoluções", "Garantia", "Formas de pagamento"].map(t => ({ t })) },
-  { t: "A LOJA", links: ["Sobre a Promo Aspiradores", "Guia de compra", "Blog e comparativos", "Política de privacidade", "Fale no WhatsApp"].map(t => ({ t })) }
 ];
 
 function pad(n) {
@@ -315,7 +309,7 @@ export default function Home() {
         </div>
       </section>
 
-      <FooterFull columns={rodape} payment={pagamentos} />
+      <FooterFull columns={[categoriasCol, institucionalCol]} />
     </>
   );
 }

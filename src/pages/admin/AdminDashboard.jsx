@@ -48,7 +48,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     document.title = "Dashboard — Admin Promo Aspiradores";
     fetch("/api/dashboard", { credentials: "include" })
-      .then(res => res.json())
+      .then(res => (res.ok ? res.json() : null))
       .then(setData);
   }, []);
 

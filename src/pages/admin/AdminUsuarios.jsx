@@ -13,7 +13,7 @@ export default function AdminUsuarios() {
   function load() {
     setLoading(true);
     fetch("/api/customers", { credentials: "include" })
-      .then(res => res.json())
+      .then(res => (res.ok ? res.json() : []))
       .then(setCustomers)
       .finally(() => setLoading(false));
   }

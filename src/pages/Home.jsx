@@ -66,7 +66,10 @@ export default function Home() {
   const { products } = useProducts();
   const cards = products.map(toCardProduct);
   const categorias = categoriesMenu
-    .map(nome => ({ nome, qtd: products.filter(p => p.category === nome).length }))
+    .map(nome => {
+      const produtosDaCategoria = products.filter(p => p.category === nome);
+      return { nome, qtd: produtosDaCategoria.length, image_url: produtosDaCategoria.find(p => p.image_url)?.image_url };
+    })
     .filter(c => c.qtd > 0);
   const ofertas = cards.filter(c => c.desconto).slice(0, 4);
   const ofertaIds = new Set(ofertas.map(c => c.id));
@@ -177,7 +180,9 @@ export default function Home() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 24 }}>
           {categorias.length > 0 ? categorias.map((c, i) => (
             <Link key={i} to={`/categoria?cat=${encodeURIComponent(c.nome)}`} className="card-hover" style={{ display: "flex", flexDirection: "column", gap: 14, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
-              <div style={{ aspectRatio: "1/1", borderRadius: 8, background: "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 12, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8" }}>{c.nome.toLowerCase()}</div>
+              <div style={{ aspectRatio: "1/1", borderRadius: 8, overflow: "hidden", background: c.image_url ? "#fff" : "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: c.image_url ? 0 : 12, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8" }}>
+                {c.image_url ? <img src={c.image_url} alt={c.nome} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 14 }} /> : c.nome.toLowerCase()}
+              </div>
               <div>
                 <div style={{ font: "700 15px Montserrat", color: "#012746", marginBottom: 3 }}>{c.nome}</div>
                 <div style={{ font: "400 13px Inter", color: "#475569" }}>{c.qtd} modelo{c.qtd === 1 ? "" : "s"}</div>

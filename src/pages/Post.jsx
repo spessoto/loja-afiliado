@@ -4,7 +4,7 @@ import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import FaqAccordion from "../components/FaqAccordion.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
-import { categoriesMenu } from "../data/categoriesMenu.js";
+import { useCategories } from "../lib/categories.js";
 
 const compartilhar = ["WhatsApp", "Facebook", "Copiar link"];
 
@@ -47,6 +47,7 @@ const maisLidos = [
 
 export default function Post() {
   const [progresso, setProgresso] = useState("0%");
+  const { categories } = useCategories();
 
   useEffect(() => {
     document.title = "Melhor aspirador vertical de 2026: 5 modelos testados — Promo Aspiradores";
@@ -67,7 +68,7 @@ export default function Post() {
     <>
       <Header
         marquee={["GUIAS DE COMPRA ESCRITOS POR ESPECIALISTAS", "ATUALIZADOS TODA SEMANA"]}
-        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
+        categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
         progress={progresso}
       />
 

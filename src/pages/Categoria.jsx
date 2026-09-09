@@ -6,7 +6,7 @@ import ProductCard from "../components/ProductCard.jsx";
 import CompareBar from "../components/CompareBar.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useProducts, toCardProduct, formatBRL } from "../lib/products.js";
-import { categoriesMenu } from "../data/categoriesMenu.js";
+import { useCategories } from "../lib/categories.js";
 
 const guia = [
   { n: "01", t: "Potência real de sucção", s: "Não olhe só os watts do motor. Modelos ciclônicos mantêm a sucção constante mesmo com o reservatório cheio, o que faz mais diferença no dia a dia." },
@@ -42,6 +42,7 @@ export default function Categoria() {
   const [preco, setPreco] = useState(null);
   const [ordem, setOrdem] = useState(ORDENS[0]);
   const { products, loading } = useProducts();
+  const { categories } = useCategories();
 
   useEffect(() => {
     document.title = categoriaAtual
@@ -112,7 +113,7 @@ export default function Categoria() {
     <>
       <Header
         marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL"]}
-        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
+        categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
       />
 
       <div style={{ borderBottom: "1px solid #F1F5F9", background: "#F8FAFC" }}>
@@ -137,19 +138,19 @@ export default function Categoria() {
             )}
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-            {categoriesMenu.map((c, i) => (
+            {categories.map((cat, i) => (
               <Link
                 key={i}
-                to={c === categoriaAtual ? "/categoria" : `/categoria?cat=${encodeURIComponent(c)}`}
+                to={cat.name === categoriaAtual ? "/categoria" : `/categoria?cat=${encodeURIComponent(cat.name)}`}
                 className="pill"
                 style={{
                   display: "inline-flex", alignItems: "center", height: 40, padding: "0 18px", borderRadius: 24,
-                  border: c === categoriaAtual ? "1.5px solid #F05A00" : "1.5px solid #E2E8F0",
-                  background: c === categoriaAtual ? "#FFF7F2" : "#fff",
-                  font: "500 13.5px Inter", color: c === categoriaAtual ? "#F05A00" : "#012746", whiteSpace: "nowrap"
+                  border: cat.name === categoriaAtual ? "1.5px solid #F05A00" : "1.5px solid #E2E8F0",
+                  background: cat.name === categoriaAtual ? "#FFF7F2" : "#fff",
+                  font: "500 13.5px Inter", color: cat.name === categoriaAtual ? "#F05A00" : "#012746", whiteSpace: "nowrap"
                 }}
               >
-                {c}
+                {cat.name}
               </Link>
             ))}
           </div>

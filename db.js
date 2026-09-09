@@ -65,6 +65,8 @@ export async function ensureSchema() {
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS garantia VARCHAR(120)`);
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS potencia VARCHAR(60)`);
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS voltagem VARCHAR(60)`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS view_count INT DEFAULT 0`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS click_count INT DEFAULT 0`);
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS admin_users (
@@ -99,4 +101,20 @@ export async function ensureSchema() {
       UNIQUE KEY uniq_customer_product (customer_id, product_id)
     ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
   `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS categories (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(120) NOT NULL UNIQUE,
+      image_url VARCHAR(500),
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+  `);
+  const [existingCategories] = await pool.query("SELECT COUNT(*) AS n FROM categories");
+  if (existingCategories[0].n === 0) {
+    const seedNames = ["Aspiradores", "Robôs", "Vertical", "Portáteis", "Extratoras", "Profissionais", "Acessórios"];
+    for (const name of seedNames) {
+      await pool.query("INSERT INTO categories (name) VALUES (?)", [name]);
+    }
+  }
 }

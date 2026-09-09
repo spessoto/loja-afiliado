@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
-import { categoriesMenu } from "../data/categoriesMenu.js";
+import { useCategories } from "../lib/categories.js";
 
 function chip(nome, ativo) {
   return { nome, bg: ativo ? "#012746" : "#fff", cor: ativo ? "#fff" : "#012746", borda: ativo ? "#012746" : "#E2E8F0" };
@@ -42,6 +42,8 @@ const essenciais = [
 ];
 
 export default function Blog() {
+  const { categories } = useCategories();
+
   useEffect(() => {
     document.title = "Guias de compra e dicas de limpeza — Blog Promo Aspiradores";
   }, []);
@@ -53,7 +55,7 @@ export default function Blog() {
       <Header
         marquee={["GUIAS DE COMPRA ESCRITOS POR ESPECIALISTAS", "ATUALIZADOS TODA SEMANA"]}
         searchPlaceholder="Buscar guias, comparativos e dicas"
-        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
+        categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
       />
 
       <div style={{ borderBottom: "1px solid #F1F5F9", background: "#F8FAFC" }}>

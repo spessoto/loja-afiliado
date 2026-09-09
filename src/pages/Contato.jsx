@@ -4,7 +4,7 @@ import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import FaqAccordion from "../components/FaqAccordion.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
-import { categoriesMenu } from "../data/categoriesMenu.js";
+import { useCategories } from "../lib/categories.js";
 
 const canais = [
   { t: "WhatsApp", v: "(11) 90000-0000", s: "Nosso canal mais rápido. Resposta em minutos no horário comercial.", href: "#whatsapp", d: "M20 12a8 8 0 10-3.2 6.4L20 20l-1-3.2A7.9 7.9 0 0020 12z" },
@@ -36,6 +36,7 @@ const faq = [
 
 export default function Contato() {
   const [enviado, setEnviado] = useState(false);
+  const { categories } = useCategories();
 
   useEffect(() => {
     document.title = "Fale com a gente — Promo Aspiradores";
@@ -47,7 +48,7 @@ export default function Contato() {
     <>
       <Header
         marquee={["ATENDIMENTO DE SEG A SÁB, 8H ÀS 20H", "RESPOSTA EM ATÉ 1 DIA ÚTIL"]}
-        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
+        categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
       />
 
       <div style={{ borderBottom: "1px solid #F1F5F9", background: "#F8FAFC" }}>

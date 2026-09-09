@@ -6,7 +6,7 @@ import ProductCard from "../components/ProductCard.jsx";
 import FaqAccordion from "../components/FaqAccordion.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useProducts, toCardProduct, formatBRL, linhas, parseReviews } from "../lib/products.js";
-import { categoriesMenu } from "../data/categoriesMenu.js";
+import { useCategories } from "../lib/categories.js";
 
 const heroTrust = ["Frete grátis acima de R$ 299", "Até 10x sem juros", "Garantia e nota fiscal"];
 
@@ -58,11 +58,12 @@ function pad(n) {
 export default function Home() {
   const [left, setLeft] = useState(6 * 3600 + 42 * 60 + 15);
   const { products } = useProducts();
+  const { categories } = useCategories();
   const cards = products.map(toCardProduct);
-  const categorias = categoriesMenu
-    .map(nome => {
-      const produtosDaCategoria = products.filter(p => p.category === nome);
-      return { nome, qtd: produtosDaCategoria.length, image_url: produtosDaCategoria.find(p => p.image_url)?.image_url };
+  const categorias = categories
+    .map(cat => {
+      const produtosDaCategoria = products.filter(p => p.category === cat.name);
+      return { nome: cat.name, qtd: produtosDaCategoria.length, image_url: cat.image_url || produtosDaCategoria.find(p => p.image_url)?.image_url };
     })
     .filter(c => c.qtd > 0);
   const ofertas = cards.filter(c => c.desconto).slice(0, 4);
@@ -113,7 +114,7 @@ export default function Home() {
       <Header
         marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL", "ENVIO PARA TODO O BRASIL", "CURADORIA DE ESPECIALISTAS"]}
         animated
-        categoriesNav={{ menu: categoriesMenu, showAllCategories: true, allCategoriesTo: "#categorias", itemTo: "/categoria", ofertaTo: "#ofertas" }}
+        categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: true, allCategoriesTo: "#categorias", itemTo: "/categoria", ofertaTo: "#ofertas" }}
       />
 
       <section style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>

@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
-import { categoriesMenu } from "../data/categoriesMenu.js";
+import { useCategories } from "../lib/categories.js";
 import { useProducts, formatBRL, parseSpecs } from "../lib/products.js";
 import { useCompare } from "../lib/compare.js";
 
 export default function Comparar() {
   const { ids, toggle, clear } = useCompare();
   const { products, loading } = useProducts();
+  const { categories } = useCategories();
   const selected = ids.map(id => products.find(p => p.id === id)).filter(Boolean);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function Comparar() {
     <>
       <Header
         marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL"]}
-        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
+        categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
       />
 
       <main style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 24px 80px" }}>

@@ -177,6 +177,114 @@ app.delete("/api/products/:id", requireAdmin, async (req, res) => {
   res.json({ ok: true });
 });
 
+app.post("/api/products/:id/view", async (req, res) => {
+  await pool.query("UPDATE products SET view_count = view_count + 1 WHERE id = ?", [req.params.id]);
+  res.json({ ok: true });
+});
+
+app.post("/api/products/:id/click", async (req, res) => {
+  await pool.query("UPDATE products SET click_count = click_count + 1 WHERE id = ?", [req.params.id]);
+  res.json({ ok: true });
+});
+
+app.get("/api/categories", async (_req, res) => {
+  const [rows] = await pool.query("SELECT * FROM categories ORDER BY name ASC");
+  res.json(rows);
+});
+
+app.post("/api/categories", requireAdmin, async (req, res) => {
+  if (!req.body.name) return res.status(422).json({ error: "name is required" });
+  const [result] = await pool.query(
+    "INSERT INTO categories (name, image_url) VALUES (?, ?)",
+    [req.body.name, req.body.image_url || null]
+  );
+  res.status(201).json({ id: result.insertId });
+});
+
+app.put("/api/categories/:id", requireAdmin, async (req, res) => {
+  if (!req.body.name) return res.status(422).json({ error: "name is required" });
+  await pool.query(
+    "UPDATE categories SET name = ?, image_url = ? WHERE id = ?",
+    [req.body.name, req.body.image_url || null, req.params.id]
+  );
+  res.json({ ok: true });
+});
+
+app.delete("/api/categories/:id", requireAdmin, async (req, res) => {
+  await pool.query("DELETE FROM categories WHERE id = ?", [req.params.id]);
+  res.json({ ok: true });
+});
+
+app.get("/api/customers", requireAdmin, async (_req, res) => {
+  const [rows] = await pool.query("SELECT id, name, email, phone, created_at FROM customers ORDER BY created_at DESC");
+  res.json(rows);
+});
+
+app.put("/api/customers/:id", requireAdmin, async (req, res) => {
+  if (!req.body.name || !req.body.email) return res.status(422).json({ error: "name and email are required" });
+  await pool.query(
+    "UPDATE customers SET name = ?, email = ?, phone = ? WHERE id = ?",
+    [req.body.name, req.body.email, req.body.phone || null, req.params.id]
+  );
+  res.json({ ok: true });
+});
+
+app.get("/api/admin-users", requireAdmin, async (_req, res) => {
+  const [rows] = await pool.query("SELECT id, email FROM admin_users ORDER BY email ASC");
+  res.json(rows);
+});
+
+app.post("/api/admin-users", requireAdmin, async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) return res.status(422).json({ error: "email and password are required" });
+  const [existing] = await pool.query("SELECT id FROM admin_users WHERE email = ?", [email]);
+  if (existing.length) return res.status(409).json({ error: "email already registered" });
+  const [result] = await pool.query(
+    "INSERT INTO admin_users (email, password_hash) VALUES (?, ?)",
+    [email, hashPassword(password)]
+  );
+  res.status(201).json({ id: result.insertId });
+});
+
+app.put("/api/admin-users/:id", requireAdmin, async (req, res) => {
+  const { email, password } = req.body;
+  if (!email) return res.status(422).json({ error: "email is required" });
+  if (password) {
+    await pool.query("UPDATE admin_users SET email = ?, password_hash = ? WHERE id = ?", [email, hashPassword(password), req.params.id]);
+  } else {
+    await pool.query("UPDATE admin_users SET email = ? WHERE id = ?", [email, req.params.id]);
+  }
+  res.json({ ok: true });
+});
+
+app.delete("/api/admin-users/:id", requireAdmin, async (req, res) => {
+  const [[{ n }]] = await pool.query("SELECT COUNT(*) AS n FROM admin_users");
+  if (n <= 1) return res.status(422).json({ error: "cannot delete the last remaining admin" });
+  await pool.query("DELETE FROM admin_users WHERE id = ?", [req.params.id]);
+  res.json({ ok: true });
+});
+
+app.get("/api/dashboard", requireAdmin, async (_req, res) => {
+  const [[{ totalProdutos }]] = await pool.query("SELECT COUNT(*) AS totalProdutos FROM products");
+  const [[{ totalCategorias }]] = await pool.query("SELECT COUNT(*) AS totalCategorias FROM categories");
+  const [[{ totalClientes }]] = await pool.query("SELECT COUNT(*) AS totalClientes FROM customers");
+  const [[{ totalFavoritos }]] = await pool.query("SELECT COUNT(*) AS totalFavoritos FROM favorites");
+  const [[{ mediaGeral, somaAvaliacoes }]] = await pool.query(
+    "SELECT COALESCE(SUM(rating_avg * rating_count) / SUM(rating_count), 0) AS mediaGeral, COALESCE(SUM(rating_count), 0) AS somaAvaliacoes FROM products WHERE rating_count > 0"
+  );
+  const [maisVistos] = await pool.query("SELECT id, name, view_count FROM products ORDER BY view_count DESC, id ASC LIMIT 5");
+  const [maisClicados] = await pool.query("SELECT id, name, click_count FROM products ORDER BY click_count DESC, id ASC LIMIT 5");
+  const [maisDesejados] = await pool.query(
+    "SELECT p.id, p.name, COUNT(*) AS favoritos FROM favorites f JOIN products p ON p.id = f.product_id GROUP BY p.id, p.name ORDER BY favoritos DESC LIMIT 5"
+  );
+  res.json({
+    totais: { totalProdutos, totalCategorias, totalClientes, totalFavoritos, mediaGeral: Number(mediaGeral), somaAvaliacoes },
+    maisVistos,
+    maisClicados,
+    maisDesejados
+  });
+});
+
 app.use(express.static(distDir));
 app.get("*", (_req, res) => res.sendFile(path.join(distDir, "index.html")));
 

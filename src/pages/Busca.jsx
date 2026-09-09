@@ -5,13 +5,14 @@ import { FooterFull } from "../components/Footer.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import CompareBar from "../components/CompareBar.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
-import { categoriesMenu } from "../data/categoriesMenu.js";
+import { useCategories } from "../lib/categories.js";
 import { useProducts, toCardProduct, searchProducts } from "../lib/products.js";
 
 export default function Busca() {
   const [params] = useSearchParams();
   const q = params.get("q") || "";
   const { products, loading } = useProducts();
+  const { categories } = useCategories();
   const results = searchProducts(products, q).map(toCardProduct);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function Busca() {
     <>
       <Header
         marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL"]}
-        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
+        categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
       />
 
       <main style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 24px 80px" }}>

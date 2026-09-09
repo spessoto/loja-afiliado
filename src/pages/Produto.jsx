@@ -4,7 +4,7 @@ import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useProduct, formatBRL, productImages, linhas, estrelasStr, parseDist, parseReviews } from "../lib/products.js";
-import { categoriesMenu } from "../data/categoriesMenu.js";
+import { useCategories } from "../lib/categories.js";
 
 const fotos = [
   "produto inteiro, 3/4, fundo branco",
@@ -97,11 +97,16 @@ function parseSpecs(text) {
 export default function Produto() {
   const { id } = useParams();
   const { product, loading } = useProduct(id);
+  const { categories } = useCategories();
   const [foto, setFoto] = useState(0);
 
   useEffect(() => {
     document.title = product ? `${product.name} — Promo Aspiradores` : "Produto — Promo Aspiradores";
   }, [product]);
+
+  useEffect(() => {
+    if (product?.id) fetch(`/api/products/${product.id}/view`, { method: "POST" });
+  }, [product?.id]);
 
   const imagens = productImages(product);
   const temGaleriaReal = imagens.length > 0;
@@ -125,7 +130,8 @@ export default function Produto() {
     : resumo;
   const descricao = product?.description;
   const afiliado = product?.affiliate_url || "#afiliado";
-  const buyProps = product ? { href: afiliado, target: "_blank", rel: "noopener noreferrer" } : { href: "#afiliado" };
+  const registrarClique = () => { if (product?.id) fetch(`/api/products/${product.id}/click`, { method: "POST" }); };
+  const buyProps = product ? { href: afiliado, target: "_blank", rel: "noopener noreferrer", onClick: registrarClique } : { href: "#afiliado" };
 
   const productTags = linhas(product?.tags);
   const tagsExibidas = productTags.length > 0 ? productTags : (product ? [] : tags);
@@ -149,7 +155,7 @@ export default function Produto() {
       <>
         <Header
           marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL"]}
-          categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
+          categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
         />
         <div style={{ maxWidth: 640, margin: "80px auto", textAlign: "center", padding: "0 24px" }}>
           <h1 style={{ font: "800 28px Montserrat, sans-serif", color: "#012746" }}>Produto não encontrado</h1>
@@ -164,7 +170,7 @@ export default function Produto() {
     <>
       <Header
         marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL"]}
-        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
+        categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
       />
 
       <div style={{ borderBottom: "1px solid #F1F5F9", background: "#F8FAFC" }}>

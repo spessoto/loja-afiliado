@@ -16,10 +16,10 @@ function sessionSecret() {
   return process.env.SESSION_SECRET || process.env.ADMIN_TOKEN;
 }
 
-function signSession(email) {
-  const payload = Buffer.from(JSON.stringify({ email, exp: Date.now() + SESSION_MAX_AGE_MS })).toString("base64url");
-  const sig = crypto.createHmac("sha256", sessionSecret()).update(payload).digest("base64url");
-  return `${payload}.${sig}`;
+function signSession(payload) {
+  const data = Buffer.from(JSON.stringify({ ...payload, exp: Date.now() + SESSION_MAX_AGE_MS })).toString("base64url");
+  const sig = crypto.createHmac("sha256", sessionSecret()).update(data).digest("base64url");
+  return `${data}.${sig}`;
 }
 
 function verifySession(token) {
@@ -33,16 +33,23 @@ function verifySession(token) {
   return data;
 }
 
-function getSessionCookie(req) {
+function getCookie(req, name) {
   const raw = req.headers.cookie || "";
-  const match = raw.split(";").map(c => c.trim()).find(c => c.startsWith("admin_session="));
-  return match ? match.slice("admin_session=".length) : null;
+  const match = raw.split(";").map(c => c.trim()).find(c => c.startsWith(`${name}=`));
+  return match ? match.slice(name.length + 1) : null;
 }
 
 function requireAdmin(req, res, next) {
-  if (!verifySession(getSessionCookie(req))) {
+  if (!verifySession(getCookie(req, "admin_session"))) {
     return res.status(401).json({ error: "unauthorized" });
   }
+  next();
+}
+
+function requireCustomer(req, res, next) {
+  const session = verifySession(getCookie(req, "customer_session"));
+  if (!session) return res.status(401).json({ error: "unauthorized" });
+  req.customerId = session.id;
   next();
 }
 
@@ -53,7 +60,7 @@ app.post("/api/login", async (req, res) => {
   if (!rows.length || !verifyPassword(password, rows[0].password_hash)) {
     return res.status(401).json({ error: "invalid credentials" });
   }
-  res.cookie("admin_session", signSession(email), {
+  res.cookie("admin_session", signSession({ email }), {
     httpOnly: true,
     secure: true,
     sameSite: "strict",
@@ -68,7 +75,68 @@ app.post("/api/logout", (_req, res) => {
 });
 
 app.get("/api/session", (req, res) => {
-  res.json({ authenticated: !!verifySession(getSessionCookie(req)) });
+  res.json({ authenticated: !!verifySession(getCookie(req, "admin_session")) });
+});
+
+function setCustomerCookie(res, customer) {
+  res.cookie("customer_session", signSession({ id: customer.id, name: customer.name }), {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    maxAge: SESSION_MAX_AGE_MS
+  });
+}
+
+app.post("/api/register", async (req, res) => {
+  const { name, email, phone, password } = req.body;
+  if (!name || !email || !password) return res.status(422).json({ error: "name, email and password are required" });
+  const [existing] = await pool.query("SELECT id FROM customers WHERE email = ?", [email]);
+  if (existing.length) return res.status(409).json({ error: "email already registered" });
+  const [result] = await pool.query(
+    "INSERT INTO customers (name, email, phone, password_hash) VALUES (?, ?, ?, ?)",
+    [name, email, phone || null, hashPassword(password)]
+  );
+  setCustomerCookie(res, { id: result.insertId, name });
+  res.status(201).json({ ok: true });
+});
+
+app.post("/api/customer-login", async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) return res.status(422).json({ error: "email and password are required" });
+  const [rows] = await pool.query("SELECT id, name, password_hash FROM customers WHERE email = ?", [email]);
+  if (!rows.length || !verifyPassword(password, rows[0].password_hash)) {
+    return res.status(401).json({ error: "invalid credentials" });
+  }
+  setCustomerCookie(res, rows[0]);
+  res.json({ ok: true });
+});
+
+app.post("/api/customer-logout", (_req, res) => {
+  res.clearCookie("customer_session");
+  res.json({ ok: true });
+});
+
+app.get("/api/me", (req, res) => {
+  const session = verifySession(getCookie(req, "customer_session"));
+  res.json(session ? { authenticated: true, name: session.name } : { authenticated: false });
+});
+
+app.get("/api/favorites", requireCustomer, async (req, res) => {
+  const [rows] = await pool.query(
+    "SELECT p.* FROM favorites f JOIN products p ON p.id = f.product_id WHERE f.customer_id = ? ORDER BY f.created_at DESC",
+    [req.customerId]
+  );
+  res.json(rows);
+});
+
+app.post("/api/favorites/:productId", requireCustomer, async (req, res) => {
+  await pool.query("INSERT IGNORE INTO favorites (customer_id, product_id) VALUES (?, ?)", [req.customerId, req.params.productId]);
+  res.json({ ok: true });
+});
+
+app.delete("/api/favorites/:productId", requireCustomer, async (req, res) => {
+  await pool.query("DELETE FROM favorites WHERE customer_id = ? AND product_id = ?", [req.customerId, req.params.productId]);
+  res.json({ ok: true });
 });
 
 app.get("/api/products", async (_req, res) => {

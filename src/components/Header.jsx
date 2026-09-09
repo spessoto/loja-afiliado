@@ -1,5 +1,8 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logoPrincipal from "../assets/logo-principal.png";
+import { useFavorites } from "../lib/favorites.jsx";
+import { useCustomer } from "../lib/customer.js";
 
 function IconSearch() {
   return (
@@ -53,7 +56,24 @@ export default function Header({
   inlineNav = null,
   progress = null
 }) {
-  const noSubmit = (e) => e.preventDefault();
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+  const { favorites } = useFavorites();
+  const { customer, logout } = useCustomer();
+
+  const submitSearch = (e) => {
+    e.preventDefault();
+    if (query.trim()) navigate(`/busca?q=${encodeURIComponent(query.trim())}`);
+  };
+
+  const searchInput = (
+    <input
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      placeholder={searchPlaceholder}
+      style={{ flex: 1, minWidth: 0, border: 0, background: "transparent", outline: "none", font: "400 15px Inter", color: "#1E293B", padding: "0 12px" }}
+    />
+  );
 
   return (
     <>
@@ -88,9 +108,9 @@ export default function Header({
               <img src={logoPrincipal} alt="Promo Aspiradores — qualidade para sua casa" style={{ width: 232, maxWidth: "100%", height: "auto", display: "block" }} />
             </Link>
             {search && (
-              <form onSubmit={noSubmit} style={{ display: "flex", alignItems: "center", background: "#F1F5F9", border: "1.5px solid #E2E8F0", borderRadius: 8, height: 50, padding: "0 4px 0 16px" }}>
+              <form onSubmit={submitSearch} style={{ display: "flex", alignItems: "center", background: "#F1F5F9", border: "1.5px solid #E2E8F0", borderRadius: 8, height: 50, padding: "0 4px 0 16px" }}>
                 <IconSearch />
-                <input placeholder={searchPlaceholder} style={{ flex: 1, minWidth: 0, border: 0, background: "transparent", outline: "none", font: "400 15px Inter", color: "#1E293B", padding: "0 12px" }} />
+                {searchInput}
                 <button className="btn-search" style={{ height: 42, padding: "0 22px", border: 0, borderRadius: 6, background: "#012746", color: "#fff", font: "700 13px Montserrat", letterSpacing: ".06em", cursor: "pointer" }}>BUSCAR</button>
               </form>
             )}
@@ -112,21 +132,31 @@ export default function Header({
             <Link to="/" style={{ display: "block" }}>
               <img src={logoPrincipal} alt="Promo Aspiradores — qualidade para sua casa" style={{ width: "100%", maxWidth: 232, height: "auto", display: "block" }} />
             </Link>
-            <form onSubmit={noSubmit} style={{ display: "flex", alignItems: "center", gap: 0, background: "#F1F5F9", border: "1.5px solid #E2E8F0", borderRadius: 8, height: 50, padding: "0 4px 0 16px" }}>
+            <form onSubmit={submitSearch} style={{ display: "flex", alignItems: "center", gap: 0, background: "#F1F5F9", border: "1.5px solid #E2E8F0", borderRadius: 8, height: 50, padding: "0 4px 0 16px" }}>
               <IconSearch />
-              <input placeholder={searchPlaceholder} style={{ flex: 1, minWidth: 0, border: 0, background: "transparent", outline: "none", font: "400 15px Inter", color: "#1E293B", padding: "0 12px" }} />
+              {searchInput}
               <button className="btn-search" style={{ height: 42, padding: "0 22px", border: 0, borderRadius: 6, background: "#012746", color: "#fff", font: "700 13px Montserrat", letterSpacing: ".06em", cursor: "pointer" }}>BUSCAR</button>
             </form>
             {account && (
               <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-                <a href="#conta" style={{ display: "flex", alignItems: "center", gap: 9 }}>
-                  <IconAccount />
-                  <span style={{ font: "500 12.5px Inter", lineHeight: 1.25, color: "#475569" }}>Entrar<br /><strong style={{ font: "700 13px Montserrat", color: "#012746" }}>Minha conta</strong></span>
-                </a>
-                <a href="#favoritos" style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                {customer ? (
+                  <button type="button" onClick={() => logout().then(() => navigate("/"))} style={{ display: "flex", alignItems: "center", gap: 9, border: 0, background: "transparent", cursor: "pointer", padding: 0 }}>
+                    <IconAccount />
+                    <span style={{ font: "500 12.5px Inter", lineHeight: 1.25, color: "#475569", textAlign: "left" }}>Olá, {customer.name.split(" ")[0]}<br /><strong style={{ font: "700 13px Montserrat", color: "#012746" }}>Sair</strong></span>
+                  </button>
+                ) : (
+                  <Link to="/cadastro" style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                    <IconAccount />
+                    <span style={{ font: "500 12.5px Inter", lineHeight: 1.25, color: "#475569" }}>Entrar<br /><strong style={{ font: "700 13px Montserrat", color: "#012746" }}>Minha conta</strong></span>
+                  </Link>
+                )}
+                <Link to="/favoritos" style={{ display: "flex", alignItems: "center", gap: 9, position: "relative" }}>
                   <IconHeart />
+                  {favorites.length > 0 && (
+                    <span style={{ position: "absolute", top: -6, left: 12, minWidth: 16, height: 16, padding: "0 4px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 10px Inter", display: "flex", alignItems: "center", justifyContent: "center" }}>{favorites.length}</span>
+                  )}
                   <span style={{ font: "500 12.5px Inter", lineHeight: 1.25, color: "#475569" }}>Lista de<br /><strong style={{ font: "700 13px Montserrat", color: "#012746" }}>Favoritos</strong></span>
-                </a>
+                </Link>
               </div>
             )}
           </div>

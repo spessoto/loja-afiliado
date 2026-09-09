@@ -40,6 +40,23 @@ export function formatBRL(value) {
   return n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
+export function parseSpecs(text) {
+  return (text || "").split("\n").map(l => l.trim()).filter(Boolean).reduce((acc, line) => {
+    const i = line.indexOf(":");
+    if (i === -1) return acc;
+    acc[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+    return acc;
+  }, {});
+}
+
+export function searchProducts(products, query) {
+  const q = (query || "").trim().toLowerCase();
+  if (!q) return products;
+  return products.filter(p =>
+    [p.name, p.brand, p.category, p.description].some(f => (f || "").toLowerCase().includes(q))
+  );
+}
+
 export function toCardProduct(p) {
   const hasDiscount = p.price_from && p.price_to && Number(p.price_from) > Number(p.price_to);
   const desconto = hasDiscount ? "-" + Math.round((1 - p.price_to / p.price_from) * 100) + "%" : "";

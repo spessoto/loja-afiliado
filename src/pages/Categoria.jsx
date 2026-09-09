@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import ProductCard from "../components/ProductCard.jsx";
+import CompareBar from "../components/CompareBar.jsx";
 import { categoriasCol, ajudaCol, institucionalCol, pagamentos } from "../data/footerColumns.js";
 import { useProducts, toCardProduct } from "../lib/products.js";
 
@@ -188,6 +189,7 @@ export default function Categoria() {
       </section>
 
       <FooterFull columns={[categoriasCol, ajudaCol, institucionalCol]} payment={pagamentos} />
+      <CompareBar />
     </>
   );
 }

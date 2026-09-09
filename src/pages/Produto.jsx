@@ -50,8 +50,7 @@ const naoIndicado = [
 ];
 
 const resumo = [
-  { k: "Preço no Pix", v: "R$ 699,90" },
-  { k: "Parcelado", v: "10x R$ 69,99" },
+  { k: "Parcelamento", v: "10x R$ 69,99" },
   { k: "Frete", v: "Grátis" },
   { k: "Garantia", v: "12 meses" }
 ];
@@ -132,6 +131,13 @@ export default function Produto() {
   const precoDe = product ? formatBRL(product.price_from) : "R$ 1.029,90";
   const precoPor = product ? formatBRL(product.price_to) || "R$ 699,90" : "R$ 699,90";
   const parcela = product?.installment || "10x de R$ 69,99";
+  const resumoExibido = product
+    ? [
+        { k: "Parcelamento", v: parcela },
+        ...(product.frete ? [{ k: "Frete", v: product.frete }] : []),
+        ...(product.garantia ? [{ k: "Garantia", v: product.garantia }] : [])
+      ]
+    : resumo;
   const descricao = product?.description;
   const afiliado = product?.affiliate_url || "#afiliado";
   const buyProps = product ? { href: afiliado, target: "_blank", rel: "noopener noreferrer" } : { href: "#afiliado" };
@@ -349,7 +355,7 @@ export default function Produto() {
               <div style={{ font: "700 11px Montserrat", letterSpacing: ".12em", color: "#F05A00", marginBottom: 10 }}>RESUMO DA OFERTA</div>
               <div style={{ font: "800 24px/1.25 Montserrat", marginBottom: 16 }}>{precoPor}</div>
               <div style={{ display: "grid", gap: 9, marginBottom: 20 }}>
-                {resumo.map((r, i) => (
+                {resumoExibido.map((r, i) => (
                   <span key={i} style={{ display: "flex", justifyContent: "space-between", gap: 12, font: "400 13.5px Inter", color: "#B8C5D0" }}>
                     <span>{r.k}</span><strong style={{ font: "600 13.5px Inter", color: "#fff" }}>{r.v}</strong>
                   </span>

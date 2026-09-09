@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const empty = { name: "", brand: "", category: "", description: "", image_url: "", images: "", affiliate_url: "", price_from: "", price_to: "", installment: "", badge: "", tags: "", specs: "", indicado: "", nao_indicado: "", rating_avg: "", rating_count: "", rating_dist: "", reviews: "" };
+const empty = { name: "", brand: "", category: "", description: "", image_url: "", images: "", affiliate_url: "", price_from: "", price_to: "", installment: "", badge: "", tags: "", specs: "", indicado: "", nao_indicado: "", rating_avg: "", rating_count: "", rating_dist: "", reviews: "", frete: "", garantia: "" };
 
 function LoginForm({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -121,6 +121,8 @@ export default function Admin() {
         <input placeholder="Preço de (ex: 1029.90)" value={form.price_from} onChange={e => setForm({ ...form, price_from: e.target.value })} style={inputStyle} />
         <input placeholder="Preço por (ex: 699.90)" value={form.price_to} onChange={e => setForm({ ...form, price_to: e.target.value })} style={inputStyle} />
         <input placeholder="Parcelamento (ex: 10x de R$ 69,99)" value={form.installment} onChange={e => setForm({ ...form, installment: e.target.value })} style={{ ...inputStyle, gridColumn: "1 / -1" }} />
+        <input placeholder="Frete (ex: Grátis) — deixe em branco para ocultar" value={form.frete} onChange={e => setForm({ ...form, frete: e.target.value })} style={inputStyle} />
+        <input placeholder="Garantia (ex: 12 meses) — deixe em branco para ocultar" value={form.garantia} onChange={e => setForm({ ...form, garantia: e.target.value })} style={inputStyle} />
         <textarea placeholder="Descrição" value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} style={{ ...inputStyle, gridColumn: "1 / -1", height: 90 }} />
         <textarea placeholder="Tags (uma por linha, ex: Sem fio HEPA lavável)" value={form.tags} onChange={e => setForm({ ...form, tags: e.target.value })} style={{ ...inputStyle, gridColumn: "1 / -1", height: 70 }} />
         <textarea placeholder="Especificações técnicas (uma por linha, formato: Chave: Valor)" value={form.specs} onChange={e => setForm({ ...form, specs: e.target.value })} style={{ ...inputStyle, gridColumn: "1 / -1", height: 110 }} />

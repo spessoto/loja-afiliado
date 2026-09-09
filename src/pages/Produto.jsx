@@ -184,7 +184,7 @@ export default function Produto() {
               ))}
             </div>
             <div className="gallery-main">
-              <div style={{ position: "relative", border: "1px solid #E2E8F0", borderRadius: 16, overflow: "hidden", background: "#fff" }}>
+              <div className="gallery-image" style={{ position: "relative", border: "1px solid #E2E8F0", borderRadius: 16, overflow: "hidden", background: "#fff" }}>
                 {temGaleriaReal ? (
                   <div style={{ aspectRatio: "1/1" }}>
                     <img src={imagens[foto] || imagens[0]} alt={nome} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
@@ -196,7 +196,7 @@ export default function Produto() {
                   </div>
                 )}
               </div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 16 }}>
+              <div className="gallery-tags" style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 16 }}>
                 {tagsExibidas.map((t, i) => (
                   <span key={i} style={{ display: "flex", alignItems: "center", gap: 7, padding: "8px 13px", border: "1px solid #E2E8F0", borderRadius: 24, background: "#F8FAFC", font: "500 12.5px Inter", color: "#012746" }}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F05A00" strokeWidth="2.6" strokeLinecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>

@@ -100,7 +100,19 @@ summary {
   }
   .header-inner {
     padding: 10px 16px !important;
-    gap: 10px !important;
+    gap: 8px !important;
+    grid-template-columns: 1fr auto !important;
+    grid-template-areas: "logo account" "search search" !important;
+  }
+  .header-logo-link {
+    grid-area: logo;
+  }
+  .header-search {
+    grid-area: search;
+  }
+  .header-account {
+    grid-area: account;
+    justify-self: end;
   }
   .header-logo {
     max-width: 130px !important;
@@ -135,12 +147,16 @@ summary {
     max-height: none !important;
     overflow-x: auto !important;
     overflow-y: visible !important;
+    order: -1;
   }
   .gallery-thumb {
     width: 56px !important;
     flex: none !important;
   }
   .gallery-main {
-    order: -1;
+    display: contents;
+  }
+  .gallery-image {
+    order: -2;
   }
 }

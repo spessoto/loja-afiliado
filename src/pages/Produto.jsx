@@ -45,7 +45,6 @@ const naoIndicado = [
 
 const resumo = [
   { k: "Parcelamento", v: "10x R$ 69,99" },
-  { k: "Frete", v: "Grátis" },
   { k: "Garantia", v: "12 meses" }
 ];
 
@@ -114,7 +113,6 @@ export default function Produto() {
   const resumoExibido = product
     ? [
         ...(parcela ? [{ k: "Parcelamento", v: parcela }] : []),
-        ...(product.frete ? [{ k: "Frete", v: product.frete }] : []),
         ...(product.garantia ? [{ k: "Garantia", v: product.garantia }] : [])
       ]
     : resumo;
@@ -238,14 +236,10 @@ export default function Produto() {
               </div>
               <div style={{ height: 1, background: "#E2E8F0", margin: "22px 0" }}></div>
               <div style={{ display: "grid", gap: 14 }}>
-                {(!product || product.frete) && (
-                  <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "none", marginTop: 1 }}><path d="M3 7.5h11v9H3zM14 10.5h4l3 3v3h-7z"></path><circle cx="7" cy="17.4" r="1.6"></circle><circle cx="17.5" cy="17.4" r="1.6"></circle></svg>
-                    <span style={{ font: "400 13.5px/1.5 Inter", color: "#475569" }}>
-                      {product ? <><strong style={{ font: "600 13.5px Inter", color: "#012746" }}>Frete:</strong> {product.frete}</> : <><strong style={{ font: "600 13.5px Inter", color: "#012746" }}>Frete grátis</strong> para todo o Brasil.</>}
-                    </span>
-                  </div>
-                )}
+                <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "none", marginTop: 1 }}><path d="M3 7.5h11v9H3zM14 10.5h4l3 3v3h-7z"></path><circle cx="7" cy="17.4" r="1.6"></circle><circle cx="17.5" cy="17.4" r="1.6"></circle></svg>
+                  <span style={{ font: "400 13.5px/1.5 Inter", color: "#475569" }}>O <strong style={{ font: "600 13.5px Inter", color: "#012746" }}>frete é calculado no site da loja parceira</strong>, na finalização da compra.</span>
+                </div>
                 <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                   <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "none", marginTop: 1 }}><path d="M12 3.5l2.6 1.9 3.2-.2.9 3.1 2.3 2.2-1.6 2.8.4 3.2-3.1 1-2 2.5-3-1.2-3 1.2-2-2.5-3.1-1 .4-3.2L2 10.5l2.3-2.2.9-3.1 3.2.2z"></path></svg>
                   <span style={{ font: "400 13.5px/1.5 Inter", color: "#475569" }}><strong style={{ font: "600 13.5px Inter", color: "#012746" }}>12 meses de garantia</strong> do fabricante, com nota fiscal.</span>

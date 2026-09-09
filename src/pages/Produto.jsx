@@ -5,6 +5,7 @@ import { FooterFull } from "../components/Footer.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useProduct, formatBRL, productImages, linhas, estrelasStr, parseDist, parseReviews } from "../lib/products.js";
 import { useCategories } from "../lib/categories.js";
+import ImageLightbox from "../components/ImageLightbox.jsx";
 
 const fotos = [
   "produto inteiro, 3/4, fundo branco",
@@ -88,6 +89,7 @@ export default function Produto() {
   const { product, loading } = useProduct(id);
   const { categories } = useCategories();
   const [foto, setFoto] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
     document.title = product ? `${product.name} — Promo Aspiradores` : "Produto — Promo Aspiradores";
@@ -171,7 +173,7 @@ export default function Produto() {
         <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,1.15fr) minmax(340px,.85fr)", gap: 48, alignItems: "start" }}>
 
           <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "72px minmax(0,1fr)", gap: 16 }}>
-            <div className="gallery-thumbs" style={{ display: "flex", flexDirection: "column", gap: 12, maxHeight: galeria.length > 7 ? 576 : "none", overflowY: galeria.length > 7 ? "auto" : "visible", paddingRight: galeria.length > 7 ? 4 : 0 }}>
+            <div className="gallery-thumbs" style={{ display: "flex", flexDirection: "column", gap: 12, maxHeight: galeria.length > 7 ? 492 : "none", overflowY: galeria.length > 7 ? "auto" : "visible", paddingRight: galeria.length > 7 ? 4 : 0 }}>
               {galeria.map((g, i) => (
                 <button key={i} onClick={g.pick} className="gallery-thumb" style={{ flex: "none", width: 72, border: `1.5px solid ${g.borda}`, borderRadius: 8, background: g.url ? "#fff" : "repeating-linear-gradient(135deg,#F8FAFC 0 7px,#F1F5F9 7px 14px)", aspectRatio: "1/1", padding: g.url ? 0 : 6, cursor: "pointer", font: "400 8.5px ui-monospace,monospace", color: "#94A3B8", lineHeight: 1.3, textAlign: "center", overflow: "hidden" }}>
                   {g.url ? <img src={g.url} alt="" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} /> : g.label}
@@ -181,7 +183,7 @@ export default function Produto() {
             <div className="gallery-main">
               <div className="gallery-image" style={{ position: "relative", border: "1px solid #E2E8F0", borderRadius: 16, overflow: "hidden", background: "#fff" }}>
                 {temGaleriaReal ? (
-                  <div style={{ aspectRatio: "1/1" }}>
+                  <div style={{ aspectRatio: "1/1", cursor: "zoom-in" }} onClick={() => setLightboxOpen(true)}>
                     <img src={imagens[foto] || imagens[0]} alt={nome} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
                   </div>
                 ) : (
@@ -430,6 +432,10 @@ export default function Produto() {
       </div>
 
       <FooterFull columns={[categoriasCol, institucionalCol]} />
+
+      {lightboxOpen && temGaleriaReal && (
+        <ImageLightbox images={imagens} index={foto} onIndexChange={setFoto} onClose={() => setLightboxOpen(false)} alt={nome} />
+      )}
     </>
   );
 }

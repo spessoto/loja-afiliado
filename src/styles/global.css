@@ -90,4 +90,8 @@ summary {
   .stack-mobile {
     grid-template-columns: 1fr !important;
   }
+  .sticky-desktop {
+    position: static !important;
+    top: auto !important;
+  }
 }

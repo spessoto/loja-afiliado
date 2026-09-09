@@ -280,7 +280,7 @@ export default function Post() {
               </section>
             </div>
 
-            <aside style={{ position: "sticky", top: 96, display: "grid", gap: 20 }}>
+            <aside className="sticky-desktop" style={{ position: "sticky", top: 96, display: "grid", gap: 20 }}>
               <div style={{ background: "linear-gradient(160deg,#012746,#001B31)", borderRadius: 16, padding: 24, color: "#fff" }}>
                 <div style={{ font: "700 11px Montserrat", letterSpacing: ".12em", color: "#F05A00", marginBottom: 14 }}>MELHOR ESCOLHA DO TESTE</div>
                 <div style={{ borderRadius: 10, background: "rgba(255,255,255,.06)", border: "1px solid #1E3A4D", aspectRatio: "1/1", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 16, font: "400 10.5px ui-monospace,monospace", color: "#7A8B99", letterSpacing: ".06em", marginBottom: 16 }}>FOTO DO PRODUTO<br />fundo escuro</div>

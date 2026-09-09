@@ -316,7 +316,7 @@ export default function Produto() {
             )}
           </div>
 
-          <aside style={{ position: "sticky", top: 24, display: "grid", gap: 16 }}>
+          <aside className="sticky-desktop" style={{ position: "sticky", top: 24, display: "grid", gap: 16 }}>
             <div style={{ background: "linear-gradient(160deg,#012746,#001B31)", borderRadius: 16, padding: 24, color: "#fff" }}>
               <div style={{ font: "700 11px Montserrat", letterSpacing: ".12em", color: "#F05A00", marginBottom: 10 }}>RESUMO DA OFERTA</div>
               <div style={{ font: "800 24px/1.25 Montserrat", marginBottom: 16 }}>{precoPor}</div>

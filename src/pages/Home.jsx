@@ -5,7 +5,7 @@ import { FooterFull } from "../components/Footer.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import FaqAccordion from "../components/FaqAccordion.jsx";
 import { pagamentos } from "../data/footerColumns.js";
-import { useProducts, toCardProduct } from "../lib/products.js";
+import { useProducts, toCardProduct, formatBRL } from "../lib/products.js";
 import { categoriesMenu } from "../data/categoriesMenu.js";
 
 const heroTrust = ["Frete grátis acima de R$ 299", "Até 10x sem juros", "Garantia e nota fiscal"];
@@ -58,6 +58,12 @@ export default function Home() {
     .filter(c => c.qtd > 0);
   const ofertas = cards.slice(0, 4);
   const vendidos = cards.slice(4, 8);
+  const heroProduct = products.length > 0
+    ? products[Math.floor(Date.now() / 3600000) % products.length]
+    : null;
+  const heroDesconto = heroProduct?.price_from && heroProduct?.price_to && Number(heroProduct.price_from) > Number(heroProduct.price_to)
+    ? Math.round((1 - heroProduct.price_to / heroProduct.price_from) * 100)
+    : 0;
 
   useEffect(() => {
     document.title = "Promo Aspiradores — Encontre o aspirador ideal para sua casa";
@@ -105,15 +111,28 @@ export default function Home() {
             </div>
           </div>
           <div style={{ position: "relative" }}>
-            <div style={{ aspectRatio: "4/3.4", borderRadius: 16, border: "1px solid #E2E8F0", background: "repeating-linear-gradient(135deg,#F1F5F9 0 9px,#E9EFF5 9px 18px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: 24 }}>
-              <span style={{ font: "500 12px ui-monospace,SFMono-Regular,monospace", letterSpacing: ".1em", color: "#94A3B8" }}>FOTO PRINCIPAL DO HERO</span>
-              <span style={{ font: "400 12px ui-monospace,monospace", color: "#94A3B8", maxWidth: 260, lineHeight: 1.6 }}>ambiente doméstico real — sala com tapete, aspirador vertical em uso, luz natural</span>
-            </div>
-            <div style={{ position: "absolute", left: -16, bottom: 28, background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, padding: "14px 18px", boxShadow: "0 8px 28px rgba(1,39,70,.12)" }}>
-              <div style={{ font: "500 11.5px Inter", color: "#475569", letterSpacing: ".04em" }}>A PARTIR DE</div>
-              <div style={{ font: "800 26px Montserrat", color: "#F05A00", lineHeight: 1.15 }}>R$ 289<span style={{ fontSize: 16 }}>,90</span></div>
-              <div style={{ font: "400 12px Inter", color: "#475569" }}>ou 10x de R$ 28,99</div>
-            </div>
+            <Link to={heroProduct ? `/produto/${heroProduct.id}` : "/categoria"} style={{ aspectRatio: "4/3.4", borderRadius: 16, border: "1px solid #E2E8F0", overflow: "hidden", background: heroProduct?.image_url ? "#fff" : "repeating-linear-gradient(135deg,#F1F5F9 0 9px,#E9EFF5 9px 18px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: heroProduct?.image_url ? 0 : 24 }}>
+              {heroProduct?.image_url ? (
+                <img src={heroProduct.image_url} alt={heroProduct.name} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 32 }} />
+              ) : heroProduct ? (
+                <span style={{ font: "600 15px Montserrat", color: "#012746", maxWidth: 260 }}>{heroProduct.name}</span>
+              ) : (
+                <>
+                  <span style={{ font: "500 12px ui-monospace,SFMono-Regular,monospace", letterSpacing: ".1em", color: "#94A3B8" }}>FOTO PRINCIPAL DO HERO</span>
+                  <span style={{ font: "400 12px ui-monospace,monospace", color: "#94A3B8", maxWidth: 260, lineHeight: 1.6 }}>Cadastre um produto para exibir aqui</span>
+                </>
+              )}
+            </Link>
+            {heroProduct && (
+              <div style={{ position: "absolute", left: -16, bottom: 28, background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, padding: "14px 18px", boxShadow: "0 8px 28px rgba(1,39,70,.12)", maxWidth: 220 }}>
+                {heroDesconto > 0 && (
+                  <div style={{ display: "inline-block", background: "#F05A00", color: "#fff", font: "800 10.5px Montserrat", letterSpacing: ".06em", padding: "3px 8px", borderRadius: 4, marginBottom: 6 }}>-{heroDesconto}%</div>
+                )}
+                <div style={{ font: "600 12.5px Inter", color: "#012746", marginBottom: 6, lineHeight: 1.3, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical" }}>{heroProduct.name}</div>
+                <div style={{ font: "800 26px Montserrat", color: "#F05A00", lineHeight: 1.15 }}>{formatBRL(heroProduct.price_to)}</div>
+                {heroProduct.installment && <div style={{ font: "400 12px Inter", color: "#475569" }}>{heroProduct.installment}</div>}
+              </div>
+            )}
           </div>
         </div>
       </section>

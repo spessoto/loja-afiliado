@@ -65,7 +65,6 @@ export default function PoliticaCookies() {
       description="Quais cookies usamos, para que servem e como você pode aceitar, recusar ou mudar de opinião quando quiser."
       breadcrumbLabel="Política de Cookies e Dados"
       toc={toc}
-      activeFooter="/politica-de-cookies"
       sidebarExtra={
         <div style={{ display: "grid", gap: 8 }}>
           <Link to="/politica-de-privacidade" style={{ font: "600 13.5px Inter", color: "#F05A00" }}>Política de Privacidade →</Link>

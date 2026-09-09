@@ -29,7 +29,6 @@ export default function PoliticaUso() {
       description="As regras para navegar e usar o site da Promo Aspiradores: como funcionam nossas recomendações, os links de afiliado e as responsabilidades de cada parte."
       breadcrumbLabel="Política de Uso"
       toc={toc}
-      activeFooter="/politica-de-uso"
       sidebarExtra={
         <>
           <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 20, background: "#F8FAFC" }}>

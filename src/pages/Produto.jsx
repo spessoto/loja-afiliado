@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
-import { FooterCompact } from "../components/Footer.jsx";
-import { pagamentos } from "../data/footerColumns.js";
+import { FooterFull } from "../components/Footer.jsx";
+import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useProduct, formatBRL, productImages, linhas, estrelasStr, parseDist, parseReviews } from "../lib/products.js";
 import { categoriesMenu } from "../data/categoriesMenu.js";
 
@@ -155,7 +155,7 @@ export default function Produto() {
           <h1 style={{ font: "800 28px Montserrat, sans-serif", color: "#012746" }}>Produto não encontrado</h1>
           <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", marginTop: 16, height: 48, padding: "0 24px", alignItems: "center", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat" }}>Ver aspiradores</Link>
         </div>
-        <FooterCompact payment={pagamentos} />
+        <FooterFull columns={[categoriasCol, institucionalCol]} />
       </>
     );
   }
@@ -458,7 +458,7 @@ export default function Produto() {
         </div>
       </div>
 
-      <FooterCompact payment={pagamentos} />
+      <FooterFull columns={[categoriasCol, institucionalCol]} />
     </>
   );
 }

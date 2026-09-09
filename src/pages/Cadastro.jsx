@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header.jsx";
-import { FooterCompact } from "../components/Footer.jsx";
+import { FooterFull } from "../components/Footer.jsx";
+import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { categoriesMenu } from "../data/categoriesMenu.js";
 
 const inputStyle = { height: 50, padding: "0 16px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "400 15px Inter", color: "#1E293B", outline: "none" };
@@ -96,7 +97,7 @@ export default function Cadastro() {
         <p style={{ marginTop: 40 }}><Link to="/" style={{ font: "400 13.5px Inter", color: "#94A3B8" }}>← Voltar para a loja</Link></p>
       </main>
 
-      <FooterCompact />
+      <FooterFull columns={[categoriasCol, institucionalCol]} />
     </>
   );
 }

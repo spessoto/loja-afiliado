@@ -9,17 +9,6 @@ export const categoriasCol = {
   ]
 };
 
-export const conteudoCol = {
-  t: "CONTEÚDO",
-  links: [
-    { t: "Blog", to: "/blog" },
-    { t: "Comparativos", to: "/blog" },
-    { t: "Guias de compra", to: "/blog" },
-    { t: "Dicas de limpeza", to: "/blog" },
-    { t: "Fale com a gente", to: "/contato" }
-  ]
-};
-
 export const institucionalCol = {
   t: "INSTITUCIONAL",
   links: [
@@ -32,4 +21,3 @@ export const institucionalCol = {
   ]
 };
 
-export const pagamentos = ["PIX", "VISA", "MASTER", "ELO", "BOLETO"];

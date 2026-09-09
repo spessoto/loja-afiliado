@@ -31,7 +31,6 @@ export default function PoliticaPrivacidade() {
       description="Como a Promo Aspiradores coleta, usa, guarda e protege os seus dados pessoais, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018)."
       breadcrumbLabel="Política de Privacidade"
       toc={toc}
-      activeFooter="/politica-de-privacidade"
       sidebarExtra={
         <>
           <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 20, background: "#F8FAFC" }}>

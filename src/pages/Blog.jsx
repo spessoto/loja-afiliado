@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
-import { categoriasCol, conteudoCol, institucionalCol } from "../data/footerColumns.js";
+import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { categoriesMenu } from "../data/categoriesMenu.js";
 
 function chip(nome, ativo) {
@@ -206,7 +206,7 @@ export default function Blog() {
         </section>
       </main>
 
-      <FooterFull columns={[categoriasCol, conteudoCol, institucionalCol]} />
+      <FooterFull columns={[categoriasCol, institucionalCol]} />
     </>
   );
 }

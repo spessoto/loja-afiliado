@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import Header from "./Header.jsx";
-import { FooterPolicy } from "./Footer.jsx";
+import { FooterFull } from "./Footer.jsx";
+import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { categoriesMenu } from "../data/categoriesMenu.js";
 
-export default function PolicyLayout({ title, description, updated = "Última atualização: 5 de setembro de 2026", breadcrumbLabel, toc, sidebarExtra, children, activeFooter }) {
+export default function PolicyLayout({ title, description, updated = "Última atualização: 5 de setembro de 2026", breadcrumbLabel, toc, sidebarExtra, children }) {
   return (
     <>
       <Header
@@ -46,7 +47,7 @@ export default function PolicyLayout({ title, description, updated = "Última at
         </article>
       </main>
 
-      <FooterPolicy active={activeFooter} />
+      <FooterFull columns={[categoriasCol, institucionalCol]} />
     </>
   );
 }

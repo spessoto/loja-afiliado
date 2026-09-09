@@ -1,21 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import CompareBar from "../components/CompareBar.jsx";
 import { categoriasCol, ajudaCol, institucionalCol, pagamentos } from "../data/footerColumns.js";
-import { useProducts, toCardProduct } from "../lib/products.js";
+import { useProducts, toCardProduct, formatBRL } from "../lib/products.js";
 import { categoriesMenu } from "../data/categoriesMenu.js";
-
-const subcategorias = ["Sem fio", "2 em 1", "Para pets", "Pó e água", "Até R$ 500", "Com filtro HEPA"];
-
-const filtroDefs = [
-  { titulo: "MARCA", opcoes: [["Vertax", "42"], ["Nordika", "28"], ["Domus", "24"], ["Laris", "19"], ["Cyclon Pro", "15"]] },
-  { titulo: "PARA QUEM TEM", opcoes: [["Pets em casa", "61"], ["Tapetes e carpetes", "48"], ["Apartamento pequeno", "37"], ["Carro", "29"]] },
-  { titulo: "AUTONOMIA", opcoes: [["Até 30 min", "34"], ["30 a 45 min", "52"], ["Acima de 45 min", "42"]] },
-  { titulo: "RECURSOS", opcoes: [["Filtro HEPA", "88"], ["Escova antiemaranhado", "54"], ["Base de parede", "47"], ["Bateria removível", "31"], ["Função pó e água", "22"]] }
-];
 
 const guia = [
   { n: "01", t: "Potência real de sucção", s: "Não olhe só os watts do motor. Modelos ciclônicos mantêm a sucção constante mesmo com o reservatório cheio, o que faz mais diferença no dia a dia." },
@@ -23,37 +14,99 @@ const guia = [
   { n: "03", t: "Escova certa para o seu piso", s: "Tapete e pelo de animal pedem escova motorizada antiemaranhado. Piso frio e laminado funcionam bem com escova macia comum." }
 ];
 
-const paginas = ["1", "2", "3", "…", "15"];
+function linhas(text) {
+  return (text || "").split("\n").map(s => s.trim()).filter(Boolean);
+}
 
-function brl(n) {
-  return "R$ " + n.toLocaleString("pt-BR") + ",00";
+const ORDENS = ["Mais relevantes", "Menor preço", "Maior preço", "Melhor avaliados", "Maior desconto"];
+
+function ordenar(lista, ordem) {
+  const copia = [...lista];
+  switch (ordem) {
+    case "Menor preço": return copia.sort((a, b) => (Number(a.price_to) || Infinity) - (Number(b.price_to) || Infinity));
+    case "Maior preço": return copia.sort((a, b) => (Number(b.price_to) || 0) - (Number(a.price_to) || 0));
+    case "Melhor avaliados": return copia.sort((a, b) => (Number(b.rating_avg) || 0) - (Number(a.rating_avg) || 0));
+    case "Maior desconto": return copia.sort((a, b) => {
+      const dA = a.price_from && a.price_to ? 1 - a.price_to / a.price_from : 0;
+      const dB = b.price_from && b.price_to ? 1 - b.price_to / b.price_from : 0;
+      return dB - dA;
+    });
+    default: return copia;
+  }
 }
 
 export default function Categoria() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoriaAtual = searchParams.get("cat") || "";
   const [sel, setSel] = useState({});
-  const [preco, setPreco] = useState(2000);
-  const [ordem, setOrdem] = useState("Mais relevantes");
-  const { products } = useProducts();
-  const produtosBase = products.map(toCardProduct);
+  const [preco, setPreco] = useState(null);
+  const [ordem, setOrdem] = useState(ORDENS[0]);
+  const { products, loading } = useProducts();
 
   useEffect(() => {
-    document.title = "Aspiradores verticais sem fio — Promo Aspiradores";
-  }, []);
+    document.title = categoriaAtual
+      ? `${categoriaAtual} — Promo Aspiradores`
+      : "Todos os aspiradores — Promo Aspiradores";
+  }, [categoriaAtual]);
 
-  const toggle = (key) => setSel((s) => ({ ...s, [key]: !s[key] }));
+  useEffect(() => {
+    setSel({});
+    setPreco(null);
+  }, [categoriaAtual]);
+
+  const naCategoria = categoriaAtual
+    ? products.filter(p => (p.category || "").toLowerCase() === categoriaAtual.toLowerCase())
+    : products;
+
+  const marcas = [...new Set(naCategoria.map(p => p.brand).filter(Boolean))]
+    .sort()
+    .map(marca => ({ label: marca, qtd: naCategoria.filter(p => p.brand === marca).length }));
+
+  const tagCounts = {};
+  naCategoria.forEach(p => linhas(p.tags).forEach(tag => { tagCounts[tag] = (tagCounts[tag] || 0) + 1; }));
+  const recursos = Object.entries(tagCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8)
+    .map(([label, qtd]) => ({ label, qtd }));
+
+  const grupos = [
+    marcas.length > 0 && { titulo: "MARCA", opcoes: marcas },
+    recursos.length > 0 && { titulo: "RECURSOS", opcoes: recursos }
+  ].filter(Boolean);
+
+  const precosReais = naCategoria.map(p => Number(p.price_to)).filter(n => n > 0);
+  const precoMin = precosReais.length ? Math.floor(Math.min(...precosReais) / 50) * 50 : 0;
+  const precoMax = precosReais.length ? Math.ceil(Math.max(...precosReais) / 50) * 50 : 0;
+  const precoAtual = preco ?? precoMax;
+
+  const toggle = (grupoTitulo, label) => {
+    const key = grupoTitulo + "|" + label;
+    setSel(s => ({ ...s, [key]: !s[key] }));
+  };
 
   const ativos = [];
-  const grupos = filtroDefs.map((g) => ({
-    titulo: g.titulo,
-    opcoes: g.opcoes.map(([label, qtd]) => {
-      const key = g.titulo + "|" + label;
-      const on = !!sel[key];
-      if (on) ativos.push({ label, key });
-      return { label, qtd, on, key };
-    })
+  grupos.forEach(g => g.opcoes.forEach(o => {
+    if (sel[g.titulo + "|" + o.label]) ativos.push({ grupo: g.titulo, label: o.label, key: g.titulo + "|" + o.label });
   }));
   const temFiltro = ativos.length > 0;
-  const limpar = () => { setSel({}); setPreco(2000); };
+  const limpar = () => { setSel({}); setPreco(null); };
+
+  const filtrados = naCategoria.filter(p => {
+    if (precosReais.length && Number(p.price_to) > precoAtual) return false;
+    const marcasSelecionadas = ativos.filter(a => a.grupo === "MARCA").map(a => a.label);
+    if (marcasSelecionadas.length && !marcasSelecionadas.includes(p.brand)) return false;
+    const recursosSelecionados = ativos.filter(a => a.grupo === "RECURSOS").map(a => a.label);
+    if (recursosSelecionados.length) {
+      const tagsProduto = linhas(p.tags);
+      if (!recursosSelecionados.some(r => tagsProduto.includes(r))) return false;
+    }
+    return true;
+  });
+
+  const produtosExibidos = ordenar(filtrados, ordem).map(toCardProduct);
+
+  const breadcrumbLabel = categoriaAtual || "Todos os produtos";
+  const titulo = categoriaAtual || "Todos os aspiradores";
 
   return (
     <>
@@ -65,18 +118,39 @@ export default function Categoria() {
       <div style={{ borderBottom: "1px solid #F1F5F9", background: "#F8FAFC" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "11px 24px", display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", font: "400 13px Inter", color: "#475569" }}>
           <Link to="/">Home</Link><span style={{ color: "#94A3B8" }}>/</span>
-          <Link to="/categoria">Aspiradores</Link><span style={{ color: "#94A3B8" }}>/</span>
-          <span style={{ color: "#012746", fontWeight: 500 }}>Vertical sem fio</span>
+          <Link to="/categoria">Aspiradores</Link>
+          {categoriaAtual && (
+            <>
+              <span style={{ color: "#94A3B8" }}>/</span>
+              <span style={{ color: "#012746", fontWeight: 500 }}>{breadcrumbLabel}</span>
+            </>
+          )}
         </div>
       </div>
 
       <section style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "36px 24px 32px" }}>
-          <h1 style={{ margin: "0 0 12px", font: "800 40px/1.1 Montserrat", color: "#012746", letterSpacing: "-.02em" }}>Aspiradores verticais sem fio</h1>
-          <p style={{ margin: "0 0 24px", maxWidth: 680, font: "400 16px/1.65 Inter", color: "#475569" }}>Leves, práticos e sem cabo para atrapalhar. São a melhor escolha para a limpeza rápida do dia a dia em casas e apartamentos, principalmente para quem tem pets. <strong style={{ fontWeight: 600, color: "#012746" }}>{produtosBase.length} modelos</strong> disponíveis.</p>
+          <h1 style={{ margin: "0 0 12px", font: "800 40px/1.1 Montserrat", color: "#012746", letterSpacing: "-.02em" }}>{titulo}</h1>
+          <p style={{ margin: "0 0 24px", maxWidth: 680, font: "400 16px/1.65 Inter", color: "#475569" }}>
+            {loading ? "Carregando produtos..." : (
+              <><strong style={{ fontWeight: 600, color: "#012746" }}>{naCategoria.length} modelo{naCategoria.length === 1 ? "" : "s"}</strong> disponíve{naCategoria.length === 1 ? "l" : "is"}{categoriaAtual ? ` na categoria ${categoriaAtual}` : ""}.</>
+            )}
+          </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-            {subcategorias.map((s, i) => (
-              <Link key={i} to="/categoria" className="pill" style={{ display: "inline-flex", alignItems: "center", height: 40, padding: "0 18px", borderRadius: 24, border: "1.5px solid #E2E8F0", background: "#fff", font: "500 13.5px Inter", color: "#012746", whiteSpace: "nowrap" }}>{s}</Link>
+            {categoriesMenu.map((c, i) => (
+              <Link
+                key={i}
+                to={c === categoriaAtual ? "/categoria" : `/categoria?cat=${encodeURIComponent(c)}`}
+                className="pill"
+                style={{
+                  display: "inline-flex", alignItems: "center", height: 40, padding: "0 18px", borderRadius: 24,
+                  border: c === categoriaAtual ? "1.5px solid #F05A00" : "1.5px solid #E2E8F0",
+                  background: c === categoriaAtual ? "#FFF7F2" : "#fff",
+                  font: "500 13.5px Inter", color: c === categoriaAtual ? "#F05A00" : "#012746", whiteSpace: "nowrap"
+                }}
+              >
+                {c}
+              </Link>
             ))}
           </div>
         </div>
@@ -87,13 +161,15 @@ export default function Categoria() {
         <aside style={{ display: "grid", gap: 12 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
             <span style={{ font: "700 16px Montserrat", color: "#012746" }}>Filtrar</span>
-            <button onClick={limpar} style={{ border: 0, background: "transparent", font: "500 13px Inter", color: "#F05A00", cursor: "pointer", textDecoration: "underline", padding: 0 }}>Limpar filtros</button>
+            {(temFiltro || preco !== null) && (
+              <button onClick={limpar} style={{ border: 0, background: "transparent", font: "500 13px Inter", color: "#F05A00", cursor: "pointer", textDecoration: "underline", padding: 0 }}>Limpar filtros</button>
+            )}
           </div>
 
           {temFiltro && (
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8, paddingBottom: 4 }}>
               {ativos.map((a, i) => (
-                <button key={i} onClick={() => toggle(a.key)} style={{ display: "inline-flex", alignItems: "center", gap: 8, height: 32, padding: "0 12px", border: "1px solid #FFD9C2", borderRadius: 20, background: "#FFF7F2", font: "500 12.5px Inter", color: "#012746", cursor: "pointer" }}>
+                <button key={i} onClick={() => toggle(a.grupo, a.label)} style={{ display: "inline-flex", alignItems: "center", gap: 8, height: 32, padding: "0 12px", border: "1px solid #FFD9C2", borderRadius: 20, background: "#FFF7F2", font: "500 12.5px Inter", color: "#012746", cursor: "pointer" }}>
                   {a.label}
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#F05A00" strokeWidth="3" strokeLinecap="round"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"></path></svg>
                 </button>
@@ -110,7 +186,7 @@ export default function Categoria() {
               <div style={{ display: "grid", gap: 11, marginTop: 14 }}>
                 {g.opcoes.map((o, j) => (
                   <label key={j} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", font: "400 13.5px Inter", color: "#475569" }}>
-                    <input type="checkbox" checked={o.on} onChange={() => toggle(o.key)} style={{ width: 17, height: 17, accentColor: "#F05A00", cursor: "pointer", flex: "none" }} />
+                    <input type="checkbox" checked={!!sel[g.titulo + "|" + o.label]} onChange={() => toggle(g.titulo, o.label)} style={{ width: 17, height: 17, accentColor: "#F05A00", cursor: "pointer", flex: "none" }} />
                     <span style={{ flex: 1 }}>{o.label}</span>
                     <span style={{ font: "400 12px Inter", color: "#94A3B8" }}>{o.qtd}</span>
                   </label>
@@ -119,59 +195,50 @@ export default function Categoria() {
             </details>
           ))}
 
-          <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: "16px 18px" }}>
-            <div style={{ font: "700 14px Montserrat", color: "#012746", letterSpacing: ".03em", marginBottom: 14 }}>FAIXA DE PREÇO</div>
-            <input type="range" min="200" max="3000" step="50" value={preco} onChange={(e) => setPreco(Number(e.target.value))} style={{ width: "100%", accentColor: "#F05A00", cursor: "pointer" }} />
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: 10, font: "500 13px Inter", color: "#475569" }}>
-              <span>R$ 200</span>
-              <strong style={{ font: "700 13.5px Montserrat", color: "#F05A00" }}>até {brl(preco)}</strong>
+          {precosReais.length > 0 && precoMax > precoMin && (
+            <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: "16px 18px" }}>
+              <div style={{ font: "700 14px Montserrat", color: "#012746", letterSpacing: ".03em", marginBottom: 14 }}>FAIXA DE PREÇO</div>
+              <input type="range" min={precoMin} max={precoMax} step="10" value={precoAtual} onChange={(e) => setPreco(Number(e.target.value))} style={{ width: "100%", accentColor: "#F05A00", cursor: "pointer" }} />
+              <div style={{ display: "flex", justifyContent: "space-between", marginTop: 10, font: "500 13px Inter", color: "#475569" }}>
+                <span>{formatBRL(precoMin)}</span>
+                <strong style={{ font: "700 13.5px Montserrat", color: "#F05A00" }}>até {formatBRL(precoAtual)}</strong>
+              </div>
             </div>
-          </div>
+          )}
         </aside>
 
         <div>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16, paddingBottom: 20, borderBottom: "1px solid #E2E8F0" }}>
-            <span style={{ font: "400 14px Inter", color: "#475569" }}><strong style={{ font: "600 14px Inter", color: "#012746" }}>{produtosBase.length} produtos</strong> encontrados</span>
+            <span style={{ font: "400 14px Inter", color: "#475569" }}><strong style={{ font: "600 14px Inter", color: "#012746" }}>{produtosExibidos.length} produto{produtosExibidos.length === 1 ? "" : "s"}</strong> encontrado{produtosExibidos.length === 1 ? "" : "s"}</span>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <span style={{ font: "500 13.5px Inter", color: "#475569" }}>Ordenar por</span>
               <select value={ordem} onChange={(e) => setOrdem(e.target.value)} style={{ height: 44, padding: "0 14px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "500 13.5px Inter", color: "#012746", cursor: "pointer", outline: "none" }}>
-                <option>Mais relevantes</option>
-                <option>Menor preço</option>
-                <option>Maior preço</option>
-                <option>Mais vendidos</option>
-                <option>Melhor avaliados</option>
-                <option>Maior desconto</option>
+                {ORDENS.map(o => <option key={o}>{o}</option>)}
               </select>
             </div>
           </div>
 
-          {produtosBase.length > 0 ? (
+          {loading ? (
+            <p style={{ padding: "24px 0", font: "400 15px Inter", color: "#94A3B8" }}>Carregando produtos...</p>
+          ) : produtosExibidos.length > 0 ? (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(232px,1fr))", gap: 24, padding: "24px 0 0" }}>
-              {produtosBase.map((p) => <ProductCard key={p.id} p={p} />)}
+              {produtosExibidos.map((p) => <ProductCard key={p.id} p={p} />)}
+            </div>
+          ) : naCategoria.length > 0 ? (
+            <div style={{ padding: "40px 0", textAlign: "center" }}>
+              <p style={{ margin: "0 0 14px", font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto encontrado com esses filtros.</p>
+              <button onClick={limpar} style={{ border: 0, background: "transparent", font: "600 14px Inter", color: "#F05A00", cursor: "pointer", textDecoration: "underline" }}>Limpar filtros</button>
             </div>
           ) : (
-            <p style={{ padding: "24px 0", font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto cadastrado ainda.</p>
+            <p style={{ padding: "24px 0", font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto cadastrado {categoriaAtual ? `em ${categoriaAtual}` : "ainda"}.</p>
           )}
-
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20, padding: "40px 0 8px" }}>
-            <div style={{ width: "100%", maxWidth: 320 }}>
-              <div style={{ height: 7, borderRadius: 4, background: "#E2E8F0", overflow: "hidden" }}><div style={{ height: "100%", width: "33%", background: "#F05A00", borderRadius: 4 }}></div></div>
-              <div style={{ textAlign: "center", marginTop: 10, font: "400 13px Inter", color: "#475569" }}>Mostrando {produtosBase.length} de {produtosBase.length} produtos</div>
-            </div>
-            <button className="btn-outline-navy" style={{ height: 52, padding: "0 36px", border: "1.5px solid #012746", borderRadius: 8, background: "#fff", font: "700 14.5px Montserrat", letterSpacing: ".04em", color: "#012746", cursor: "pointer" }}>CARREGAR MAIS PRODUTOS</button>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              {paginas.map((pg, i) => (
-                <Link key={i} to="/categoria" className="page-link" style={{ display: "flex", alignItems: "center", justifyContent: "center", minWidth: 40, height: 40, padding: "0 10px", border: "1.5px solid #E2E8F0", borderRadius: 8, font: "600 13.5px Inter", color: "#475569" }}>{pg}</Link>
-              ))}
-            </div>
-          </div>
         </div>
       </main>
 
       <section style={{ margin: "64px 0 0", background: "#F8FAFC", borderTop: "1px solid #E2E8F0", borderBottom: "1px solid #E2E8F0" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px", display: "grid", gridTemplateColumns: "minmax(0,.8fr) minmax(0,1.2fr)", gap: 48 }}>
           <div>
-            <h2 style={{ margin: "0 0 10px", font: "700 30px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Como escolher um aspirador vertical</h2>
+            <h2 style={{ margin: "0 0 10px", font: "700 30px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Como escolher o aspirador certo</h2>
             <p style={{ margin: 0, font: "400 15.5px/1.65 Inter", color: "#475569" }}>Três critérios resolvem 90% da decisão. O resto é preferência.</p>
           </div>
           <div style={{ display: "grid", gap: 14 }}>

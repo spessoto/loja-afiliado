@@ -10,15 +10,6 @@ import { categoriesMenu } from "../data/categoriesMenu.js";
 
 const heroTrust = ["Frete grátis acima de R$ 299", "Até 10x sem juros", "Garantia e nota fiscal"];
 
-const categorias = [
-  { nome: "Vertical", qtd: "128 modelos", ph: "aspirador vertical" },
-  { nome: "Robô", qtd: "64 modelos", ph: "aspirador robô" },
-  { nome: "Portátil", qtd: "91 modelos", ph: "aspirador portátil" },
-  { nome: "Tradicional", qtd: "73 modelos", ph: "aspirador de arraste" },
-  { nome: "Extratoras", qtd: "38 modelos", ph: "extratora de sofá" },
-  { nome: "Profissionais", qtd: "45 modelos", ph: "aspirador pó e água" }
-];
-
 const necessidades = [
   { i: "01", t: "Para pelos de animais", s: "Escova antiemaranhado" },
   { i: "02", t: "Para carros", s: "Portáteis e sem fio" },
@@ -62,6 +53,9 @@ export default function Home() {
   const [left, setLeft] = useState(6 * 3600 + 42 * 60 + 15);
   const { products } = useProducts();
   const cards = products.map(toCardProduct);
+  const categorias = categoriesMenu
+    .map(nome => ({ nome, qtd: products.filter(p => p.category === nome).length }))
+    .filter(c => c.qtd > 0);
   const ofertas = cards.slice(0, 4);
   const vendidos = cards.slice(4, 8);
 
@@ -82,7 +76,7 @@ export default function Home() {
       <Header
         marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL", "ENVIO PARA TODO O BRASIL", "CURADORIA DE ESPECIALISTAS"]}
         animated
-        categoriesNav={{ menu: categoriesMenu, showAllCategories: true, allCategoriesTo: "#categorias", itemTo: "/produto", ofertaTo: "#ofertas" }}
+        categoriesNav={{ menu: categoriesMenu, showAllCategories: true, allCategoriesTo: "#categorias", itemTo: "/categoria", ofertaTo: "#ofertas" }}
       />
 
       <section style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>
@@ -128,15 +122,17 @@ export default function Home() {
         <h2 style={{ margin: "0 0 8px", font: "700 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Compre por tipo de aspirador</h2>
         <p style={{ margin: "0 0 32px", font: "400 16px Inter", color: "#475569" }}>Seis categorias, sem enrolação. Escolha pelo formato que combina com a sua casa.</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 24 }}>
-          {categorias.map((c, i) => (
-            <Link key={i} to="/categoria" className="card-hover" style={{ display: "flex", flexDirection: "column", gap: 14, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
-              <div style={{ aspectRatio: "1/1", borderRadius: 8, background: "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 12, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8" }}>{c.ph}</div>
+          {categorias.length > 0 ? categorias.map((c, i) => (
+            <Link key={i} to={`/categoria?cat=${encodeURIComponent(c.nome)}`} className="card-hover" style={{ display: "flex", flexDirection: "column", gap: 14, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
+              <div style={{ aspectRatio: "1/1", borderRadius: 8, background: "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 12, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8" }}>{c.nome.toLowerCase()}</div>
               <div>
                 <div style={{ font: "700 15px Montserrat", color: "#012746", marginBottom: 3 }}>{c.nome}</div>
-                <div style={{ font: "400 13px Inter", color: "#475569" }}>{c.qtd}</div>
+                <div style={{ font: "400 13px Inter", color: "#475569" }}>{c.qtd} modelo{c.qtd === 1 ? "" : "s"}</div>
               </div>
             </Link>
-          ))}
+          )) : (
+            <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto cadastrado ainda.</p>
+          )}
         </div>
       </section>
 

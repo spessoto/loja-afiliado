@@ -175,7 +175,7 @@ export default function Header({
                 </>
               )}
               {categoriesNav.menu.map((item, i) => (
-                <NavA key={i} to={categoriesNav.itemTo} className="hover-orange" style={{ padding: "13px 0", font: "500 14px Inter", color: "#475569", whiteSpace: "nowrap" }}>{item}</NavA>
+                <NavA key={i} to={`${categoriesNav.itemTo || "/categoria"}?cat=${encodeURIComponent(item)}`} className="hover-orange" style={{ padding: "13px 0", font: "500 14px Inter", color: "#475569", whiteSpace: "nowrap" }}>{item}</NavA>
               ))}
               <NavA to={categoriesNav.ofertaTo || categoriesNav.itemTo} style={{ marginLeft: "auto", padding: "13px 0", font: "800 13px Montserrat", letterSpacing: ".05em", color: "#F05A00", whiteSpace: "nowrap" }}>OFERTAS DA SEMANA</NavA>
             </div>

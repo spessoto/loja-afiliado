@@ -16,7 +16,8 @@ export default function Comparar() {
     document.title = "Comparar produtos — Promo Aspiradores";
   }, []);
 
-  const allSpecKeys = [...new Set(selected.flatMap(p => Object.keys(parseSpecs(p.specs))))];
+  const allSpecKeys = [...new Set(selected.flatMap(p => Object.keys(parseSpecs(p.specs))))]
+    .filter(key => !/^(marca|categoria)$/i.test(key));
   const specsByProduct = selected.map(p => parseSpecs(p.specs));
 
   return (

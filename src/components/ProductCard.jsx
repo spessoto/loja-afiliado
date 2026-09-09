@@ -34,7 +34,7 @@ export default function ProductCard({ p, priceColor = "#F05A00", to, showCompare
         <label
           onClick={(e) => e.stopPropagation()}
           title={!comparing && ids.length >= max ? `Máximo de ${max} produtos na comparação` : "Comparar"}
-          style={{ position: "absolute", top: 12, left: 12, zIndex: 3, display: "flex", alignItems: "center", gap: 6, padding: "5px 9px", borderRadius: 20, background: "rgba(255,255,255,.95)", border: "1px solid #E2E8F0", font: "600 11px Inter", color: "#012746", cursor: !comparing && ids.length >= max ? "not-allowed" : "pointer" }}
+          style={{ position: "absolute", top: 54, right: 12, zIndex: 3, display: "flex", alignItems: "center", gap: 6, padding: "5px 9px", borderRadius: 20, background: "rgba(255,255,255,.95)", border: "1px solid #E2E8F0", font: "600 11px Inter", color: "#012746", cursor: !comparing && ids.length >= max ? "not-allowed" : "pointer" }}
         >
           <input
             type="checkbox"

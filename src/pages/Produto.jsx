@@ -44,7 +44,6 @@ const naoIndicado = [
 ];
 
 const resumo = [
-  { k: "Parcelamento", v: "10x R$ 69,99" },
   { k: "Garantia", v: "12 meses" }
 ];
 
@@ -109,10 +108,8 @@ export default function Produto() {
   const categoria = product?.category || "Vertical sem fio";
   const precoDe = product ? formatBRL(product.price_from) : "R$ 1.029,90";
   const precoPor = product ? formatBRL(product.price_to) || "R$ 699,90" : "R$ 699,90";
-  const parcela = product ? (product.installment || "") : "10x de R$ 69,99";
   const resumoExibido = product
     ? [
-        ...(parcela ? [{ k: "Parcelamento", v: parcela }] : []),
         ...(product.garantia ? [{ k: "Garantia", v: product.garantia }] : [])
       ]
     : resumo;
@@ -224,7 +221,6 @@ export default function Produto() {
               <div style={{ display: "flex", alignItems: "flex-end", gap: 12, flexWrap: "wrap" }}>
                 <span style={{ font: "800 46px Montserrat", color: "#F05A00", lineHeight: 1 }}>{precoPor}</span>
               </div>
-              {parcela && <div style={{ font: "500 15px Inter", color: "#1E293B", margin: "8px 0 20px" }}>ou <strong style={{ font: "700 15px Montserrat", color: "#012746" }}>{parcela}</strong></div>}
 
               <a {...buyProps} className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, height: 56, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 17px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.3)" }}>
                 COMPRAR AGORA
@@ -423,7 +419,6 @@ export default function Produto() {
               <div style={{ font: "600 13.5px Inter", color: "#1E293B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 340 }}>{nome}</div>
               <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
                 <span style={{ font: "800 20px Montserrat", color: "#F05A00" }}>{precoPor}</span>
-                {parcela && <span style={{ font: "400 12.5px Inter", color: "#475569" }}>{parcela}</span>}
               </div>
             </div>
           </div>

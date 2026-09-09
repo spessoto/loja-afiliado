@@ -17,13 +17,6 @@ const labels = ["produto 3/4", "escova", "reservatório", "em uso", "acessórios
 
 const tags = ["Indicado para pets", "Sem saco", "Filtro HEPA lavável", "45 min de bateria"];
 
-const destaques = [
-  { v: "450W", l: "Potência de sucção ciclônica" },
-  { v: "45 min", l: "Autonomia no modo padrão" },
-  { v: "1,8 kg", l: "Peso, sobe escada tranquilo" },
-  { v: "72 dB", l: "Ruído, aprovado em apartamento" }
-];
-
 const specsBase = [
   { k: "Tipo", v: "Vertical sem fio 2 em 1" },
   { k: "Potência", v: "450W (motor digital)" },
@@ -77,8 +70,6 @@ const relacionados = [
   { marca: "LARIS", nome: "Extratora Laris Sofá & Estofados 1.400W 2L", desconto: "-15%", estrelas: "★★★★☆", avaliacoes: "(741)", por: "R$ 799,00", parcela: "ou 10x de R$ 79,90 sem juros" }
 ];
 
-const restante = 12;
-
 function paragrafos(text) {
   return (text || "")
     .replace(/\r\n/g, "\n")
@@ -113,7 +104,6 @@ export default function Produto() {
   const galeria = temGaleriaReal
     ? imagens.map((url, i) => ({ url, borda: foto === i ? "#F05A00" : "#E2E8F0", pick: () => setFoto(i) }))
     : labels.map((label, i) => ({ label, borda: foto === i ? "#F05A00" : "#E2E8F0", pick: () => setFoto(i) }));
-  const barra = Math.round((restante / 40) * 100) + "%";
 
   const nome = product?.name || "Aspirador Vertical Sem Fio Vertax V12 Ciclônico 450W";
   const marca = product?.brand || "VERTAX";
@@ -244,8 +234,6 @@ export default function Produto() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round"><path d="M12 3.5l7 2.6v5.4c0 4.3-2.9 7.3-7 9-4.1-1.7-7-4.7-7-9V6.1l7-2.6z"></path></svg>
                 Você finaliza a compra no site oficial da loja parceira
               </div>
-              <a href="#comparar" className="btn-outline-navy" style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 48, borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 14.5px Montserrat" }}>COMPARAR COM OUTROS MODELOS</a>
-
               <div style={{ height: 1, background: "#E2E8F0", margin: "22px 0" }}></div>
               <div style={{ display: "grid", gap: 14 }}>
                 <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
@@ -260,16 +248,6 @@ export default function Produto() {
                   <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" style={{ flex: "none", marginTop: 1 }}><path d="M12 4v8l5 3"></path><circle cx="12" cy="12" r="8.5"></circle></svg>
                   <span style={{ font: "400 13.5px/1.5 Inter", color: "#475569" }}><strong style={{ font: "600 13.5px Inter", color: "#012746" }}>30 dias</strong> para trocar ou devolver sem custo.</span>
                 </div>
-              </div>
-            </div>
-
-            <div style={{ marginTop: 16, border: "1px solid #FFD9C2", background: "#FFF7F2", borderRadius: 12, padding: "16px 18px" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 10 }}>
-                <span style={{ font: "700 13.5px Montserrat", color: "#012746" }}>Últimas unidades neste preço</span>
-                <span style={{ font: "600 13px Inter", color: "#F05A00" }}>{restante} de 40</span>
-              </div>
-              <div style={{ height: 8, borderRadius: 4, background: "#FFE2D0", overflow: "hidden" }}>
-                <div style={{ height: "100%", width: barra, background: "linear-gradient(90deg,#F05A00,#FF7A00)", borderRadius: 4 }}></div>
               </div>
             </div>
           </div>
@@ -288,14 +266,6 @@ export default function Produto() {
                 <p style={{ margin: "0 0 24px", font: "400 16px/1.65 Inter", color: "#475569" }}>A bateria de 2.500 mAh entrega até 45 minutos no modo padrão, o suficiente para limpar dois quartos e uma sala sem recarregar. Sem fio, sem saco e com filtro HEPA lavável, ele reduz a poeira que volta para o ar.</p>
               </>
             )}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(150px,1fr))", gap: 16 }}>
-              {destaques.map((d, i) => (
-                <div key={i} style={{ padding: 18, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
-                  <div style={{ font: "800 26px Montserrat", color: "#012746", lineHeight: 1, marginBottom: 6 }}>{d.v}</div>
-                  <div style={{ font: "400 13px/1.45 Inter", color: "#475569" }}>{d.l}</div>
-                </div>
-              ))}
-            </div>
 
             {specsExibidas.length > 0 && (
               <>

@@ -63,6 +63,8 @@ export async function ensureSchema() {
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS reviews TEXT`);
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS frete VARCHAR(120)`);
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS garantia VARCHAR(120)`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS potencia VARCHAR(60)`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS voltagem VARCHAR(60)`);
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS admin_users (

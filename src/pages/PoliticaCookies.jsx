@@ -137,19 +137,21 @@ export default function PoliticaCookies() {
 
       <section id="c4" style={{ marginBottom: 36 }}>
         <h2 style={{ ...h2, marginBottom: 16 }}>4. Cookies em detalhe</h2>
-        <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1.5fr) minmax(0,.7fr)", gap: 14, padding: "13px 18px", background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>
-            <span style={{ font: "700 12px Montserrat", letterSpacing: ".06em", color: "#012746" }}>NOME</span>
-            <span style={{ font: "700 12px Montserrat", letterSpacing: ".06em", color: "#012746" }}>FINALIDADE</span>
-            <span style={{ font: "700 12px Montserrat", letterSpacing: ".06em", color: "#012746" }}>PRAZO</span>
-          </div>
-          {tabela.map((c, i) => (
-            <div key={i} style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1.5fr) minmax(0,.7fr)", gap: 14, padding: "13px 18px", borderBottom: "1px solid #F1F5F9" }}>
-              <span style={{ font: "600 13px ui-monospace,SFMono-Regular,monospace", color: "#012746", wordBreak: "break-all" }}>{c.n}</span>
-              <span style={{ font: "400 13.5px/1.5 Inter", color: "#475569" }}>{c.f}</span>
-              <span style={{ font: "500 13px Inter", color: "#1E293B" }}>{c.p}</span>
+        <div style={{ overflowX: "auto" }}>
+          <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden", minWidth: 520 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1.5fr) minmax(0,.7fr)", gap: 14, padding: "13px 18px", background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>
+              <span style={{ font: "700 12px Montserrat", letterSpacing: ".06em", color: "#012746" }}>NOME</span>
+              <span style={{ font: "700 12px Montserrat", letterSpacing: ".06em", color: "#012746" }}>FINALIDADE</span>
+              <span style={{ font: "700 12px Montserrat", letterSpacing: ".06em", color: "#012746" }}>PRAZO</span>
             </div>
-          ))}
+            {tabela.map((c, i) => (
+              <div key={i} style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1.5fr) minmax(0,.7fr)", gap: 14, padding: "13px 18px", borderBottom: "1px solid #F1F5F9" }}>
+                <span style={{ font: "600 13px ui-monospace,SFMono-Regular,monospace", color: "#012746", wordBreak: "break-all" }}>{c.n}</span>
+                <span style={{ font: "400 13.5px/1.5 Inter", color: "#475569" }}>{c.f}</span>
+                <span style={{ font: "500 13px Inter", color: "#1E293B" }}>{c.p}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -118,7 +118,7 @@ export default function Home() {
       />
 
       <section style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "56px 24px 60px", display: "grid", gridTemplateColumns: "minmax(0,1.05fr) minmax(0,.95fr)", gap: 48, alignItems: "center" }}>
+        <div className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "56px 24px 60px", display: "grid", gridTemplateColumns: "minmax(0,1.05fr) minmax(0,.95fr)", gap: 48, alignItems: "center" }}>
           <div>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#fff", border: "1.5px solid #E2E8F0", borderRadius: 24, padding: "7px 16px 7px 8px", marginBottom: 24 }}>
               <span style={{ background: "linear-gradient(90deg,#F05A00,#FF7A00)", color: "#fff", font: "800 11.5px Montserrat", letterSpacing: ".08em", padding: "4px 10px", borderRadius: 16 }}>ATÉ 40% OFF</span>
@@ -267,7 +267,7 @@ export default function Home() {
       </section>
 
       <section style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 24px 0" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0,.85fr) minmax(0,1.15fr)", gap: 48 }}>
+        <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,.85fr) minmax(0,1.15fr)", gap: 48 }}>
           <div>
             <h2 style={{ margin: "0 0 8px", font: "700 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Quem comprou, aprovou</h2>
             <p style={{ margin: "0 0 24px", font: "400 16px Inter", color: "#475569" }}>
@@ -301,7 +301,7 @@ export default function Home() {
       </section>
 
       <section style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 24px 72px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0,.7fr) minmax(0,1.3fr)", gap: 48 }}>
+        <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,.7fr) minmax(0,1.3fr)", gap: 48 }}>
           <div>
             <h2 style={{ margin: "0 0 8px", font: "700 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Dúvidas frequentes</h2>
             <p style={{ margin: 0, font: "400 16px Inter", color: "#475569" }}>Se ficar qualquer dúvida, fale com nosso atendimento especializado pelo WhatsApp.</p>

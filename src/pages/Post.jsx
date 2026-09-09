@@ -113,7 +113,7 @@ export default function Post() {
             <figcaption style={{ marginTop: 10, font: "400 13px/1.6 Inter", color: "#64748B" }}>Os cinco modelos avaliados entre julho e agosto de 2026. Foto: Promo Aspiradores.</figcaption>
           </figure>
 
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(280px,308px)", gap: 56, alignItems: "start" }}>
+          <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(280px,308px)", gap: 56, alignItems: "start" }}>
             <div style={{ maxWidth: 780 }}>
 
               <nav aria-label="Índice do artigo" style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: "22px 24px", marginBottom: 44, background: "#F8FAFC" }}>
@@ -133,7 +133,7 @@ export default function Post() {
                 <p style={{ margin: "0 0 20px", font: "400 17px/1.8 Inter", color: "#334155" }}>Se você quer só a conclusão, ela está aqui. Cada modelo abaixo ganhou em uma situação específica de uso, e é isso que deve guiar a escolha — não o preço mais alto da lista.</p>
                 <div style={{ display: "grid", gap: 14 }}>
                   {vencedores.map((v, i) => (
-                    <div key={i} style={{ display: "grid", gridTemplateColumns: "minmax(90px,110px) minmax(0,1fr) auto", gap: 20, alignItems: "center", padding: "18px 20px", border: "1px solid #E2E8F0", borderRadius: 12 }}>
+                    <div key={i} className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(90px,110px) minmax(0,1fr) auto", gap: 20, alignItems: "center", padding: "18px 20px", border: "1px solid #E2E8F0", borderRadius: 12 }}>
                       <div style={{ aspectRatio: "1/1", borderRadius: 8, background: "repeating-linear-gradient(135deg,#F8FAFC 0 7px,#F1F5F9 7px 14px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 8, font: "400 9px ui-monospace,monospace", color: "#94A3B8", letterSpacing: ".04em" }}>FOTO</div>
                       <div>
                         <div style={{ font: "700 11px Montserrat", letterSpacing: ".1em", color: "#F05A00", marginBottom: 6 }}>{v.premio}</div>
@@ -175,7 +175,7 @@ export default function Post() {
 
                 <div style={{ border: "1px solid #E2E8F0", borderRadius: 16, overflow: "hidden", marginBottom: 36, boxShadow: "0 4px 20px rgba(1,39,70,.08)" }}>
                   <div style={{ padding: "12px 20px", background: "#012746", font: "700 11.5px Montserrat", letterSpacing: ".12em", color: "#fff" }}>NOSSA PRIMEIRA ESCOLHA</div>
-                  <div style={{ display: "grid", gridTemplateColumns: "minmax(120px,160px) minmax(0,1fr)", gap: 24, padding: 24 }}>
+                  <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(120px,160px) minmax(0,1fr)", gap: 24, padding: 24 }}>
                     <div style={{ aspectRatio: "1/1", borderRadius: 10, background: "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 12, font: "400 10px ui-monospace,monospace", color: "#94A3B8", letterSpacing: ".06em" }}>FOTO DO PRODUTO<br />fundo branco</div>
                     <div>
                       <div style={{ font: "600 11px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 5 }}>VERTAX</div>
@@ -217,23 +217,25 @@ export default function Post() {
 
               <section id="tabela" style={{ marginBottom: 48 }}>
                 <h2 style={{ margin: "0 0 18px", font: "700 30px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Tabela comparativa completa</h2>
-                <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden" }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1.5fr) repeat(4,minmax(0,1fr))", gap: 12, padding: "14px 18px", background: "#012746" }}>
-                    <span style={{ font: "700 11.5px Montserrat", letterSpacing: ".06em", color: "#fff" }}>MODELO</span>
-                    <span style={{ font: "700 11.5px Montserrat", letterSpacing: ".06em", color: "#fff" }}>TAPETE</span>
-                    <span style={{ font: "700 11.5px Montserrat", letterSpacing: ".06em", color: "#fff" }}>PISO</span>
-                    <span style={{ font: "700 11.5px Montserrat", letterSpacing: ".06em", color: "#fff" }}>AUTONOMIA</span>
-                    <span style={{ font: "700 11.5px Montserrat", letterSpacing: ".06em", color: "#fff" }}>PREÇO</span>
-                  </div>
-                  {tabela.map((r, i) => (
-                    <div key={i} style={{ display: "grid", gridTemplateColumns: "minmax(0,1.5fr) repeat(4,minmax(0,1fr))", gap: 12, padding: "14px 18px", borderBottom: "1px solid #F1F5F9", alignItems: "center" }}>
-                      <span style={{ font: "600 13.5px/1.4 Inter", color: "#012746" }}>{r.modelo}</span>
-                      <span style={{ font: "500 13.5px Inter", color: "#475569" }}>{r.tapete}</span>
-                      <span style={{ font: "500 13.5px Inter", color: "#475569" }}>{r.piso}</span>
-                      <span style={{ font: "500 13.5px Inter", color: "#475569" }}>{r.autonomia}</span>
-                      <span style={{ font: "700 13.5px Montserrat", color: "#F05A00" }}>{r.preco}</span>
+                <div style={{ overflowX: "auto" }}>
+                  <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden", minWidth: 620 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1.5fr) repeat(4,minmax(0,1fr))", gap: 12, padding: "14px 18px", background: "#012746" }}>
+                      <span style={{ font: "700 11.5px Montserrat", letterSpacing: ".06em", color: "#fff" }}>MODELO</span>
+                      <span style={{ font: "700 11.5px Montserrat", letterSpacing: ".06em", color: "#fff" }}>TAPETE</span>
+                      <span style={{ font: "700 11.5px Montserrat", letterSpacing: ".06em", color: "#fff" }}>PISO</span>
+                      <span style={{ font: "700 11.5px Montserrat", letterSpacing: ".06em", color: "#fff" }}>AUTONOMIA</span>
+                      <span style={{ font: "700 11.5px Montserrat", letterSpacing: ".06em", color: "#fff" }}>PREÇO</span>
                     </div>
-                  ))}
+                    {tabela.map((r, i) => (
+                      <div key={i} style={{ display: "grid", gridTemplateColumns: "minmax(0,1.5fr) repeat(4,minmax(0,1fr))", gap: 12, padding: "14px 18px", borderBottom: "1px solid #F1F5F9", alignItems: "center" }}>
+                        <span style={{ font: "600 13.5px/1.4 Inter", color: "#012746" }}>{r.modelo}</span>
+                        <span style={{ font: "500 13.5px Inter", color: "#475569" }}>{r.tapete}</span>
+                        <span style={{ font: "500 13.5px Inter", color: "#475569" }}>{r.piso}</span>
+                        <span style={{ font: "500 13.5px Inter", color: "#475569" }}>{r.autonomia}</span>
+                        <span style={{ font: "700 13.5px Montserrat", color: "#F05A00" }}>{r.preco}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </section>
 
@@ -250,7 +252,7 @@ export default function Post() {
               </section>
 
               <section id="autora" style={{ marginBottom: 48 }}>
-                <div style={{ display: "grid", gridTemplateColumns: "auto minmax(0,1fr)", gap: 20, padding: 24, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
+                <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "auto minmax(0,1fr)", gap: 20, padding: 24, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
                   <div style={{ width: 76, height: 76, borderRadius: "50%", background: "repeating-linear-gradient(135deg,#F1F5F9 0 6px,#E9EFF5 6px 12px)", border: "1px solid #E2E8F0" }}></div>
                   <div>
                     <div style={{ font: "700 11px Montserrat", letterSpacing: ".12em", color: "#F05A00", marginBottom: 6 }}>SOBRE A AUTORA</div>

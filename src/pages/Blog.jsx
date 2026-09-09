@@ -78,7 +78,7 @@ export default function Blog() {
 
       <main style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px 0" }}>
 
-        <article style={{ display: "grid", gridTemplateColumns: "minmax(0,1.15fr) minmax(0,.85fr)", gap: 40, alignItems: "center", marginBottom: 64 }}>
+        <article className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,1.15fr) minmax(0,.85fr)", gap: 40, alignItems: "center", marginBottom: 64 }}>
           <Link to="/post" style={{ display: "block", borderRadius: 16, overflow: "hidden", border: "1px solid #E2E8F0" }}>
             <div style={{ aspectRatio: "16/10", background: "repeating-linear-gradient(135deg,#F1F5F9 0 10px,#E9EFF5 10px 20px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: 24 }}>
               <span style={{ font: "500 12px ui-monospace,SFMono-Regular,monospace", letterSpacing: ".1em", color: "#94A3B8" }}>IMAGEM DE DESTAQUE</span>
@@ -108,7 +108,7 @@ export default function Blog() {
           </div>
         </article>
 
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(280px,308px)", gap: 56, alignItems: "start" }}>
+        <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(280px,308px)", gap: 56, alignItems: "start" }}>
           <div>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: 12, paddingBottom: 20, borderBottom: "2px solid #012746", marginBottom: 32 }}>
               <h2 style={{ margin: 0, font: "700 26px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Publicações recentes</h2>
@@ -117,7 +117,7 @@ export default function Blog() {
 
             <div style={{ display: "grid", gap: 28 }}>
               {posts.map((p, i) => (
-                <article key={i} style={{ display: "grid", gridTemplateColumns: "minmax(160px,240px) minmax(0,1fr)", gap: 24, alignItems: "start" }}>
+                <article key={i} className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(160px,240px) minmax(0,1fr)", gap: 24, alignItems: "start" }}>
                   <Link to="/post" style={{ display: "block", borderRadius: 12, overflow: "hidden", border: "1px solid #E2E8F0" }}>
                     <div style={{ aspectRatio: "4/3", background: "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 14, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8", lineHeight: 1.5 }}>{p.imagem}</div>
                   </Link>

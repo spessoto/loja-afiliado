@@ -66,7 +66,7 @@ export default function AdminAdministradores() {
 
   return (
     <AdminShell title="Administradores">
-      <form onSubmit={submit} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, margin: "0 0 24px", padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
+      <form onSubmit={submit} className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, margin: "0 0 24px", padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
         {error && <p style={{ color: "#DC2626", gridColumn: "1 / -1", margin: 0 }}>{error}</p>}
         <input placeholder="E-mail" type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} required style={inputStyle} />
         <input placeholder={editingId ? "Nova senha (deixe em branco para manter)" : "Senha"} type="password" value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} required={!editingId} style={inputStyle} />

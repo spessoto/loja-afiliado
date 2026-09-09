@@ -62,7 +62,7 @@ export default function AdminShell({ title, children }) {
   if (!authenticated) return <LoginForm onLogin={() => window.location.reload()} />;
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "220px minmax(0,1fr)", minHeight: "100vh", fontFamily: "Inter, system-ui, sans-serif" }}>
+    <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "220px minmax(0,1fr)", minHeight: "100vh", fontFamily: "Inter, system-ui, sans-serif" }}>
       <aside style={{ background: "#012746", color: "#fff", padding: "24px 16px", display: "flex", flexDirection: "column", gap: 4 }}>
         <div style={{ font: "800 18px Montserrat, sans-serif", marginBottom: 24, padding: "0 8px" }}>Promo Admin</div>
         {navItems.map(item => (

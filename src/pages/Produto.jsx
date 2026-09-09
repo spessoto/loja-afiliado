@@ -173,9 +173,9 @@ export default function Produto() {
       </div>
 
       <main style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 24px 0" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1.15fr) minmax(340px,.85fr)", gap: 48, alignItems: "start" }}>
+        <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,1.15fr) minmax(340px,.85fr)", gap: 48, alignItems: "start" }}>
 
-          <div style={{ display: "grid", gridTemplateColumns: "72px minmax(0,1fr)", gap: 16 }}>
+          <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "72px minmax(0,1fr)", gap: 16 }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, maxHeight: galeria.length > 7 ? 576 : "none", overflowY: galeria.length > 7 ? "auto" : "visible", paddingRight: galeria.length > 7 ? 4 : 0 }}>
               {galeria.map((g, i) => (
                 <button key={i} onClick={g.pick} style={{ flex: "none", border: `1.5px solid ${g.borda}`, borderRadius: 8, background: g.url ? "#fff" : "repeating-linear-gradient(135deg,#F8FAFC 0 7px,#F1F5F9 7px 14px)", aspectRatio: "1/1", padding: g.url ? 0 : 6, cursor: "pointer", font: "400 8.5px ui-monospace,monospace", color: "#94A3B8", lineHeight: 1.3, textAlign: "center", overflow: "hidden" }}>
@@ -253,7 +253,7 @@ export default function Produto() {
           </div>
         </div>
 
-        <section style={{ marginTop: 72, display: "grid", gridTemplateColumns: "minmax(0,1.15fr) minmax(320px,.85fr)", gap: 48, alignItems: "start" }}>
+        <section className="stack-mobile" style={{ marginTop: 72, display: "grid", gridTemplateColumns: "minmax(0,1.15fr) minmax(320px,.85fr)", gap: 48, alignItems: "start" }}>
           <div>
             <h2 style={{ margin: "0 0 16px", font: "700 28px Montserrat", color: "#012746" }}>Mais potência, menos trabalho</h2>
             {descricao ? (
@@ -335,7 +335,7 @@ export default function Produto() {
         {temAvaliacoes && (
           <section id="avaliacoes" style={{ marginTop: 72 }}>
             <h2 style={{ margin: "0 0 24px", font: "700 28px Montserrat", color: "#012746" }}>Avaliações de quem comprou</h2>
-            <div style={{ display: "grid", gridTemplateColumns: "minmax(260px,.55fr) minmax(0,1.45fr)", gap: 40, alignItems: "start" }}>
+            <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(260px,.55fr) minmax(0,1.45fr)", gap: 40, alignItems: "start" }}>
               {distExibida.length > 0 && (
                 <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 24, background: "#F8FAFC" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>

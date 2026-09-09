@@ -50,7 +50,7 @@ export default function AdminProdutoForm() {
       {loading ? (
         <p style={{ font: "400 14px Inter", color: "#94A3B8" }}>Carregando...</p>
       ) : (
-        <form onSubmit={submit} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
+        <form onSubmit={submit} className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
           {error && <p style={{ color: "#DC2626", gridColumn: "1 / -1", margin: 0 }}>{error}</p>}
           <input placeholder="Nome" value={form.name} onChange={set("name")} required style={inputStyle} />
           <input placeholder="Marca" value={form.brand} onChange={set("brand")} style={inputStyle} />

@@ -128,7 +128,7 @@ export default function Header({
             </nav>
           </div>
         ) : (
-          <div style={{ maxWidth: 1280, margin: "0 auto", padding: "16px 24px", display: "grid", gridTemplateColumns: "minmax(180px,232px) minmax(0,1fr) auto", alignItems: "center", gap: 32 }}>
+          <div className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "16px 24px", display: "grid", gridTemplateColumns: "minmax(180px,232px) minmax(0,1fr) auto", alignItems: "center", gap: 32 }}>
             <Link to="/" style={{ display: "block" }}>
               <img src={logoPrincipal} alt="Promo Aspiradores — qualidade para sua casa" style={{ width: "100%", maxWidth: 232, height: "auto", display: "block" }} />
             </Link>

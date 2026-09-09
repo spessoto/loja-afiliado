@@ -157,7 +157,7 @@ export default function Categoria() {
         </div>
       </section>
 
-      <main style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 24px 0", display: "grid", gridTemplateColumns: "minmax(240px,268px) minmax(0,1fr)", gap: 40, alignItems: "start" }}>
+      <main className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 24px 0", display: "grid", gridTemplateColumns: "minmax(240px,268px) minmax(0,1fr)", gap: 40, alignItems: "start" }}>
 
         <aside style={{ display: "grid", gap: 12 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
@@ -237,7 +237,7 @@ export default function Categoria() {
       </main>
 
       <section style={{ margin: "64px 0 0", background: "#F8FAFC", borderTop: "1px solid #E2E8F0", borderBottom: "1px solid #E2E8F0" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px", display: "grid", gridTemplateColumns: "minmax(0,.8fr) minmax(0,1.2fr)", gap: 48 }}>
+        <div className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px", display: "grid", gridTemplateColumns: "minmax(0,.8fr) minmax(0,1.2fr)", gap: 48 }}>
           <div>
             <h2 style={{ margin: "0 0 10px", font: "700 30px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Como escolher o aspirador certo</h2>
             <p style={{ margin: 0, font: "400 15.5px/1.65 Inter", color: "#475569" }}>Três critérios resolvem 90% da decisão. O resto é preferência.</p>

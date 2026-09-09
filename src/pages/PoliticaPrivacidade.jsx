@@ -109,20 +109,20 @@ export default function PoliticaPrivacidade() {
       <section id="p7" style={{ marginBottom: 36 }}>
         <h2 style={h2}>7. Por quanto tempo guardamos</h2>
         <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: 16, padding: "13px 18px", background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>
+          <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: 16, padding: "13px 18px", background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>
             <span style={{ font: "700 12.5px Montserrat", letterSpacing: ".06em", color: "#012746" }}>DADO</span>
             <span style={{ font: "700 12.5px Montserrat", letterSpacing: ".06em", color: "#012746" }}>PRAZO</span>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: 16, padding: "13px 18px", borderBottom: "1px solid #F1F5F9" }}>
+          <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: 16, padding: "13px 18px", borderBottom: "1px solid #F1F5F9" }}>
             <span style={{ font: "500 14px Inter", color: "#475569" }}>Mensagens de contato</span><span style={{ font: "600 14px Inter", color: "#1E293B" }}>24 meses</span>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: 16, padding: "13px 18px", borderBottom: "1px solid #F1F5F9" }}>
+          <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: 16, padding: "13px 18px", borderBottom: "1px solid #F1F5F9" }}>
             <span style={{ font: "500 14px Inter", color: "#475569" }}>Cadastro em newsletter</span><span style={{ font: "600 14px Inter", color: "#1E293B" }}>Até o cancelamento</span>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: 16, padding: "13px 18px", borderBottom: "1px solid #F1F5F9" }}>
+          <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: 16, padding: "13px 18px", borderBottom: "1px solid #F1F5F9" }}>
             <span style={{ font: "500 14px Inter", color: "#475569" }}>Registros de acesso</span><span style={{ font: "600 14px Inter", color: "#1E293B" }}>6 meses (Marco Civil da Internet)</span>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: 16, padding: "13px 18px" }}>
+          <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: 16, padding: "13px 18px" }}>
             <span style={{ font: "500 14px Inter", color: "#475569" }}>Dados de audiência agregados</span><span style={{ font: "600 14px Inter", color: "#1E293B" }}>26 meses</span>
           </div>
         </div>

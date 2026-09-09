@@ -85,3 +85,9 @@ summary {
 .input-field:focus {
   border-color: #F05A00 !important;
 }
+
+@media (max-width: 860px) {
+  .stack-mobile {
+    grid-template-columns: 1fr !important;
+  }
+}

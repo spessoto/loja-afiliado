@@ -78,7 +78,7 @@ export default function Contato() {
           ))}
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1.1fr) minmax(300px,.9fr)", gap: 48, alignItems: "start" }}>
+        <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,1.1fr) minmax(300px,.9fr)", gap: 48, alignItems: "start" }}>
           <div>
             <h2 style={{ margin: "0 0 8px", font: "700 30px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Envie sua mensagem</h2>
             <p style={{ margin: "0 0 28px", font: "400 15.5px Inter", color: "#475569" }}>Responda em até um dia útil. Campos marcados com * são obrigatórios.</p>
@@ -168,7 +168,7 @@ export default function Contato() {
         </div>
 
         <section style={{ marginTop: 72, paddingBottom: 80 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0,.7fr) minmax(0,1.3fr)", gap: 48 }}>
+          <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,.7fr) minmax(0,1.3fr)", gap: 48 }}>
             <div>
               <h2 style={{ margin: "0 0 8px", font: "700 30px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Antes de enviar, veja se já respondemos</h2>
               <p style={{ margin: 0, font: "400 15.5px/1.65 Inter", color: "#475569" }}>As dúvidas mais comuns do atendimento estão aqui.</p>

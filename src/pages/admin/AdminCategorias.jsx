@@ -61,7 +61,7 @@ export default function AdminCategorias() {
 
   return (
     <AdminShell title="Categorias">
-      <form onSubmit={submit} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, margin: "0 0 24px", padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
+      <form onSubmit={submit} className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, margin: "0 0 24px", padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
         {error && <p style={{ color: "#DC2626", gridColumn: "1 / -1", margin: 0 }}>{error}</p>}
         <input placeholder="Nome da categoria" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required style={inputStyle} />
         <input placeholder="URL da imagem" value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })} style={inputStyle} />

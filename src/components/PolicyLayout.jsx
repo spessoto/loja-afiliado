@@ -30,7 +30,7 @@ export default function PolicyLayout({ title, description, updated = "Última at
         </div>
       </section>
 
-      <main style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 24px 80px", display: "grid", gridTemplateColumns: "minmax(220px,258px) minmax(0,1fr)", gap: 56, alignItems: "start" }}>
+      <main className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 24px 80px", display: "grid", gridTemplateColumns: "minmax(220px,258px) minmax(0,1fr)", gap: 56, alignItems: "start" }}>
         <aside style={{ position: "sticky", top: 24, display: "grid", gap: 16 }}>
           <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 20 }}>
             <div style={{ font: "700 13px Montserrat", letterSpacing: ".1em", color: "#012746", marginBottom: 14 }}>NESTA PÁGINA</div>

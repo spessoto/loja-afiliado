@@ -94,4 +94,53 @@ summary {
     position: static !important;
     top: auto !important;
   }
+
+  .header-marquee {
+    display: none !important;
+  }
+  .header-inner {
+    padding: 10px 16px !important;
+    gap: 10px !important;
+  }
+  .header-logo {
+    max-width: 130px !important;
+  }
+  .header-search {
+    height: 40px !important;
+  }
+  .header-search input {
+    font-size: 13px !important;
+  }
+  .header-search .btn-search {
+    height: 32px !important;
+    padding: 0 14px !important;
+    font-size: 11px !important;
+  }
+  .header-account {
+    gap: 14px !important;
+  }
+  .header-account span {
+    font-size: 11px !important;
+  }
+  .header-catnav {
+    gap: 16px !important;
+  }
+  .header-catnav a {
+    padding: 9px 0 !important;
+    font-size: 12.5px !important;
+  }
+
+  .gallery-thumbs {
+    flex-direction: row !important;
+    max-height: none !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+  }
+  .gallery-thumb {
+    width: 56px !important;
+    flex: none !important;
+  }
+  .gallery-main {
+    order: -1;
+  }
 }

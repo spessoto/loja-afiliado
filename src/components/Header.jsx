@@ -79,7 +79,7 @@ export default function Header({
     <>
       {marquee && marquee.length > 0 && (
         animated ? (
-          <div style={{ width: "100%", overflow: "hidden", background: "linear-gradient(90deg,#F05A00,#FF7A00)" }}>
+          <div className="header-marquee" style={{ width: "100%", overflow: "hidden", background: "linear-gradient(90deg,#F05A00,#FF7A00)" }}>
             <div style={{ display: "flex", width: "200%", animation: "marqueeSlide 28s linear infinite" }}>
               {[0, 1].map((rep) => (
                 <div
@@ -93,7 +93,7 @@ export default function Header({
             </div>
           </div>
         ) : (
-          <div style={{ background: "linear-gradient(90deg,#F05A00,#FF7A00)" }}>
+          <div className="header-marquee" style={{ background: "linear-gradient(90deg,#F05A00,#FF7A00)" }}>
             <div style={{ maxWidth: 1280, margin: "0 auto", padding: "9px 24px", display: "flex", flexWrap: "wrap", gap: "8px 40px", justifyContent: "center", font: "600 12.5px Inter", color: "#fff", letterSpacing: ".06em" }}>
               {marquee.map((m, i) => <span key={i}>{m}</span>)}
             </div>
@@ -128,17 +128,17 @@ export default function Header({
             </nav>
           </div>
         ) : (
-          <div className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "16px 24px", display: "grid", gridTemplateColumns: "minmax(180px,232px) minmax(0,1fr) auto", alignItems: "center", gap: 32 }}>
+          <div className="stack-mobile header-inner" style={{ maxWidth: 1280, margin: "0 auto", padding: "16px 24px", display: "grid", gridTemplateColumns: "minmax(180px,232px) minmax(0,1fr) auto", alignItems: "center", gap: 32 }}>
             <Link to="/" style={{ display: "block" }}>
-              <img src={logoPrincipal} alt="Promo Aspiradores — qualidade para sua casa" style={{ width: "100%", maxWidth: 232, height: "auto", display: "block" }} />
+              <img className="header-logo" src={logoPrincipal} alt="Promo Aspiradores — qualidade para sua casa" style={{ width: "100%", maxWidth: 232, height: "auto", display: "block" }} />
             </Link>
-            <form onSubmit={submitSearch} style={{ display: "flex", alignItems: "center", gap: 0, background: "#F1F5F9", border: "1.5px solid #E2E8F0", borderRadius: 8, height: 50, padding: "0 4px 0 16px" }}>
+            <form onSubmit={submitSearch} className="header-search" style={{ display: "flex", alignItems: "center", gap: 0, background: "#F1F5F9", border: "1.5px solid #E2E8F0", borderRadius: 8, height: 50, padding: "0 4px 0 16px" }}>
               <IconSearch />
               {searchInput}
               <button className="btn-search" style={{ height: 42, padding: "0 22px", border: 0, borderRadius: 6, background: "#012746", color: "#fff", font: "700 13px Montserrat", letterSpacing: ".06em", cursor: "pointer" }}>BUSCAR</button>
             </form>
             {account && (
-              <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+              <div className="header-account" style={{ display: "flex", alignItems: "center", gap: 24 }}>
                 {customer ? (
                   <button type="button" onClick={() => logout().then(() => navigate("/"))} style={{ display: "flex", alignItems: "center", gap: 9, border: 0, background: "transparent", cursor: "pointer", padding: 0 }}>
                     <IconAccount />
@@ -164,7 +164,7 @@ export default function Header({
 
         {categoriesNav && (
           <nav style={{ borderTop: "1px solid #F1F5F9" }}>
-            <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", gap: 28, overflowX: "auto" }}>
+            <div className="header-catnav" style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", gap: 28, overflowX: "auto" }}>
               {categoriesNav.showAllCategories && (
                 <>
                   <NavA to={categoriesNav.allCategoriesTo || "#categorias"} style={{ display: "flex", alignItems: "center", gap: 9, padding: "13px 0", font: "700 13px Montserrat", letterSpacing: ".04em", color: "#012746", whiteSpace: "nowrap" }}>

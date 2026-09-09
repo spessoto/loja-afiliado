@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterCompact } from "../components/Footer.jsx";
 import { pagamentos } from "../data/footerColumns.js";
-import { useProduct, formatBRL, productImages } from "../lib/products.js";
+import { useProduct, formatBRL, productImages, linhas, estrelasStr, parseDist, parseReviews } from "../lib/products.js";
 import { categoriesMenu } from "../data/categoriesMenu.js";
 
 const fotos = [
@@ -79,10 +79,6 @@ const relacionados = [
 
 const restante = 12;
 
-function linhas(text) {
-  return (text || "").split("\n").map(s => s.trim()).filter(Boolean);
-}
-
 function paragrafos(text) {
   return (text || "")
     .replace(/\r\n/g, "\n")
@@ -96,26 +92,6 @@ function parseSpecs(text) {
     const [k, ...rest] = line.split(":");
     return { k: (k || "").trim(), v: rest.join(":").trim() };
   }).filter(s => s.k && s.v);
-}
-
-function estrelasStr(nota) {
-  const cheias = Math.round(Number(nota) || 0);
-  return "★".repeat(cheias) + "☆".repeat(Math.max(0, 5 - cheias));
-}
-
-function parseDist(text) {
-  return linhas(text).map(line => {
-    const [n, pct] = line.split(":");
-    return { n: Number(n), p: (pct || "0").trim() + "%" };
-  }).filter(d => d.n).sort((a, b) => b.n - a.n);
-}
-
-function parseReviews(text) {
-  return (text || "").split(/\n-{3,}\n/).map(block => {
-    const l = block.split("\n").map(s => s.trim()).filter(Boolean);
-    if (l.length < 3) return null;
-    return { nome: l[0], estrelas: estrelasStr(l[1]), texto: l.slice(2, -1).join(" "), meta: l[l.length - 1] };
-  }).filter(Boolean);
 }
 
 export default function Produto() {

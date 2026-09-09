@@ -49,6 +49,30 @@ export function parseSpecs(text) {
   }, {});
 }
 
+export function linhas(text) {
+  return (text || "").split("\n").map(s => s.trim()).filter(Boolean);
+}
+
+export function estrelasStr(nota) {
+  const cheias = Math.round(Number(nota) || 0);
+  return "★".repeat(cheias) + "☆".repeat(Math.max(0, 5 - cheias));
+}
+
+export function parseDist(text) {
+  return linhas(text).map(line => {
+    const [n, pct] = line.split(":");
+    return { n: Number(n), p: (pct || "0").trim() + "%" };
+  }).filter(d => d.n).sort((a, b) => b.n - a.n);
+}
+
+export function parseReviews(text) {
+  return (text || "").split(/\n-{3,}\n/).map(block => {
+    const l = block.split("\n").map(s => s.trim()).filter(Boolean);
+    if (l.length < 3) return null;
+    return { nome: l[0], nota: Number(l[1]) || 0, estrelas: estrelasStr(l[1]), texto: l.slice(2, -1).join(" "), meta: l[l.length - 1] };
+  }).filter(Boolean);
+}
+
 export function searchProducts(products, query) {
   const q = (query || "").trim().toLowerCase();
   if (!q) return products;

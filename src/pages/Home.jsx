@@ -5,18 +5,18 @@ import { FooterFull } from "../components/Footer.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import FaqAccordion from "../components/FaqAccordion.jsx";
 import { pagamentos } from "../data/footerColumns.js";
-import { useProducts, toCardProduct, formatBRL } from "../lib/products.js";
+import { useProducts, toCardProduct, formatBRL, linhas, parseReviews } from "../lib/products.js";
 import { categoriesMenu } from "../data/categoriesMenu.js";
 
 const heroTrust = ["Frete grátis acima de R$ 299", "Até 10x sem juros", "Garantia e nota fiscal"];
 
 const necessidades = [
-  { i: "01", t: "Para pelos de animais", s: "Escova antiemaranhado" },
-  { i: "02", t: "Para carros", s: "Portáteis e sem fio" },
-  { i: "03", t: "Para tapetes", s: "Alta sucção e batedor" },
-  { i: "04", t: "Para apartamentos", s: "Compactos e silenciosos" },
-  { i: "05", t: "Para limpeza pesada", s: "Pó e água, 20L ou mais" },
-  { i: "06", t: "Para uso profissional", s: "Uso contínuo e garantia" }
+  { i: "01", t: "Para pelos de animais", s: "Escova antiemaranhado", q: "pet" },
+  { i: "02", t: "Para carros", s: "Portáteis e sem fio", q: "carro" },
+  { i: "03", t: "Para tapetes", s: "Alta sucção e batedor", q: "tapete" },
+  { i: "04", t: "Para apartamentos", s: "Compactos e práticos", q: "compacto" },
+  { i: "05", t: "Para limpeza pesada", s: "Pó e água", q: "água" },
+  { i: "06", t: "Para uso profissional", s: "Obras e oficinas", q: "oficina" }
 ];
 
 const beneficios = [
@@ -26,11 +26,23 @@ const beneficios = [
   { t: "Atendimento especializado", s: "Time que conhece aspirador e ajuda você a escolher pelo WhatsApp.", d: "M20 12a8 8 0 10-3.2 6.4L20 20l-1-3.2A7.9 7.9 0 0020 12z" }
 ];
 
-const avaliacoes = [
-  { nome: "Camila R.", texto: "Comprei o vertical sem fio e a diferença nos pelos do gato é enorme. Chegou em três dias em Belo Horizonte.", meta: "Compra verificada • Aspirador Vertax V12" },
-  { nome: "Rodrigo M.", texto: "O time me ajudou a escolher pelo WhatsApp. Preço melhor do que eu tinha achado em outras lojas.", meta: "Compra verificada • Robô Nordika R7" },
-  { nome: "Fernanda L.", texto: "Uso na minha empresa de limpeza. Aguenta o dia inteiro e a nota fiscal veio junto, sem dor de cabeça.", meta: "Compra verificada • Cyclon Pro 20L" }
-];
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function parseDistMap(text) {
+  const map = {};
+  linhas(text).forEach(line => {
+    const [n, pct] = line.split(":");
+    map[Number(n)] = Number(pct);
+  });
+  return map;
+}
 
 const faq = [
   { q: "Qual aspirador serve para pelos de animais?", a: "Modelos verticais sem fio com escova antiemaranhado e filtro HEPA são os mais indicados. Na página de cada produto indicamos se ele é recomendado para pets." },
@@ -65,11 +77,32 @@ export default function Home() {
     ? Math.round((1 - heroProduct.price_to / heroProduct.price_from) * 100)
     : 0;
 
+  const totalAvaliacoes = products.reduce((s, p) => s + (Number(p.rating_count) || 0), 0);
+  const somaEstrelas = products.reduce((s, p) => s + (Number(p.rating_count) || 0) * (Number(p.rating_avg) || 0), 0);
+  const mediaGeral = totalAvaliacoes > 0 ? somaEstrelas / totalAvaliacoes : 0;
+  const somaPct45 = products.reduce((s, p) => {
+    const count = Number(p.rating_count) || 0;
+    if (!count) return s;
+    const dist = parseDistMap(p.rating_dist);
+    return s + count * ((dist[5] || 0) + (dist[4] || 0));
+  }, 0);
+  const recomendamPct = totalAvaliacoes > 0 ? Math.round(somaPct45 / totalAvaliacoes) : 0;
+
+  const [avaliacoesExibidas, setAvaliacoesExibidas] = useState([]);
+
   useEffect(() => {
     document.title = "Promo Aspiradores — Encontre o aspirador ideal para sua casa";
     const t = setInterval(() => setLeft((s) => (s > 0 ? s - 1 : 0)), 1000);
     return () => clearInterval(t);
   }, []);
+
+  useEffect(() => {
+    if (products.length === 0 || avaliacoesExibidas.length > 0) return;
+    const pool = products.flatMap(p =>
+      parseReviews(p.reviews).map(r => ({ ...r, produto: p.name, produtoId: p.id }))
+    );
+    setAvaliacoesExibidas(shuffle(pool).slice(0, 3));
+  }, [products, avaliacoesExibidas]);
 
   const countdown = [
     { v: pad(Math.floor(left / 3600)), l: "HORAS" },
@@ -188,7 +221,7 @@ export default function Home() {
         <p style={{ margin: "0 0 32px", font: "400 16px Inter", color: "#475569" }}>Diga o que incomoda na sua casa e a gente mostra só os modelos que resolvem.</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 16 }}>
           {necessidades.map((n, i) => (
-            <Link key={i} to="/categoria" className="need-card" style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
+            <Link key={i} to={`/busca?q=${encodeURIComponent(n.q)}`} className="need-card" style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
               <span style={{ flex: "none", width: 40, height: 40, borderRadius: 8, background: "#fff", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "center", font: "700 15px Montserrat", color: "#F05A00" }}>{n.i}</span>
               <span>
                 <span style={{ display: "block", font: "700 14.5px Montserrat", color: "#012746" }}>{n.t}</span>
@@ -236,26 +269,32 @@ export default function Home() {
         <div style={{ display: "grid", gridTemplateColumns: "minmax(0,.85fr) minmax(0,1.15fr)", gap: 48 }}>
           <div>
             <h2 style={{ margin: "0 0 8px", font: "700 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Quem comprou, aprovou</h2>
-            <p style={{ margin: "0 0 24px", font: "400 16px Inter", color: "#475569" }}>Média de 4,8 em 6.412 avaliações verificadas de clientes que receberam o produto.</p>
+            <p style={{ margin: "0 0 24px", font: "400 16px Inter", color: "#475569" }}>
+              {totalAvaliacoes > 0
+                ? <>Média de {mediaGeral.toFixed(1).replace(".", ",")} em {totalAvaliacoes.toLocaleString("pt-BR")} avaliações verificadas de clientes que receberam o produto.</>
+                : "Ainda não há avaliações suficientes."}
+            </p>
             <div style={{ display: "flex", alignItems: "center", gap: 16, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
-              <div style={{ font: "800 48px Montserrat", color: "#012746", lineHeight: 1 }}>4,8</div>
+              <div style={{ font: "800 48px Montserrat", color: "#012746", lineHeight: 1 }}>{totalAvaliacoes > 0 ? mediaGeral.toFixed(1).replace(".", ",") : "-"}</div>
               <div>
-                <div style={{ font: "600 16px Inter", color: "#F05A00", letterSpacing: ".1em" }}>★★★★★</div>
-                <div style={{ font: "400 13px Inter", color: "#475569", marginTop: 4 }}>94% recomendam a loja</div>
+                <div style={{ font: "600 16px Inter", color: "#F05A00", letterSpacing: ".1em" }}>{"★".repeat(Math.round(mediaGeral)) + "☆".repeat(Math.max(0, 5 - Math.round(mediaGeral)))}</div>
+                <div style={{ font: "400 13px Inter", color: "#475569", marginTop: 4 }}>{totalAvaliacoes > 0 ? `${recomendamPct}% avaliam com 4 ou 5 estrelas` : "Sem dados ainda"}</div>
               </div>
             </div>
           </div>
           <div style={{ display: "grid", gap: 16 }}>
-            {avaliacoes.map((a, i) => (
-              <div key={i} style={{ padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
+            {avaliacoesExibidas.length > 0 ? avaliacoesExibidas.map((a, i) => (
+              <Link key={i} to={`/produto/${a.produtoId}`} style={{ padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff", display: "block" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 10 }}>
                   <span style={{ font: "700 14px Montserrat", color: "#012746" }}>{a.nome}</span>
-                  <span style={{ font: "600 13px Inter", color: "#F05A00", letterSpacing: ".08em" }}>★★★★★</span>
+                  <span style={{ font: "600 13px Inter", color: "#F05A00", letterSpacing: ".08em" }}>{a.estrelas}</span>
                 </div>
                 <p style={{ margin: "0 0 8px", font: "400 14.5px/1.6 Inter", color: "#475569" }}>{a.texto}</p>
-                <span style={{ font: "500 12px Inter", color: "#94A3B8" }}>{a.meta}</span>
-              </div>
-            ))}
+                <span style={{ font: "500 12px Inter", color: "#94A3B8" }}>{a.meta} • {a.produto}</span>
+              </Link>
+            )) : (
+              <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Ainda não há avaliações cadastradas.</p>
+            )}
           </div>
         </div>
       </section>

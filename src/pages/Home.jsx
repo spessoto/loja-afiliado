@@ -68,8 +68,9 @@ export default function Home() {
   const categorias = categoriesMenu
     .map(nome => ({ nome, qtd: products.filter(p => p.category === nome).length }))
     .filter(c => c.qtd > 0);
-  const ofertas = cards.slice(0, 4);
-  const vendidos = cards.slice(4, 8);
+  const ofertas = cards.filter(c => c.desconto).slice(0, 4);
+  const ofertaIds = new Set(ofertas.map(c => c.id));
+  const vendidos = cards.filter(c => !ofertaIds.has(c.id)).slice(0, 4);
   const heroProduct = products.length > 0
     ? products[Math.floor(Date.now() / 3600000) % products.length]
     : null;
@@ -212,7 +213,7 @@ export default function Home() {
             {ofertas.map((p) => <ProductCard key={p.id} p={p} />)}
           </div>
         ) : (
-          <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto cadastrado ainda.</p>
+          <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto com desconto ativo no momento.</p>
         )}
       </section>
 

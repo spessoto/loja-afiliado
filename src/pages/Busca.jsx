@@ -5,6 +5,7 @@ import { FooterFull } from "../components/Footer.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import CompareBar from "../components/CompareBar.jsx";
 import { categoriasCol, ajudaCol, institucionalCol, pagamentos } from "../data/footerColumns.js";
+import { categoriesMenu } from "../data/categoriesMenu.js";
 import { useProducts, toCardProduct, searchProducts } from "../lib/products.js";
 
 export default function Busca() {
@@ -19,7 +20,10 @@ export default function Busca() {
 
   return (
     <>
-      <Header sticky={false} searchPlaceholder="O que você está procurando?" inlineNav={[{ label: "Home", to: "/" }, { label: "Aspiradores", to: "/categoria" }]} />
+      <Header
+        marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL"]}
+        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
+      />
 
       <main style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 24px 80px" }}>
         <h1 style={{ margin: "0 0 8px", font: "800 30px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Resultados para "{q}"</h1>

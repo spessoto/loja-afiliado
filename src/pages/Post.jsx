@@ -4,6 +4,7 @@ import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import FaqAccordion from "../components/FaqAccordion.jsx";
 import { categoriasCol, conteudoCol, institucionalCol, pagamentos } from "../data/footerColumns.js";
+import { categoriesMenu } from "../data/categoriesMenu.js";
 
 const compartilhar = ["WhatsApp", "Facebook", "Copiar link"];
 
@@ -65,12 +66,8 @@ export default function Post() {
   return (
     <>
       <Header
-        inlineNav={[
-          { label: "Aspiradores", to: "/categoria" },
-          { label: "Blog", to: "/blog", active: true },
-          { label: "Contato", to: "/contato" }
-        ]}
-        search={false}
+        marquee={["GUIAS DE COMPRA ESCRITOS POR ESPECIALISTAS", "ATUALIZADOS TODA SEMANA"]}
+        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
         progress={progresso}
       />
 

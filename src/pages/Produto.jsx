@@ -4,6 +4,7 @@ import Header from "../components/Header.jsx";
 import { FooterCompact } from "../components/Footer.jsx";
 import { pagamentos } from "../data/footerColumns.js";
 import { useProduct, formatBRL, productImages } from "../lib/products.js";
+import { categoriesMenu } from "../data/categoriesMenu.js";
 
 const fotos = [
   "produto inteiro, 3/4, fundo branco",
@@ -162,7 +163,10 @@ export default function Produto() {
   if (!loading && id && !product) {
     return (
       <>
-        <Header marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL"]} sticky={false} />
+        <Header
+          marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL"]}
+          categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
+        />
         <div style={{ maxWidth: 640, margin: "80px auto", textAlign: "center", padding: "0 24px" }}>
           <h1 style={{ font: "800 28px Montserrat, sans-serif", color: "#012746" }}>Produto não encontrado</h1>
           <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", marginTop: 16, height: 48, padding: "0 24px", alignItems: "center", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat" }}>Ver aspiradores</Link>
@@ -176,7 +180,7 @@ export default function Produto() {
     <>
       <Header
         marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL"]}
-        sticky={false}
+        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
       />
 
       <div style={{ borderBottom: "1px solid #F1F5F9", background: "#F8FAFC" }}>

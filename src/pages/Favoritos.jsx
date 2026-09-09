@@ -4,6 +4,7 @@ import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import { categoriasCol, ajudaCol, institucionalCol, pagamentos } from "../data/footerColumns.js";
+import { categoriesMenu } from "../data/categoriesMenu.js";
 import { useFavorites } from "../lib/favorites.jsx";
 import { toCardProduct } from "../lib/products.js";
 
@@ -16,7 +17,10 @@ export default function Favoritos() {
 
   return (
     <>
-      <Header sticky={false} search={false} inlineNav={[{ label: "Home", to: "/" }, { label: "Aspiradores", to: "/categoria" }, { label: "Favoritos", to: "/favoritos", active: true }]} />
+      <Header
+        marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL"]}
+        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
+      />
 
       <main style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 24px 80px" }}>
         <h1 style={{ margin: "0 0 28px", font: "800 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Meus favoritos</h1>

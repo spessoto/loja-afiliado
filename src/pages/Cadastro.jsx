@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterCompact } from "../components/Footer.jsx";
+import { categoriesMenu } from "../data/categoriesMenu.js";
 
 const inputStyle = { height: 50, padding: "0 16px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "400 15px Inter", color: "#1E293B", outline: "none" };
 const labelStyle = { display: "grid", gap: 7 };
@@ -46,7 +47,10 @@ export default function Cadastro() {
 
   return (
     <>
-      <Header sticky={false} search={false} account={false} inlineNav={[{ label: "Home", to: "/" }, { label: "Aspiradores", to: "/categoria" }]} />
+      <Header
+        marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL"]}
+        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
+      />
 
       <main style={{ maxWidth: 460, margin: "0 auto", padding: "56px 24px 80px" }}>
         <h1 style={{ margin: "0 0 8px", font: "800 30px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>{mode === "cadastro" ? "Criar minha conta" : "Entrar na minha conta"}</h1>

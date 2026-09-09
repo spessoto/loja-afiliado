@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import { categoriasCol, ajudaCol, institucionalCol, pagamentos } from "../data/footerColumns.js";
+import { categoriesMenu } from "../data/categoriesMenu.js";
 import { useProducts, formatBRL, parseSpecs } from "../lib/products.js";
 import { useCompare } from "../lib/compare.js";
 
@@ -20,7 +21,10 @@ export default function Comparar() {
 
   return (
     <>
-      <Header sticky={false} search={false} inlineNav={[{ label: "Home", to: "/" }, { label: "Aspiradores", to: "/categoria" }, { label: "Comparar", to: "/comparar", active: true }]} />
+      <Header
+        marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL"]}
+        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
+      />
 
       <main style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 24px 80px" }}>
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16, marginBottom: 24 }}>

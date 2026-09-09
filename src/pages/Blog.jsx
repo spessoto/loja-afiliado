@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import { categoriasCol, conteudoCol, institucionalCol, pagamentos } from "../data/footerColumns.js";
+import { categoriesMenu } from "../data/categoriesMenu.js";
 
 function chip(nome, ativo) {
   return { nome, bg: ativo ? "#012746" : "#fff", cor: ativo ? "#fff" : "#012746", borda: ativo ? "#012746" : "#E2E8F0" };
@@ -51,14 +52,8 @@ export default function Blog() {
     <>
       <Header
         marquee={["GUIAS DE COMPRA ESCRITOS POR ESPECIALISTAS", "ATUALIZADOS TODA SEMANA"]}
-        search
         searchPlaceholder="Buscar guias, comparativos e dicas"
-        account={false}
-        inlineNav={[
-          { label: "Aspiradores", to: "/categoria" },
-          { label: "Blog", to: "/blog", active: true },
-          { label: "Contato", to: "/contato" }
-        ]}
+        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
       />
 
       <div style={{ borderBottom: "1px solid #F1F5F9", background: "#F8FAFC" }}>

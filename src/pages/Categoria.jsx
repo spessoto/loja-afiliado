@@ -6,8 +6,8 @@ import ProductCard from "../components/ProductCard.jsx";
 import CompareBar from "../components/CompareBar.jsx";
 import { categoriasCol, ajudaCol, institucionalCol, pagamentos } from "../data/footerColumns.js";
 import { useProducts, toCardProduct } from "../lib/products.js";
+import { categoriesMenu } from "../data/categoriesMenu.js";
 
-const menu = ["Aspiradores", "Robôs", "Vertical", "Portáteis", "Extratoras", "Profissionais", "Acessórios"];
 const subcategorias = ["Sem fio", "2 em 1", "Para pets", "Pó e água", "Até R$ 500", "Com filtro HEPA"];
 
 const filtroDefs = [
@@ -59,7 +59,7 @@ export default function Categoria() {
     <>
       <Header
         marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL"]}
-        categoriesNav={{ menu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
+        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
       />
 
       <div style={{ borderBottom: "1px solid #F1F5F9", background: "#F8FAFC" }}>

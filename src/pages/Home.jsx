@@ -6,8 +6,8 @@ import ProductCard from "../components/ProductCard.jsx";
 import FaqAccordion from "../components/FaqAccordion.jsx";
 import { pagamentos } from "../data/footerColumns.js";
 import { useProducts, toCardProduct } from "../lib/products.js";
+import { categoriesMenu } from "../data/categoriesMenu.js";
 
-const menu = ["Aspiradores", "Robôs", "Vertical", "Portáteis", "Extratoras", "Profissionais", "Acessórios"];
 const heroTrust = ["Frete grátis acima de R$ 299", "Até 10x sem juros", "Garantia e nota fiscal"];
 
 const categorias = [
@@ -82,7 +82,7 @@ export default function Home() {
       <Header
         marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL", "ENVIO PARA TODO O BRASIL", "CURADORIA DE ESPECIALISTAS"]}
         animated
-        categoriesNav={{ menu, showAllCategories: true, allCategoriesTo: "#categorias", itemTo: "/produto", ofertaTo: "#ofertas" }}
+        categoriesNav={{ menu: categoriesMenu, showAllCategories: true, allCategoriesTo: "#categorias", itemTo: "/produto", ofertaTo: "#ofertas" }}
       />
 
       <section style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>

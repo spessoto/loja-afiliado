@@ -1,18 +1,14 @@
 import { Link } from "react-router-dom";
 import Header from "./Header.jsx";
 import { FooterPolicy } from "./Footer.jsx";
+import { categoriesMenu } from "../data/categoriesMenu.js";
 
 export default function PolicyLayout({ title, description, updated = "Última atualização: 5 de setembro de 2026", breadcrumbLabel, toc, sidebarExtra, children, activeFooter }) {
   return (
     <>
       <Header
-        sticky={false}
-        search={false}
-        inlineNav={[
-          { label: "Home", to: "/" },
-          { label: "Aspiradores", to: "/categoria" },
-          { label: "Contato", to: "/contato" }
-        ]}
+        marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL"]}
+        categoriesNav={{ menu: categoriesMenu, showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
       />
 
       <div style={{ borderBottom: "1px solid #F1F5F9", background: "#F8FAFC" }}>

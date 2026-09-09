@@ -2,7 +2,7 @@ import express from "express";
 import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
-import { pool, ensureSchema, verifyPassword } from "./db.js";
+import { pool, ensureSchema, hashPassword, verifyPassword } from "./db.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, "dist");

@@ -83,6 +83,14 @@ function linhas(text) {
   return (text || "").split("\n").map(s => s.trim()).filter(Boolean);
 }
 
+function paragrafos(text) {
+  return (text || "")
+    .replace(/\r\n/g, "\n")
+    .split(/\n{2,}/)
+    .map(p => p.trim())
+    .filter(Boolean);
+}
+
 function parseSpecs(text) {
   return linhas(text).map(line => {
     const [k, ...rest] = line.split(":");
@@ -289,7 +297,9 @@ export default function Produto() {
           <div>
             <h2 style={{ margin: "0 0 16px", font: "700 28px Montserrat", color: "#012746" }}>Mais potência, menos trabalho</h2>
             {descricao ? (
-              <p style={{ margin: "0 0 24px", font: "400 16px/1.65 Inter", color: "#475569" }}>{descricao}</p>
+              paragrafos(descricao).map((par, i) => (
+                <p key={i} style={{ margin: "0 0 18px", font: "400 16px/1.65 Inter", color: "#475569", whiteSpace: "pre-line" }}>{par}</p>
+              ))
             ) : (
               <>
                 <p style={{ margin: "0 0 14px", font: "400 16px/1.65 Inter", color: "#475569" }}>O Vertax V12 foi feito para a limpeza do dia a dia em casas e apartamentos brasileiros. O motor de 450W com tecnologia ciclônica mantém a sucção constante mesmo com o reservatório cheio, e a escova antiemaranhado dá conta de pelos de animais em tapetes e sofás.</p>

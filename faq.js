@@ -4,7 +4,6 @@ export function generateFaq(p) {
   if (p.potencia) candidates.push({ q: `Qual a potência do ${name}?`, a: `${p.potencia}.` });
   if (p.voltagem) candidates.push({ q: `Qual a voltagem do ${name}?`, a: `${p.voltagem}.` });
   if (p.garantia) candidates.push({ q: "Qual o prazo de garantia?", a: `${p.garantia} de garantia do fabricante.` });
-  if (p.frete) candidates.push({ q: "Como funciona o frete?", a: `${p.frete}.` });
   const indicadoLines = (p.indicado || "").split("\n").map(s => s.trim()).filter(Boolean);
   if (indicadoLines.length) candidates.push({ q: `Para quem o ${name} é indicado?`, a: indicadoLines.join("; ") + "." });
   const naoIndicadoLines = (p.nao_indicado || "").split("\n").map(s => s.trim()).filter(Boolean);

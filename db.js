@@ -1,5 +1,6 @@
 import mysql from "mysql2/promise";
 import crypto from "node:crypto";
+import { generateFaq } from "./faq.js";
 
 export function hashPassword(password) {
   const salt = crypto.randomBytes(16).toString("hex");
@@ -125,6 +126,11 @@ export async function ensureSchema() {
       setting_value TEXT
     ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
   `);
+
+  const [productsWithFreteFaq] = await pool.query("SELECT * FROM products WHERE faq LIKE '%frete%'");
+  for (const row of productsWithFreteFaq) {
+    await pool.query("UPDATE products SET faq = ? WHERE id = ?", [JSON.stringify(generateFaq(row)), row.id]);
+  }
 }
 
 export async function getSettings() {

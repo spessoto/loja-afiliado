@@ -5,6 +5,7 @@ const withData = generateFaq({ name: "Aspirador X", potencia: "450W", voltagem: 
 assert.strictEqual(withData.length, 5);
 assert.ok(withData[0].q.includes("potência"));
 assert.ok(withData.every(f => f.q && f.a));
+assert.ok(withData.every(f => !/frete/i.test(f.q) && !/frete/i.test(f.a)));
 
 const empty = generateFaq({ name: "Produto Sem Dados" });
 assert.strictEqual(empty.length, 5);

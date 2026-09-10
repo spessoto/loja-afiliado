@@ -6,6 +6,7 @@ import fs from "node:fs/promises";
 import { pool, ensureSchema, hashPassword, verifyPassword, getSettings, setSettings } from "./db.js";
 import { generateFaq } from "./faq.js";
 import { getPageMeta, injectMeta, buildSitemapXml, SITE_URL } from "./seo.js";
+import { slugify } from "./slug.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, "dist");
@@ -221,6 +222,75 @@ app.delete("/api/categories/:id", requireAdmin, async (req, res) => {
   res.json({ ok: true });
 });
 
+async function uniquePostSlug(base, excludeId) {
+  let n = 2;
+  let candidate = slugify(base);
+  while (true) {
+    const [rows] = excludeId
+      ? await pool.query("SELECT id FROM posts WHERE slug = ? AND id != ?", [candidate, excludeId])
+      : await pool.query("SELECT id FROM posts WHERE slug = ?", [candidate]);
+    if (!rows.length) return candidate;
+    candidate = `${slugify(base)}-${n++}`;
+  }
+}
+
+const POST_FIELDS = ["title", "excerpt", "content", "cover_image_url", "author", "category", "meta_description"];
+
+app.get("/api/posts", async (_req, res) => {
+  const [rows] = await pool.query("SELECT id, title, slug, excerpt, cover_image_url, author, category, published_at FROM posts WHERE published = 1 ORDER BY published_at DESC");
+  res.json(rows);
+});
+
+app.get("/api/posts/:slug", async (req, res) => {
+  const [rows] = await pool.query("SELECT * FROM posts WHERE slug = ? AND published = 1", [req.params.slug]);
+  if (!rows.length) return res.status(404).json({ error: "not found" });
+  res.json(rows[0]);
+});
+
+app.get("/api/admin/posts", requireAdmin, async (_req, res) => {
+  const [rows] = await pool.query("SELECT id, title, slug, published, published_at, updated_at FROM posts ORDER BY updated_at DESC");
+  res.json(rows);
+});
+
+app.get("/api/admin/posts/:id", requireAdmin, async (req, res) => {
+  const [rows] = await pool.query("SELECT * FROM posts WHERE id = ?", [req.params.id]);
+  if (!rows.length) return res.status(404).json({ error: "not found" });
+  res.json(rows[0]);
+});
+
+app.post("/api/admin/posts", requireAdmin, async (req, res) => {
+  if (!req.body.title) return res.status(422).json({ error: "title is required" });
+  const slug = await uniquePostSlug(req.body.slug || req.body.title);
+  const published = req.body.published ? 1 : 0;
+  const values = POST_FIELDS.map(f => req.body[f] ?? null);
+  const [result] = await pool.query(
+    `INSERT INTO posts (${POST_FIELDS.join(", ")}, slug, published, published_at) VALUES (${POST_FIELDS.map(() => "?").join(", ")}, ?, ?, ?)`,
+    [...values, slug, published, published ? new Date() : null]
+  );
+  res.status(201).json({ id: result.insertId, slug });
+});
+
+app.put("/api/admin/posts/:id", requireAdmin, async (req, res) => {
+  if (!req.body.title) return res.status(422).json({ error: "title is required" });
+  const [existingRows] = await pool.query("SELECT slug, published, published_at FROM posts WHERE id = ?", [req.params.id]);
+  if (!existingRows.length) return res.status(404).json({ error: "not found" });
+  const existing = existingRows[0];
+  const slug = req.body.slug && slugify(req.body.slug) !== existing.slug ? await uniquePostSlug(req.body.slug, req.params.id) : existing.slug;
+  const published = req.body.published ? 1 : 0;
+  const publishedAt = published && !existing.published_at ? new Date() : existing.published_at;
+  const values = POST_FIELDS.map(f => req.body[f] ?? null);
+  await pool.query(
+    `UPDATE posts SET ${POST_FIELDS.map(f => `${f}=?`).join(", ")}, slug=?, published=?, published_at=? WHERE id=?`,
+    [...values, slug, published, publishedAt, req.params.id]
+  );
+  res.json({ ok: true });
+});
+
+app.delete("/api/admin/posts/:id", requireAdmin, async (req, res) => {
+  await pool.query("DELETE FROM posts WHERE id = ?", [req.params.id]);
+  res.json({ ok: true });
+});
+
 app.get("/api/customers", requireAdmin, async (_req, res) => {
   const [rows] = await pool.query("SELECT id, name, email, phone, created_at FROM customers ORDER BY created_at DESC");
   res.json(rows);
@@ -306,19 +376,20 @@ app.put("/api/settings", requireAdmin, async (req, res) => {
 });
 
 app.get("/sitemap.xml", async (_req, res) => {
-  const [products] = await pool.query("SELECT id, category, updated_at FROM products");
+  const [products] = await pool.query("SELECT id, category, image_url, updated_at FROM products");
   const [categories] = await pool.query("SELECT name FROM categories");
+  const [posts] = await pool.query("SELECT slug, cover_image_url, updated_at FROM posts WHERE published = 1");
   const urls = [
     { loc: `${SITE_URL}/`, priority: 1.0, changefreq: "daily" },
     { loc: `${SITE_URL}/categoria`, priority: 0.8, changefreq: "daily" },
     { loc: `${SITE_URL}/blog`, priority: 0.6, changefreq: "weekly" },
-    { loc: `${SITE_URL}/post`, priority: 0.5, changefreq: "monthly" },
     { loc: `${SITE_URL}/contato`, priority: 0.3, changefreq: "monthly" },
     { loc: `${SITE_URL}/politica-de-cookies`, priority: 0.1, changefreq: "yearly" },
     { loc: `${SITE_URL}/politica-de-privacidade`, priority: 0.1, changefreq: "yearly" },
     { loc: `${SITE_URL}/politica-de-uso`, priority: 0.1, changefreq: "yearly" },
     ...categories.map(c => ({ loc: `${SITE_URL}/categoria?cat=${encodeURIComponent(c.name)}`, priority: 0.7, changefreq: "daily" })),
-    ...products.map(p => ({ loc: `${SITE_URL}/produto/${p.id}`, priority: 0.9, changefreq: "weekly", lastmod: new Date(p.updated_at).toISOString().slice(0, 10) }))
+    ...products.map(p => ({ loc: `${SITE_URL}/produto/${p.id}`, priority: 0.9, changefreq: "weekly", lastmod: new Date(p.updated_at).toISOString().slice(0, 10), image: p.image_url || undefined })),
+    ...posts.map(p => ({ loc: `${SITE_URL}/blog/${p.slug}`, priority: 0.6, changefreq: "monthly", lastmod: new Date(p.updated_at).toISOString().slice(0, 10), image: p.cover_image_url || undefined }))
   ];
   res.set("Content-Type", "application/xml").send(buildSitemapXml(urls));
 });
@@ -331,13 +402,26 @@ app.get("*", async (req, res) => {
   const indexPath = path.join(distDir, "index.html");
   let html = await fs.readFile(indexPath, "utf-8");
 
-  let product = null;
+  const seoData = {};
   const produtoMatch = req.path.match(/^\/produto\/(\d+)$/);
   if (produtoMatch) {
     const [rows] = await pool.query("SELECT * FROM products WHERE id = ?", [produtoMatch[1]]);
-    product = rows[0] || null;
+    if (rows[0]) seoData.product = rows[0];
+    else seoData.productNotFound = true;
   }
-  html = injectMeta(html, getPageMeta(req.path, req.query, product));
+  const postMatch = req.path.match(/^\/blog\/([^/]+)$/);
+  if (postMatch) {
+    const [rows] = await pool.query("SELECT * FROM posts WHERE slug = ? AND published = 1", [postMatch[1]]);
+    if (rows[0]) seoData.post = rows[0];
+    else seoData.postNotFound = true;
+  }
+  if (req.path === "/categoria" && req.query.cat) {
+    const [rows] = await pool.query("SELECT id, name FROM products WHERE category = ?", [req.query.cat]);
+    seoData.categoryProducts = rows;
+  }
+
+  const meta = getPageMeta(req.path, req.query, seoData);
+  html = injectMeta(html, meta);
 
   const settings = await getSettings().catch(() => ({}));
   if (settings.search_console_meta) {
@@ -350,7 +434,7 @@ app.get("*", async (req, res) => {
       `  <script async src="https://www.googletagmanager.com/gtag/js?id=${id}"></script>\n  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","${id}");</script>\n</head>`
     );
   }
-  res.set("Content-Type", "text/html").send(html);
+  res.status(meta.notFound ? 404 : 200).set("Content-Type", "text/html").send(html);
 });
 
 ensureSchema()

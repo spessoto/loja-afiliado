@@ -117,6 +117,7 @@ export default function Home() {
         categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: true, allCategoriesTo: "#categorias", itemTo: "/categoria", ofertaTo: "#ofertas" }}
       />
 
+      <main>
       <section style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>
         <div className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "44px 24px 48px", display: "grid", gridTemplateColumns: "minmax(0,1.05fr) minmax(0,.95fr)", gap: 40, alignItems: "center" }}>
           <div>
@@ -308,6 +309,7 @@ export default function Home() {
           <FaqAccordion faq={faq} />
         </div>
       </section>
+      </main>
 
       <FooterFull columns={[categoriasCol, institucionalCol]} />
     </>

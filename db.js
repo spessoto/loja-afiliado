@@ -131,6 +131,24 @@ export async function ensureSchema() {
   for (const row of allProducts) {
     await pool.query("UPDATE products SET faq = ? WHERE id = ?", [JSON.stringify(generateFaq(row)), row.id]);
   }
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS posts (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      title VARCHAR(255) NOT NULL,
+      slug VARCHAR(255) NOT NULL UNIQUE,
+      excerpt TEXT,
+      content LONGTEXT,
+      cover_image_url VARCHAR(500),
+      author VARCHAR(120),
+      category VARCHAR(120),
+      meta_description VARCHAR(300),
+      published TINYINT(1) NOT NULL DEFAULT 0,
+      published_at TIMESTAMP NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+  `);
 }
 
 export async function getSettings() {

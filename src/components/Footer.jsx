@@ -6,7 +6,7 @@ export function FooterFull({ columns }) {
     <footer style={{ background: "linear-gradient(180deg,#012746,#001B31)", color: "#B8C5D0" }}>
       <div className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "56px 24px 32px", display: "grid", gridTemplateColumns: `minmax(240px,1.2fr) repeat(${columns.length},minmax(0,1fr))`, gap: 40 }}>
         <div>
-          <img src={logoFundoEscuro} alt="Promo Aspiradores" style={{ width: "100%", maxWidth: 230, height: "auto", display: "block", marginBottom: 20 }} />
+          <img src={logoFundoEscuro} alt="Promo Aspiradores" width="230" height="78" style={{ width: "100%", maxWidth: 230, height: "auto", display: "block", marginBottom: 20 }} />
           <p style={{ margin: 0, font: "400 14px/1.65 Inter", maxWidth: 300 }}>Loja especializada em aspiradores de pó para casa e uso profissional. Curadoria de especialistas, preço competitivo e compra segura.</p>
         </div>
         {columns.map((col, i) => (

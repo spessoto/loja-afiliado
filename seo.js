@@ -27,13 +27,8 @@ const STATIC_META = {
   },
   "/blog": {
     title: `Guias de Compra e Dicas de Limpeza — Blog ${SITE_NAME}`,
-    description: "Comparativos, testes e conteúdo prático para você escolher o aspirador certo e tirar o máximo dele.",
+    description: "Comparativos, guias e dicas práticas para você escolher o aspirador certo e tirar o máximo dele.",
     focusKeyword: "guia de aspirador"
-  },
-  "/post": {
-    title: `Melhor Aspirador Vertical de 2026: 5 Modelos Testados — ${SITE_NAME}`,
-    description: "Testamos cinco aspiradores verticais sem fio nas mesmas condições de tapete, piso frio, pelo de animal e autonomia real.",
-    focusKeyword: "melhor aspirador vertical"
   },
   "/contato": {
     title: `Fale com a Gente — ${SITE_NAME}`,
@@ -85,91 +80,155 @@ function websiteJsonLd() {
   };
 }
 
-export function getPageMeta(pathname, query, product) {
+function breadcrumbJsonLd(items) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((it, i) => ({ "@type": "ListItem", position: i + 1, name: it.name, item: it.item }))
+  };
+}
+
+function itemListJsonLd(products) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: products.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `${SITE_URL}/produto/${p.id}`,
+      name: p.name
+    }))
+  };
+}
+
+/**
+ * data: { product, productNotFound, post, postNotFound, categoryProducts }
+ */
+export function getPageMeta(pathname, query, data = {}) {
+  const { product, productNotFound, post, postNotFound, categoryProducts } = data;
+
   if (pathname.startsWith("/admin")) {
     return { title: `Admin — ${SITE_NAME}`, description: "Painel administrativo.", noindex: true, canonical: `${SITE_URL}${pathname}`, jsonLd: [] };
   }
 
-  if (pathname.startsWith("/produto/") && product) {
-    const canonical = `${SITE_URL}/produto/${product.id}`;
-    const desc = truncate(product.description || `${product.name} — confira preço, especificações e avaliações reais.`, 155);
-    const jsonLd = [orgJsonLd(), websiteJsonLd()];
-    const breadcrumb = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: product.category || "Aspiradores", item: `${SITE_URL}/categoria?cat=${encodeURIComponent(product.category || "")}` },
-        { "@type": "ListItem", position: 3, name: product.name, item: canonical }
-      ]
-    };
-    jsonLd.push(breadcrumb);
-    const productLd = {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      name: product.name,
-      image: [product.image_url].filter(Boolean),
-      description: desc,
-      brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
-      category: product.category || undefined,
-      offers: product.price_to ? {
-        "@type": "Offer",
-        url: canonical,
-        priceCurrency: "BRL",
-        price: Number(product.price_to).toFixed(2)
-      } : undefined
-    };
-    if (product.rating_count > 0 && product.rating_avg) {
-      productLd.aggregateRating = {
-        "@type": "AggregateRating",
-        ratingValue: Number(product.rating_avg),
-        reviewCount: Number(product.rating_count)
+  if (pathname.startsWith("/produto/")) {
+    if (productNotFound) {
+      return { title: `Produto não encontrado — ${SITE_NAME}`, description: DEFAULT_DESCRIPTION, noindex: true, notFound: true, canonical: `${SITE_URL}${pathname}`, jsonLd: [] };
+    }
+    if (product) {
+      const canonical = `${SITE_URL}/produto/${product.id}`;
+      const desc = truncate(product.description || `${product.name} — confira preço, especificações e avaliações reais.`, 155);
+      const jsonLd = [orgJsonLd(), websiteJsonLd()];
+      jsonLd.push(breadcrumbJsonLd([
+        { name: "Home", item: SITE_URL },
+        { name: product.category || "Aspiradores", item: `${SITE_URL}/categoria?cat=${encodeURIComponent(product.category || "")}` },
+        { name: product.name, item: canonical }
+      ]));
+      const productLd = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: product.name,
+        image: [product.image_url].filter(Boolean),
+        description: desc,
+        brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
+        category: product.category || undefined,
+        offers: product.price_to ? {
+          "@type": "Offer",
+          url: canonical,
+          priceCurrency: "BRL",
+          price: Number(product.price_to).toFixed(2)
+        } : undefined
+      };
+      if (product.rating_count > 0 && product.rating_avg) {
+        productLd.aggregateRating = {
+          "@type": "AggregateRating",
+          ratingValue: Number(product.rating_avg),
+          reviewCount: Number(product.rating_count)
+        };
+      }
+      jsonLd.push(productLd);
+      let faq = [];
+      try { faq = product.faq ? JSON.parse(product.faq) : []; } catch { faq = []; }
+      if (faq.length > 0) {
+        jsonLd.push({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faq.map(f => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a }
+          }))
+        });
+      }
+      return {
+        title: `${product.name} — ${SITE_NAME}`,
+        description: desc,
+        image: product.image_url || DEFAULT_IMAGE,
+        canonical,
+        focusKeyword: product.name,
+        jsonLd
       };
     }
-    jsonLd.push(productLd);
-    let faq = [];
-    try { faq = product.faq ? JSON.parse(product.faq) : []; } catch { faq = []; }
-    if (faq.length > 0) {
-      jsonLd.push({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: faq.map(f => ({
-          "@type": "Question",
-          name: f.q,
-          acceptedAnswer: { "@type": "Answer", text: f.a }
-        }))
-      });
-    }
-    return {
-      title: `${product.name} — ${SITE_NAME}`,
-      description: desc,
-      image: product.image_url || DEFAULT_IMAGE,
-      canonical,
-      focusKeyword: product.name,
-      jsonLd
-    };
   }
 
   if (pathname === "/produto") {
     return { title: `Produto — ${SITE_NAME}`, description: DEFAULT_DESCRIPTION, noindex: true, canonical: `${SITE_URL}/produto`, jsonLd: [orgJsonLd()] };
   }
 
-  if (pathname === "/categoria" && query.cat) {
-    const cat = String(query.cat);
-    const canonical = `${SITE_URL}/categoria?cat=${encodeURIComponent(cat)}`;
-    return {
+  if (pathname.startsWith("/blog/")) {
+    if (postNotFound) {
+      return { title: `Publicação não encontrada — ${SITE_NAME}`, description: DEFAULT_DESCRIPTION, noindex: true, notFound: true, canonical: `${SITE_URL}${pathname}`, jsonLd: [] };
+    }
+    if (post) {
+      const canonical = `${SITE_URL}/blog/${post.slug}`;
+      const desc = truncate(post.meta_description || post.excerpt || post.title, 155);
+      return {
+        title: `${post.title} — ${SITE_NAME}`,
+        description: desc,
+        image: post.cover_image_url || DEFAULT_IMAGE,
+        canonical,
+        focusKeyword: post.title,
+        jsonLd: [orgJsonLd(), websiteJsonLd(), breadcrumbJsonLd([
+          { name: "Home", item: SITE_URL },
+          { name: "Blog", item: `${SITE_URL}/blog` },
+          { name: post.title, item: canonical }
+        ]), {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: desc,
+          image: post.cover_image_url ? [post.cover_image_url] : undefined,
+          author: post.author ? { "@type": "Person", name: post.author } : undefined,
+          datePublished: post.published_at ? new Date(post.published_at).toISOString() : undefined,
+          dateModified: post.updated_at ? new Date(post.updated_at).toISOString() : undefined,
+          mainEntityOfPage: canonical
+        }]
+      };
+    }
+  }
+
+  if (pathname === "/categoria") {
+    const cat = query.cat ? String(query.cat) : null;
+    const canonical = cat ? `${SITE_URL}/categoria?cat=${encodeURIComponent(cat)}` : `${SITE_URL}/categoria`;
+    const jsonLd = [orgJsonLd(), websiteJsonLd()];
+    if (cat) {
+      jsonLd.push(breadcrumbJsonLd([{ name: "Home", item: SITE_URL }, { name: cat, item: canonical }]));
+    }
+    if (categoryProducts && categoryProducts.length > 0) {
+      jsonLd.push(itemListJsonLd(categoryProducts));
+    }
+    return cat ? {
       title: `Aspirador ${cat} — Compare os Melhores Modelos | ${SITE_NAME}`,
       description: `Confira os melhores aspiradores da categoria ${cat}: preços, avaliações reais e comparação lado a lado para você escolher com segurança.`,
       canonical,
       focusKeyword: `aspirador ${cat}`.toLowerCase(),
-      jsonLd: [orgJsonLd(), websiteJsonLd(), {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-          { "@type": "ListItem", position: 2, name: cat, item: canonical }
-        ]
-      }]
+      jsonLd
+    } : {
+      title: STATIC_META["/categoria"].title,
+      description: STATIC_META["/categoria"].description,
+      canonical,
+      focusKeyword: STATIC_META["/categoria"].focusKeyword,
+      jsonLd
     };
   }
 
@@ -206,7 +265,7 @@ export function injectMeta(html, meta) {
   const tags = [
     `<link rel="canonical" href="${canonical}" />`,
     meta.noindex ? `<meta name="robots" content="noindex,nofollow" />` : `<meta name="robots" content="index,follow" />`,
-    `<meta property="og:type" content="${meta.image && meta.canonical?.includes('/produto/') ? "product" : "website"}" />`,
+    `<meta property="og:type" content="${meta.canonical?.includes('/produto/') ? "product" : meta.canonical?.includes('/blog/') ? "article" : "website"}" />`,
     `<meta property="og:site_name" content="${SITE_NAME}" />`,
     `<meta property="og:locale" content="pt_BR" />`,
     `<meta property="og:title" content="${title}" />`,
@@ -225,11 +284,14 @@ export function injectMeta(html, meta) {
 }
 
 export function buildSitemapXml(urls) {
+  const hasImages = urls.some(u => u.image);
   const items = urls.map(u => {
     const lastmod = u.lastmod ? `\n    <lastmod>${u.lastmod}</lastmod>` : "";
-    return `  <url>\n    <loc>${escapeAttr(u.loc)}</loc>${lastmod}\n    <changefreq>${u.changefreq || "weekly"}</changefreq>\n    <priority>${u.priority ?? 0.5}</priority>\n  </url>`;
+    const image = u.image ? `\n    <image:image>\n      <image:loc>${escapeAttr(u.image)}</image:loc>\n    </image:image>` : "";
+    return `  <url>\n    <loc>${escapeAttr(u.loc)}</loc>${lastmod}\n    <changefreq>${u.changefreq || "weekly"}</changefreq>\n    <priority>${u.priority ?? 0.5}</priority>${image}\n  </url>`;
   }).join("\n");
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${items}\n</urlset>\n`;
+  const imageNs = hasImages ? ' xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"' : "";
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"${imageNs}>\n${items}\n</urlset>\n`;
 }
 
 export { SITE_URL, SITE_NAME, DEFAULT_IMAGE, DEFAULT_DESCRIPTION };

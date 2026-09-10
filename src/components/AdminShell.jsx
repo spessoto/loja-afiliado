@@ -5,6 +5,7 @@ const navItems = [
   { to: "/admin", label: "Dashboard" },
   { to: "/admin/produtos", label: "Produtos" },
   { to: "/admin/categorias", label: "Categorias" },
+  { to: "/admin/blog", label: "Blog" },
   { to: "/admin/usuarios", label: "Usuários" },
   { to: "/admin/administradores", label: "Administradores" },
   { to: "/admin/configuracoes", label: "Configurações" }

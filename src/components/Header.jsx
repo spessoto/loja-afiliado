@@ -105,7 +105,7 @@ export default function Header({
         {inlineNav ? (
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "16px 24px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
             <Link to="/" style={{ display: "block" }}>
-              <img src={logoPrincipal} alt="Promo Aspiradores — qualidade para sua casa" style={{ width: 232, maxWidth: "100%", height: "auto", display: "block" }} />
+              <img src={logoPrincipal} alt="Promo Aspiradores — qualidade para sua casa" width="232" height="97" style={{ width: 232, maxWidth: "100%", height: "auto", display: "block" }} />
             </Link>
             {search && (
               <form onSubmit={submitSearch} style={{ display: "flex", alignItems: "center", background: "#F1F5F9", border: "1.5px solid #E2E8F0", borderRadius: 8, height: 50, padding: "0 4px 0 16px" }}>
@@ -130,7 +130,7 @@ export default function Header({
         ) : (
           <div className="header-inner" style={{ maxWidth: 1280, margin: "0 auto", padding: "10px 24px", display: "grid", gridTemplateColumns: "minmax(150px,190px) minmax(0,1fr) auto", alignItems: "center", gap: 28 }}>
             <Link to="/" className="header-logo-link" style={{ display: "block" }}>
-              <img className="header-logo" src={logoPrincipal} alt="Promo Aspiradores — qualidade para sua casa" style={{ width: "100%", maxWidth: 190, height: "auto", display: "block" }} />
+              <img className="header-logo" src={logoPrincipal} alt="Promo Aspiradores — qualidade para sua casa" width="190" height="79" style={{ width: "100%", maxWidth: 190, height: "auto", display: "block" }} />
             </Link>
             <form onSubmit={submitSearch} className="header-search" style={{ display: "flex", alignItems: "center", gap: 0, background: "#F1F5F9", border: "1.5px solid #E2E8F0", borderRadius: 8, height: 42, padding: "0 4px 0 16px" }}>
               <IconSearch />

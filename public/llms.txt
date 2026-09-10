@@ -1,0 +1,22 @@
+# Promo Aspiradores
+
+> Loja especializada em aspiradores de pó para casa e uso profissional, com curadoria de especialistas, comparação de preços e avaliações reais.
+
+Promo Aspiradores ajuda o usuário a encontrar o aspirador certo comparando modelos verticais, robôs, portáteis, extratoras e profissionais por preço, especificações técnicas e avaliações reais de compradores. Os links de compra levam a lojas parceiras (Amazon, Mercado Livre).
+
+## Páginas principais
+
+- [Home](https://promoaspiradores.com.br/): apresentação da loja e destaques de ofertas.
+- [Todos os aspiradores](https://promoaspiradores.com.br/categoria): catálogo completo, filtrável por categoria, marca e preço.
+- [Blog](https://promoaspiradores.com.br/blog): guias de compra e comparativos.
+- [Contato](https://promoaspiradores.com.br/contato): atendimento ao cliente.
+
+## Dados estruturados
+
+- [sitemap.xml](https://promoaspiradores.com.br/sitemap.xml): lista completa de páginas, produtos e publicações do blog.
+- Cada página de produto (`/produto/{id}`) inclui dados estruturados Schema.org (Product, Offer, AggregateRating, FAQPage) com preço, marca, categoria, avaliações e perguntas frequentes reais sobre o item.
+
+## Observações para agentes e crawlers
+
+- Preços e disponibilidade são definidos pela loja parceira no momento da compra; o preço exibido no marcado estruturado reflete o valor cadastrado no catálogo, não uma cotação em tempo real.
+- Páginas de conta do usuário (`/cadastro`, `/favoritos`, `/comparar`, `/busca`) e o painel administrativo (`/admin`) não fazem parte do conteúdo público indexável.

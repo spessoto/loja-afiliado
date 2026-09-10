@@ -157,10 +157,17 @@ app.get("/api/products/:id", async (req, res) => {
 
 const FIELDS = ["name", "brand", "category", "description", "image_url", "images", "affiliate_url", "price_from", "price_to", "installment", "badge", "tags", "specs", "indicado", "nao_indicado", "rating_avg", "rating_count", "rating_dist", "reviews", "frete", "garantia", "potencia", "voltagem"];
 
+// An empty string sent for a numeric column (price, rating...) gets silently
+// coerced to 0 by MySQL, which then renders as a fake "R$ 0,00" or "0 avaliações"
+// on the storefront. Treat "" the same as null/undefined for every field.
+function sqlValue(v) {
+  return v === "" || v === undefined ? null : v;
+}
+
 app.post("/api/products", requireAdmin, async (req, res) => {
   if (!req.body.name || !req.body.affiliate_url) return res.status(422).json({ error: "name and affiliate_url are required" });
   const faq = JSON.stringify(generateFaq(req.body));
-  const values = FIELDS.map(f => req.body[f] ?? null);
+  const values = FIELDS.map(f => sqlValue(req.body[f]));
   const [result] = await pool.query(
     `INSERT INTO products (${FIELDS.join(", ")}, faq) VALUES (${FIELDS.map(() => "?").join(", ")}, ?)`,
     [...values, faq]
@@ -173,7 +180,7 @@ app.put("/api/products/:id", requireAdmin, async (req, res) => {
   if (!req.body.name || !req.body.affiliate_url) return res.status(422).json({ error: "name and affiliate_url are required" });
   const [existingRows] = await pool.query("SELECT faq FROM products WHERE id = ?", [req.params.id]);
   const faq = existingRows[0]?.faq || JSON.stringify(generateFaq(req.body));
-  const values = FIELDS.map(f => req.body[f] ?? null);
+  const values = FIELDS.map(f => sqlValue(req.body[f]));
   await pool.query(
     `UPDATE products SET ${FIELDS.map(f => `${f}=?`).join(", ")}, faq=? WHERE id=?`,
     [...values, faq, req.params.id]

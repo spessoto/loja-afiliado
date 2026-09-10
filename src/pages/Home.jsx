@@ -218,7 +218,7 @@ export default function Home() {
       <section id="necessidade" style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px 0" }}>
         <h2 style={{ margin: "0 0 8px", font: "700 26px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Qual é o seu problema de limpeza?</h2>
         <p style={{ margin: "0 0 24px", font: "400 14.5px Inter", color: "#475569" }}>Diga o que incomoda na sua casa e a gente mostra só os modelos que resolvem.</p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 16 }}>
+        <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16 }}>
           {necessidades.map((n, i) => (
             <Link key={i} to={`/busca?q=${encodeURIComponent(n.q)}`} className="need-card" style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
               <span style={{ flex: "none", width: 40, height: 40, borderRadius: 8, background: "#fff", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "center", font: "700 15px Montserrat", color: "#F05A00" }}>{n.i}</span>

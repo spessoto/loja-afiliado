@@ -45,10 +45,6 @@ const naoIndicado = [
   "Uso profissional contínuo"
 ];
 
-const resumo = [
-  { k: "Garantia", v: "12 meses" }
-];
-
 const distribuicao = [
   { n: 5, w: "82%", p: "82%" },
   { n: 4, w: "12%", p: "12%" },
@@ -111,11 +107,6 @@ export default function Produto() {
   const categoria = product?.category || "Vertical sem fio";
   const precoDe = product ? formatBRL(product.price_from) : "R$ 1.029,90";
   const precoPor = product ? formatBRL(product.price_to) || "R$ 699,90" : "R$ 699,90";
-  const resumoExibido = product
-    ? [
-        ...(product.garantia ? [{ k: "Garantia", v: product.garantia }] : [])
-      ]
-    : resumo;
   const descricao = product?.description;
   const afiliado = product?.affiliate_url || "#afiliado";
   const registrarClique = () => { if (product?.id) fetch(`/api/products/${product.id}/click`, { method: "POST" }); };
@@ -259,7 +250,7 @@ export default function Produto() {
           </div>
         </div>
 
-        <section className="stack-mobile" style={{ marginTop: 72, display: "grid", gridTemplateColumns: "minmax(0,1.15fr) minmax(320px,.85fr)", gap: 48, alignItems: "start" }}>
+        <section style={{ marginTop: 72 }}>
           <div>
             <h2 style={{ margin: "0 0 16px", font: "700 28px Montserrat", color: "#012746" }}>Mais potência, menos trabalho</h2>
             {descricao ? (
@@ -321,21 +312,6 @@ export default function Produto() {
               </>
             )}
           </div>
-
-          <aside className="sticky-desktop" style={{ position: "sticky", top: 24, display: "grid", gap: 16 }}>
-            <div style={{ background: "linear-gradient(160deg,#012746,#001B31)", borderRadius: 16, padding: 24, color: "#fff" }}>
-              <div style={{ font: "700 11px Montserrat", letterSpacing: ".12em", color: "#F05A00", marginBottom: 10 }}>RESUMO DA OFERTA</div>
-              <div style={{ font: "800 24px/1.25 Montserrat", marginBottom: 16 }}>{precoPor}</div>
-              <div style={{ display: "grid", gap: 9, marginBottom: 20 }}>
-                {resumoExibido.map((r, i) => (
-                  <span key={i} style={{ display: "flex", justifyContent: "space-between", gap: 12, font: "400 13.5px Inter", color: "#B8C5D0" }}>
-                    <span>{r.k}</span><strong style={{ font: "600 13.5px Inter", color: "#fff" }}>{r.v}</strong>
-                  </span>
-                ))}
-              </div>
-              <a {...buyProps} className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 50, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em" }}>IR PARA A OFERTA</a>
-            </div>
-          </aside>
         </section>
 
         {temAvaliacoes && (

@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { FavoritesProvider } from "./lib/favorites.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
+import CookieBanner from "./components/CookieBanner.jsx";
 import Home from "./pages/Home.jsx";
 import Produto from "./pages/Produto.jsx";
 
@@ -31,6 +32,7 @@ export default function App() {
   return (
     <FavoritesProvider>
       <ScrollToTop />
+      <CookieBanner />
       <Suspense fallback={null}>
         <Routes>
           <Route path="/" element={<Home />} />

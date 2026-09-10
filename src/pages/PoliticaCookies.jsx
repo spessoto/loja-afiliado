@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PolicyLayout from "../components/PolicyLayout.jsx";
+import { useCookieConsent } from "../lib/cookieConsent.js";
 
 const toc = [
   { href: "#c1", label: "1. O que são cookies" },
@@ -28,11 +29,11 @@ const h2 = { margin: "0 0 14px", font: "700 24px Montserrat", color: "#012746" }
 const p = { margin: 0, font: "400 16px/1.75 Inter", color: "#475569" };
 
 export default function PoliticaCookies() {
-  const [desempenho, setDesempenho] = useState(true);
-  const [funcionais, setFuncionais] = useState(true);
-  const [marketing, setMarketing] = useState(false);
+  const { consent, aceitarTodos: aceitarTodosGlobal, recusar: recusarGlobal, salvarPersonalizado } = useCookieConsent();
+  const [desempenho, setDesempenho] = useState(consent ? consent.desempenho : true);
+  const [funcionais, setFuncionais] = useState(consent ? consent.funcionais : true);
+  const [marketing, setMarketing] = useState(consent ? consent.marketing : false);
   const [salvo, setSalvo] = useState(false);
-  const [banner, setBanner] = useState(true);
 
   useEffect(() => {
     document.title = "Política de Cookies e Dados — Promo Aspiradores";
@@ -56,8 +57,9 @@ export default function PoliticaCookies() {
     linha(marketing, setMarketing, "Marketing e afiliados", "Atribuição de compras aos nossos links e exibição de ofertas mais relevantes.")
   ];
 
-  const aceitarTodos = () => { setDesempenho(true); setFuncionais(true); setMarketing(true); setSalvo(true); setBanner(false); };
-  const recusar = () => { setDesempenho(false); setFuncionais(false); setMarketing(false); setSalvo(true); setBanner(false); };
+  const aceitarTodos = () => { setDesempenho(true); setFuncionais(true); setMarketing(true); setSalvo(true); aceitarTodosGlobal(); };
+  const recusar = () => { setDesempenho(false); setFuncionais(false); setMarketing(false); setSalvo(true); recusarGlobal(); };
+  const salvarPreferencias = () => { salvarPersonalizado({ desempenho, funcionais, marketing }); setSalvo(true); };
 
   return (
     <PolicyLayout
@@ -103,6 +105,7 @@ export default function PoliticaCookies() {
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center", padding: "20px 22px", background: "#F8FAFC" }}>
             <button onClick={aceitarTodos} className="btn-primary" style={{ height: 48, padding: "0 26px", border: 0, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em", cursor: "pointer" }}>ACEITAR TODOS</button>
             <button onClick={recusar} className="btn-outline-navy" style={{ height: 48, padding: "0 26px", border: "1.5px solid #012746", borderRadius: 8, background: "#fff", color: "#012746", font: "600 14px Montserrat", cursor: "pointer" }}>SÓ OS ESSENCIAIS</button>
+            <button onClick={salvarPreferencias} className="btn-outline-navy" style={{ height: 48, padding: "0 26px", border: "1.5px solid #F05A00", borderRadius: 8, background: "#fff", color: "#F05A00", font: "600 14px Montserrat", cursor: "pointer" }}>SALVAR PREFERÊNCIAS</button>
             {salvo && (
               <span style={{ display: "flex", alignItems: "center", gap: 8, font: "600 13px Inter", color: "#012746" }}>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F05A00" strokeWidth="2.6" strokeLinecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
@@ -196,18 +199,6 @@ export default function PoliticaCookies() {
           <Link to="/contato" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 48, padding: "0 28px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14.5px Montserrat", letterSpacing: ".04em" }}>ABRIR UMA SOLICITAÇÃO</Link>
         </div>
       </section>
-
-      {banner && (
-        <div style={{ position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 40, background: "#fff", borderTop: "1px solid #E2E8F0", boxShadow: "0 -6px 24px rgba(1,39,70,.12)" }}>
-          <div style={{ maxWidth: 1280, margin: "0 auto", padding: "18px 24px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 20 }}>
-            <p style={{ margin: 0, flex: 1, minWidth: 260, font: "400 14px/1.6 Inter", color: "#475569" }}>Usamos cookies para medir audiência e indicar as melhores ofertas de aspiradores. Você escolhe o que autorizar.</p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
-              <button onClick={recusar} className="btn-outline-navy" style={{ height: 46, padding: "0 22px", border: "1.5px solid #012746", borderRadius: 8, background: "#fff", color: "#012746", font: "600 13.5px Montserrat", cursor: "pointer" }}>SÓ OS ESSENCIAIS</button>
-              <button onClick={aceitarTodos} className="btn-primary" style={{ height: 46, padding: "0 26px", border: 0, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".04em", cursor: "pointer" }}>ACEITAR TODOS</button>
-            </div>
-          </div>
-        </div>
-      )}
     </PolicyLayout>
   );
 }

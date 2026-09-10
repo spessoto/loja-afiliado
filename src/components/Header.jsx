@@ -45,7 +45,7 @@ function NavA({ to, className, style, children }) {
   return <Link to={to} className={className} style={style}>{children}</Link>;
 }
 
-const DEFAULT_MARQUEE = ["As melhores ofertas", "As melhores lojas", "Os melhores produtos", "Os maiores descontos"];
+const DEFAULT_MARQUEE = ["AS MELHORES OFERTAS", "AS MELHORES LOJAS", "OS MELHORES PRODUTOS", "OS MAIORES DESCONTOS"];
 
 export default function Header({
   marquee = DEFAULT_MARQUEE,

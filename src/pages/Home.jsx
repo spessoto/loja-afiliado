@@ -20,10 +20,10 @@ const necessidades = [
 ];
 
 const beneficios = [
-  { t: "Compra segura", s: "Pagamento protegido e dados criptografados em todo o processo.", d: "M12 3.5l7 2.6v5.4c0 4.3-2.9 7.3-7 9-4.1-1.7-7-4.7-7-9V6.1l7-2.6z" },
-  { t: "Envio para todo o Brasil", s: "Rastreio do pedido e frete grátis nas compras acima de R$ 299.", d: "M3 7.5h11v9H3zM14 10.5h4l3 3v3h-7zM7 19a1.6 1.6 0 100-3.2A1.6 1.6 0 007 19zM17.5 19a1.6 1.6 0 100-3.2 1.6 1.6 0 000 3.2z" },
-  { t: "Garantia e nota fiscal", s: "Produtos originais, garantia do fabricante e NF em todos os pedidos.", d: "M12 3.5l2.6 1.9 3.2-.2.9 3.1 2.3 2.2-1.6 2.8.4 3.2-3.1 1-2 2.5-3-1.2-3 1.2-2-2.5-3.1-1 .4-3.2L2 10.5l2.3-2.2.9-3.1 3.2.2z" },
-  { t: "Atendimento especializado", s: "Time que conhece aspirador e ajuda você a escolher pelo WhatsApp.", d: "M20 12a8 8 0 10-3.2 6.4L20 20l-1-3.2A7.9 7.9 0 0020 12z" }
+  { t: "Curadoria de verdade", s: "Cada produto é escolhido a dedo, comparando potência, preço e avaliações reais antes de entrar no site.", d: "M12 3.5l7 2.6v5.4c0 4.3-2.9 7.3-7 9-4.1-1.7-7-4.7-7-9V6.1l7-2.6z" },
+  { t: "Você compra na loja oficial", s: "Ao clicar em comprar, você finaliza o pedido direto no site do parceiro (Amazon, Mercado Livre e outras), com a garantia, nota fiscal e entrega deles.", d: "M3 7.5h11v9H3zM14 10.5h4l3 3v3h-7zM7 19a1.6 1.6 0 100-3.2A1.6 1.6 0 007 19zM17.5 19a1.6 1.6 0 100-3.2 1.6 1.6 0 000 3.2z" },
+  { t: "Comparação sem enrolação", s: "Reunimos preço, especificações e nota de quem já comprou para você decidir em minutos.", d: "M12 3.5l2.6 1.9 3.2-.2.9 3.1 2.3 2.2-1.6 2.8.4 3.2-3.1 1-2 2.5-3-1.2-3 1.2-2-2.5-3.1-1 .4-3.2L2 10.5l2.3-2.2.9-3.1 3.2.2z" },
+  { t: "Conteúdo pra ajudar a escolher", s: "Guias e comparativos pensados para quem quer entender o produto antes de comprar, sem papo de vendedor.", d: "M20 12a8 8 0 10-3.2 6.4L20 20l-1-3.2A7.9 7.9 0 0020 12z" }
 ];
 
 function shuffle(arr) {

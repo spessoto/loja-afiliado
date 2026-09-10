@@ -127,8 +127,8 @@ export async function ensureSchema() {
     ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
   `);
 
-  const [productsWithFreteFaq] = await pool.query("SELECT * FROM products WHERE faq LIKE '%frete%'");
-  for (const row of productsWithFreteFaq) {
+  const [allProducts] = await pool.query("SELECT * FROM products");
+  for (const row of allProducts) {
     await pool.query("UPDATE products SET faq = ? WHERE id = ?", [JSON.stringify(generateFaq(row)), row.id]);
   }
 }

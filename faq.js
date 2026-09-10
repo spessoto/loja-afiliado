@@ -1,20 +1,20 @@
 export function generateFaq(p) {
   const name = p.name || "o produto";
   const candidates = [];
-  if (p.potencia) candidates.push({ q: `Qual a potência do ${name}?`, a: `${p.potencia}.` });
-  if (p.voltagem) candidates.push({ q: `Qual a voltagem do ${name}?`, a: `${p.voltagem}.` });
-  if (p.garantia) candidates.push({ q: "Qual o prazo de garantia?", a: `${p.garantia} de garantia do fabricante.` });
+  if (p.potencia) candidates.push({ q: `Qual a potência do ${name}?`, a: `A potência do ${name} é ${p.potencia}.` });
+  if (p.voltagem) candidates.push({ q: `Qual a voltagem do ${name}?`, a: `O ${name} funciona em ${p.voltagem}.` });
+  if (p.garantia) candidates.push({ q: "Qual o prazo de garantia?", a: `O ${name} tem ${p.garantia} de garantia do fabricante.` });
   const indicadoLines = (p.indicado || "").split("\n").map(s => s.trim()).filter(Boolean);
-  if (indicadoLines.length) candidates.push({ q: `Para quem o ${name} é indicado?`, a: indicadoLines.join("; ") + "." });
+  if (indicadoLines.length) candidates.push({ q: `Para quem o ${name} é indicado?`, a: `O ${name} é indicado para: ${indicadoLines.join("; ")}.` });
   const naoIndicadoLines = (p.nao_indicado || "").split("\n").map(s => s.trim()).filter(Boolean);
-  if (naoIndicadoLines.length) candidates.push({ q: `Para quais situações o ${name} não é indicado?`, a: naoIndicadoLines.join("; ") + "." });
+  if (naoIndicadoLines.length) candidates.push({ q: `Para quais situações o ${name} não é indicado?`, a: `O ${name} não é a melhor escolha para: ${naoIndicadoLines.join("; ")}.` });
   const specsLines = (p.specs || "").split("\n").map(s => s.trim()).filter(Boolean);
   const bateria = specsLines.find(l => /bateria/i.test(l));
-  if (bateria) candidates.push({ q: `Qual a autonomia de bateria do ${name}?`, a: bateria.split(":").slice(1).join(":").trim() + "." });
+  if (bateria) candidates.push({ q: `Qual a autonomia de bateria do ${name}?`, a: `A bateria do ${name} tem autonomia de ${bateria.split(":").slice(1).join(":").trim()}.` });
   const reservatorio = specsLines.find(l => /reservat|capacidade/i.test(l));
-  if (reservatorio) candidates.push({ q: `Qual a capacidade do ${name}?`, a: reservatorio.split(":").slice(1).join(":").trim() + "." });
+  if (reservatorio) candidates.push({ q: `Qual a capacidade do ${name}?`, a: `A capacidade do ${name} é ${reservatorio.split(":").slice(1).join(":").trim()}.` });
   if (p.category) candidates.push({ q: `Em qual categoria o ${name} se encaixa?`, a: `Ele está na categoria ${p.category} do nosso catálogo.` });
-  if (p.brand) candidates.push({ q: `Qual a marca do ${name}?`, a: `${p.brand}.` });
+  if (p.brand) candidates.push({ q: `Qual a marca do ${name}?`, a: `O ${name} é fabricado pela ${p.brand}.` });
 
   const filler = [
     { q: "Como faço para comprar?", a: "Clique em \"Comprar\" nesta página para ir até a loja parceira e finalizar a compra com segurança." },

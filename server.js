@@ -300,7 +300,7 @@ app.put("/api/settings", requireAdmin, async (req, res) => {
   res.json({ ok: true });
 });
 
-app.use(express.static(distDir));
+app.use(express.static(distDir, { index: false }));
 
 const escapeAttr = (s) => s.replace(/"/g, "&quot;");
 

@@ -5,7 +5,7 @@ import { FooterFull } from "../components/Footer.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useCategories } from "../lib/categories.js";
 
-const inputStyle = { height: 50, padding: "0 16px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "400 15px Inter", color: "#1E293B", outline: "none" };
+const inputStyle = { height: 44, padding: "0 14px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "400 14px Inter", color: "#1E293B", outline: "none" };
 const labelStyle = { display: "grid", gap: 7 };
 const captionStyle = { font: "600 13px Inter", color: "#012746", letterSpacing: ".02em" };
 
@@ -54,9 +54,9 @@ export default function Cadastro() {
         categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
       />
 
-      <main style={{ maxWidth: 460, margin: "0 auto", padding: "56px 24px 80px" }}>
-        <h1 style={{ margin: "0 0 8px", font: "800 30px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>{mode === "cadastro" ? "Criar minha conta" : "Entrar na minha conta"}</h1>
-        <p style={{ margin: "0 0 28px", font: "400 15px/1.6 Inter", color: "#475569" }}>
+      <main style={{ maxWidth: 440, margin: "0 auto", padding: "44px 24px 64px" }}>
+        <h1 style={{ margin: "0 0 8px", font: "800 24px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>{mode === "cadastro" ? "Criar minha conta" : "Entrar na minha conta"}</h1>
+        <p style={{ margin: "0 0 22px", font: "400 14px/1.6 Inter", color: "#475569" }}>
           {mode === "cadastro" ? "Salve seus favoritos e compare produtos com mais facilidade." : "Acesse para ver sua lista de favoritos."}
         </p>
 
@@ -83,7 +83,7 @@ export default function Cadastro() {
             <span style={captionStyle}>Senha *</span>
             <input required type="password" minLength={4} value={form.password} onChange={set("password")} placeholder="Mínimo 4 caracteres" style={inputStyle} />
           </label>
-          <button disabled={loading} className="btn-primary" style={{ height: 52, border: 0, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em", cursor: loading ? "default" : "pointer", opacity: loading ? .7 : 1 }}>
+          <button disabled={loading} className="btn-primary" style={{ height: 46, border: 0, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em", cursor: loading ? "default" : "pointer", opacity: loading ? .7 : 1 }}>
             {loading ? "Enviando..." : mode === "cadastro" ? "CRIAR CONTA" : "ENTRAR"}
           </button>
         </form>

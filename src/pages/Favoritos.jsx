@@ -23,8 +23,8 @@ export default function Favoritos() {
         categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
       />
 
-      <main style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 24px 80px" }}>
-        <h1 style={{ margin: "0 0 28px", font: "800 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Meus favoritos</h1>
+      <main style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 24px 64px" }}>
+        <h1 style={{ margin: "0 0 22px", font: "800 26px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Meus favoritos</h1>
 
         {loading ? (
           <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Carregando...</p>

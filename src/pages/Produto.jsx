@@ -168,10 +168,10 @@ export default function Produto() {
         </div>
       </div>
 
-      <main style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 24px 0" }}>
-        <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,1.15fr) minmax(340px,.85fr)", gap: 48, alignItems: "start" }}>
+      <main style={{ maxWidth: 1280, margin: "0 auto", padding: "24px 24px 0" }}>
+        <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,.95fr) minmax(360px,1.05fr)", gap: 40, alignItems: "start" }}>
 
-          <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "72px minmax(0,1fr)", gap: 16 }}>
+          <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "64px minmax(0,1fr)", gap: 14, maxWidth: 460, margin: "0 auto" }}>
             <div className="gallery-thumbs" style={{ display: "flex", flexDirection: "column", gap: 12, maxHeight: galeria.length > 7 ? 492 : "none", overflowY: galeria.length > 7 ? "auto" : "visible", paddingRight: galeria.length > 7 ? 4 : 0 }}>
               {galeria.map((g, i) => (
                 <button key={i} onClick={g.pick} className="gallery-thumb" style={{ flex: "none", width: "100%", border: `1.5px solid ${g.borda}`, borderRadius: 8, background: g.url ? "#fff" : "repeating-linear-gradient(135deg,#F8FAFC 0 7px,#F1F5F9 7px 14px)", aspectRatio: "1/1", padding: g.url ? 0 : 6, cursor: "pointer", font: "400 8.5px ui-monospace,monospace", color: "#94A3B8", lineHeight: 1.3, textAlign: "center", overflow: "hidden" }}>
@@ -206,72 +206,72 @@ export default function Produto() {
           <div className="product-info">
             <div className="product-title-block">
               <div style={{ font: "600 11.5px Inter", letterSpacing: ".14em", color: "#94A3B8", marginBottom: 8 }}>{marca}</div>
-              <h1 style={{ margin: "0 0 14px", font: "800 34px/1.18 Montserrat", color: "#012746", letterSpacing: "-.01em", textWrap: "balance" }}>{nome}</h1>
-              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 14, marginBottom: 24 }}>
-                <span style={{ font: "600 15px Inter", color: "#F05A00", letterSpacing: ".1em" }}>{estrelasStr(notaMedia)}</span>
-                <a href="#avaliacoes" style={{ font: "500 13.5px Inter", color: "#475569", textDecoration: "underline" }}>{String(notaMedia).replace(".", ",")} · {totalAvaliacoes.toLocaleString("pt-BR")} avaliações</a>
-                <span style={{ width: 1, height: 16, background: "#E2E8F0" }}></span>
-                <span style={{ font: "400 13.5px Inter", color: "#475569" }}>Cód. 8412-V12</span>
+              <h1 style={{ margin: "0 0 12px", font: "800 26px/1.22 Montserrat", color: "#012746", letterSpacing: "-.01em", textWrap: "balance" }}>{nome}</h1>
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12, marginBottom: 20 }}>
+                <span style={{ font: "600 14px Inter", color: "#F05A00", letterSpacing: ".1em" }}>{estrelasStr(notaMedia)}</span>
+                <a href="#avaliacoes" style={{ font: "500 13px Inter", color: "#475569", textDecoration: "underline" }}>{String(notaMedia).replace(".", ",")} · {totalAvaliacoes.toLocaleString("pt-BR")} avaliações</a>
+                <span style={{ width: 1, height: 14, background: "#E2E8F0" }}></span>
+                <span style={{ font: "400 13px Inter", color: "#475569" }}>Cód. 8412-V12</span>
               </div>
             </div>
 
-            <div style={{ border: "1px solid #E2E8F0", borderRadius: 16, padding: 24, boxShadow: "0 4px 20px rgba(1,39,70,.08)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                {precoDe && <span style={{ font: "400 15px Inter", color: "#64748B", textDecoration: "line-through" }}>{precoDe}</span>}
+            <div style={{ border: "1px solid #E2E8F0", borderRadius: 16, padding: 20, boxShadow: "0 4px 20px rgba(1,39,70,.08)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+                {precoDe && <span style={{ font: "400 13.5px Inter", color: "#64748B", textDecoration: "line-through" }}>{precoDe}</span>}
               </div>
-              <div style={{ display: "flex", alignItems: "flex-end", gap: 12, flexWrap: "wrap", marginBottom: 22 }}>
-                <span style={{ font: "800 46px Montserrat", color: "#F05A00", lineHeight: 1 }}>{precoPor}</span>
+              <div style={{ display: "flex", alignItems: "flex-end", gap: 12, flexWrap: "wrap", marginBottom: 18 }}>
+                <span style={{ font: "800 32px Montserrat", color: "#F05A00", lineHeight: 1 }}>{precoPor}</span>
               </div>
 
-              <a {...buyProps} className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, height: 56, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 17px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.3)" }}>
+              <a {...buyProps} className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 48, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.3)" }}>
                 COMPRAR AGORA
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
               </a>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, margin: "14px 0", font: "400 12.5px Inter", color: "#475569", textAlign: "center" }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round"><path d="M12 3.5l7 2.6v5.4c0 4.3-2.9 7.3-7 9-4.1-1.7-7-4.7-7-9V6.1l7-2.6z"></path></svg>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, margin: "12px 0", font: "400 12px Inter", color: "#475569", textAlign: "center" }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round"><path d="M12 3.5l7 2.6v5.4c0 4.3-2.9 7.3-7 9-4.1-1.7-7-4.7-7-9V6.1l7-2.6z"></path></svg>
                 Você finaliza a compra no site oficial da loja parceira
               </div>
-              <div style={{ height: 1, background: "#E2E8F0", margin: "18px 0" }}></div>
-              <div style={{ display: "grid", gap: 16 }}>
-                <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "none", marginTop: 1 }}><path d="M3 7.5h11v9H3zM14 10.5h4l3 3v3h-7z"></path><circle cx="7" cy="17.4" r="1.6"></circle><circle cx="17.5" cy="17.4" r="1.6"></circle></svg>
-                  <span style={{ font: "400 13.5px/1.5 Inter", color: "#475569" }}>O <strong style={{ font: "600 13.5px Inter", color: "#012746" }}>frete é calculado no site da loja parceira</strong>, na finalização da compra.</span>
+              <div style={{ height: 1, background: "#E2E8F0", margin: "16px 0" }}></div>
+              <div style={{ display: "grid", gap: 14 }}>
+                <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "none", marginTop: 1 }}><path d="M3 7.5h11v9H3zM14 10.5h4l3 3v3h-7z"></path><circle cx="7" cy="17.4" r="1.6"></circle><circle cx="17.5" cy="17.4" r="1.6"></circle></svg>
+                  <span style={{ font: "400 12.5px/1.5 Inter", color: "#475569" }}>O <strong style={{ font: "600 12.5px Inter", color: "#012746" }}>frete é calculado no site da loja parceira</strong>, na finalização da compra.</span>
                 </div>
-                <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "none", marginTop: 1 }}><path d="M12 3.5l2.6 1.9 3.2-.2.9 3.1 2.3 2.2-1.6 2.8.4 3.2-3.1 1-2 2.5-3-1.2-3 1.2-2-2.5-3.1-1 .4-3.2L2 10.5l2.3-2.2.9-3.1 3.2.2z"></path></svg>
-                  <span style={{ font: "400 13.5px/1.5 Inter", color: "#475569" }}><strong style={{ font: "600 13.5px Inter", color: "#012746" }}>12 meses de garantia</strong> do fabricante, com nota fiscal.</span>
+                <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "none", marginTop: 1 }}><path d="M12 3.5l2.6 1.9 3.2-.2.9 3.1 2.3 2.2-1.6 2.8.4 3.2-3.1 1-2 2.5-3-1.2-3 1.2-2-2.5-3.1-1 .4-3.2L2 10.5l2.3-2.2.9-3.1 3.2.2z"></path></svg>
+                  <span style={{ font: "400 12.5px/1.5 Inter", color: "#475569" }}><strong style={{ font: "600 12.5px Inter", color: "#012746" }}>12 meses de garantia</strong> do fabricante, com nota fiscal.</span>
                 </div>
-                <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" style={{ flex: "none", marginTop: 1 }}><path d="M12 4v8l5 3"></path><circle cx="12" cy="12" r="8.5"></circle></svg>
-                  <span style={{ font: "400 13.5px/1.5 Inter", color: "#475569" }}><strong style={{ font: "600 13.5px Inter", color: "#012746" }}>30 dias</strong> para trocar ou devolver sem custo.</span>
+                <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" style={{ flex: "none", marginTop: 1 }}><path d="M12 4v8l5 3"></path><circle cx="12" cy="12" r="8.5"></circle></svg>
+                  <span style={{ font: "400 12.5px/1.5 Inter", color: "#475569" }}><strong style={{ font: "600 12.5px Inter", color: "#012746" }}>30 dias</strong> para trocar ou devolver sem custo.</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <section style={{ marginTop: 72 }}>
+        <section style={{ marginTop: 56 }}>
           <div>
-            <h2 style={{ margin: "0 0 16px", font: "700 28px Montserrat", color: "#012746" }}>Mais potência, menos trabalho</h2>
+            <h2 style={{ margin: "0 0 14px", font: "700 22px Montserrat", color: "#012746" }}>Mais potência, menos trabalho</h2>
             {descricao ? (
               paragrafos(descricao).map((par, i) => (
-                <p key={i} style={{ margin: "0 0 18px", font: "400 16px/1.65 Inter", color: "#475569", whiteSpace: "pre-line" }}>{par}</p>
+                <p key={i} style={{ margin: "0 0 16px", font: "400 14.5px/1.65 Inter", color: "#475569", whiteSpace: "pre-line" }}>{par}</p>
               ))
             ) : (
               <>
-                <p style={{ margin: "0 0 14px", font: "400 16px/1.65 Inter", color: "#475569" }}>O Vertax V12 foi feito para a limpeza do dia a dia em casas e apartamentos brasileiros. O motor de 450W com tecnologia ciclônica mantém a sucção constante mesmo com o reservatório cheio, e a escova antiemaranhado dá conta de pelos de animais em tapetes e sofás.</p>
-                <p style={{ margin: "0 0 24px", font: "400 16px/1.65 Inter", color: "#475569" }}>A bateria de 2.500 mAh entrega até 45 minutos no modo padrão, o suficiente para limpar dois quartos e uma sala sem recarregar. Sem fio, sem saco e com filtro HEPA lavável, ele reduz a poeira que volta para o ar.</p>
+                <p style={{ margin: "0 0 14px", font: "400 14.5px/1.65 Inter", color: "#475569" }}>O Vertax V12 foi feito para a limpeza do dia a dia em casas e apartamentos brasileiros. O motor de 450W com tecnologia ciclônica mantém a sucção constante mesmo com o reservatório cheio, e a escova antiemaranhado dá conta de pelos de animais em tapetes e sofás.</p>
+                <p style={{ margin: "0 0 20px", font: "400 14.5px/1.65 Inter", color: "#475569" }}>A bateria de 2.500 mAh entrega até 45 minutos no modo padrão, o suficiente para limpar dois quartos e uma sala sem recarregar. Sem fio, sem saco e com filtro HEPA lavável, ele reduz a poeira que volta para o ar.</p>
               </>
             )}
 
             {specsExibidas.length > 0 && (
               <>
-                <h3 style={{ margin: "40px 0 16px", font: "700 24px Montserrat", color: "#012746" }}>Especificações técnicas</h3>
+                <h3 style={{ margin: "32px 0 14px", font: "700 19px Montserrat", color: "#012746" }}>Especificações técnicas</h3>
                 <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden" }}>
                   {specsExibidas.map((s, i) => (
-                    <div key={i} style={{ display: "grid", gridTemplateColumns: "minmax(0,.9fr) minmax(0,1.1fr)", gap: 16, padding: "13px 18px", borderBottom: "1px solid #F1F5F9" }}>
-                      <span style={{ font: "500 13.5px Inter", color: "#475569" }}>{s.k}</span>
-                      <span style={{ font: "600 13.5px Inter", color: "#1E293B" }}>{s.v}</span>
+                    <div key={i} style={{ display: "grid", gridTemplateColumns: "minmax(0,.9fr) minmax(0,1.1fr)", gap: 16, padding: "11px 16px", borderBottom: "1px solid #F1F5F9" }}>
+                      <span style={{ font: "500 13px Inter", color: "#475569" }}>{s.k}</span>
+                      <span style={{ font: "600 13px Inter", color: "#1E293B" }}>{s.v}</span>
                     </div>
                   ))}
                 </div>
@@ -280,7 +280,7 @@ export default function Produto() {
 
             {(indicadoExibido.length > 0 || naoIndicadoExibido.length > 0) && (
               <>
-                <h3 style={{ margin: "40px 0 16px", font: "700 24px Montserrat", color: "#012746" }}>Este modelo é para você?</h3>
+                <h3 style={{ margin: "32px 0 14px", font: "700 19px Montserrat", color: "#012746" }}>Este modelo é para você?</h3>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 16 }}>
                   {indicadoExibido.length > 0 && (
                     <div style={{ padding: 20, border: "1px solid #E2E8F0", borderRadius: 12 }}>
@@ -315,13 +315,13 @@ export default function Produto() {
         </section>
 
         {temAvaliacoes && (
-          <section id="avaliacoes" style={{ marginTop: 72 }}>
-            <h2 style={{ margin: "0 0 24px", font: "700 28px Montserrat", color: "#012746" }}>Avaliações de quem comprou</h2>
-            <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(260px,.55fr) minmax(0,1.45fr)", gap: 40, alignItems: "start" }}>
+          <section id="avaliacoes" style={{ marginTop: 56 }}>
+            <h2 style={{ margin: "0 0 20px", font: "700 22px Montserrat", color: "#012746" }}>Avaliações de quem comprou</h2>
+            <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(260px,.55fr) minmax(0,1.45fr)", gap: 32, alignItems: "start" }}>
               {distExibida.length > 0 && (
-                <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 24, background: "#F8FAFC" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
-                    <span style={{ font: "800 48px Montserrat", color: "#012746", lineHeight: 1 }}>{String(notaMedia).replace(".", ",")}</span>
+                <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 20, background: "#F8FAFC" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 18 }}>
+                    <span style={{ font: "800 34px Montserrat", color: "#012746", lineHeight: 1 }}>{String(notaMedia).replace(".", ",")}</span>
                     <span>
                       <span style={{ display: "block", font: "600 15px Inter", color: "#F05A00", letterSpacing: ".1em" }}>{estrelasStr(notaMedia)}</span>
                       <span style={{ display: "block", font: "400 13px Inter", color: "#475569", marginTop: 4 }}>{totalAvaliacoes.toLocaleString("pt-BR")} avaliações</span>
@@ -360,19 +360,19 @@ export default function Produto() {
         )}
 
         {faqExibido.length > 0 && (
-          <section style={{ marginTop: 72 }}>
-            <h2 style={{ margin: "0 0 24px", font: "700 28px Montserrat", color: "#012746" }}>Perguntas frequentes</h2>
-            <FaqAccordion faq={faqExibido} />
+          <section style={{ marginTop: 56 }}>
+            <h2 style={{ margin: "0 0 20px", font: "700 22px Montserrat", color: "#012746" }}>Perguntas frequentes</h2>
+            <FaqAccordion faq={faqExibido} qFont="700 14.5px Montserrat" />
           </section>
         )}
 
-        <section style={{ marginTop: 72, paddingBottom: 80 }}>
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 16, marginBottom: 28 }}>
+        <section style={{ marginTop: 56, paddingBottom: 64 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 16, marginBottom: 24 }}>
             <div>
-              <h2 style={{ margin: "0 0 6px", font: "700 28px Montserrat", color: "#012746" }}>Quem viu este, também comprou</h2>
-              <p style={{ margin: 0, font: "400 15.5px Inter", color: "#475569" }}>Modelos da mesma faixa de preço com boa avaliação.</p>
+              <h2 style={{ margin: "0 0 6px", font: "700 22px Montserrat", color: "#012746" }}>Quem viu este, também comprou</h2>
+              <p style={{ margin: 0, font: "400 14px Inter", color: "#475569" }}>Modelos da mesma faixa de preço com boa avaliação.</p>
             </div>
-            <Link to="/" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", height: 46, padding: "0 22px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 14px Montserrat" }}>VER TODAS AS OFERTAS</Link>
+            <Link to="/" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", height: 42, padding: "0 20px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 13px Montserrat" }}>VER TODAS AS OFERTAS</Link>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(238px,1fr))", gap: 24 }}>
             {relacionados.map((p, i) => (
@@ -381,17 +381,16 @@ export default function Produto() {
                   {p.desconto && <span style={{ position: "absolute", top: 16, left: 16, zIndex: 2, background: "#F05A00", color: "#fff", font: "800 12px Montserrat", padding: "5px 9px", borderRadius: 4 }}>{p.desconto}</span>}
                   <div style={{ aspectRatio: "1/1", borderRadius: 8, background: "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 16, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8" }}>FOTO DO PRODUTO<br />fundo branco</div>
                 </div>
-                <div style={{ padding: "14px 16px 18px", display: "flex", flexDirection: "column", flex: 1 }}>
-                  <div style={{ font: "600 11px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 5 }}>{p.marca}</div>
-                  <div style={{ font: "600 14.5px/1.45 Inter", color: "#1E293B", marginBottom: 10, minHeight: 42 }}>{p.nome}</div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
-                    <span style={{ font: "600 12px Inter", color: "#F05A00", letterSpacing: ".08em" }}>{p.estrelas}</span>
-                    <span style={{ font: "400 12px Inter", color: "#94A3B8" }}>{p.avaliacoes}</span>
+                <div style={{ padding: "12px 14px 16px", display: "flex", flexDirection: "column", flex: 1 }}>
+                  <div style={{ font: "600 10.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 4 }}>{p.marca}</div>
+                  <div style={{ font: "600 13.5px/1.4 Inter", color: "#1E293B", marginBottom: 8, minHeight: 38 }}>{p.nome}</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}>
+                    <span style={{ font: "600 11.5px Inter", color: "#F05A00", letterSpacing: ".08em" }}>{p.estrelas}</span>
+                    <span style={{ font: "400 11.5px Inter", color: "#94A3B8" }}>{p.avaliacoes}</span>
                   </div>
                   <div style={{ marginTop: "auto" }}>
-                    <div style={{ font: "800 25px Montserrat", color: "#F05A00", lineHeight: 1.15 }}>{p.por}</div>
-                    <div style={{ font: "400 12.5px Inter", color: "#475569", marginBottom: 14 }}>{p.parcela}</div>
-                    <span style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 44, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".06em" }}>COMPRAR</span>
+                    <div style={{ font: "800 20px Montserrat", color: "#F05A00", lineHeight: 1.15, marginBottom: 12 }}>{p.por}</div>
+                    <span style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 40, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 12.5px Montserrat", letterSpacing: ".06em" }}>COMPRAR</span>
                   </div>
                 </div>
               </Link>
@@ -411,11 +410,11 @@ export default function Produto() {
             <div style={{ minWidth: 0 }}>
               <div style={{ font: "600 13.5px Inter", color: "#1E293B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 340 }}>{nome}</div>
               <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                <span style={{ font: "800 20px Montserrat", color: "#F05A00" }}>{precoPor}</span>
+                <span style={{ font: "800 18px Montserrat", color: "#F05A00" }}>{precoPor}</span>
               </div>
             </div>
           </div>
-          <a {...buyProps} className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10, height: 50, padding: "0 34px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em" }}>
+          <a {...buyProps} className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10, height: 44, padding: "0 28px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em" }}>
             COMPRAR AGORA
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
           </a>

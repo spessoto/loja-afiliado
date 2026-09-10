@@ -130,9 +130,9 @@ export default function Categoria() {
       </div>
 
       <section style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "36px 24px 32px" }}>
-          <h1 style={{ margin: "0 0 12px", font: "800 40px/1.1 Montserrat", color: "#012746", letterSpacing: "-.02em" }}>{titulo}</h1>
-          <p style={{ margin: "0 0 24px", maxWidth: 680, font: "400 16px/1.65 Inter", color: "#475569" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "28px 24px 24px" }}>
+          <h1 style={{ margin: "0 0 10px", font: "800 30px/1.15 Montserrat", color: "#012746", letterSpacing: "-.02em" }}>{titulo}</h1>
+          <p style={{ margin: "0 0 20px", maxWidth: 680, font: "400 14.5px/1.65 Inter", color: "#475569" }}>
             {loading ? "Carregando produtos..." : (
               <><strong style={{ fontWeight: 600, color: "#012746" }}>{naCategoria.length} modelo{naCategoria.length === 1 ? "" : "s"}</strong> disponíve{naCategoria.length === 1 ? "l" : "is"}{categoriaAtual ? ` na categoria ${categoriaAtual}` : ""}.</>
             )}
@@ -236,10 +236,10 @@ export default function Categoria() {
         </div>
       </main>
 
-      <section style={{ margin: "64px 0 0", background: "#F8FAFC", borderTop: "1px solid #E2E8F0", borderBottom: "1px solid #E2E8F0" }}>
-        <div className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px", display: "grid", gridTemplateColumns: "minmax(0,.8fr) minmax(0,1.2fr)", gap: 48 }}>
+      <section style={{ margin: "48px 0 0", background: "#F8FAFC", borderTop: "1px solid #E2E8F0", borderBottom: "1px solid #E2E8F0" }}>
+        <div className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "36px 24px", display: "grid", gridTemplateColumns: "minmax(0,.8fr) minmax(0,1.2fr)", gap: 40 }}>
           <div>
-            <h2 style={{ margin: "0 0 10px", font: "700 30px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Como escolher o aspirador certo</h2>
+            <h2 style={{ margin: "0 0 10px", font: "700 23px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Como escolher o aspirador certo</h2>
             <p style={{ margin: 0, font: "400 15.5px/1.65 Inter", color: "#475569" }}>Três critérios resolvem 90% da decisão. O resto é preferência.</p>
           </div>
           <div style={{ display: "grid", gap: 14 }}>

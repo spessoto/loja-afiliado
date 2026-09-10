@@ -26,8 +26,8 @@ export default function Busca() {
         categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
       />
 
-      <main style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 24px 80px" }}>
-        <h1 style={{ margin: "0 0 8px", font: "800 30px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Resultados para "{q}"</h1>
+      <main style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 24px 64px" }}>
+        <h1 style={{ margin: "0 0 8px", font: "800 24px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Resultados para "{q}"</h1>
         <p style={{ margin: "0 0 28px", font: "400 14px Inter", color: "#475569" }}>{loading ? "Buscando..." : `${results.length} produto(s) encontrado(s)`}</p>
 
         {!loading && results.length > 0 && (

@@ -118,20 +118,20 @@ export default function Home() {
       />
 
       <section style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>
-        <div className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "56px 24px 60px", display: "grid", gridTemplateColumns: "minmax(0,1.05fr) minmax(0,.95fr)", gap: 48, alignItems: "center" }}>
+        <div className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "44px 24px 48px", display: "grid", gridTemplateColumns: "minmax(0,1.05fr) minmax(0,.95fr)", gap: 40, alignItems: "center" }}>
           <div>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#fff", border: "1.5px solid #E2E8F0", borderRadius: 24, padding: "7px 16px 7px 8px", marginBottom: 24 }}>
               <span style={{ background: "linear-gradient(90deg,#F05A00,#FF7A00)", color: "#fff", font: "800 11.5px Montserrat", letterSpacing: ".08em", padding: "4px 10px", borderRadius: 16 }}>ATÉ 40% OFF</span>
               <span style={{ font: "600 13px Inter", color: "#012746" }}>Semana do Aspirador</span>
             </div>
-            <h1 style={{ margin: "0 0 20px", font: "800 54px/1.05 Montserrat", letterSpacing: "-.02em", color: "#012746", textWrap: "balance" }}>ENCONTRE O ASPIRADOR IDEAL PARA SUA CASA</h1>
-            <p style={{ margin: "0 0 32px", maxWidth: 520, font: "400 17px/1.6 Inter", color: "#475569" }}>Modelos para todos os tipos de limpeza e necessidades. Nossa curadoria compara potência, autonomia e preço para você escolher em minutos.</p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 36 }}>
-              <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 52, padding: "0 30px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.28)" }}>
+            <h1 style={{ margin: "0 0 16px", font: "800 40px/1.1 Montserrat", letterSpacing: "-.02em", color: "#012746", textWrap: "balance" }}>ENCONTRE O ASPIRADOR IDEAL PARA SUA CASA</h1>
+            <p style={{ margin: "0 0 28px", maxWidth: 500, font: "400 15.5px/1.6 Inter", color: "#475569" }}>Modelos para todos os tipos de limpeza e necessidades. Nossa curadoria compara potência, autonomia e preço para você escolher em minutos.</p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 32 }}>
+              <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 46, padding: "0 26px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.28)" }}>
                 VER ASPIRADORES
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
               </Link>
-              <a href="#necessidade" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", height: 52, padding: "0 26px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 15px Montserrat" }}>DESCOBRIR MEU MODELO</a>
+              <a href="#necessidade" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", height: 46, padding: "0 22px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 14px Montserrat" }}>DESCOBRIR MEU MODELO</a>
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "12px 28px" }}>
               {heroTrust.map((t, i) => (
@@ -143,9 +143,9 @@ export default function Home() {
             </div>
           </div>
           <div style={{ position: "relative" }}>
-            <Link to={heroProduct ? `/produto/${heroProduct.id}` : "/categoria"} style={{ aspectRatio: "4/3.4", borderRadius: 16, border: "1px solid #E2E8F0", overflow: "hidden", background: heroProduct?.image_url ? "#fff" : "repeating-linear-gradient(135deg,#F1F5F9 0 9px,#E9EFF5 9px 18px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: heroProduct?.image_url ? 0 : 24 }}>
+            <Link to={heroProduct ? `/produto/${heroProduct.id}` : "/categoria"} style={{ aspectRatio: "4/3.4", maxWidth: 420, margin: "0 auto", borderRadius: 16, border: "1px solid #E2E8F0", overflow: "hidden", background: heroProduct?.image_url ? "#fff" : "repeating-linear-gradient(135deg,#F1F5F9 0 9px,#E9EFF5 9px 18px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: heroProduct?.image_url ? 0 : 24 }}>
               {heroProduct?.image_url ? (
-                <img src={heroProduct.image_url} alt={heroProduct.name} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 32 }} />
+                <img src={heroProduct.image_url} alt={heroProduct.name} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 24 }} />
               ) : heroProduct ? (
                 <span style={{ font: "600 15px Montserrat", color: "#012746", maxWidth: 260 }}>{heroProduct.name}</span>
               ) : (
@@ -161,16 +161,16 @@ export default function Home() {
                   <div style={{ display: "inline-block", background: "#F05A00", color: "#fff", font: "800 10.5px Montserrat", letterSpacing: ".06em", padding: "3px 8px", borderRadius: 4, marginBottom: 6 }}>-{heroDesconto}%</div>
                 )}
                 <div style={{ font: "600 12.5px Inter", color: "#012746", marginBottom: 6, lineHeight: 1.3, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical" }}>{heroProduct.name}</div>
-                <div style={{ font: "800 26px Montserrat", color: "#F05A00", lineHeight: 1.15 }}>{formatBRL(heroProduct.price_to)}</div>
+                <div style={{ font: "800 21px Montserrat", color: "#F05A00", lineHeight: 1.15 }}>{formatBRL(heroProduct.price_to)}</div>
               </div>
             )}
           </div>
         </div>
       </section>
 
-      <section id="categorias" style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 24px 8px" }}>
-        <h2 style={{ margin: "0 0 8px", font: "700 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Compre por tipo de aspirador</h2>
-        <p style={{ margin: "0 0 32px", font: "400 16px Inter", color: "#475569" }}>Seis categorias, sem enrolação. Escolha pelo formato que combina com a sua casa.</p>
+      <section id="categorias" style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px 8px" }}>
+        <h2 style={{ margin: "0 0 8px", font: "700 26px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Compre por tipo de aspirador</h2>
+        <p style={{ margin: "0 0 24px", font: "400 14.5px Inter", color: "#475569" }}>Seis categorias, sem enrolação. Escolha pelo formato que combina com a sua casa.</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 24 }}>
           {categorias.length > 0 ? categorias.map((c, i) => (
             <Link key={i} to={`/categoria?cat=${encodeURIComponent(c.nome)}`} className="card-hover" style={{ display: "flex", flexDirection: "column", gap: 14, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
@@ -188,19 +188,19 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="ofertas" style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 24px 0" }}>
-        <div style={{ background: "linear-gradient(100deg,#012746,#001B31)", borderRadius: 16, padding: "28px 32px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 24, marginBottom: 32 }}>
+      <section id="ofertas" style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px 0" }}>
+        <div style={{ background: "linear-gradient(100deg,#012746,#001B31)", borderRadius: 16, padding: "22px 26px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 20, marginBottom: 28 }}>
           <div>
-            <div style={{ display: "inline-block", background: "#F05A00", color: "#fff", font: "800 11px Montserrat", letterSpacing: ".1em", padding: "5px 11px", borderRadius: 4, marginBottom: 12 }}>OFERTA DO DIA</div>
-            <h2 style={{ margin: 0, font: "800 32px Montserrat", color: "#fff", letterSpacing: "-.01em" }}>Descontos que acabam hoje</h2>
-            <p style={{ margin: "6px 0 0", font: "400 15px Inter", color: "#B8C5D0" }}>Preços válidos enquanto durar o estoque de cada modelo.</p>
+            <div style={{ display: "inline-block", background: "#F05A00", color: "#fff", font: "800 10.5px Montserrat", letterSpacing: ".1em", padding: "4px 10px", borderRadius: 4, marginBottom: 10 }}>OFERTA DO DIA</div>
+            <h2 style={{ margin: 0, font: "800 25px Montserrat", color: "#fff", letterSpacing: "-.01em" }}>Descontos que acabam hoje</h2>
+            <p style={{ margin: "6px 0 0", font: "400 14px Inter", color: "#B8C5D0" }}>Preços válidos enquanto durar o estoque de cada modelo.</p>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <span style={{ font: "600 13px Inter", color: "#B8C5D0", maxWidth: 96, lineHeight: 1.35 }}>Termina em</span>
+            <span style={{ font: "600 12.5px Inter", color: "#B8C5D0", maxWidth: 96, lineHeight: 1.35 }}>Termina em</span>
             <div style={{ display: "flex", gap: 8 }}>
               {countdown.map((u, i) => (
-                <div key={i} style={{ minWidth: 62, background: "rgba(255,255,255,.08)", border: "1px solid #1E3A4D", borderRadius: 8, padding: "10px 8px", textAlign: "center" }}>
-                  <div style={{ font: "800 24px Montserrat", color: "#fff", lineHeight: 1 }}>{u.v}</div>
+                <div key={i} style={{ minWidth: 54, background: "rgba(255,255,255,.08)", border: "1px solid #1E3A4D", borderRadius: 8, padding: "8px 6px", textAlign: "center" }}>
+                  <div style={{ font: "800 19px Montserrat", color: "#fff", lineHeight: 1 }}>{u.v}</div>
                   <div style={{ font: "500 10px Inter", letterSpacing: ".1em", color: "#94A3B8", marginTop: 4 }}>{u.l}</div>
                 </div>
               ))}
@@ -216,9 +216,9 @@ export default function Home() {
         )}
       </section>
 
-      <section id="necessidade" style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 24px 0" }}>
-        <h2 style={{ margin: "0 0 8px", font: "700 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Qual é o seu problema de limpeza?</h2>
-        <p style={{ margin: "0 0 32px", font: "400 16px Inter", color: "#475569" }}>Diga o que incomoda na sua casa e a gente mostra só os modelos que resolvem.</p>
+      <section id="necessidade" style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px 0" }}>
+        <h2 style={{ margin: "0 0 8px", font: "700 26px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Qual é o seu problema de limpeza?</h2>
+        <p style={{ margin: "0 0 24px", font: "400 14.5px Inter", color: "#475569" }}>Diga o que incomoda na sua casa e a gente mostra só os modelos que resolvem.</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 16 }}>
           {necessidades.map((n, i) => (
             <Link key={i} to={`/busca?q=${encodeURIComponent(n.q)}`} className="need-card" style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
@@ -232,13 +232,13 @@ export default function Home() {
         </div>
       </section>
 
-      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 24px 0" }}>
-        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 16, marginBottom: 32 }}>
+      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px 0" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 16, marginBottom: 24 }}>
           <div>
-            <h2 style={{ margin: "0 0 6px", font: "700 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Mais vendidos do mês</h2>
-            <p style={{ margin: 0, font: "400 16px Inter", color: "#475569" }}>O que as famílias brasileiras estão levando para casa.</p>
+            <h2 style={{ margin: "0 0 6px", font: "700 26px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Mais vendidos do mês</h2>
+            <p style={{ margin: 0, font: "400 14.5px Inter", color: "#475569" }}>O que as famílias brasileiras estão levando para casa.</p>
           </div>
-          <Link to="/categoria" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", gap: 8, height: 46, padding: "0 22px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 14px Montserrat" }}>VER RANKING COMPLETO</Link>
+          <Link to="/categoria" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", gap: 8, height: 42, padding: "0 20px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 13px Montserrat" }}>VER RANKING COMPLETO</Link>
         </div>
         {vendidos.length > 0 ? (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(238px,1fr))", gap: 24 }}>
@@ -249,8 +249,8 @@ export default function Home() {
         )}
       </section>
 
-      <section style={{ margin: "64px 0 0", background: "#F8FAFC", borderTop: "1px solid #E2E8F0", borderBottom: "1px solid #E2E8F0" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "44px 24px", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 32 }}>
+      <section style={{ margin: "48px 0 0", background: "#F8FAFC", borderTop: "1px solid #E2E8F0", borderBottom: "1px solid #E2E8F0" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "36px 24px", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 28 }}>
           {beneficios.map((b, i) => (
             <div key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
               <span style={{ flex: "none", width: 44, height: 44, borderRadius: 8, background: "#fff", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -265,17 +265,17 @@ export default function Home() {
         </div>
       </section>
 
-      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 24px 0" }}>
-        <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,.85fr) minmax(0,1.15fr)", gap: 48 }}>
+      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px 0" }}>
+        <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,.85fr) minmax(0,1.15fr)", gap: 40 }}>
           <div>
-            <h2 style={{ margin: "0 0 8px", font: "700 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Quem comprou, aprovou</h2>
-            <p style={{ margin: "0 0 24px", font: "400 16px Inter", color: "#475569" }}>
+            <h2 style={{ margin: "0 0 8px", font: "700 26px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Quem comprou, aprovou</h2>
+            <p style={{ margin: "0 0 20px", font: "400 14.5px Inter", color: "#475569" }}>
               {totalAvaliacoes > 0
                 ? <>Média de {mediaGeral.toFixed(1).replace(".", ",")} em {totalAvaliacoes.toLocaleString("pt-BR")} avaliações verificadas de clientes que receberam o produto.</>
                 : "Ainda não há avaliações suficientes."}
             </p>
             <div style={{ display: "flex", alignItems: "center", gap: 16, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
-              <div style={{ font: "800 48px Montserrat", color: "#012746", lineHeight: 1 }}>{totalAvaliacoes > 0 ? mediaGeral.toFixed(1).replace(".", ",") : "-"}</div>
+              <div style={{ font: "800 34px Montserrat", color: "#012746", lineHeight: 1 }}>{totalAvaliacoes > 0 ? mediaGeral.toFixed(1).replace(".", ",") : "-"}</div>
               <div>
                 <div style={{ font: "600 16px Inter", color: "#F05A00", letterSpacing: ".1em" }}>{"★".repeat(Math.round(mediaGeral)) + "☆".repeat(Math.max(0, 5 - Math.round(mediaGeral)))}</div>
                 <div style={{ font: "400 13px Inter", color: "#475569", marginTop: 4 }}>{totalAvaliacoes > 0 ? `${recomendamPct}% avaliam com 4 ou 5 estrelas` : "Sem dados ainda"}</div>
@@ -299,11 +299,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "64px 24px 72px" }}>
-        <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,.7fr) minmax(0,1.3fr)", gap: 48 }}>
+      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px 56px" }}>
+        <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,.7fr) minmax(0,1.3fr)", gap: 40 }}>
           <div>
-            <h2 style={{ margin: "0 0 8px", font: "700 34px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Dúvidas frequentes</h2>
-            <p style={{ margin: 0, font: "400 16px Inter", color: "#475569" }}>Se ficar qualquer dúvida, fale com nosso atendimento especializado pelo WhatsApp.</p>
+            <h2 style={{ margin: "0 0 8px", font: "700 26px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Dúvidas frequentes</h2>
+            <p style={{ margin: 0, font: "400 14.5px Inter", color: "#475569" }}>Se ficar qualquer dúvida, fale com nosso atendimento especializado pelo WhatsApp.</p>
           </div>
           <FaqAccordion faq={faq} />
         </div>

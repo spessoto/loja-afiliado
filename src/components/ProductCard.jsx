@@ -64,17 +64,17 @@ export default function ProductCard({ p, priceColor = "#F05A00", to, showCompare
             </div>
           )}
         </div>
-        <div style={{ padding: "14px 16px 18px", display: "flex", flexDirection: "column", flex: 1 }}>
-          <div style={{ font: "600 11px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 5 }}>{p.marca}</div>
-          <div style={{ font: "600 14.5px/1.45 Inter", color: "#1E293B", marginBottom: 10, minHeight: 42 }}>{p.nome}</div>
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
-            <span style={{ font: "600 12px Inter", color: "#F05A00", letterSpacing: ".08em" }}>{p.estrelas}</span>
-            <span style={{ font: "400 12px Inter", color: "#94A3B8" }}>{p.avaliacoes}</span>
+        <div style={{ padding: "12px 14px 16px", display: "flex", flexDirection: "column", flex: 1 }}>
+          <div style={{ font: "600 10.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 4 }}>{p.marca}</div>
+          <div style={{ font: "600 13.5px/1.4 Inter", color: "#1E293B", marginBottom: 8, minHeight: 38 }}>{p.nome}</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}>
+            <span style={{ font: "600 11.5px Inter", color: "#F05A00", letterSpacing: ".08em" }}>{p.estrelas}</span>
+            <span style={{ font: "400 11.5px Inter", color: "#94A3B8" }}>{p.avaliacoes}</span>
           </div>
           <div style={{ marginTop: "auto" }}>
-            {p.de && <div style={{ font: "400 13px Inter", color: "#64748B", textDecoration: "line-through" }}>{p.de}</div>}
-            <div style={{ font: "800 25px Montserrat", color: priceColor, lineHeight: 1.15, marginBottom: 14 }}>{p.por}</div>
-            <span style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 44, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".06em" }}>COMPRAR</span>
+            {p.de && <div style={{ font: "400 12.5px Inter", color: "#64748B", textDecoration: "line-through" }}>{p.de}</div>}
+            <div style={{ font: "800 20px Montserrat", color: priceColor, lineHeight: 1.15, marginBottom: 12 }}>{p.por}</div>
+            <span style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 40, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 12.5px Montserrat", letterSpacing: ".06em" }}>COMPRAR</span>
           </div>
         </div>
       </Link>

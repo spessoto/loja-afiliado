@@ -28,9 +28,9 @@ export default function Comparar() {
         categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
       />
 
-      <main style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 24px 80px" }}>
-        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16, marginBottom: 24 }}>
-          <h1 style={{ margin: 0, font: "800 30px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Comparar produtos</h1>
+      <main style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 24px 64px" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16, marginBottom: 20 }}>
+          <h1 style={{ margin: 0, font: "800 24px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Comparar produtos</h1>
           {selected.length > 0 && (
             <button onClick={clear} style={{ border: 0, background: "transparent", font: "600 13.5px Inter", color: "#F05A00", cursor: "pointer", textDecoration: "underline" }}>Limpar comparação</button>
           )}

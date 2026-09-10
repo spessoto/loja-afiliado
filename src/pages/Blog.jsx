@@ -65,9 +65,9 @@ export default function Blog() {
       </div>
 
       <section style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "44px 24px 40px" }}>
-          <h1 style={{ margin: "0 0 14px", font: "800 42px/1.1 Montserrat", color: "#012746", letterSpacing: "-.02em", maxWidth: 760 }}>Guias de compra e dicas de limpeza</h1>
-          <p style={{ margin: "0 0 28px", maxWidth: 680, font: "400 16.5px/1.65 Inter", color: "#475569" }}>Comparativos, testes e conteúdo prático para você escolher o aspirador certo e tirar o máximo dele. Escrito por quem usa e testa esses aparelhos todos os dias.</p>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "36px 24px 32px" }}>
+          <h1 style={{ margin: "0 0 12px", font: "800 32px/1.15 Montserrat", color: "#012746", letterSpacing: "-.02em", maxWidth: 760 }}>Guias de compra e dicas de limpeza</h1>
+          <p style={{ margin: "0 0 22px", maxWidth: 680, font: "400 15px/1.65 Inter", color: "#475569" }}>Comparativos, testes e conteúdo prático para você escolher o aspirador certo e tirar o máximo dele. Escrito por quem usa e testa esses aparelhos todos os dias.</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
             {topicos.map((t, i) => (
               <Link key={i} to="/blog" style={{ display: "inline-flex", alignItems: "center", height: 40, padding: "0 18px", borderRadius: 24, border: `1.5px solid ${t.borda}`, background: t.bg, font: "600 13.5px Inter", color: t.cor, whiteSpace: "nowrap" }}>{t.nome}</Link>
@@ -90,10 +90,10 @@ export default function Blog() {
               <span style={{ background: "#F05A00", color: "#fff", font: "800 11px Montserrat", letterSpacing: ".1em", padding: "5px 11px", borderRadius: 4 }}>EM DESTAQUE</span>
               <Link to="/blog" style={{ font: "600 12.5px Inter", letterSpacing: ".06em", color: "#012746" }}>COMPARATIVOS</Link>
             </div>
-            <h2 style={{ margin: "0 0 14px", font: "800 34px/1.2 Montserrat", color: "#012746", letterSpacing: "-.01em", textWrap: "balance" }}>
+            <h2 style={{ margin: "0 0 12px", font: "800 25px/1.25 Montserrat", color: "#012746", letterSpacing: "-.01em", textWrap: "balance" }}>
               <Link to="/post" style={{ color: "#012746" }}>Melhor aspirador vertical de 2026: 5 modelos testados por preço e potência</Link>
             </h2>
-            <p style={{ margin: "0 0 20px", font: "400 16px/1.7 Inter", color: "#475569" }}>Testamos cinco verticais sem fio nas mesmas condições: tapete, piso frio, pelo de animal e farinha. O resultado mostra que o modelo mais caro não foi o melhor em três dos quatro testes.</p>
+            <p style={{ margin: "0 0 18px", font: "400 14.5px/1.7 Inter", color: "#475569" }}>Testamos cinco verticais sem fio nas mesmas condições: tapete, piso frio, pelo de animal e farinha. O resultado mostra que o modelo mais caro não foi o melhor em três dos quatro testes.</p>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px 14px", marginBottom: 24, font: "400 13.5px Inter", color: "#64748B" }}>
               <span style={{ fontWeight: 500, color: "#012746" }}>Por Marina Duarte</span>
               <span style={{ color: "#CBD5E1" }}>•</span>
@@ -101,7 +101,7 @@ export default function Blog() {
               <span style={{ color: "#CBD5E1" }}>•</span>
               <span>12 min de leitura</span>
             </div>
-            <Link to="/post" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 52, padding: "0 30px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.26)" }}>
+            <Link to="/post" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 46, padding: "0 26px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.26)" }}>
               LER O COMPARATIVO
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
             </Link>
@@ -111,7 +111,7 @@ export default function Blog() {
         <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(280px,308px)", gap: 56, alignItems: "start" }}>
           <div>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: 12, paddingBottom: 20, borderBottom: "2px solid #012746", marginBottom: 32 }}>
-              <h2 style={{ margin: 0, font: "700 26px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Publicações recentes</h2>
+              <h2 style={{ margin: 0, font: "700 21px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Publicações recentes</h2>
               <span style={{ font: "400 13.5px Inter", color: "#64748B" }}>48 artigos publicados</span>
             </div>
 
@@ -123,7 +123,7 @@ export default function Blog() {
                   </Link>
                   <div>
                     <Link to="/blog" style={{ display: "inline-block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#F05A00", marginBottom: 8 }}>{p.categoria}</Link>
-                    <h3 style={{ margin: "0 0 10px", font: "700 21px/1.32 Montserrat", color: "#012746", textWrap: "pretty" }}>
+                    <h3 style={{ margin: "0 0 8px", font: "700 17px/1.32 Montserrat", color: "#012746", textWrap: "pretty" }}>
                       <Link to="/post" style={{ color: "#012746" }}>{p.titulo}</Link>
                     </h3>
                     <p style={{ margin: "0 0 12px", font: "400 15px/1.7 Inter", color: "#475569" }}>{p.resumo}</p>
@@ -140,7 +140,7 @@ export default function Blog() {
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20, padding: "48px 0 8px" }}>
-              <button className="btn-outline-navy" style={{ height: 52, padding: "0 36px", border: "1.5px solid #012746", borderRadius: 8, background: "#fff", font: "700 14.5px Montserrat", letterSpacing: ".04em", color: "#012746", cursor: "pointer" }}>CARREGAR MAIS ARTIGOS</button>
+              <button className="btn-outline-navy" style={{ height: 46, padding: "0 30px", border: "1.5px solid #012746", borderRadius: 8, background: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".04em", color: "#012746", cursor: "pointer" }}>CARREGAR MAIS ARTIGOS</button>
               <nav style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 {paginas.map((p, i) => (
                   <Link key={i} to="/blog" style={{ display: "flex", alignItems: "center", justifyContent: "center", minWidth: 40, height: 40, padding: "0 10px", border: `1.5px solid ${p.borda}`, borderRadius: 8, font: "600 13.5px Inter", color: p.cor, background: p.bg }}>{p.n}</Link>
@@ -166,8 +166,7 @@ export default function Blog() {
               <div style={{ font: "700 11px Montserrat", letterSpacing: ".12em", color: "#F05A00", marginBottom: 10 }}>OFERTA DA SEMANA</div>
               <div style={{ borderRadius: 10, background: "rgba(255,255,255,.06)", border: "1px solid #1E3A4D", aspectRatio: "4/3", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 16, font: "400 10.5px ui-monospace,monospace", color: "#7A8B99", letterSpacing: ".06em", marginBottom: 16 }}>FOTO DO PRODUTO<br />fundo escuro</div>
               <div style={{ font: "600 14.5px/1.5 Inter", marginBottom: 10 }}>Aspirador Vertical Vertax V12 Ciclônico 450W</div>
-              <div style={{ font: "800 26px Montserrat", color: "#F05A00", lineHeight: 1.15 }}>R$ 699,90</div>
-              <div style={{ font: "400 13px Inter", color: "#B8C5D0", marginBottom: 18 }}>ou 10x de R$ 69,99 sem juros</div>
+              <div style={{ font: "800 21px Montserrat", color: "#F05A00", lineHeight: 1.15, marginBottom: 18 }}>R$ 699,90</div>
               <Link to="/produto" className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 48, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".05em" }}>VER A OFERTA</Link>
             </div>
 
@@ -192,14 +191,14 @@ export default function Blog() {
           </aside>
         </div>
 
-        <section style={{ marginTop: 72, paddingBottom: 80 }}>
-          <h2 style={{ margin: "0 0 10px", font: "700 30px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Comece pelos guias essenciais</h2>
-          <p style={{ margin: "0 0 32px", maxWidth: 640, font: "400 15.5px/1.65 Inter", color: "#475569" }}>Se você está começando a pesquisar, estes três conteúdos respondem quase tudo antes da compra.</p>
+        <section style={{ marginTop: 56, paddingBottom: 64 }}>
+          <h2 style={{ margin: "0 0 10px", font: "700 23px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Comece pelos guias essenciais</h2>
+          <p style={{ margin: "0 0 24px", maxWidth: 640, font: "400 14.5px/1.65 Inter", color: "#475569" }}>Se você está começando a pesquisar, estes três conteúdos respondem quase tudo antes da compra.</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 24 }}>
             {essenciais.map((e, i) => (
               <Link key={i} to="/post" className="card-hover" style={{ display: "flex", flexDirection: "column", gap: 14, padding: 24, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
                 <span style={{ width: 44, height: 44, borderRadius: 8, background: "#FFF1E8", display: "flex", alignItems: "center", justifyContent: "center", font: "800 15px Montserrat", color: "#F05A00" }}>{e.n}</span>
-                <span style={{ font: "700 18px/1.35 Montserrat", color: "#012746" }}>{e.t}</span>
+                <span style={{ font: "700 16px/1.35 Montserrat", color: "#012746" }}>{e.t}</span>
                 <span style={{ font: "400 14.5px/1.65 Inter", color: "#475569" }}>{e.s}</span>
                 <span style={{ font: "600 13.5px Inter", color: "#F05A00", marginTop: "auto" }}>Ler o guia →</span>
               </Link>

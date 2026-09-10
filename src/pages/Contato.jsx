@@ -58,14 +58,14 @@ export default function Contato() {
       </div>
 
       <section style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "44px 24px 40px" }}>
-          <h1 style={{ margin: "0 0 12px", font: "800 42px/1.1 Montserrat", color: "#012746", letterSpacing: "-.02em" }}>Fale com a gente</h1>
-          <p style={{ margin: 0, maxWidth: 600, font: "400 16.5px/1.65 Inter", color: "#475569" }}>Nosso time conhece aspirador de verdade e ajuda você a escolher antes de comprar. Escolha o canal que preferir.</p>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "36px 24px 32px" }}>
+          <h1 style={{ margin: "0 0 10px", font: "800 30px/1.15 Montserrat", color: "#012746", letterSpacing: "-.02em" }}>Fale com a gente</h1>
+          <p style={{ margin: 0, maxWidth: 600, font: "400 15px/1.65 Inter", color: "#475569" }}>Nosso time conhece aspirador de verdade e ajuda você a escolher antes de comprar. Escolha o canal que preferir.</p>
         </div>
       </section>
 
-      <main style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 24px 0" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 20, marginBottom: 56 }}>
+      <main style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 24px 0" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 20, marginBottom: 44 }}>
           {canais.map((c, i) => (
             <a key={i} href={c.href} className="card-hover" style={{ display: "flex", flexDirection: "column", gap: 12, padding: 24, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
               <span style={{ width: 44, height: 44, borderRadius: 8, background: "#FFF1E8", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -80,8 +80,8 @@ export default function Contato() {
 
         <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,1.1fr) minmax(300px,.9fr)", gap: 48, alignItems: "start" }}>
           <div>
-            <h2 style={{ margin: "0 0 8px", font: "700 30px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Envie sua mensagem</h2>
-            <p style={{ margin: "0 0 28px", font: "400 15.5px Inter", color: "#475569" }}>Responda em até um dia útil. Campos marcados com * são obrigatórios.</p>
+            <h2 style={{ margin: "0 0 8px", font: "700 22px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Envie sua mensagem</h2>
+            <p style={{ margin: "0 0 22px", font: "400 14px Inter", color: "#475569" }}>Responda em até um dia útil. Campos marcados com * são obrigatórios.</p>
 
             {enviado && (
               <div style={{ display: "flex", gap: 14, alignItems: "flex-start", padding: 20, border: "1px solid #FFD9C2", background: "#FFF7F2", borderRadius: 12, marginBottom: 24 }}>
@@ -97,19 +97,19 @@ export default function Contato() {
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: 18 }}>
                 <label style={{ display: "grid", gap: 7 }}>
                   <span style={{ font: "600 13px Inter", color: "#012746", letterSpacing: ".02em" }}>Nome completo *</span>
-                  <input placeholder="Como podemos te chamar?" className="input-field" style={{ height: 50, padding: "0 16px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "400 15px Inter", color: "#1E293B", outline: "none" }} />
+                  <input placeholder="Como podemos te chamar?" className="input-field" style={{ height: 44, padding: "0 14px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "400 14px Inter", color: "#1E293B", outline: "none" }} />
                 </label>
                 <label style={{ display: "grid", gap: 7 }}>
                   <span style={{ font: "600 13px Inter", color: "#012746", letterSpacing: ".02em" }}>E-mail *</span>
-                  <input type="email" placeholder="seu@email.com.br" className="input-field" style={{ height: 50, padding: "0 16px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "400 15px Inter", color: "#1E293B", outline: "none" }} />
+                  <input type="email" placeholder="seu@email.com.br" className="input-field" style={{ height: 44, padding: "0 14px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "400 14px Inter", color: "#1E293B", outline: "none" }} />
                 </label>
                 <label style={{ display: "grid", gap: 7 }}>
                   <span style={{ font: "600 13px Inter", color: "#012746", letterSpacing: ".02em" }}>WhatsApp</span>
-                  <input placeholder="(00) 00000-0000" className="input-field" style={{ height: 50, padding: "0 16px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "400 15px Inter", color: "#1E293B", outline: "none" }} />
+                  <input placeholder="(00) 00000-0000" className="input-field" style={{ height: 44, padding: "0 14px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "400 14px Inter", color: "#1E293B", outline: "none" }} />
                 </label>
                 <label style={{ display: "grid", gap: 7 }}>
                   <span style={{ font: "600 13px Inter", color: "#012746", letterSpacing: ".02em" }}>Assunto *</span>
-                  <select className="input-field" style={{ height: 50, padding: "0 14px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "400 15px Inter", color: "#1E293B", outline: "none", cursor: "pointer" }}>
+                  <select className="input-field" style={{ height: 44, padding: "0 14px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "400 14px Inter", color: "#1E293B", outline: "none", cursor: "pointer" }}>
                     <option>Ajuda para escolher um aspirador</option>
                     <option>Dúvida sobre um pedido</option>
                     <option>Prazo de entrega e frete</option>
@@ -129,7 +129,7 @@ export default function Contato() {
                 <span style={{ font: "400 13.5px/1.6 Inter", color: "#475569" }}>Concordo com o tratamento dos meus dados para responder este contato, conforme a <Link to="/politica-de-privacidade" style={{ color: "#F05A00", textDecoration: "underline" }}>Política de Privacidade</Link>.</span>
               </label>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 14, alignItems: "center" }}>
-                <button className="btn-primary" style={{ height: 54, padding: "0 34px", border: 0, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15.5px Montserrat", letterSpacing: ".04em", cursor: "pointer", boxShadow: "0 8px 24px rgba(240,90,0,.28)" }}>ENVIAR MENSAGEM</button>
+                <button className="btn-primary" style={{ height: 46, padding: "0 28px", border: 0, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em", cursor: "pointer", boxShadow: "0 8px 24px rgba(240,90,0,.28)" }}>ENVIAR MENSAGEM</button>
                 <span style={{ font: "400 13px Inter", color: "#94A3B8" }}>Não enviamos spam e não compartilhamos seus dados.</span>
               </div>
             </form>
@@ -167,11 +167,11 @@ export default function Contato() {
           </aside>
         </div>
 
-        <section style={{ marginTop: 72, paddingBottom: 80 }}>
-          <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,.7fr) minmax(0,1.3fr)", gap: 48 }}>
+        <section style={{ marginTop: 56, paddingBottom: 64 }}>
+          <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,.7fr) minmax(0,1.3fr)", gap: 40 }}>
             <div>
-              <h2 style={{ margin: "0 0 8px", font: "700 30px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Antes de enviar, veja se já respondemos</h2>
-              <p style={{ margin: 0, font: "400 15.5px/1.65 Inter", color: "#475569" }}>As dúvidas mais comuns do atendimento estão aqui.</p>
+              <h2 style={{ margin: "0 0 8px", font: "700 22px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Antes de enviar, veja se já respondemos</h2>
+              <p style={{ margin: 0, font: "400 14px/1.65 Inter", color: "#475569" }}>As dúvidas mais comuns do atendimento estão aqui.</p>
             </div>
             <FaqAccordion faq={faq} />
           </div>

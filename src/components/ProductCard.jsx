@@ -73,8 +73,7 @@ export default function ProductCard({ p, priceColor = "#F05A00", to, showCompare
           </div>
           <div style={{ marginTop: "auto" }}>
             {p.de && <div style={{ font: "400 13px Inter", color: "#64748B", textDecoration: "line-through" }}>{p.de}</div>}
-            <div style={{ font: "800 25px Montserrat", color: priceColor, lineHeight: 1.15 }}>{p.por}</div>
-            <div style={{ font: "400 12.5px Inter", color: "#475569", marginBottom: 14 }}>{p.parcela}</div>
+            <div style={{ font: "800 25px Montserrat", color: priceColor, lineHeight: 1.15, marginBottom: 14 }}>{p.por}</div>
             <span style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 44, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".06em" }}>COMPRAR</span>
           </div>
         </div>

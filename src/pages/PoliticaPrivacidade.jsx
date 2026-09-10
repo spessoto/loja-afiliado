@@ -83,7 +83,7 @@ export default function PoliticaPrivacidade() {
           <li style={{ font: "400 16px/1.75 Inter", color: "#475569" }}>Operar e melhorar o site, corrigindo erros e ajustando a navegação.</li>
           <li style={{ font: "400 16px/1.75 Inter", color: "#475569" }}>Medir quais produtos e ofertas despertam mais interesse, de forma agregada.</li>
           <li style={{ font: "400 16px/1.75 Inter", color: "#475569" }}>Atribuir comissões de afiliado sobre compras originadas nos nossos links.</li>
-          <li style={{ font: "400 16px/1.75 Inter", color: "#475569" }}>Enviar ofertas e conteúdos por e-mail ou WhatsApp, quando você autorizar.</li>
+          <li style={{ font: "400 16px/1.75 Inter", color: "#475569" }}>Enviar ofertas e conteúdos por e-mail, quando você autorizar.</li>
           <li style={{ font: "400 16px/1.75 Inter", color: "#475569" }}>Cumprir obrigações legais e prevenir fraudes e usos abusivos.</li>
         </ul>
       </section>

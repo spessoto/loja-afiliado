@@ -302,7 +302,7 @@ export default function Home() {
         <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,.7fr) minmax(0,1.3fr)", gap: 40 }}>
           <div>
             <h2 style={{ margin: "0 0 8px", font: "700 26px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Dúvidas frequentes</h2>
-            <p style={{ margin: 0, font: "400 14.5px Inter", color: "#475569" }}>Se ficar qualquer dúvida, fale com nosso atendimento especializado pelo WhatsApp.</p>
+            <p style={{ margin: 0, font: "400 14.5px Inter", color: "#475569" }}>Se ficar qualquer dúvida, fale com nosso atendimento especializado por e-mail.</p>
           </div>
           <FaqAccordion faq={faq} />
         </div>

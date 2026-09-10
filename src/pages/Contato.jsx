@@ -7,8 +7,7 @@ import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useCategories } from "../lib/categories.js";
 
 const canais = [
-  { t: "WhatsApp", v: "(11) 90000-0000", s: "Nosso canal mais rápido. Resposta em minutos no horário comercial.", href: "#whatsapp", d: "M20 12a8 8 0 10-3.2 6.4L20 20l-1-3.2A7.9 7.9 0 0020 12z" },
-  { t: "E-mail", v: "contato@promoaspiradores.com.br", s: "Para dúvidas sobre pedidos, garantia e notas fiscais.", href: "#email", d: "M3.5 6.5h17v11h-17zM3.5 7l8.5 6 8.5-6" },
+  { t: "E-mail", v: "contato@promoaspiradores.com.br", s: "Nosso canal principal. Para dúvidas sobre pedidos, garantia e notas fiscais.", href: "#email", d: "M3.5 6.5h17v11h-17zM3.5 7l8.5 6 8.5-6" },
   { t: "Central de ajuda", v: "Perguntas frequentes", s: "Prazos, formas de pagamento, trocas e devoluções.", href: "#faq", d: "M12 20.5a8.5 8.5 0 100-17 8.5 8.5 0 000 17zM9.6 9.4A2.5 2.5 0 0114.4 10c0 1.7-2.4 1.9-2.4 3.6M12 16.6v.1" },
   { t: "Parcerias", v: "parceiros@promoaspiradores.com.br", s: "Marcas, lojistas e criadores de conteúdo interessados em parceria.", href: "#parcerias", d: "M8 12.5l3 3 5.5-5.5M4.5 6.5h15v11h-15z" }
 ];
@@ -28,7 +27,7 @@ const empresa = [
 
 const faq = [
   { q: "Vocês vendem direto pelo site?", a: "A finalização da compra acontece no site da loja parceira. Fazemos a curadoria dos modelos, comparamos preços e direcionamos você para a oferta, com link de afiliado." },
-  { q: "Quanto tempo leva para responder?", a: "No WhatsApp, poucos minutos dentro do horário comercial. Por e-mail e formulário, até um dia útil." },
+  { q: "Quanto tempo leva para responder?", a: "Por e-mail e formulário, até um dia útil dentro do horário comercial." },
   { q: "Quem cuida da entrega e da garantia?", a: "A entrega e a garantia são da loja onde a compra foi finalizada. Mesmo assim, nosso atendimento acompanha o caso com você até a resolução." },
   { q: "Como pedir a nota fiscal?", a: "A nota é emitida pela loja parceira e enviada por e-mail após a confirmação do pagamento. Se não chegou, fale com a gente com o número do pedido." },
   { q: "Como solicitar a exclusão dos meus dados?", a: "Escreva para contato@promoaspiradores.com.br. Confirmamos a identidade e atendemos o pedido em até 15 dias, conforme a LGPD." }
@@ -101,10 +100,6 @@ export default function Contato() {
                 <label style={{ display: "grid", gap: 7 }}>
                   <span style={{ font: "600 13px Inter", color: "#012746", letterSpacing: ".02em" }}>E-mail *</span>
                   <input type="email" placeholder="seu@email.com.br" className="input-field" style={{ height: 44, padding: "0 14px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "400 14px Inter", color: "#1E293B", outline: "none" }} />
-                </label>
-                <label style={{ display: "grid", gap: 7 }}>
-                  <span style={{ font: "600 13px Inter", color: "#012746", letterSpacing: ".02em" }}>WhatsApp</span>
-                  <input placeholder="(00) 00000-0000" className="input-field" style={{ height: 44, padding: "0 14px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "400 14px Inter", color: "#1E293B", outline: "none" }} />
                 </label>
                 <label style={{ display: "grid", gap: 7 }}>
                   <span style={{ font: "600 13px Inter", color: "#012746", letterSpacing: ".02em" }}>Assunto *</span>

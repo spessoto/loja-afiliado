@@ -162,7 +162,6 @@ export default function Home() {
                 )}
                 <div style={{ font: "600 12.5px Inter", color: "#012746", marginBottom: 6, lineHeight: 1.3, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical" }}>{heroProduct.name}</div>
                 <div style={{ font: "800 26px Montserrat", color: "#F05A00", lineHeight: 1.15 }}>{formatBRL(heroProduct.price_to)}</div>
-                {heroProduct.installment && <div style={{ font: "400 12px Inter", color: "#475569" }}>{heroProduct.installment}</div>}
               </div>
             )}
           </div>

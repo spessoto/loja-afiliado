@@ -7,6 +7,7 @@ import { pool, ensureSchema, hashPassword, verifyPassword, getSettings, setSetti
 import { generateFaq } from "./faq.js";
 import { getPageMeta, injectMeta, buildSitemapXml, SITE_URL } from "./seo.js";
 import { slugify } from "./slug.js";
+import { submitToIndexNow } from "./indexnow.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, "dist");
@@ -166,6 +167,7 @@ app.post("/api/products", requireAdmin, async (req, res) => {
     `INSERT INTO products (${FIELDS.join(", ")}, faq) VALUES (${FIELDS.map(() => "?").join(", ")}, ?)`,
     [...values, faq]
   );
+  submitToIndexNow(`/produto/${result.insertId}`);
   res.status(201).json({ id: result.insertId });
 });
 
@@ -178,11 +180,13 @@ app.put("/api/products/:id", requireAdmin, async (req, res) => {
     `UPDATE products SET ${FIELDS.map(f => `${f}=?`).join(", ")}, faq=? WHERE id=?`,
     [...values, faq, req.params.id]
   );
+  submitToIndexNow(`/produto/${req.params.id}`);
   res.json({ ok: true });
 });
 
 app.delete("/api/products/:id", requireAdmin, async (req, res) => {
   await pool.query("DELETE FROM products WHERE id = ?", [req.params.id]);
+  submitToIndexNow(`/produto/${req.params.id}`);
   res.json({ ok: true });
 });
 
@@ -271,6 +275,7 @@ app.post("/api/admin/posts", requireAdmin, async (req, res) => {
     `INSERT INTO posts (${POST_FIELDS.join(", ")}, slug, published, published_at) VALUES (${POST_FIELDS.map(() => "?").join(", ")}, ?, ?, ?)`,
     [...values, slug, published, published ? new Date() : null]
   );
+  if (published) submitToIndexNow(`/blog/${slug}`);
   res.status(201).json({ id: result.insertId, slug });
 });
 
@@ -287,11 +292,14 @@ app.put("/api/admin/posts/:id", requireAdmin, async (req, res) => {
     `UPDATE posts SET ${POST_FIELDS.map(f => `${f}=?`).join(", ")}, slug=?, published=?, published_at=? WHERE id=?`,
     [...values, slug, published, publishedAt, req.params.id]
   );
+  if (published) submitToIndexNow(`/blog/${slug}`);
   res.json({ ok: true });
 });
 
 app.delete("/api/admin/posts/:id", requireAdmin, async (req, res) => {
+  const [rows] = await pool.query("SELECT slug FROM posts WHERE id = ?", [req.params.id]);
   await pool.query("DELETE FROM posts WHERE id = ?", [req.params.id]);
+  if (rows[0]) submitToIndexNow(`/blog/${rows[0].slug}`);
   res.json({ ok: true });
 });
 

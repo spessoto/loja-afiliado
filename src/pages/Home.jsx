@@ -112,8 +112,6 @@ export default function Home() {
   return (
     <>
       <Header
-        marquee={["FRETE GRÁTIS ACIMA DE R$ 299", "ATÉ 10X SEM JUROS", "COMPRA SEGURA E NOTA FISCAL", "ENVIO PARA TODO O BRASIL", "CURADORIA DE ESPECIALISTAS"]}
-        animated
         categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: true, allCategoriesTo: "#categorias", itemTo: "/categoria", ofertaTo: "#ofertas" }}
       />
 

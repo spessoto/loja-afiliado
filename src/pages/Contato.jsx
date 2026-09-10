@@ -47,7 +47,6 @@ export default function Contato() {
   return (
     <>
       <Header
-        marquee={["ATENDIMENTO DE SEG A SÁB, 8H ÀS 20H", "RESPOSTA EM ATÉ 1 DIA ÚTIL"]}
         categoriesNav={{ menu: categories.map(c => c.name), showAllCategories: false, itemTo: "/categoria", ofertaTo: "/categoria" }}
       />
 

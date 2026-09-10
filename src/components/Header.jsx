@@ -45,9 +45,11 @@ function NavA({ to, className, style, children }) {
   return <Link to={to} className={className} style={style}>{children}</Link>;
 }
 
+const DEFAULT_MARQUEE = ["As melhores ofertas", "As melhores lojas", "Os melhores produtos", "Os maiores descontos"];
+
 export default function Header({
-  marquee = null,
-  animated = false,
+  marquee = DEFAULT_MARQUEE,
+  animated = true,
   sticky = true,
   search = true,
   searchPlaceholder = "O que você está procurando?",

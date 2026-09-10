@@ -4,6 +4,7 @@ import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import fs from "node:fs/promises";
 import { pool, ensureSchema, hashPassword, verifyPassword, getSettings, setSettings } from "./db.js";
+import { generateFaq } from "./faq.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, "dist");
@@ -155,20 +156,23 @@ const FIELDS = ["name", "brand", "category", "description", "image_url", "images
 
 app.post("/api/products", requireAdmin, async (req, res) => {
   if (!req.body.name || !req.body.affiliate_url) return res.status(422).json({ error: "name and affiliate_url are required" });
+  const faq = JSON.stringify(generateFaq(req.body));
   const values = FIELDS.map(f => req.body[f] ?? null);
   const [result] = await pool.query(
-    `INSERT INTO products (${FIELDS.join(", ")}) VALUES (${FIELDS.map(() => "?").join(", ")})`,
-    values
+    `INSERT INTO products (${FIELDS.join(", ")}, faq) VALUES (${FIELDS.map(() => "?").join(", ")}, ?)`,
+    [...values, faq]
   );
   res.status(201).json({ id: result.insertId });
 });
 
 app.put("/api/products/:id", requireAdmin, async (req, res) => {
   if (!req.body.name || !req.body.affiliate_url) return res.status(422).json({ error: "name and affiliate_url are required" });
+  const [existingRows] = await pool.query("SELECT faq FROM products WHERE id = ?", [req.params.id]);
+  const faq = existingRows[0]?.faq || JSON.stringify(generateFaq(req.body));
   const values = FIELDS.map(f => req.body[f] ?? null);
   await pool.query(
-    `UPDATE products SET ${FIELDS.map(f => `${f}=?`).join(", ")} WHERE id=?`,
-    [...values, req.params.id]
+    `UPDATE products SET ${FIELDS.map(f => `${f}=?`).join(", ")}, faq=? WHERE id=?`,
+    [...values, faq, req.params.id]
   );
   res.json({ ok: true });
 });

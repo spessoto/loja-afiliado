@@ -67,6 +67,7 @@ export async function ensureSchema() {
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS voltagem VARCHAR(60)`);
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS view_count INT DEFAULT 0`);
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS click_count INT DEFAULT 0`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS faq TEXT`);
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS admin_users (

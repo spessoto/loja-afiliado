@@ -6,6 +6,7 @@ import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useProduct, formatBRL, productImages, linhas, estrelasStr, parseDist, parseReviews } from "../lib/products.js";
 import { useCategories } from "../lib/categories.js";
 import ImageLightbox from "../components/ImageLightbox.jsx";
+import FaqAccordion from "../components/FaqAccordion.jsx";
 
 const fotos = [
   "produto inteiro, 3/4, fundo branco",
@@ -136,6 +137,13 @@ export default function Produto() {
   const productReviews = parseReviews(product?.reviews);
   const reviewsExibidos = productReviews.length > 0 ? productReviews : (product ? [] : reviews);
   const temAvaliacoes = distExibida.length > 0 || reviewsExibidos.length > 0;
+
+  let faqExibido = [];
+  try {
+    faqExibido = product?.faq ? JSON.parse(product.faq) : [];
+  } catch {
+    faqExibido = [];
+  }
 
   if (!loading && id && !product) {
     return (
@@ -372,6 +380,13 @@ export default function Produto() {
                 </div>
               )}
             </div>
+          </section>
+        )}
+
+        {faqExibido.length > 0 && (
+          <section style={{ marginTop: 72 }}>
+            <h2 style={{ margin: "0 0 24px", font: "700 28px Montserrat", color: "#012746" }}>Perguntas frequentes</h2>
+            <FaqAccordion faq={faqExibido} />
           </section>
         )}
 

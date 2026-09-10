@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /cadastro
+Disallow: /favoritos
+Disallow: /comparar
+Disallow: /busca
+
+Sitemap: https://promoaspiradores.com.br/sitemap.xml

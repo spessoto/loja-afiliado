@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import fs from "node:fs/promises";
 import { pool, ensureSchema, hashPassword, verifyPassword, getSettings, setSettings } from "./db.js";
 import { generateFaq } from "./faq.js";
+import { getPageMeta, injectMeta, buildSitemapXml, SITE_URL } from "./seo.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, "dist");
@@ -304,13 +305,40 @@ app.put("/api/settings", requireAdmin, async (req, res) => {
   res.json({ ok: true });
 });
 
+app.get("/sitemap.xml", async (_req, res) => {
+  const [products] = await pool.query("SELECT id, category, updated_at FROM products");
+  const [categories] = await pool.query("SELECT name FROM categories");
+  const urls = [
+    { loc: `${SITE_URL}/`, priority: 1.0, changefreq: "daily" },
+    { loc: `${SITE_URL}/categoria`, priority: 0.8, changefreq: "daily" },
+    { loc: `${SITE_URL}/blog`, priority: 0.6, changefreq: "weekly" },
+    { loc: `${SITE_URL}/post`, priority: 0.5, changefreq: "monthly" },
+    { loc: `${SITE_URL}/contato`, priority: 0.3, changefreq: "monthly" },
+    { loc: `${SITE_URL}/politica-de-cookies`, priority: 0.1, changefreq: "yearly" },
+    { loc: `${SITE_URL}/politica-de-privacidade`, priority: 0.1, changefreq: "yearly" },
+    { loc: `${SITE_URL}/politica-de-uso`, priority: 0.1, changefreq: "yearly" },
+    ...categories.map(c => ({ loc: `${SITE_URL}/categoria?cat=${encodeURIComponent(c.name)}`, priority: 0.7, changefreq: "daily" })),
+    ...products.map(p => ({ loc: `${SITE_URL}/produto/${p.id}`, priority: 0.9, changefreq: "weekly", lastmod: new Date(p.updated_at).toISOString().slice(0, 10) }))
+  ];
+  res.set("Content-Type", "application/xml").send(buildSitemapXml(urls));
+});
+
 app.use(express.static(distDir, { index: false }));
 
 const escapeAttr = (s) => s.replace(/"/g, "&quot;");
 
-app.get("*", async (_req, res) => {
+app.get("*", async (req, res) => {
   const indexPath = path.join(distDir, "index.html");
   let html = await fs.readFile(indexPath, "utf-8");
+
+  let product = null;
+  const produtoMatch = req.path.match(/^\/produto\/(\d+)$/);
+  if (produtoMatch) {
+    const [rows] = await pool.query("SELECT * FROM products WHERE id = ?", [produtoMatch[1]]);
+    product = rows[0] || null;
+  }
+  html = injectMeta(html, getPageMeta(req.path, req.query, product));
+
   const settings = await getSettings().catch(() => ({}));
   if (settings.search_console_meta) {
     html = html.replace("</head>", `  <meta name="google-site-verification" content="${escapeAttr(settings.search_console_meta)}" />\n</head>`);

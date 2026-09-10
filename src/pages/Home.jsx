@@ -46,9 +46,9 @@ function parseDistMap(text) {
 
 const faq = [
   { q: "Qual aspirador serve para pelos de animais?", a: "Modelos verticais sem fio com escova antiemaranhado e filtro HEPA são os mais indicados. Na página de cada produto indicamos se ele é recomendado para pets." },
-  { q: "Em quantas vezes eu posso pagar?", a: "Até 10x sem juros no cartão de crédito. No Pix há desconto adicional à vista, informado no momento da finalização." },
-  { q: "Como funciona o frete?", a: "Enviamos para todo o Brasil com rastreio. Compras acima de R$ 299 têm frete grátis para as regiões atendidas." },
-  { q: "E se o produto apresentar defeito?", a: "Todos os itens têm garantia do fabricante e nota fiscal. Nosso atendimento acompanha o acionamento da garantia do começo ao fim." }
+  { q: "Em quantas vezes eu posso pagar?", a: "As opções de parcelamento são definidas pela loja parceira no momento da finalização da compra." },
+  { q: "Como funciona o frete?", a: "O frete é calculado e cobrado diretamente no site da loja parceira, na finalização da compra." },
+  { q: "E se o produto apresentar defeito?", a: "A garantia varia por produto e fabricante — consulte as informações de garantia na página de cada item. Todas as compras são processadas com nota fiscal pela loja parceira." }
 ];
 
 function pad(n) {
@@ -175,7 +175,7 @@ export default function Home() {
           {categorias.length > 0 ? categorias.map((c, i) => (
             <Link key={i} to={`/categoria?cat=${encodeURIComponent(c.nome)}`} className="card-hover" style={{ display: "flex", flexDirection: "column", gap: 14, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
               <div style={{ aspectRatio: "1/1", borderRadius: 8, overflow: "hidden", background: c.image_url ? "#fff" : "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: c.image_url ? 0 : 12, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8" }}>
-                {c.image_url ? <img src={c.image_url} alt={c.nome} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 14 }} /> : c.nome.toLowerCase()}
+                {c.image_url ? <img src={c.image_url} alt={`Aspiradores ${c.nome}`} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 14 }} /> : c.nome.toLowerCase()}
               </div>
               <div>
                 <div style={{ font: "700 15px Montserrat", color: "#012746", marginBottom: 3 }}>{c.nome}</div>

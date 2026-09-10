@@ -179,8 +179,20 @@ export default function PoliticaCookies() {
       <section id="c8">
         <h2 style={h2}>8. Contato</h2>
         <div style={{ padding: 24, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
-          <div style={{ font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 4 }}>ENCARREGADO DE PROTEÇÃO DE DADOS</div>
-          <div style={{ font: "400 15px Inter", color: "#1E293B", marginBottom: 18 }}>privacidade@promoaspiradores.com.br</div>
+          <div style={{ display: "grid", gap: 14, marginBottom: 20 }}>
+            <span>
+              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>RESPONSÁVEL PELO TRATAMENTO DE DADOS</span>
+              <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>Caio Cézares de Souza Spessoto — CPF 364.609.548-28</span>
+            </span>
+            <span>
+              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>E-MAIL DE CONTATO</span>
+              <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>contato@promoaspiradores.com.br</span>
+            </span>
+            <span>
+              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>LOCALIZAÇÃO</span>
+              <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>Bragança Paulista/SP - Brasil</span>
+            </span>
+          </div>
           <Link to="/contato" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 48, padding: "0 28px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14.5px Montserrat", letterSpacing: ".04em" }}>ABRIR UMA SOLICITAÇÃO</Link>
         </div>
       </section>

@@ -52,8 +52,8 @@ export default function PoliticaPrivacidade() {
 
       <section id="p1" style={{ marginBottom: 36 }}>
         <h2 style={h2}>1. Quem somos</h2>
-        <p style={{ margin: "0 0 14px", font: "400 16px/1.75 Inter", color: "#475569" }}>A Promo Aspiradores é uma loja online especializada em aspiradores de pó para uso doméstico e profissional. Fazemos a curadoria de modelos, comparamos preços e direcionamos o visitante para as ofertas de lojas parceiras por meio de links de afiliado.</p>
-        <p style={p}>O controlador dos dados tratados neste site é a Promo Aspiradores Comércio Digital Ltda., CNPJ 00.000.000/0001-00, com sede em São Paulo/SP.</p>
+        <p style={{ margin: "0 0 14px", font: "400 16px/1.75 Inter", color: "#475569" }}>A Promo Aspiradores é um site de curadoria e comparação de aspiradores de pó. Selecionamos modelos, comparamos preço, potência e avaliações reais, e direcionamos o visitante para a compra nas lojas parceiras por meio de links de afiliado. Não vendemos produtos diretamente nem processamos pagamentos.</p>
+        <p style={p}>O controlador dos dados tratados neste site é Caio Cézares de Souza Spessoto, CPF 364.609.548-28, com sede em Bragança Paulista/SP - Brasil.</p>
       </section>
 
       <section id="p2" style={{ marginBottom: 36 }}>
@@ -131,7 +131,7 @@ export default function PoliticaPrivacidade() {
       <section id="p8" style={{ marginBottom: 36 }}>
         <h2 style={h2}>8. Seus direitos</h2>
         <p style={{ margin: "0 0 16px", font: "400 16px/1.75 Inter", color: "#475569" }}>A LGPD garante a você o direito de confirmar a existência de tratamento, acessar seus dados, corrigir informações incompletas ou desatualizadas, solicitar anonimização, bloqueio ou eliminação de dados desnecessários, pedir a portabilidade, revogar o consentimento e se opor a tratamentos que considere irregulares.</p>
-        <p style={p}>Para exercer qualquer um deles, escreva para <strong style={{ fontWeight: 600, color: "#012746" }}>privacidade@promoaspiradores.com.br</strong>. Confirmamos sua identidade e respondemos em até 15 dias.</p>
+        <p style={p}>Para exercer qualquer um deles, escreva para <strong style={{ fontWeight: 600, color: "#012746" }}>contato@promoaspiradores.com.br</strong>. Confirmamos sua identidade e respondemos em até 15 dias.</p>
       </section>
 
       <section id="p9" style={{ marginBottom: 36 }}>
@@ -154,12 +154,16 @@ export default function PoliticaPrivacidade() {
         <div style={{ padding: 24, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
           <div style={{ display: "grid", gap: 14, marginBottom: 20 }}>
             <span>
-              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>ENCARREGADO DE PROTEÇÃO DE DADOS</span>
-              <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>privacidade@promoaspiradores.com.br</span>
+              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>RESPONSÁVEL PELO TRATAMENTO DE DADOS</span>
+              <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>Caio Cézares de Souza Spessoto — CPF 364.609.548-28</span>
             </span>
             <span>
-              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>ENDEREÇO</span>
-              <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>Av. Exemplo, 1.000 — Sala 12, São Paulo/SP, 00000-000</span>
+              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>E-MAIL DE CONTATO</span>
+              <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>contato@promoaspiradores.com.br</span>
+            </span>
+            <span>
+              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>LOCALIZAÇÃO</span>
+              <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>Bragança Paulista/SP - Brasil</span>
             </span>
           </div>
           <Link to="/contato" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 48, padding: "0 28px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14.5px Montserrat", letterSpacing: ".04em" }}>ABRIR UMA SOLICITAÇÃO</Link>

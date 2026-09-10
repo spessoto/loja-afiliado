@@ -20,10 +20,10 @@ const horarios = [
 ];
 
 const empresa = [
-  { k: "RAZÃO SOCIAL", v: "Promo Aspiradores Comércio Digital Ltda." },
-  { k: "CNPJ", v: "00.000.000/0001-00" },
-  { k: "ENDEREÇO", v: "Av. Exemplo, 1.000 — Sala 12, São Paulo/SP, 00000-000" },
-  { k: "ENCARREGADO DE DADOS (DPO)", v: "privacidade@promoaspiradores.com.br" }
+  { k: "RESPONSÁVEL", v: "Caio Cézares de Souza Spessoto" },
+  { k: "CPF", v: "364.609.548-28" },
+  { k: "LOCALIZAÇÃO", v: "Bragança Paulista/SP - Brasil" },
+  { k: "ENCARREGADO DE DADOS (DPO)", v: "contato@promoaspiradores.com.br" }
 ];
 
 const faq = [
@@ -31,7 +31,7 @@ const faq = [
   { q: "Quanto tempo leva para responder?", a: "No WhatsApp, poucos minutos dentro do horário comercial. Por e-mail e formulário, até um dia útil." },
   { q: "Quem cuida da entrega e da garantia?", a: "A entrega e a garantia são da loja onde a compra foi finalizada. Mesmo assim, nosso atendimento acompanha o caso com você até a resolução." },
   { q: "Como pedir a nota fiscal?", a: "A nota é emitida pela loja parceira e enviada por e-mail após a confirmação do pagamento. Se não chegou, fale com a gente com o número do pedido." },
-  { q: "Como solicitar a exclusão dos meus dados?", a: "Escreva para privacidade@promoaspiradores.com.br. Confirmamos a identidade e atendemos o pedido em até 15 dias, conforme a LGPD." }
+  { q: "Como solicitar a exclusão dos meus dados?", a: "Escreva para contato@promoaspiradores.com.br. Confirmamos a identidade e atendemos o pedido em até 15 dias, conforme a LGPD." }
 ];
 
 export default function Contato() {

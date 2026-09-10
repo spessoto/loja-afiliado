@@ -3,10 +3,11 @@ import { Link, useParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
-import { useProduct, formatBRL, productImages, linhas, estrelasStr, parseDist, parseReviews } from "../lib/products.js";
+import { useProduct, useProducts, toCardProduct, formatBRL, productImages, linhas, estrelasStr, parseDist, parseReviews } from "../lib/products.js";
 import { useCategories } from "../lib/categories.js";
 import ImageLightbox from "../components/ImageLightbox.jsx";
 import FaqAccordion from "../components/FaqAccordion.jsx";
+import ProductCard from "../components/ProductCard.jsx";
 
 const fotos = [
   "produto inteiro, 3/4, fundo branco",
@@ -84,6 +85,7 @@ function parseSpecs(text) {
 export default function Produto() {
   const { id } = useParams();
   const { product, loading } = useProduct(id);
+  const { products: todosProdutos } = useProducts();
   const { categories } = useCategories();
   const [foto, setFoto] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -107,6 +109,7 @@ export default function Produto() {
   const categoria = product?.category || "Vertical sem fio";
   const precoDe = product ? formatBRL(product.price_from) : "R$ 1.029,90";
   const precoPor = product ? formatBRL(product.price_to) || "R$ 699,90" : "R$ 699,90";
+  const garantiaExibida = product ? product.garantia : "12 meses";
   const descricao = product?.description;
   const afiliado = product?.affiliate_url || "#afiliado";
   const registrarClique = () => { if (product?.id) fetch(`/api/products/${product.id}/click`, { method: "POST" }); };
@@ -135,6 +138,15 @@ export default function Produto() {
   } catch {
     faqExibido = [];
   }
+
+  const relacionadosExibidos = product
+    ? (() => {
+        const outros = todosProdutos.filter(p => p.id !== product.id);
+        const mesmaCategoria = outros.filter(p => p.category === product.category);
+        const demaisCategorias = outros.filter(p => p.category !== product.category);
+        return [...mesmaCategoria, ...demaisCategorias].slice(0, 4).map(toCardProduct);
+      })()
+    : relacionados;
 
   if (!loading && id && !product) {
     return (
@@ -211,7 +223,7 @@ export default function Produto() {
                 <span style={{ font: "600 14px Inter", color: "#F05A00", letterSpacing: ".1em" }}>{estrelasStr(notaMedia)}</span>
                 <a href="#avaliacoes" style={{ font: "500 13px Inter", color: "#475569", textDecoration: "underline" }}>{String(notaMedia).replace(".", ",")} · {totalAvaliacoes.toLocaleString("pt-BR")} avaliações</a>
                 <span style={{ width: 1, height: 14, background: "#E2E8F0" }}></span>
-                <span style={{ font: "400 13px Inter", color: "#475569" }}>Cód. 8412-V12</span>
+                <span style={{ font: "400 13px Inter", color: "#475569" }}>Cód. {product ? product.id : "8412-V12"}</span>
               </div>
             </div>
 
@@ -237,14 +249,12 @@ export default function Produto() {
                   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "none", marginTop: 1 }}><path d="M3 7.5h11v9H3zM14 10.5h4l3 3v3h-7z"></path><circle cx="7" cy="17.4" r="1.6"></circle><circle cx="17.5" cy="17.4" r="1.6"></circle></svg>
                   <span style={{ font: "400 12.5px/1.5 Inter", color: "#475569" }}>O <strong style={{ font: "600 12.5px Inter", color: "#012746" }}>frete é calculado no site da loja parceira</strong>, na finalização da compra.</span>
                 </div>
-                <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "none", marginTop: 1 }}><path d="M12 3.5l2.6 1.9 3.2-.2.9 3.1 2.3 2.2-1.6 2.8.4 3.2-3.1 1-2 2.5-3-1.2-3 1.2-2-2.5-3.1-1 .4-3.2L2 10.5l2.3-2.2.9-3.1 3.2.2z"></path></svg>
-                  <span style={{ font: "400 12.5px/1.5 Inter", color: "#475569" }}><strong style={{ font: "600 12.5px Inter", color: "#012746" }}>12 meses de garantia</strong> do fabricante, com nota fiscal.</span>
-                </div>
-                <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" style={{ flex: "none", marginTop: 1 }}><path d="M12 4v8l5 3"></path><circle cx="12" cy="12" r="8.5"></circle></svg>
-                  <span style={{ font: "400 12.5px/1.5 Inter", color: "#475569" }}><strong style={{ font: "600 12.5px Inter", color: "#012746" }}>30 dias</strong> para trocar ou devolver sem custo.</span>
-                </div>
+                {garantiaExibida && (
+                  <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "none", marginTop: 1 }}><path d="M12 3.5l2.6 1.9 3.2-.2.9 3.1 2.3 2.2-1.6 2.8.4 3.2-3.1 1-2 2.5-3-1.2-3 1.2-2-2.5-3.1-1 .4-3.2L2 10.5l2.3-2.2.9-3.1 3.2.2z"></path></svg>
+                    <span style={{ font: "400 12.5px/1.5 Inter", color: "#475569" }}><strong style={{ font: "600 12.5px Inter", color: "#012746" }}>{garantiaExibida} de garantia</strong> do fabricante, com nota fiscal.</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -366,37 +376,20 @@ export default function Produto() {
           </section>
         )}
 
-        <section style={{ marginTop: 56, paddingBottom: 64 }}>
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 16, marginBottom: 24 }}>
-            <div>
-              <h2 style={{ margin: "0 0 6px", font: "700 22px Montserrat", color: "#012746" }}>Quem viu este, também comprou</h2>
-              <p style={{ margin: 0, font: "400 14px Inter", color: "#475569" }}>Modelos da mesma faixa de preço com boa avaliação.</p>
+        {relacionadosExibidos.length > 0 && (
+          <section style={{ marginTop: 56, paddingBottom: 64 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 16, marginBottom: 24 }}>
+              <div>
+                <h2 style={{ margin: "0 0 6px", font: "700 22px Montserrat", color: "#012746" }}>Quem viu este, também comprou</h2>
+                <p style={{ margin: 0, font: "400 14px Inter", color: "#475569" }}>Outros modelos que podem te interessar.</p>
+              </div>
+              <Link to="/categoria" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", height: 42, padding: "0 20px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 13px Montserrat" }}>VER TODAS AS OFERTAS</Link>
             </div>
-            <Link to="/" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", height: 42, padding: "0 20px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 13px Montserrat" }}>VER TODAS AS OFERTAS</Link>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(238px,1fr))", gap: 24 }}>
-            {relacionados.map((p, i) => (
-              <Link key={i} to="/categoria" className="product-card" style={{ display: "flex", flexDirection: "column", background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden" }}>
-                <div style={{ position: "relative", padding: "16px 16px 0" }}>
-                  {p.desconto && <span style={{ position: "absolute", top: 16, left: 16, zIndex: 2, background: "#F05A00", color: "#fff", font: "800 12px Montserrat", padding: "5px 9px", borderRadius: 4 }}>{p.desconto}</span>}
-                  <div style={{ aspectRatio: "1/1", borderRadius: 8, background: "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 16, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8" }}>FOTO DO PRODUTO<br />fundo branco</div>
-                </div>
-                <div style={{ padding: "12px 14px 16px", display: "flex", flexDirection: "column", flex: 1 }}>
-                  <div style={{ font: "600 10.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 4 }}>{p.marca}</div>
-                  <div style={{ font: "600 13.5px/1.4 Inter", color: "#1E293B", marginBottom: 8, minHeight: 38 }}>{p.nome}</div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}>
-                    <span style={{ font: "600 11.5px Inter", color: "#F05A00", letterSpacing: ".08em" }}>{p.estrelas}</span>
-                    <span style={{ font: "400 11.5px Inter", color: "#94A3B8" }}>{p.avaliacoes}</span>
-                  </div>
-                  <div style={{ marginTop: "auto" }}>
-                    <div style={{ font: "800 20px Montserrat", color: "#F05A00", lineHeight: 1.15, marginBottom: 12 }}>{p.por}</div>
-                    <span style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 40, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 12.5px Montserrat", letterSpacing: ".06em" }}>COMPRAR</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(238px,1fr))", gap: 24 }}>
+              {relacionadosExibidos.map((p, i) => <ProductCard key={p.id || i} p={p} showCompare={false} />)}
+            </div>
+          </section>
+        )}
       </main>
 
       <div style={{ position: "sticky", bottom: 0, zIndex: 40, background: "#fff", borderTop: "1px solid #E2E8F0", boxShadow: "0 -6px 24px rgba(1,39,70,.1)" }}>

@@ -158,11 +158,6 @@ export default function Contato() {
                 ))}
               </div>
             </div>
-            <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 22, background: "#F8FAFC" }}>
-              <div style={{ font: "700 15px Montserrat", color: "#012746", marginBottom: 8 }}>Já é sobre um pedido?</div>
-              <p style={{ margin: "0 0 14px", font: "400 13.5px/1.6 Inter", color: "#475569" }}>Tenha o número do pedido em mãos. Isso agiliza bastante a resposta.</p>
-              <a href="#pedido" className="btn-outline-navy" style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 46, borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 14px Montserrat" }}>RASTREAR MEU PEDIDO</a>
-            </div>
           </aside>
         </div>
 

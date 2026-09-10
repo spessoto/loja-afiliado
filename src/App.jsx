@@ -15,6 +15,7 @@ import AdminProdutoForm from "./pages/admin/AdminProdutoForm.jsx";
 import AdminCategorias from "./pages/admin/AdminCategorias.jsx";
 import AdminUsuarios from "./pages/admin/AdminUsuarios.jsx";
 import AdminAdministradores from "./pages/admin/AdminAdministradores.jsx";
+import AdminConfiguracoes from "./pages/admin/AdminConfiguracoes.jsx";
 import Cadastro from "./pages/Cadastro.jsx";
 import Favoritos from "./pages/Favoritos.jsx";
 import Comparar from "./pages/Comparar.jsx";
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/admin/categorias" element={<AdminCategorias />} />
         <Route path="/admin/usuarios" element={<AdminUsuarios />} />
         <Route path="/admin/administradores" element={<AdminAdministradores />} />
+        <Route path="/admin/configuracoes" element={<AdminConfiguracoes />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/favoritos" element={<Favoritos />} />
         <Route path="/comparar" element={<Comparar />} />

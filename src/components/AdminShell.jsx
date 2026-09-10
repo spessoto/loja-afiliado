@@ -6,7 +6,8 @@ const navItems = [
   { to: "/admin/produtos", label: "Produtos" },
   { to: "/admin/categorias", label: "Categorias" },
   { to: "/admin/usuarios", label: "Usuários" },
-  { to: "/admin/administradores", label: "Administradores" }
+  { to: "/admin/administradores", label: "Administradores" },
+  { to: "/admin/configuracoes", label: "Configurações" }
 ];
 
 export const inputStyle = { height: 44, padding: "0 12px", border: "1.5px solid #E2E8F0", borderRadius: 8, font: "400 14px Inter, sans-serif", background: "#fff", color: "#1E293B" };

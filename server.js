@@ -2,7 +2,8 @@ import express from "express";
 import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
-import { pool, ensureSchema, hashPassword, verifyPassword } from "./db.js";
+import fs from "node:fs/promises";
+import { pool, ensureSchema, hashPassword, verifyPassword, getSettings, setSettings } from "./db.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, "dist");
@@ -285,8 +286,40 @@ app.get("/api/dashboard", requireAdmin, async (_req, res) => {
   });
 });
 
+app.get("/api/settings", requireAdmin, async (_req, res) => {
+  const settings = await getSettings();
+  res.json({ ga_measurement_id: settings.ga_measurement_id || "", search_console_meta: settings.search_console_meta || "" });
+});
+
+app.put("/api/settings", requireAdmin, async (req, res) => {
+  const { ga_measurement_id = "", search_console_meta = "" } = req.body;
+  if (ga_measurement_id && !/^[A-Za-z0-9-]+$/.test(ga_measurement_id)) {
+    return res.status(422).json({ error: "ID do Google Analytics inválido" });
+  }
+  await setSettings({ ga_measurement_id, search_console_meta });
+  res.json({ ok: true });
+});
+
 app.use(express.static(distDir));
-app.get("*", (_req, res) => res.sendFile(path.join(distDir, "index.html")));
+
+const escapeAttr = (s) => s.replace(/"/g, "&quot;");
+
+app.get("*", async (_req, res) => {
+  const indexPath = path.join(distDir, "index.html");
+  let html = await fs.readFile(indexPath, "utf-8");
+  const settings = await getSettings().catch(() => ({}));
+  if (settings.search_console_meta) {
+    html = html.replace("</head>", `  <meta name="google-site-verification" content="${escapeAttr(settings.search_console_meta)}" />\n</head>`);
+  }
+  if (settings.ga_measurement_id && /^[A-Za-z0-9-]+$/.test(settings.ga_measurement_id)) {
+    const id = settings.ga_measurement_id;
+    html = html.replace(
+      "</head>",
+      `  <script async src="https://www.googletagmanager.com/gtag/js?id=${id}"></script>\n  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","${id}");</script>\n</head>`
+    );
+  }
+  res.set("Content-Type", "text/html").send(html);
+});
 
 ensureSchema()
   .then(() => app.listen(port, () => console.log(`Server running on port ${port}`)))

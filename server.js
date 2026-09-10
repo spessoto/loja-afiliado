@@ -146,14 +146,12 @@ app.delete("/api/favorites/:productId", requireCustomer, async (req, res) => {
 
 app.get("/api/products", async (_req, res) => {
   const [rows] = await pool.query("SELECT * FROM products ORDER BY created_at DESC");
-  res.set("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
   res.json(rows);
 });
 
 app.get("/api/products/:id", async (req, res) => {
   const [rows] = await pool.query("SELECT * FROM products WHERE id = ?", [req.params.id]);
   if (!rows.length) return res.status(404).json({ error: "not found" });
-  res.set("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
   res.json(rows[0]);
 });
 
@@ -202,7 +200,6 @@ app.post("/api/products/:id/click", async (req, res) => {
 
 app.get("/api/categories", async (_req, res) => {
   const [rows] = await pool.query("SELECT * FROM categories ORDER BY name ASC");
-  res.set("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
   res.json(rows);
 });
 
@@ -245,7 +242,6 @@ const POST_FIELDS = ["title", "excerpt", "content", "cover_image_url", "author",
 
 app.get("/api/posts", async (_req, res) => {
   const [rows] = await pool.query("SELECT id, title, slug, excerpt, cover_image_url, author, category, published_at FROM posts WHERE published = 1 ORDER BY published_at DESC");
-  res.set("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
   res.json(rows);
 });
 

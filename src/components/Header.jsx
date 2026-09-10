@@ -85,7 +85,7 @@ export default function Header({
                 <div
                   key={rep}
                   aria-hidden={rep === 1 ? "true" : undefined}
-                  style={{ display: "flex", alignItems: "center", gap: 56, width: "50%", flex: "none", padding: "9px 0", font: "600 12.5px Inter", color: "#fff", letterSpacing: ".06em", whiteSpace: "nowrap", justifyContent: "space-around" }}
+                  style={{ display: "flex", alignItems: "center", gap: 56, width: "50%", flex: "none", padding: "6px 0", font: "600 12px Inter", color: "#fff", letterSpacing: ".06em", whiteSpace: "nowrap", justifyContent: "space-around" }}
                 >
                   {marquee.map((m, i) => <span key={i}>{m}</span>)}
                 </div>
@@ -94,7 +94,7 @@ export default function Header({
           </div>
         ) : (
           <div className="header-marquee" style={{ background: "linear-gradient(90deg,#F05A00,#FF7A00)" }}>
-            <div style={{ maxWidth: 1280, margin: "0 auto", padding: "9px 24px", display: "flex", flexWrap: "wrap", gap: "8px 40px", justifyContent: "center", font: "600 12.5px Inter", color: "#fff", letterSpacing: ".06em" }}>
+            <div style={{ maxWidth: 1280, margin: "0 auto", padding: "6px 24px", display: "flex", flexWrap: "wrap", gap: "8px 40px", justifyContent: "center", font: "600 12px Inter", color: "#fff", letterSpacing: ".06em" }}>
               {marquee.map((m, i) => <span key={i}>{m}</span>)}
             </div>
           </div>
@@ -128,14 +128,14 @@ export default function Header({
             </nav>
           </div>
         ) : (
-          <div className="header-inner" style={{ maxWidth: 1280, margin: "0 auto", padding: "16px 24px", display: "grid", gridTemplateColumns: "minmax(180px,232px) minmax(0,1fr) auto", alignItems: "center", gap: 32 }}>
+          <div className="header-inner" style={{ maxWidth: 1280, margin: "0 auto", padding: "10px 24px", display: "grid", gridTemplateColumns: "minmax(150px,190px) minmax(0,1fr) auto", alignItems: "center", gap: 28 }}>
             <Link to="/" className="header-logo-link" style={{ display: "block" }}>
-              <img className="header-logo" src={logoPrincipal} alt="Promo Aspiradores — qualidade para sua casa" style={{ width: "100%", maxWidth: 232, height: "auto", display: "block" }} />
+              <img className="header-logo" src={logoPrincipal} alt="Promo Aspiradores — qualidade para sua casa" style={{ width: "100%", maxWidth: 190, height: "auto", display: "block" }} />
             </Link>
-            <form onSubmit={submitSearch} className="header-search" style={{ display: "flex", alignItems: "center", gap: 0, background: "#F1F5F9", border: "1.5px solid #E2E8F0", borderRadius: 8, height: 50, padding: "0 4px 0 16px" }}>
+            <form onSubmit={submitSearch} className="header-search" style={{ display: "flex", alignItems: "center", gap: 0, background: "#F1F5F9", border: "1.5px solid #E2E8F0", borderRadius: 8, height: 42, padding: "0 4px 0 16px" }}>
               <IconSearch />
               {searchInput}
-              <button className="btn-search" style={{ height: 42, padding: "0 22px", border: 0, borderRadius: 6, background: "#012746", color: "#fff", font: "700 13px Montserrat", letterSpacing: ".06em", cursor: "pointer" }}>BUSCAR</button>
+              <button className="btn-search" style={{ height: 34, padding: "0 18px", border: 0, borderRadius: 6, background: "#012746", color: "#fff", font: "700 12px Montserrat", letterSpacing: ".06em", cursor: "pointer" }}>BUSCAR</button>
             </form>
             {account && (
               <div className="header-account" style={{ display: "flex", alignItems: "center", gap: 24 }}>
@@ -167,7 +167,7 @@ export default function Header({
             <div className="header-catnav" style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", gap: 28, overflowX: "auto" }}>
               {categoriesNav.showAllCategories && (
                 <>
-                  <NavA to={categoriesNav.allCategoriesTo || "#categorias"} style={{ display: "flex", alignItems: "center", gap: 9, padding: "13px 0", font: "700 13px Montserrat", letterSpacing: ".04em", color: "#012746", whiteSpace: "nowrap" }}>
+                  <NavA to={categoriesNav.allCategoriesTo || "#categorias"} style={{ display: "flex", alignItems: "center", gap: 9, padding: "9px 0", font: "700 13px Montserrat", letterSpacing: ".04em", color: "#012746", whiteSpace: "nowrap" }}>
                     <IconMenu />
                     TODAS AS CATEGORIAS
                   </NavA>
@@ -175,9 +175,9 @@ export default function Header({
                 </>
               )}
               {categoriesNav.menu.map((item, i) => (
-                <NavA key={i} to={`${categoriesNav.itemTo || "/categoria"}?cat=${encodeURIComponent(item)}`} className="hover-orange" style={{ padding: "13px 0", font: "500 14px Inter", color: "#475569", whiteSpace: "nowrap" }}>{item}</NavA>
+                <NavA key={i} to={`${categoriesNav.itemTo || "/categoria"}?cat=${encodeURIComponent(item)}`} className="hover-orange" style={{ padding: "9px 0", font: "500 14px Inter", color: "#475569", whiteSpace: "nowrap" }}>{item}</NavA>
               ))}
-              <NavA to={categoriesNav.ofertaTo || categoriesNav.itemTo} style={{ marginLeft: "auto", padding: "13px 0", font: "800 13px Montserrat", letterSpacing: ".05em", color: "#F05A00", whiteSpace: "nowrap" }}>OFERTAS DA SEMANA</NavA>
+              <NavA to={categoriesNav.ofertaTo || categoriesNav.itemTo} style={{ marginLeft: "auto", padding: "9px 0", font: "800 13px Montserrat", letterSpacing: ".05em", color: "#F05A00", whiteSpace: "nowrap" }}>OFERTAS DA SEMANA</NavA>
             </div>
           </nav>
         )}

@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { FavoritesProvider } from "./lib/favorites.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 import Home from "./pages/Home.jsx";
 import Categoria from "./pages/Categoria.jsx";
 import Blog from "./pages/Blog.jsx";
@@ -24,6 +25,7 @@ import Busca from "./pages/Busca.jsx";
 export default function App() {
   return (
     <FavoritesProvider>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/categoria" element={<Categoria />} />

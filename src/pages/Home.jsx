@@ -116,26 +116,26 @@ export default function Home() {
       />
 
       <main>
-      <section style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0" }}>
+      <section style={{ background: "linear-gradient(100deg,#F05A00,#FF7A00)", borderBottom: "1px solid #E2E8F0" }}>
         <div className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "44px 24px 48px", display: "grid", gridTemplateColumns: "minmax(0,1.05fr) minmax(0,.95fr)", gap: 40, alignItems: "center" }}>
           <div>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#fff", border: "1.5px solid #E2E8F0", borderRadius: 24, padding: "7px 16px 7px 8px", marginBottom: 24 }}>
-              <span style={{ background: "linear-gradient(90deg,#F05A00,#FF7A00)", color: "#fff", font: "800 11.5px Montserrat", letterSpacing: ".08em", padding: "4px 10px", borderRadius: 16 }}>ATÉ 40% OFF</span>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#fff", border: "1.5px solid rgba(255,255,255,.6)", borderRadius: 24, padding: "7px 16px 7px 8px", marginBottom: 24 }}>
+              <span style={{ background: "#012746", color: "#fff", font: "800 11.5px Montserrat", letterSpacing: ".08em", padding: "4px 10px", borderRadius: 16 }}>ATÉ 40% OFF</span>
               <span style={{ font: "600 13px Inter", color: "#012746" }}>Semana do Aspirador</span>
             </div>
-            <h1 style={{ margin: "0 0 16px", font: "800 40px/1.1 Montserrat", letterSpacing: "-.02em", color: "#012746", textWrap: "balance" }}>ENCONTRE O ASPIRADOR IDEAL PARA SUA CASA</h1>
-            <p style={{ margin: "0 0 28px", maxWidth: 500, font: "400 15.5px/1.6 Inter", color: "#475569" }}>Modelos para todos os tipos de limpeza e necessidades. Nossa curadoria compara potência, autonomia e preço para você escolher em minutos.</p>
+            <h1 style={{ margin: "0 0 16px", font: "800 40px/1.1 Montserrat", letterSpacing: "-.02em", color: "#fff", textWrap: "balance" }}>ENCONTRE O ASPIRADOR IDEAL PARA SUA CASA</h1>
+            <p style={{ margin: "0 0 28px", maxWidth: 500, font: "400 15.5px/1.6 Inter", color: "rgba(255,255,255,.92)" }}>Modelos para todos os tipos de limpeza e necessidades. Nossa curadoria compara potência, autonomia e preço para você escolher em minutos.</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 32 }}>
-              <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 46, padding: "0 26px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.28)" }}>
+              <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 46, padding: "0 26px", borderRadius: 8, background: "#012746", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(1,39,70,.35)" }}>
                 VER ASPIRADORES
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
               </Link>
-              <a href="#necessidade" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", height: 46, padding: "0 22px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 14px Montserrat" }}>DESCOBRIR MEU MODELO</a>
+              <a href="#necessidade" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", height: 46, padding: "0 22px", borderRadius: 8, border: "1.5px solid #fff", background: "rgba(255,255,255,.12)", color: "#fff", font: "600 14px Montserrat" }}>DESCOBRIR MEU MODELO</a>
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "12px 28px" }}>
               {heroTrust.map((t, i) => (
-                <span key={i} style={{ display: "flex", alignItems: "center", gap: 8, font: "500 13.5px Inter", color: "#012746" }}>
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F05A00" strokeWidth="2.4" strokeLinecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
+                <span key={i} style={{ display: "flex", alignItems: "center", gap: 8, font: "500 13.5px Inter", color: "#fff" }}>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2.4" strokeLinecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
                   {t}
                 </span>
               ))}

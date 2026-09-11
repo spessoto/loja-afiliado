@@ -2,7 +2,89 @@
   "2026-09-11": {
     "dia_da_semana": 1,
     "lote_indice": 0,
-    "erro_execucao": "EGRESS_BLOCKED: acesso a promoaspiradores.com.br bloqueado pela política de rede do ambiente (proxy retornou 403 na conexão). Não foi possível buscar GET /api/products nem via WebFetch nem via curl direto. Nenhum produto pôde ser verificado hoje.",
-    "resultados": []
+    "total_catalogo": 65,
+    "tamanho_lote": 10,
+    "resultados": [
+      {
+        "id": 1,
+        "name": "Extratora de Sujeira Portátil WAP Spot Cleaner W3 Borrifa Esfrega e Extrai 1450W de Potência e Bico de Autolimpeza",
+        "price_cadastrado": "548.00",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Página do Mercado Livre (meli.la/2esGTLd) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+      },
+      {
+        "id": 2,
+        "name": "Dreame L40 Ultra Com Base E Mop 19000pa Branco 127v",
+        "price_cadastrado": "5549.00",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Página do Mercado Livre (meli.la/2mN9YGk) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+      },
+      {
+        "id": 3,
+        "name": "Aspirador Automotivo Portátil WAP CAR com Filtro HEPA e Cabo de 3,7m",
+        "price_cadastrado": "89.91",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Página do Mercado Livre (meli.la/1NTtggY) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+      },
+      {
+        "id": 4,
+        "name": "Aspirador de Pó e Água WAP GTW 10 1400W de Potência com Bocal de Sopro",
+        "price_cadastrado": "257.90",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Página do Mercado Livre (meli.la/1ZgYoAv) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+      },
+      {
+        "id": 5,
+        "name": "Aspirador Portátil 3 Em 1 Com Soprador e Filtro HEPA Para Carro e Teclado USB",
+        "price_cadastrado": "24.99",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Página do Mercado Livre (meli.la/2ZeWkfp) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+      },
+      {
+        "id": 6,
+        "name": "Robô Aspirador De Pó Inteligente Passa Pano Mapeamento Ekaza Preto",
+        "price_cadastrado": "872.99",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Página do Mercado Livre (meli.la/1T38PfG) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+      },
+      {
+        "id": 7,
+        "name": "Aspirador De Pó Portátil 21v + Filtro Hepa Com Acessórios",
+        "price_cadastrado": "289.90",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Página do Mercado Livre (meli.la/27c7z1p) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+      },
+      {
+        "id": 8,
+        "name": "Aspirador Vertical WAP POWER SPEED MAX CI10 3 EM 1 1600W 127V",
+        "price_cadastrado": "226.73",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Página do Mercado Livre (meli.la/1Srr4Dd) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+      },
+      {
+        "id": 9,
+        "name": "Robô Aspirador Wap Robot W90 Varre, Aspira e Passa Pano 30W Preto",
+        "price_cadastrado": "319.90",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Página do Mercado Livre (meli.la/1hBTGrN) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+      },
+      {
+        "id": 10,
+        "name": "Mini Aspirador De Pó Portátil Recarregável Chrome Technology Soprador Usb Automotivo 3em1 Sem Fio",
+        "price_cadastrado": "39.98",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Página do Mercado Livre (meli.la/2syfQfu) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+      }
+    ]
   }
 }

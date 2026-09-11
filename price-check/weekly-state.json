@@ -1,1 +1,8 @@
-{}
+{
+  "2026-09-11": {
+    "dia_da_semana": 1,
+    "lote_indice": 0,
+    "erro_execucao": "EGRESS_BLOCKED: acesso a promoaspiradores.com.br bloqueado pela política de rede do ambiente (proxy retornou 403 na conexão). Não foi possível buscar GET /api/products nem via WebFetch nem via curl direto. Nenhum produto pôde ser verificado hoje.",
+    "resultados": []
+  }
+}

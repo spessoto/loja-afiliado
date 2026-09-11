@@ -9,81 +9,108 @@
         "id": 1,
         "name": "Extratora de Sujeira Portátil WAP Spot Cleaner W3 Borrifa Esfrega e Extrai 1450W de Potência e Bico de Autolimpeza",
         "price_cadastrado": "548.00",
-        "precos_reais_encontrados": [],
-        "status": "não_verificado",
-        "observacao": "Página do Mercado Livre (meli.la/2esGTLd) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+        "precos_reais_encontrados": [
+          "468.54 (cupom)",
+          "493.20 (Pix)",
+          "548.00 (outros meios)"
+        ],
+        "status": "correto",
+        "observacao": "price_to (548.00) igual ao valor de 'outros meios' de pagamento exibido na vitrine do afiliado (Pix R$493,20 / cupom R$468,54)."
       },
       {
         "id": 2,
         "name": "Dreame L40 Ultra Com Base E Mop 19000pa Branco 127v",
         "price_cadastrado": "5549.00",
-        "precos_reais_encontrados": [],
-        "status": "não_verificado",
-        "observacao": "Página do Mercado Livre (meli.la/2mN9YGk) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+        "precos_reais_encontrados": [
+          "6599.00 (preço único, Pix/parcelado sem juros)"
+        ],
+        "status": "divergente",
+        "observacao": "Preço cadastrado (R$5.549,00) está ~15,9% abaixo do preço real exibido na vitrine (R$6.599,00). Preço anterior/riscado exibido: R$7.499,00."
       },
       {
         "id": 3,
         "name": "Aspirador Automotivo Portátil WAP CAR com Filtro HEPA e Cabo de 3,7m",
         "price_cadastrado": "89.91",
-        "precos_reais_encontrados": [],
-        "status": "não_verificado",
-        "observacao": "Página do Mercado Livre (meli.la/1NTtggY) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+        "precos_reais_encontrados": [
+          "99.90 (preço único)"
+        ],
+        "status": "correto",
+        "observacao": "Cadastrado R$89,91 vs real R$99,90 — diferença de exatamente ~10% (limite da tolerância), não passa de ~10%, considerado correto."
       },
       {
         "id": 4,
         "name": "Aspirador de Pó e Água WAP GTW 10 1400W de Potência com Bocal de Sopro",
         "price_cadastrado": "257.90",
-        "precos_reais_encontrados": [],
-        "status": "não_verificado",
-        "observacao": "Página do Mercado Livre (meli.la/1ZgYoAv) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+        "precos_reais_encontrados": [
+          "227.15 (cupom)",
+          "239.11 (Pix)",
+          "259.90 (outros meios)"
+        ],
+        "status": "correto",
+        "observacao": "price_to dentro da faixa de preços reais exibidos (R$227,15 a R$259,90)."
       },
       {
         "id": 5,
         "name": "Aspirador Portátil 3 Em 1 Com Soprador e Filtro HEPA Para Carro e Teclado USB",
         "price_cadastrado": "24.99",
-        "precos_reais_encontrados": [],
-        "status": "não_verificado",
-        "observacao": "Página do Mercado Livre (meli.la/2ZeWkfp) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+        "precos_reais_encontrados": [
+          "24.99 (preço único)"
+        ],
+        "status": "correto",
+        "observacao": "Preço cadastrado igual ao preço exibido na vitrine."
       },
       {
         "id": 6,
         "name": "Robô Aspirador De Pó Inteligente Passa Pano Mapeamento Ekaza Preto",
         "price_cadastrado": "872.99",
-        "precos_reais_encontrados": [],
-        "status": "não_verificado",
-        "observacao": "Página do Mercado Livre (meli.la/1T38PfG) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+        "precos_reais_encontrados": [
+          "989.99 (preço único, 10x sem juros)"
+        ],
+        "status": "divergente",
+        "observacao": "Preço cadastrado (R$872,99) está ~11,8% abaixo do preço real exibido na vitrine (R$989,99)."
       },
       {
         "id": 7,
         "name": "Aspirador De Pó Portátil 21v + Filtro Hepa Com Acessórios",
         "price_cadastrado": "289.90",
-        "precos_reais_encontrados": [],
-        "status": "não_verificado",
-        "observacao": "Página do Mercado Livre (meli.la/27c7z1p) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+        "precos_reais_encontrados": [
+          "289.90 (com cupom/Pix)",
+          "299.90 (6x sem juros/outros meios)"
+        ],
+        "status": "correto",
+        "observacao": "price_to no piso da faixa de preços reais exibidos (R$289,90 a R$299,90). Nome na vitrine tem complemento 'Amarelo 127/220v', mesmo produto (item em destaque no topo da página)."
       },
       {
         "id": 8,
         "name": "Aspirador Vertical WAP POWER SPEED MAX CI10 3 EM 1 1600W 127V",
         "price_cadastrado": "226.73",
-        "precos_reais_encontrados": [],
-        "status": "não_verificado",
-        "observacao": "Página do Mercado Livre (meli.la/1Srr4Dd) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+        "precos_reais_encontrados": [
+          "245.90 (Pix)",
+          "292.08 (12x com juros)"
+        ],
+        "status": "correto",
+        "observacao": "Cadastrado R$226,73 ligeiramente abaixo do menor preço real (R$245,90), diferença de ~7,8%, dentro da tolerância de ~10%."
       },
       {
         "id": 9,
         "name": "Robô Aspirador Wap Robot W90 Varre, Aspira e Passa Pano 30W Preto",
         "price_cadastrado": "319.90",
-        "precos_reais_encontrados": [],
-        "status": "não_verificado",
-        "observacao": "Página do Mercado Livre (meli.la/1hBTGrN) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+        "precos_reais_encontrados": [
+          "319.90 (Pix)",
+          "375.48 (12x com juros)"
+        ],
+        "status": "correto",
+        "observacao": "price_to igual ao preço à vista (Pix) exibido na vitrine."
       },
       {
         "id": 10,
         "name": "Mini Aspirador De Pó Portátil Recarregável Chrome Technology Soprador Usb Automotivo 3em1 Sem Fio",
         "price_cadastrado": "39.98",
-        "precos_reais_encontrados": [],
-        "status": "não_verificado",
-        "observacao": "Página do Mercado Livre (meli.la/2syfQfu) retornou HTTP 403 Forbidden ao tentar acessar via WebFetch."
+        "precos_reais_encontrados": [
+          "37.00 (preço único, +5% OFF adicional com cupom não quantificado)"
+        ],
+        "status": "correto",
+        "observacao": "Cadastrado R$39,98 cerca de 8% acima do preço exibido (R$37,00), dentro da tolerância de ~10%."
       }
     ]
   }

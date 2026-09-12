@@ -113,5 +113,93 @@
         "observacao": "Cadastrado R$39,98 cerca de 8% acima do preço exibido (R$37,00), dentro da tolerância de ~10%."
       }
     ]
+  },
+  "2026-09-12": {
+    "dia_da_semana": 6,
+    "lote_indice": 5,
+    "total_catalogo": 68,
+    "tamanho_lote": 10,
+    "resultados": [
+      {
+        "id": 51,
+        "name": "Midea Aspirador de Pó Vertical 2 em 1 1350W Preto e Azul 220V",
+        "price_cadastrado": "141.45",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Link link.amazon redireciona para amzlinks.in, domínio bloqueado pela política de rede do ambiente (egress proxy retornou 403 tanto via WebFetch quanto via curl com user-agent de navegador). Não foi possível acessar a página do produto."
+      },
+      {
+        "id": 52,
+        "name": "Philco Aspirador de Pó Vertical Power Clean PAS4000V 2000W 220V",
+        "price_cadastrado": "234.99",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Mesmo bloqueio de rede em amzlinks.in (destino do redirecionamento de link.amazon) — não verificado."
+      },
+      {
+        "id": 53,
+        "name": "WAP Robô Aspirador de Pó ROBOT W100 3 em 1, Automático, 250ml, Bivolt",
+        "price_cadastrado": "648.87",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Mesmo bloqueio de rede em amzlinks.in (destino do redirecionamento de link.amazon) — não verificado."
+      },
+      {
+        "id": 54,
+        "name": "Kärcher Aspirador WDL 1s 3 em 1 Pó, Água e Soprador 1700W Tanque Inox 110V",
+        "price_cadastrado": "323.91",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Mesmo bloqueio de rede em amzlinks.in (destino do redirecionamento de link.amazon) — não verificado."
+      },
+      {
+        "id": 55,
+        "name": "Electrolux Aspirador de Pó Sem Saco Ease C4 EAS40 1600W Cyclonic Power Filtro HEPA 127V",
+        "price_cadastrado": "539.90",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Mesmo bloqueio de rede em amzlinks.in (destino do redirecionamento de link.amazon) — não verificado."
+      },
+      {
+        "id": 56,
+        "name": "Philco Aspirador Robô PAS23 3 em 1 com MOP Bivolt Anticolisão",
+        "price_cadastrado": "484.40",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Mesmo bloqueio de rede em amzlinks.in (destino do redirecionamento de link.amazon) — não verificado."
+      },
+      {
+        "id": 57,
+        "name": "Mondial Aspirador de Pó Hepa Turbo AP-15 1500W 110V",
+        "price_cadastrado": "246.05",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Mesmo bloqueio de rede em amzlinks.in (destino do redirecionamento de link.amazon) — não verificado."
+      },
+      {
+        "id": 58,
+        "name": "Electrolux Aspirador de Pó Vertical Ergorapido 2 em 1 ERG24N 30min Bivolt",
+        "price_cadastrado": "759.00",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Mesmo bloqueio de rede em amzlinks.in (destino do redirecionamento de link.amazon) — não verificado."
+      },
+      {
+        "id": 59,
+        "name": "Britânia Aspirador de Pó Vertical BAS1500V Filtro Ciclone 1500W 220V",
+        "price_cadastrado": "153.49",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Mesmo bloqueio de rede em amzlinks.in (destino do redirecionamento de link.amazon) — não verificado."
+      },
+      {
+        "id": 60,
+        "name": "Philips Walita Aspirador de Pó Vertical com Mop Série 3000 XC3133/01",
+        "price_cadastrado": "1329.91",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Mesmo bloqueio de rede em amzlinks.in (destino do redirecionamento de link.amazon) — não verificado."
+      }
+    ]
   }
 }

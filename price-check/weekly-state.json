@@ -201,5 +201,86 @@
         "observacao": "Mesmo bloqueio de rede em amzlinks.in (destino do redirecionamento de link.amazon) — não verificado."
       }
     ]
+  },
+  "2026-09-13": {
+    "dia_da_semana": 7,
+    "lote_indice": 6,
+    "total_catalogo": 68,
+    "tamanho_lote": 10,
+    "resultados": [
+      {
+        "id": 61,
+        "name": "Robô Aspirador de Pó X600 com Mapeamento a Laser 3000Pa e Passa Pano",
+        "price_cadastrado": "1199.00",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Link link.amazon redireciona para amzlinks.in, domínio bloqueado pela política de rede do ambiente (egress proxy retornou erro tanto via WebFetch quanto via curl com user-agent de navegador). Mesmo bloqueio já registrado no sábado (dia 6)."
+      },
+      {
+        "id": 62,
+        "name": "Velds Robô Aspirador V50 PRO Base Autolimpante Mop Duplo Giratório 10000Pa 127V",
+        "price_cadastrado": "2327.49",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Mesmo bloqueio de rede em amzlinks.in — não verificado."
+      },
+      {
+        "id": 63,
+        "name": "Arno X-CLEAN 4 Limpadora de Pisos Vertical Sem Fio 2 em 1 LXC4 Bivolt",
+        "price_cadastrado": "2849.04",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Mesmo bloqueio de rede em amzlinks.in — não verificado."
+      },
+      {
+        "id": 64,
+        "name": "Arno X-FORCE FLEX 9.60 Aqua Aspirador Versátil Sem Fio com Tubo Flexível XF9A Bivolt",
+        "price_cadastrado": "1249.99",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Mesmo bloqueio de rede em amzlinks.in — não verificado."
+      },
+      {
+        "id": 65,
+        "name": "Arno X-PERT 7.60 Aspirador Versátil Sem Fio Bateria Removível RH6A Bivolt",
+        "price_cadastrado": "719.28",
+        "precos_reais_encontrados": [],
+        "status": "não_verificado",
+        "observacao": "Mesmo bloqueio de rede em amzlinks.in — não verificado."
+      },
+      {
+        "id": 66,
+        "name": "Robô Aspirador de Pó 3 em 1 – Varre Aspira e Passa Pano com Lds Mapeamento Lydsto R1D Compatível com XiaoMi Home",
+        "price_cadastrado": "1217.70",
+        "precos_reais_encontrados": [
+          "3500.00 (preço único, 10x sem juros de R$350,00)"
+        ],
+        "status": "divergente",
+        "observacao": "Preço cadastrado (R$1.217,70) está ~65% abaixo do único preço real exibido na vitrine do afiliado (R$3.500,00). Divergência muito grande — verificar se o preço cadastrado está desatualizado ou se houve erro de digitação."
+      },
+      {
+        "id": 67,
+        "name": "Robô De Limpeza Wap Robot W500 Policleaner",
+        "price_cadastrado": "719.91",
+        "precos_reais_encontrados": [
+          "683.92 (cupom)",
+          "719.91 (Pix, 48% OFF)",
+          "799.90 (outros meios)"
+        ],
+        "status": "correto",
+        "observacao": "price_to igual ao preço à vista (Pix) exibido na vitrine (dentro da faixa R$683,92 a R$799,90). Preço riscado/anterior exibido: R$1.399,00."
+      },
+      {
+        "id": 68,
+        "name": "Robô Aspirador Anker eufy X10 Pro 4 em 1 Sucção 8000Pa IA Evita Obstáculos Mapeamento AI.Map 3.0 Lava Seca Esvazia Reabastece Água Escovas Antiembaraço Navegação Laser Limpeza Silenciosa Ideal Pet220V",
+        "price_cadastrado": "4004.10",
+        "precos_reais_encontrados": [
+          "4184.00 (Pix + cupom, 47% OFF)",
+          "4749.00 (outros meios / 10x sem juros de R$474,90)"
+        ],
+        "status": "correto",
+        "observacao": "Cadastrado R$4.004,10 cerca de 4,3% abaixo do menor preço real (R$4.184,00), dentro da tolerância de ~10%. Preço riscado/anterior exibido: R$7.999,00."
+      }
+    ]
   }
 }

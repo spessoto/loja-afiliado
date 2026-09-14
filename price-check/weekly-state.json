@@ -1,1 +1,120 @@
-{}
+{
+  "2026-09-14": {
+    "dia_da_semana": "segunda-feira",
+    "lote_indice": 0,
+    "total_produtos_catalogo": 68,
+    "tamanho_lote": 10,
+    "resultados": [
+      {
+        "id": 1,
+        "name": "Extratora de Sujeira Portátil WAP Spot Cleaner W3 Borrifa Esfrega e Extrai 1450W de Potência e Bico de Autolimpeza",
+        "price_cadastrado": 548.0,
+        "precos_reais_encontrados": {
+          "cupom_1a_compra": 494.57,
+          "pix": 520.6,
+          "outros_meios": 548.0
+        },
+        "status": "correto",
+        "observacao": "price_to bate exatamente com o preço 'outros meios' (sem Pix) mostrado na vitrine."
+      },
+      {
+        "id": 2,
+        "name": "Dreame L40 Ultra Com Base E Mop 19000pa Branco 127v",
+        "price_cadastrado": 5549.0,
+        "precos_reais_encontrados": {
+          "preco_atual": 6599.0,
+          "de": 7499.0
+        },
+        "status": "divergente",
+        "observacao": "Cadastrado 18,9% abaixo do preço real atual (6599,00). Preço 'de' 7499,00 confere com o cadastrado."
+      },
+      {
+        "id": 3,
+        "name": "Aspirador Automotivo Portátil WAP CAR com Filtro HEPA e Cabo de 3,7m",
+        "price_cadastrado": 89.91,
+        "precos_reais_encontrados": {
+          "preco_atual": 99.9,
+          "de": 111.0
+        },
+        "status": "divergente",
+        "observacao": "Cadastrado 11,1% abaixo do preço real atual (99,90) — levemente acima do limiar de ~10%."
+      },
+      {
+        "id": 4,
+        "name": "Aspirador de Pó e Água WAP GTW 10 1400W de Potência com Bocal de Sopro",
+        "price_cadastrado": 257.9,
+        "precos_reais_encontrados": {
+          "cupom_1a_compra": 235.89,
+          "pix": 248.31,
+          "outros_meios": 269.9
+        },
+        "status": "correto",
+        "observacao": "Dentro da faixa entre cupom (235,89) e outros meios (269,90)."
+      },
+      {
+        "id": 5,
+        "name": "Aspirador Portátil 3 Em 1 Com Soprador e Filtro HEPA Para Carro e Teclado USB",
+        "price_cadastrado": 24.99,
+        "precos_reais_encontrados": {
+          "preco_atual": 24.99
+        },
+        "status": "correto",
+        "observacao": "Igual ao preço real exibido."
+      },
+      {
+        "id": 6,
+        "name": "Robô Aspirador De Pó Inteligente Passa Pano Mapeamento Ekaza Preto",
+        "price_cadastrado": 872.99,
+        "precos_reais_encontrados": {
+          "preco_atual": 989.99
+        },
+        "status": "divergente",
+        "observacao": "Cadastrado 13,4% abaixo do preço real atual (989,99)."
+      },
+      {
+        "id": 7,
+        "name": "Aspirador De Pó Portátil 21v + Filtro Hepa Com Acessórios Amarelo 127/220v",
+        "price_cadastrado": 289.9,
+        "precos_reais_encontrados": {
+          "preco_atual": 299.9,
+          "de": 699.04
+        },
+        "status": "correto",
+        "observacao": "Diferença de 3,4%, dentro da tolerância. Obs: imagem do produto no ML mudou de ID desde o cadastro, mas título bate exatamente."
+      },
+      {
+        "id": 8,
+        "name": "Aspirador Vertical WAP POWER SPEED MAX CI10 3 EM 1 1600W 127V",
+        "price_cadastrado": 226.73,
+        "precos_reais_encontrados": {
+          "preco_atual": 245.9,
+          "de": 359.9
+        },
+        "status": "correto",
+        "observacao": "Diferença de 8,5%, dentro da tolerância de ~10%."
+      },
+      {
+        "id": 9,
+        "name": "Robô Aspirador Wap Robot W90 Varre, Aspira e Passa Pano 30W",
+        "price_cadastrado": 319.9,
+        "precos_reais_encontrados": {
+          "cupom_1a_compra": 341.9,
+          "preco_atual": 359.9,
+          "de": 514.14
+        },
+        "status": "correto",
+        "observacao": "Cadastrado 6,9% abaixo do menor preço real (cupom 341,90), dentro da tolerância de ~10%."
+      },
+      {
+        "id": 10,
+        "name": "Mini Aspirador De Pó Portátil Recarregável Chrome Technology",
+        "price_cadastrado": 39.98,
+        "precos_reais_encontrados": {
+          "preco_atual": 39.99
+        },
+        "status": "correto",
+        "observacao": "Praticamente igual (diferença de centavos)."
+      }
+    ]
+  }
+}

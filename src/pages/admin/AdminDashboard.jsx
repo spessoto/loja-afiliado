@@ -25,7 +25,7 @@ function Ranking({ title, items, valueKey, valueLabel, emptyText }) {
           {items.map((item, i) => {
             const value = Number(item[valueKey]) || 0;
             return (
-              <div key={item.id}>
+              <div key={item.id} style={{ minWidth: 0 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 5 }}>
                   <Link to={`/produto/${item.id}`} target="_blank" style={{ font: "500 13.5px Inter", color: "#1E293B", textDecoration: "none", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1, minWidth: 0 }}>{item.name}</Link>
                   <span style={{ font: "700 13px Inter", color: "#F05A00", flex: "none" }}>{value} {valueLabel}</span>

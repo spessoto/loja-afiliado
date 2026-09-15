@@ -58,6 +58,14 @@ function requireCustomer(req, res, next) {
   next();
 }
 
+function requireAutomationToken(req, res, next) {
+  const expected = process.env.PRICE_AUTOMATION_TOKEN;
+  const token = req.headers["x-automation-token"];
+  const ok = expected && token && token.length === expected.length && crypto.timingSafeEqual(Buffer.from(token), Buffer.from(expected));
+  if (!ok) return res.status(401).json({ error: "unauthorized" });
+  next();
+}
+
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) return res.status(422).json({ error: "email and password are required" });
@@ -186,6 +194,21 @@ app.put("/api/products/:id", requireAdmin, async (req, res) => {
     [...values, faq, req.params.id]
   );
   submitToIndexNow(`/produto/${req.params.id}`);
+  res.json({ ok: true });
+});
+
+// Scoped endpoint for the automated price-check routine: only touches price_from/price_to,
+// authenticated with a standalone API token instead of the admin session cookie.
+app.patch("/api/products/:id/price", requireAutomationToken, async (req, res) => {
+  const { price_from, price_to } = req.body;
+  if (price_from === undefined || price_to === undefined) {
+    return res.status(422).json({ error: "price_from and price_to are required" });
+  }
+  const [result] = await pool.query(
+    "UPDATE products SET price_from = ?, price_to = ? WHERE id = ?",
+    [sqlValue(price_from), sqlValue(price_to), req.params.id]
+  );
+  if (!result.affectedRows) return res.status(404).json({ error: "not found" });
   res.json({ ok: true });
 });
 

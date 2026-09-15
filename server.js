@@ -347,6 +347,23 @@ app.post("/api/posts/automation", requireBlogToken, async (req, res) => {
   res.status(201).json({ id: result.insertId, slug });
 });
 
+// Edição pontual de um post já publicado pela automação (mesmo token, mesmos campos).
+app.patch("/api/posts/automation/:id", requireBlogToken, async (req, res) => {
+  const [existingRows] = await pool.query("SELECT slug FROM posts WHERE id = ?", [req.params.id]);
+  if (!existingRows.length) return res.status(404).json({ error: "not found" });
+  if (req.body.category !== undefined && !BLOG_CATEGORIES.includes(req.body.category)) {
+    return res.status(422).json({ error: `category must be one of: ${BLOG_CATEGORIES.join(", ")}` });
+  }
+  const fields = POST_FIELDS.filter(f => req.body[f] !== undefined);
+  if (!fields.length) return res.status(422).json({ error: "no fields to update" });
+  await pool.query(
+    `UPDATE posts SET ${fields.map(f => `${f}=?`).join(", ")} WHERE id=?`,
+    [...fields.map(f => req.body[f]), req.params.id]
+  );
+  submitToIndexNow(`/blog/${existingRows[0].slug}`);
+  res.json({ ok: true, slug: existingRows[0].slug });
+});
+
 app.delete("/api/admin/posts/:id", requireAdmin, async (req, res) => {
   const [rows] = await pool.query("SELECT slug FROM posts WHERE id = ?", [req.params.id]);
   await pool.query("DELETE FROM posts WHERE id = ?", [req.params.id]);

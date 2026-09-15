@@ -103,8 +103,8 @@ export default function Post() {
         </div>
 
         {post.cover_image_url && (
-          <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid #E2E8F0", marginBottom: 32 }}>
-            <img src={post.cover_image_url} alt={post.title} style={{ width: "100%", display: "block" }} />
+          <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid #E2E8F0", marginBottom: 32, aspectRatio: "16/9", background: "#F1F5F9" }}>
+            <img src={post.cover_image_url} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
           </div>
         )}
 
@@ -113,8 +113,8 @@ export default function Post() {
           if (imageMatch) {
             const [, alt, src] = imageMatch;
             return (
-              <div key={i} style={{ borderRadius: 12, overflow: "hidden", border: "1px solid #E2E8F0", margin: "8px 0 24px" }}>
-                <img src={src} alt={alt || post.title} loading="lazy" style={{ width: "100%", display: "block" }} />
+              <div key={i} style={{ borderRadius: 12, overflow: "hidden", border: "1px solid #E2E8F0", margin: "8px 0 24px", aspectRatio: "16/9", background: "#F1F5F9" }}>
+                <img src={src} alt={alt || post.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
               </div>
             );
           }

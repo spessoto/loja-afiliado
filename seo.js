@@ -287,8 +287,10 @@ export function buildSitemapXml(urls) {
   const hasImages = urls.some(u => u.image);
   const items = urls.map(u => {
     const lastmod = u.lastmod ? `\n    <lastmod>${u.lastmod}</lastmod>` : "";
-    const image = u.image ? `\n    <image:image>\n      <image:loc>${escapeAttr(u.image)}</image:loc>\n    </image:image>` : "";
-    return `  <url>\n    <loc>${escapeAttr(u.loc)}</loc>${lastmod}\n    <changefreq>${u.changefreq || "weekly"}</changefreq>\n    <priority>${u.priority ?? 0.5}</priority>${image}\n  </url>`;
+    const images = (Array.isArray(u.image) ? u.image : u.image ? [u.image] : [])
+      .map(img => `\n    <image:image>\n      <image:loc>${escapeAttr(img)}</image:loc>\n    </image:image>`)
+      .join("");
+    return `  <url>\n    <loc>${escapeAttr(u.loc)}</loc>${lastmod}\n    <changefreq>${u.changefreq || "weekly"}</changefreq>\n    <priority>${u.priority ?? 0.5}</priority>${images}\n  </url>`;
   }).join("\n");
   const imageNs = hasImages ? ' xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"' : "";
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"${imageNs}>\n${items}\n</urlset>\n`;

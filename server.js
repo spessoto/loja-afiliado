@@ -458,7 +458,7 @@ app.put("/api/settings", requireAdmin, async (req, res) => {
 app.get("/sitemap.xml", async (_req, res) => {
   const [products] = await pool.query("SELECT id, category, image_url, updated_at FROM products");
   const [categories] = await pool.query("SELECT name FROM categories");
-  const [posts] = await pool.query("SELECT slug, cover_image_url, updated_at FROM posts WHERE published = 1");
+  const [posts] = await pool.query("SELECT slug, content, cover_image_url, updated_at FROM posts WHERE published = 1");
   const urls = [
     { loc: `${SITE_URL}/`, priority: 1.0, changefreq: "daily" },
     { loc: `${SITE_URL}/categoria`, priority: 0.8, changefreq: "daily" },
@@ -469,7 +469,11 @@ app.get("/sitemap.xml", async (_req, res) => {
     { loc: `${SITE_URL}/politica-de-uso`, priority: 0.1, changefreq: "yearly" },
     ...categories.map(c => ({ loc: `${SITE_URL}/categoria?cat=${encodeURIComponent(c.name)}`, priority: 0.7, changefreq: "daily" })),
     ...products.map(p => ({ loc: `${SITE_URL}/produto/${p.id}`, priority: 0.9, changefreq: "weekly", lastmod: new Date(p.updated_at).toISOString().slice(0, 10), image: p.image_url || undefined })),
-    ...posts.map(p => ({ loc: `${SITE_URL}/blog/${p.slug}`, priority: 0.6, changefreq: "monthly", lastmod: new Date(p.updated_at).toISOString().slice(0, 10), image: p.cover_image_url || undefined }))
+    ...posts.map(p => {
+      const inlineImages = [...(p.content || "").matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)].map(m => m[1]);
+      const images = [p.cover_image_url, ...inlineImages].filter(Boolean);
+      return { loc: `${SITE_URL}/blog/${p.slug}`, priority: 0.6, changefreq: "monthly", lastmod: new Date(p.updated_at).toISOString().slice(0, 10), image: images.length ? images : undefined };
+    })
   ];
   res.set("Content-Type", "application/xml").send(buildSitemapXml(urls));
 });

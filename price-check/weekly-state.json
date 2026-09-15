@@ -116,5 +116,116 @@
         "observacao": "Praticamente igual (diferença de centavos)."
       }
     ]
+  },
+  "2026-09-15": {
+    "dia_da_semana": "terça-feira",
+    "lote_indice": 1,
+    "total_produtos_catalogo": 68,
+    "tamanho_lote": 10,
+    "resultados": [
+      {
+        "id": 11,
+        "name": "Aspirador de Pó Vertical e Portátil WAP High Speed Plus 1350W 3 em 1",
+        "price_cadastrado": 122.9,
+        "precos_reais_encontrados": {
+          "preco_atual": 154.0,
+          "de": 316.4
+        },
+        "status": "divergente",
+        "observacao": "Cadastrado 20,2% abaixo do preço atual real (154,00)."
+      },
+      {
+        "id": 12,
+        "name": "Robô Aspirador WAP Robot W200 3 em 1 Varre, Aspira e Passa Pano Bivolt",
+        "price_cadastrado": 559.0,
+        "precos_reais_encontrados": {
+          "preco_atual": 607.56,
+          "de": 699.9
+        },
+        "status": "correto",
+        "observacao": "Cadastrado 8,0% abaixo do preço atual, dentro da tolerância de ~10%."
+      },
+      {
+        "id": 13,
+        "name": "WAP Aspirador de Pó e Água GTW INOX 20i, Compacto, 20 Litros, com Soprador e Filtro Lavável, 170mbar 1900W 220v",
+        "price_cadastrado": 500.47,
+        "precos_reais_encontrados": {},
+        "status": "não_verificado",
+        "observacao": "Link Amazon (link.amazon -> amzlinks.in) bloqueado pela política de rede do ambiente (403 no CONNECT, confirmado no proxy). WebFetch e curl falharam."
+      },
+      {
+        "id": 14,
+        "name": "Dreame X50 Ultra Robô Aspirador e Esfregão, 20.000Pa, supera obstáculos de 6 cm, mopa extensível e removível, navegação LDS inteligente, 127V",
+        "price_cadastrado": 10999.0,
+        "precos_reais_encontrados": {},
+        "status": "não_verificado",
+        "observacao": "Link Amazon (link.amazon -> amzlinks.in) bloqueado pela política de rede do ambiente (403 no CONNECT, confirmado no proxy). WebFetch e curl falharam."
+      },
+      {
+        "id": 15,
+        "name": "Robô Aspirador e Esfregão Combinado 3 em 1 com Sucção 6500Pa",
+        "price_cadastrado": 532.97,
+        "precos_reais_encontrados": {
+          "preco_atual": 532.97,
+          "de": 999.0
+        },
+        "status": "correto",
+        "observacao": "Igual ao preço atual real exibido."
+      },
+      {
+        "id": 16,
+        "name": "Aspirador de Pó e Água Wap GTW Inox 12 1400W com Bocal de Sopro",
+        "price_cadastrado": 299.0,
+        "precos_reais_encontrados": {
+          "preco_atual": 324.3,
+          "de": 696.0
+        },
+        "status": "correto",
+        "observacao": "Cadastrado 7,8% abaixo do preço atual, dentro da tolerância de ~10%."
+      },
+      {
+        "id": 17,
+        "name": "Robô Aspirador Xiaomi S40 10.000Pa Ultra Potente Bivolt Branco",
+        "price_cadastrado": 1300.0,
+        "precos_reais_encontrados": {
+          "preco_atual": 1210.0,
+          "de": 1299.0
+        },
+        "status": "correto",
+        "observacao": "Cadastrado praticamente igual ao preço 'de' (1299,00), diferença de R$1,00."
+      },
+      {
+        "id": 18,
+        "name": "Aspirador Vertical WAP Power Speed Max AZ20 1600W, Sistema 360° com Tecnologia Cyclone, 3 em 1, 127V",
+        "price_cadastrado": 288.9,
+        "precos_reais_encontrados": {
+          "preco_atual": 309.0
+        },
+        "status": "correto",
+        "observacao": "Cadastrado 6,5% abaixo do preço atual real, dentro da tolerância de ~10%. Página não mostrou preço 'de'."
+      },
+      {
+        "id": 19,
+        "name": "Robô Aspirador Liectroux T9 com Base Autolimpante, Aspira, Varre e Passa Pano, para Carpetes e Pelo de Animais",
+        "price_cadastrado": 2899.0,
+        "precos_reais_encontrados": {
+          "preco_atual": 2413.0,
+          "de": 2899.0
+        },
+        "status": "correto",
+        "observacao": "Cadastrado bate exatamente com o preço 'de' (sem desconto) mostrado na vitrine."
+      },
+      {
+        "id": 20,
+        "name": "Britânia BAS1295P Aspirador de Pó 2 em 1 1250W Preto 127V",
+        "price_cadastrado": 111.0,
+        "precos_reais_encontrados": {
+          "preco_atual": 129.9,
+          "de": 185.36
+        },
+        "status": "divergente",
+        "observacao": "Cadastrado 14,6% abaixo do preço atual real (129,90)."
+      }
+    ]
   }
 }

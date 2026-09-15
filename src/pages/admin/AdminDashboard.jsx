@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AdminShell from "../../components/AdminShell.jsx";
 
-const cardStyle = { padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" };
+const cardStyle = { padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff", minWidth: 0 };
 
 function StatCard({ label, value }) {
   return (

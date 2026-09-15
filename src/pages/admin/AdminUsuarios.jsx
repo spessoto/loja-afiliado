@@ -79,7 +79,7 @@ export default function AdminUsuarios() {
       ) : (
         <div style={{ display: "grid", gap: 10 }}>
           {customers.map(c => (
-            <div key={c.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, padding: 14, border: "1px solid #E2E8F0", borderRadius: 10, background: "#fff" }}>
+            <div key={c.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, padding: 14, border: "1px solid #E2E8F0", borderRadius: 10, background: "#fff", minWidth: 0 }}>
               <div>
                 <div style={{ font: "600 14px Inter", color: "#1E293B" }}>{c.name}</div>
                 <div style={{ font: "400 12.5px Inter", color: "#94A3B8" }}>{c.email} {c.phone ? `• ${c.phone}` : ""}</div>

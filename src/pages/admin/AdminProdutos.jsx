@@ -39,7 +39,7 @@ export default function AdminProdutos() {
       ) : (
         <div style={{ display: "grid", gap: 10 }}>
           {products.map(p => (
-            <div key={p.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, padding: 14, border: "1px solid #E2E8F0", borderRadius: 10, background: "#fff" }}>
+            <div key={p.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, padding: 14, border: "1px solid #E2E8F0", borderRadius: 10, background: "#fff", minWidth: 0 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
                 {p.image_url ? (
                   <img src={p.image_url} alt={p.name} style={{ width: 44, height: 44, objectFit: "contain", flex: "none" }} />

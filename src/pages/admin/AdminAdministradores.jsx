@@ -81,9 +81,9 @@ export default function AdminAdministradores() {
       ) : (
         <div style={{ display: "grid", gap: 10 }}>
           {admins.map(a => (
-            <div key={a.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, padding: 14, border: "1px solid #E2E8F0", borderRadius: 10, background: "#fff" }}>
-              <strong style={{ font: "600 14px Inter", color: "#1E293B" }}>{a.email}</strong>
-              <div style={{ display: "flex", gap: 8 }}>
+            <div key={a.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, padding: 14, border: "1px solid #E2E8F0", borderRadius: 10, background: "#fff", minWidth: 0 }}>
+              <strong style={{ font: "600 14px Inter", color: "#1E293B", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0, flex: 1 }}>{a.email}</strong>
+              <div style={{ display: "flex", gap: 8, flex: "none" }}>
                 <button onClick={() => startEdit(a)} style={btnStyle}>Editar</button>
                 <button onClick={() => remove(a.id)} style={{ ...btnStyle, background: "#DC2626" }}>Remover</button>
               </div>

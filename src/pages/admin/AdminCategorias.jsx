@@ -78,7 +78,7 @@ export default function AdminCategorias() {
       ) : (
         <div style={{ display: "grid", gap: 10 }}>
           {categories.map(c => (
-            <div key={c.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, padding: 14, border: "1px solid #E2E8F0", borderRadius: 10, background: "#fff" }}>
+            <div key={c.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, padding: 14, border: "1px solid #E2E8F0", borderRadius: 10, background: "#fff", minWidth: 0 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 0 }}>
                 {c.image_url ? (
                   <img src={c.image_url} alt={c.name} style={{ width: 44, height: 44, objectFit: "contain", flex: "none" }} />

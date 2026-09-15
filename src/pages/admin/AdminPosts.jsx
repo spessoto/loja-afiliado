@@ -38,10 +38,10 @@ export default function AdminPosts() {
       ) : (
         <div style={{ display: "grid", gap: 10 }}>
           {posts.map(p => (
-            <div key={p.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, padding: 14, border: "1px solid #E2E8F0", borderRadius: 10, background: "#fff" }}>
-              <div style={{ minWidth: 0 }}>
+            <div key={p.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, padding: 14, border: "1px solid #E2E8F0", borderRadius: 10, background: "#fff", minWidth: 0 }}>
+              <div style={{ minWidth: 0, flex: 1 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ font: "600 14px Inter", color: "#1E293B", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.title}</span>
+                  <span style={{ font: "600 14px Inter", color: "#1E293B", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0, flex: 1 }}>{p.title}</span>
                   <span style={{ font: "700 10.5px Montserrat", letterSpacing: ".05em", padding: "3px 8px", borderRadius: 4, color: p.published ? "#16A34A" : "#94A3B8", background: p.published ? "#F0FDF4" : "#F1F5F9" }}>
                     {p.published ? "PUBLICADO" : "RASCUNHO"}
                   </span>

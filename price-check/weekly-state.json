@@ -125,106 +125,123 @@
     "resultados": [
       {
         "id": 11,
-        "name": "Aspirador de Pó Vertical e Portátil WAP High Speed Plus 1350W 3 em 1",
-        "price_cadastrado": 122.9,
+        "name": "Aspirador de Pó Vertical e Portátil WAP High Speed Plus 1350",
+        "price_cadastrado_from": 326.0,
+        "price_cadastrado_to": 122.9,
         "precos_reais_encontrados": {
-          "preco_atual": 154.0,
-          "de": 316.4
+          "de": 326.0,
+          "por": 164.99
         },
-        "status": "divergente",
-        "observacao": "Cadastrado 20,2% abaixo do preço atual real (154,00)."
+        "status": "corrigido",
+        "price_corrigido_from": 326.0,
+        "price_corrigido_to": 164.99,
+        "observacao": "price_from já batia com o 'de' real (326,00). price_to cadastrado (122,90) estava 25,5% abaixo do preço 'por' real (164,99) — corrigido."
       },
       {
         "id": 12,
-        "name": "Robô Aspirador WAP Robot W200 3 em 1 Varre, Aspira e Passa Pano Bivolt",
-        "price_cadastrado": 559.0,
+        "name": "Robô Aspirador WAP Robot W200 3 em 1 Varre, Aspira e Passa Pano",
+        "price_cadastrado_from": 699.9,
+        "price_cadastrado_to": 559.0,
         "precos_reais_encontrados": {
-          "preco_atual": 607.56,
-          "de": 699.9
+          "de": 699.9,
+          "por": 607.56
         },
         "status": "correto",
-        "observacao": "Cadastrado 8,0% abaixo do preço atual, dentro da tolerância de ~10%."
+        "observacao": "price_from bate exatamente. price_to cadastrado 7,99% abaixo do preço 'por' real — dentro do limiar de ~10%."
       },
       {
         "id": 13,
-        "name": "WAP Aspirador de Pó e Água GTW INOX 20i, Compacto, 20 Litros, com Soprador e Filtro Lavável, 170mbar 1900W 220v",
-        "price_cadastrado": 500.47,
-        "precos_reais_encontrados": {},
+        "name": "WAP Aspirador de Pó e Água GTW INOX 20i, Compacto, 20 Litros",
+        "price_cadastrado_from": 759.9,
+        "price_cadastrado_to": 500.47,
+        "precos_reais_encontrados": null,
         "status": "não_verificado",
-        "observacao": "Link Amazon (link.amazon -> amzlinks.in) bloqueado pela política de rede do ambiente (403 no CONNECT, confirmado no proxy). WebFetch e curl falharam."
+        "observacao": "Link Amazon (link.amazon -> amzlinks.in -> amazon.com.br) caiu em página de CAPTCHA ('Clique no botão abaixo para continuar comprando' / validateCaptcha) mesmo com WebFetch e curl com user-agent de navegador. Não foi possível extrair preços reais."
       },
       {
         "id": 14,
-        "name": "Dreame X50 Ultra Robô Aspirador e Esfregão, 20.000Pa, supera obstáculos de 6 cm, mopa extensível e removível, navegação LDS inteligente, 127V",
-        "price_cadastrado": 10999.0,
-        "precos_reais_encontrados": {},
+        "name": "Dreame X50 Ultra Robô Aspirador e Esfregão, 20.000Pa, supera...",
+        "price_cadastrado_from": 12999.0,
+        "price_cadastrado_to": 10999.0,
+        "precos_reais_encontrados": null,
         "status": "não_verificado",
-        "observacao": "Link Amazon (link.amazon -> amzlinks.in) bloqueado pela política de rede do ambiente (403 no CONNECT, confirmado no proxy). WebFetch e curl falharam."
+        "observacao": "Mesmo bloqueio de CAPTCHA da Amazon (validateCaptcha) via WebFetch e curl com user-agent de navegador."
       },
       {
         "id": 15,
         "name": "Robô Aspirador e Esfregão Combinado 3 em 1 com Sucção 6500Pa",
-        "price_cadastrado": 532.97,
+        "price_cadastrado_from": 999.0,
+        "price_cadastrado_to": 532.97,
         "precos_reais_encontrados": {
-          "preco_atual": 532.97,
-          "de": 999.0
+          "de": 999.0,
+          "por": 532.97
         },
         "status": "correto",
-        "observacao": "Igual ao preço atual real exibido."
+        "observacao": "price_from e price_to batem exatamente com 'de' e 'por' reais."
       },
       {
         "id": 16,
         "name": "Aspirador de Pó e Água Wap GTW Inox 12 1400W com Bocal de Sopro",
-        "price_cadastrado": 299.0,
+        "price_cadastrado_from": 696.0,
+        "price_cadastrado_to": 299.0,
         "precos_reais_encontrados": {
-          "preco_atual": 324.3,
-          "de": 696.0
+          "de": 696.0,
+          "por": 324.33
         },
         "status": "correto",
-        "observacao": "Cadastrado 7,8% abaixo do preço atual, dentro da tolerância de ~10%."
+        "observacao": "price_from bate exatamente. price_to cadastrado 7,82% abaixo do 'por' real — dentro do limiar de ~10%."
       },
       {
         "id": 17,
         "name": "Robô Aspirador Xiaomi S40 10.000Pa Ultra Potente Bivolt Branco",
-        "price_cadastrado": 1300.0,
+        "price_cadastrado_from": null,
+        "price_cadastrado_to": 1300.0,
         "precos_reais_encontrados": {
-          "preco_atual": 1210.0,
-          "de": 1299.0
+          "de": 1299.0,
+          "por": 1210.0
         },
         "status": "correto",
-        "observacao": "Cadastrado praticamente igual ao preço 'de' (1299,00), diferença de R$1,00."
+        "observacao": "price_to cadastrado (1300,00) está 7,44% acima do 'por' real (1210,00) e essencialmente igual ao 'de' real (1299,00) — dentro do limiar de ~10%, sem correção automática pelo critério definido (compara price_to à faixa do preço 'por')."
       },
       {
         "id": 18,
-        "name": "Aspirador Vertical WAP Power Speed Max AZ20 1600W, Sistema 360° com Tecnologia Cyclone, 3 em 1, 127V",
-        "price_cadastrado": 288.9,
+        "name": "Aspirador Vertical WAP Power Speed Max AZ20 1600W, Sistema 3 em 1",
+        "price_cadastrado_from": 348.0,
+        "price_cadastrado_to": 288.9,
         "precos_reais_encontrados": {
-          "preco_atual": 309.0
+          "de": 302.9,
+          "por": 287.5
         },
         "status": "correto",
-        "observacao": "Cadastrado 6,5% abaixo do preço atual real, dentro da tolerância de ~10%. Página não mostrou preço 'de'."
+        "observacao": "price_to cadastrado 0,49% do 'por' real — dentro do limiar. Nota: price_from cadastrado (348,00) diverge do 'de' real (302,90), mas o critério de correção do processo só avalia price_to; não corrigido."
       },
       {
         "id": 19,
-        "name": "Robô Aspirador Liectroux T9 com Base Autolimpante, Aspira, Varre e Passa Pano, para Carpetes e Pelo de Animais",
-        "price_cadastrado": 2899.0,
+        "name": "Robô Aspirador Liectroux T9 com Base Autolimpante, Aspira, Varre e Passa Pano",
+        "price_cadastrado_from": null,
+        "price_cadastrado_to": 2899.0,
         "precos_reais_encontrados": {
-          "preco_atual": 2413.0,
-          "de": 2899.0
+          "de": 2899.0,
+          "por": 2413.0
         },
-        "status": "correto",
-        "observacao": "Cadastrado bate exatamente com o preço 'de' (sem desconto) mostrado na vitrine."
+        "status": "corrigido",
+        "price_corrigido_from": 2899.0,
+        "price_corrigido_to": 2413.0,
+        "observacao": "price_to cadastrado (2899,00) estava 20,1% acima do 'por' real (2413,00) — corrigido. price_from setado para o 'de' real (2899,00)."
       },
       {
         "id": 20,
         "name": "Britânia BAS1295P Aspirador de Pó 2 em 1 1250W Preto 127V",
-        "price_cadastrado": 111.0,
+        "price_cadastrado_from": null,
+        "price_cadastrado_to": 111.0,
         "precos_reais_encontrados": {
-          "preco_atual": 129.9,
-          "de": 185.36
+          "de": 185.36,
+          "por": 129.9
         },
-        "status": "divergente",
-        "observacao": "Cadastrado 14,6% abaixo do preço atual real (129,90)."
+        "status": "corrigido",
+        "price_corrigido_from": 185.36,
+        "price_corrigido_to": 129.9,
+        "observacao": "price_to cadastrado (111,00) estava 14,55% abaixo do 'por' real (129,90) — corrigido. price_from setado para o 'de' real (185,36)."
       }
     ]
   }

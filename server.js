@@ -58,13 +58,17 @@ function requireCustomer(req, res, next) {
   next();
 }
 
-function requireAutomationToken(req, res, next) {
-  const expected = process.env.PRICE_AUTOMATION_TOKEN;
-  const token = req.headers["x-automation-token"];
-  const ok = expected && token && token.length === expected.length && crypto.timingSafeEqual(Buffer.from(token), Buffer.from(expected));
-  if (!ok) return res.status(401).json({ error: "unauthorized" });
-  next();
+function requireTokenEnv(envVar) {
+  return (req, res, next) => {
+    const expected = process.env[envVar];
+    const token = req.headers["x-automation-token"];
+    const ok = expected && token && token.length === expected.length && crypto.timingSafeEqual(Buffer.from(token), Buffer.from(expected));
+    if (!ok) return res.status(401).json({ error: "unauthorized" });
+    next();
+  };
 }
+const requirePriceToken = requireTokenEnv("PRICE_AUTOMATION_TOKEN");
+const requireBlogToken = requireTokenEnv("BLOG_AUTOMATION_TOKEN");
 
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
@@ -199,7 +203,7 @@ app.put("/api/products/:id", requireAdmin, async (req, res) => {
 
 // Scoped endpoint for the automated price-check routine: only touches price_from/price_to,
 // authenticated with a standalone API token instead of the admin session cookie.
-app.patch("/api/products/:id/price", requireAutomationToken, async (req, res) => {
+app.patch("/api/products/:id/price", requirePriceToken, async (req, res) => {
   const { price_from, price_to } = req.body;
   if (price_from === undefined || price_to === undefined) {
     return res.status(422).json({ error: "price_from and price_to are required" });
@@ -320,6 +324,27 @@ app.put("/api/admin/posts/:id", requireAdmin, async (req, res) => {
   );
   if (published) submitToIndexNow(`/blog/${slug}`);
   res.json({ ok: true });
+});
+
+// Categorias fixas do blog — a rotina automática só pode usar uma destas.
+const BLOG_CATEGORIES = ["Guia de Compra", "Comparativos", "Aspiradores Robô", "Aspiradores Verticais", "Manutenção e Cuidados", "Dicas de Limpeza", "Reviews de Produtos", "Tendências e Tecnologia"];
+
+// Endpoint escopado para a automação de conteúdo do blog: sempre publica direto,
+// autenticado com token dedicado (não a sessão de admin).
+app.post("/api/posts/automation", requireBlogToken, async (req, res) => {
+  const { title, excerpt, content, cover_image_url, author, category, meta_description } = req.body;
+  if (!title || !content) return res.status(422).json({ error: "title and content are required" });
+  if (!BLOG_CATEGORIES.includes(category)) {
+    return res.status(422).json({ error: `category must be one of: ${BLOG_CATEGORIES.join(", ")}` });
+  }
+  const slug = await uniquePostSlug(req.body.slug || title);
+  const values = [title, excerpt ?? null, content, cover_image_url ?? null, author || "Equipe Promo Aspiradores", category, meta_description ?? null];
+  const [result] = await pool.query(
+    `INSERT INTO posts (${POST_FIELDS.join(", ")}, slug, published, published_at) VALUES (${POST_FIELDS.map(() => "?").join(", ")}, ?, 1, ?)`,
+    [...values, slug, new Date()]
+  );
+  submitToIndexNow(`/blog/${slug}`);
+  res.status(201).json({ id: result.insertId, slug });
 });
 
 app.delete("/api/admin/posts/:id", requireAdmin, async (req, res) => {

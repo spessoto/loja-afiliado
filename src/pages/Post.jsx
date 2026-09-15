@@ -18,6 +18,30 @@ function paragrafos(text) {
     .filter(Boolean);
 }
 
+// Marcação leve dentro do texto simples: "## " / "### " viram heading, "[texto](url)" vira link.
+function renderInline(text, keyPrefix) {
+  const parts = [];
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  let last = 0, match, i = 0;
+  while ((match = linkRegex.exec(text))) {
+    if (match.index > last) parts.push(text.slice(last, match.index));
+    const [, label, url] = match;
+    const external = /^https?:\/\//.test(url) && !url.includes("promoaspiradores.com.br");
+    const href = external ? url : url.replace(/^https?:\/\/[^/]+/, "");
+    parts.push(
+      external ? (
+        <a key={`${keyPrefix}-${i}`} href={href} target="_blank" rel="noopener noreferrer" style={{ color: "#F05A00", fontWeight: 600 }}>{label}</a>
+      ) : (
+        <a key={`${keyPrefix}-${i}`} href={href} style={{ color: "#F05A00", fontWeight: 600 }}>{label}</a>
+      )
+    );
+    last = match.index + match[0].length;
+    i++;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return parts;
+}
+
 export default function Post() {
   const { slug } = useParams();
   const { categories } = useCategories();
@@ -84,9 +108,15 @@ export default function Post() {
           </div>
         )}
 
-        {paragrafos(post.content).map((par, i) => (
-          <p key={i} style={{ margin: "0 0 18px", font: "400 16px/1.75 Inter", color: "#334155", whiteSpace: "pre-line" }}>{par}</p>
-        ))}
+        {paragrafos(post.content).map((block, i) => {
+          if (block.startsWith("### ")) {
+            return <h3 key={i} style={{ margin: "28px 0 12px", font: "700 19px/1.35 Montserrat", color: "#012746" }}>{renderInline(block.slice(4), `h3-${i}`)}</h3>;
+          }
+          if (block.startsWith("## ")) {
+            return <h2 key={i} style={{ margin: "36px 0 14px", font: "800 23px/1.3 Montserrat", color: "#012746" }}>{renderInline(block.slice(3), `h2-${i}`)}</h2>;
+          }
+          return <p key={i} style={{ margin: "0 0 18px", font: "400 16px/1.75 Inter", color: "#334155", whiteSpace: "pre-line" }}>{renderInline(block, `p-${i}`)}</p>;
+        })}
       </article>
       </main>
 

@@ -33,6 +33,12 @@ export default function AdminUsuarios() {
     setForm(empty);
   }
 
+  async function remove(id) {
+    if (!confirm("Excluir este cliente? Os favoritos dele também serão removidos.")) return;
+    await fetch(`/api/customers/${id}`, { method: "DELETE", credentials: "include" });
+    load();
+  }
+
   async function submit(e) {
     e.preventDefault();
     setError("");
@@ -78,7 +84,10 @@ export default function AdminUsuarios() {
                 <div style={{ font: "600 14px Inter", color: "#1E293B" }}>{c.name}</div>
                 <div style={{ font: "400 12.5px Inter", color: "#94A3B8" }}>{c.email} {c.phone ? `• ${c.phone}` : ""}</div>
               </div>
-              <button onClick={() => startEdit(c)} style={btnStyle}>Editar</button>
+              <div style={{ display: "flex", gap: 8, flex: "none" }}>
+                <button onClick={() => startEdit(c)} style={btnStyle}>Editar</button>
+                <button onClick={() => remove(c.id)} style={{ ...btnStyle, background: "#DC2626" }}>Excluir</button>
+              </div>
             </div>
           ))}
         </div>

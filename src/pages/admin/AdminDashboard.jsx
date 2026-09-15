@@ -74,6 +74,8 @@ export default function AdminDashboard() {
         <StatCard label="Clientes cadastrados" value={totais.totalClientes} />
         <StatCard label="Favoritos (wishlist)" value={totais.totalFavoritos} />
         <StatCard label="Avaliação média do catálogo" value={totais.mediaGeral ? totais.mediaGeral.toFixed(1).replace(".", ",") : "-"} />
+        <StatCard label="Total de visualizações" value={totais.totalViews} />
+        <StatCard label="Total de cliques em comprar" value={totais.totalCliques} />
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 20 }}>

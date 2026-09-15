@@ -385,6 +385,12 @@ app.put("/api/customers/:id", requireAdmin, async (req, res) => {
   res.json({ ok: true });
 });
 
+app.delete("/api/customers/:id", requireAdmin, async (req, res) => {
+  await pool.query("DELETE FROM favorites WHERE customer_id = ?", [req.params.id]);
+  await pool.query("DELETE FROM customers WHERE id = ?", [req.params.id]);
+  res.json({ ok: true });
+});
+
 app.get("/api/admin-users", requireAdmin, async (_req, res) => {
   const [rows] = await pool.query("SELECT id, email FROM admin_users ORDER BY email ASC");
   res.json(rows);
@@ -428,13 +434,16 @@ app.get("/api/dashboard", requireAdmin, async (_req, res) => {
   const [[{ mediaGeral, somaAvaliacoes }]] = await pool.query(
     "SELECT COALESCE(SUM(rating_avg * rating_count) / SUM(rating_count), 0) AS mediaGeral, COALESCE(SUM(rating_count), 0) AS somaAvaliacoes FROM products WHERE rating_count > 0"
   );
+  const [[{ totalViews, totalCliques }]] = await pool.query(
+    "SELECT COALESCE(SUM(view_count), 0) AS totalViews, COALESCE(SUM(click_count), 0) AS totalCliques FROM products"
+  );
   const [maisVistos] = await pool.query("SELECT id, name, view_count FROM products ORDER BY view_count DESC, id ASC LIMIT 5");
   const [maisClicados] = await pool.query("SELECT id, name, click_count FROM products ORDER BY click_count DESC, id ASC LIMIT 5");
   const [maisDesejados] = await pool.query(
     "SELECT p.id, p.name, COUNT(*) AS favoritos FROM favorites f JOIN products p ON p.id = f.product_id GROUP BY p.id, p.name ORDER BY favoritos DESC LIMIT 5"
   );
   res.json({
-    totais: { totalProdutos, totalCategorias, totalClientes, totalFavoritos, mediaGeral: Number(mediaGeral), somaAvaliacoes },
+    totais: { totalProdutos, totalCategorias, totalClientes, totalFavoritos, mediaGeral: Number(mediaGeral), somaAvaliacoes, totalViews, totalCliques },
     maisVistos,
     maisClicados,
     maisDesejados

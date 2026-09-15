@@ -165,4 +165,34 @@ summary {
   .product-title-block {
     order: -3;
   }
+
+  .admin-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .admin-topbar {
+    display: flex !important;
+  }
+  .admin-aside {
+    position: fixed !important;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 240px;
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+    z-index: 60;
+  }
+  .admin-aside.is-open {
+    transform: translateX(0);
+  }
+  .admin-overlay.is-open {
+    display: block !important;
+    position: fixed;
+    inset: 0;
+    background: rgba(1, 39, 70, .5);
+    z-index: 55;
+  }
+  .admin-main {
+    padding: 20px 16px !important;
+  }
 }

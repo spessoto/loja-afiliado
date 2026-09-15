@@ -47,6 +47,7 @@ function LoginForm({ onLogin }) {
 
 export default function AdminShell({ title, children }) {
   const [authenticated, setAuthenticated] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -54,6 +55,10 @@ export default function AdminShell({ title, children }) {
       .then(res => res.json())
       .then(data => setAuthenticated(data.authenticated));
   }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
 
   async function logout() {
     await fetch("/api/logout", { method: "POST", credentials: "include" });
@@ -64,8 +69,9 @@ export default function AdminShell({ title, children }) {
   if (!authenticated) return <LoginForm onLogin={() => window.location.reload()} />;
 
   return (
-    <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "220px minmax(0,1fr)", minHeight: "100vh", fontFamily: "Inter, system-ui, sans-serif" }}>
-      <aside style={{ background: "#012746", color: "#fff", padding: "24px 16px", display: "flex", flexDirection: "column", gap: 4 }}>
+    <div className="admin-grid" style={{ display: "grid", gridTemplateColumns: "220px minmax(0,1fr)", minHeight: "100vh", fontFamily: "Inter, system-ui, sans-serif" }}>
+      <div className={`admin-overlay${menuOpen ? " is-open" : ""}`} style={{ display: "none" }} onClick={() => setMenuOpen(false)} />
+      <aside className={`admin-aside${menuOpen ? " is-open" : ""}`} style={{ background: "#012746", color: "#fff", padding: "24px 16px", display: "flex", flexDirection: "column", gap: 4 }}>
         <div style={{ font: "800 18px Montserrat, sans-serif", marginBottom: 24, padding: "0 8px" }}>Promo Admin</div>
         {navItems.map(item => (
           <Link
@@ -83,10 +89,17 @@ export default function AdminShell({ title, children }) {
         <Link to="/" style={{ display: "block", padding: "10px 12px", borderRadius: 8, font: "600 14px Inter, sans-serif", color: "#B8C5D0", textDecoration: "none" }}>Ver site</Link>
         <button onClick={logout} style={{ marginTop: "auto", height: 40, border: 0, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 13px Montserrat, sans-serif", cursor: "pointer" }}>Sair</button>
       </aside>
-      <main style={{ padding: "32px 40px", background: "#F8FAFC" }}>
-        {title && <h1 style={{ margin: "0 0 24px", font: "800 26px Montserrat, sans-serif", color: "#012746" }}>{title}</h1>}
-        {children}
-      </main>
+      <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
+        <div className="admin-topbar" style={{ display: "none", alignItems: "center", justifyContent: "space-between", padding: "14px 16px", background: "#012746" }}>
+          <button onClick={() => setMenuOpen(v => !v)} aria-label="Abrir menu" style={{ background: "transparent", border: 0, color: "#fff", fontSize: 22, lineHeight: 1, cursor: "pointer", padding: 4 }}>☰</button>
+          <span style={{ font: "800 15px Montserrat, sans-serif", color: "#fff" }}>Promo Admin</span>
+          <span style={{ width: 22 }} />
+        </div>
+        <main className="admin-main" style={{ padding: "32px 40px", background: "#F8FAFC", flex: 1 }}>
+          {title && <h1 style={{ margin: "0 0 24px", font: "800 26px Montserrat, sans-serif", color: "#012746" }}>{title}</h1>}
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

@@ -109,6 +109,15 @@ export default function Post() {
         )}
 
         {paragrafos(post.content).map((block, i) => {
+          const imageMatch = block.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+          if (imageMatch) {
+            const [, alt, src] = imageMatch;
+            return (
+              <div key={i} style={{ borderRadius: 12, overflow: "hidden", border: "1px solid #E2E8F0", margin: "8px 0 24px" }}>
+                <img src={src} alt={alt || post.title} loading="lazy" style={{ width: "100%", display: "block" }} />
+              </div>
+            );
+          }
           if (block.startsWith("### ")) {
             return <h3 key={i} style={{ margin: "28px 0 12px", font: "700 19px/1.35 Montserrat", color: "#012746" }}>{renderInline(block.slice(4), `h3-${i}`)}</h3>;
           }

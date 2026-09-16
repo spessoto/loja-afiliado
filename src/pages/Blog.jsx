@@ -10,6 +10,11 @@ function formatDate(iso) {
   return new Date(iso).toLocaleDateString("pt-BR", { day: "numeric", month: "long", year: "numeric" });
 }
 
+function truncate(text, max) {
+  if (!text || text.length <= max) return text;
+  return text.slice(0, max).trimEnd() + "…";
+}
+
 export default function Blog() {
   const { categories } = useCategories();
   const [posts, setPosts] = useState([]);
@@ -49,16 +54,16 @@ export default function Blog() {
             {posts.map(p => (
               <Link key={p.id} to={`/blog/${p.slug}`} className="card-hover" style={{ display: "flex", flexDirection: "column", border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden", background: "#fff" }}>
                 {p.cover_image_url ? (
-                  <div style={{ aspectRatio: "16/10", background: "#fff" }}>
+                  <div style={{ aspectRatio: "16/10", overflow: "hidden", background: "#fff" }}>
                     <img src={p.cover_image_url} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                   </div>
                 ) : (
-                  <div style={{ aspectRatio: "16/10", background: "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)" }} />
+                  <div style={{ aspectRatio: "16/10", overflow: "hidden", background: "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)" }} />
                 )}
                 <div style={{ padding: "16px 18px 20px", display: "flex", flexDirection: "column", flex: 1 }}>
                   {p.category && <span style={{ display: "inline-block", font: "600 11px Inter", letterSpacing: ".1em", color: "#F05A00", marginBottom: 8 }}>{p.category.toUpperCase()}</span>}
-                  <h2 style={{ margin: "0 0 8px", font: "700 17px/1.35 Montserrat", color: "#012746" }}>{p.title}</h2>
-                  {p.excerpt && <p style={{ margin: "0 0 12px", font: "400 13.5px/1.6 Inter", color: "#475569", flex: 1 }}>{p.excerpt}</p>}
+                  <h2 style={{ margin: "0 0 8px", font: "700 17px/1.35 Montserrat", color: "#012746", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{p.title}</h2>
+                  {p.excerpt && <p style={{ margin: "0 0 12px", font: "400 13.5px/1.6 Inter", color: "#475569", flex: 1 }}>{truncate(p.excerpt, 110)}</p>}
                   <span style={{ font: "400 12.5px Inter", color: "#94A3B8" }}>{[p.author, formatDate(p.published_at)].filter(Boolean).join(" • ")}</span>
                 </div>
               </Link>

@@ -156,8 +156,13 @@ app.delete("/api/favorites/:productId", requireCustomer, async (req, res) => {
   res.json({ ok: true });
 });
 
+// Colunas de listagem: exclui faq/images/indicado/nao_indicado, usados só na página de detalhe
+// do produto (que busca via /api/products/:id) — sozinhos eram ~39% do payload desta rota.
+const PRODUCT_LIST_FIELDS = "id, name, brand, category, description, image_url, affiliate_url, price_from, price_to, installment, badge, tags, specs, rating_avg, rating_count, rating_dist, reviews, created_at, updated_at";
+
 app.get("/api/products", async (_req, res) => {
-  const [rows] = await pool.query("SELECT * FROM products ORDER BY created_at DESC");
+  const [rows] = await pool.query(`SELECT ${PRODUCT_LIST_FIELDS} FROM products ORDER BY created_at DESC`);
+  res.set("Cache-Control", "public, max-age=60");
   res.json(rows);
 });
 
@@ -234,6 +239,7 @@ app.post("/api/products/:id/click", async (req, res) => {
 
 app.get("/api/categories", async (_req, res) => {
   const [rows] = await pool.query("SELECT * FROM categories ORDER BY name ASC");
+  res.set("Cache-Control", "public, max-age=60");
   res.json(rows);
 });
 
@@ -276,6 +282,7 @@ const POST_FIELDS = ["title", "excerpt", "content", "cover_image_url", "author",
 
 app.get("/api/posts", async (_req, res) => {
   const [rows] = await pool.query("SELECT id, title, slug, excerpt, cover_image_url, author, category, published_at FROM posts WHERE published = 1 ORDER BY published_at DESC");
+  res.set("Cache-Control", "public, max-age=60");
   res.json(rows);
 });
 

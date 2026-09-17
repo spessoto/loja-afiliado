@@ -8,7 +8,7 @@ import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useProducts, toCardProduct, formatBRL, linhas, parseReviews } from "../lib/products.js";
 import { useCategories } from "../lib/categories.js";
 
-const heroTrust = ["Frete grátis acima de R$ 299", "Até 10x sem juros", "Garantia e nota fiscal"];
+const heroTrust = ["Curadoria comparando preço e avaliações", "Você compra direto na loja oficial", "Garantia e nota fiscal do parceiro"];
 
 const necessidades = [
   { i: "01", t: "Para pelos de animais", s: "Escova antiemaranhado", q: "pet" },

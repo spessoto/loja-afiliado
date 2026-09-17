@@ -1,4 +1,9 @@
 import { useEffect, useState } from "react";
+import { slugify } from "../../slug.js";
+
+export function productUrl(id, name) {
+  return id ? `/produto/${slugify(name)}-${id}` : "/produto";
+}
 
 export function useProducts() {
   const [products, setProducts] = useState([]);

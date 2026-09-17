@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useFavorites } from "../lib/favorites.jsx";
 import { useCompare } from "../lib/compare.js";
+import { productUrl } from "../lib/products.js";
 
 function HeartIcon({ filled }) {
   return (
@@ -11,7 +12,7 @@ function HeartIcon({ filled }) {
 }
 
 export default function ProductCard({ p, priceColor = "#F05A00", to, showCompare = true }) {
-  const target = to || (p.id ? `/produto/${p.id}` : "/produto");
+  const target = to || productUrl(p.id, p.nome);
   const { isFavorite, toggle: toggleFavorite } = useFavorites();
   const { isComparing, toggle: toggleCompare, ids, max } = useCompare();
   const favorited = p.id ? isFavorite(p.id) : false;

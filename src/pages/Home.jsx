@@ -5,7 +5,7 @@ import { FooterFull } from "../components/Footer.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import FaqAccordion from "../components/FaqAccordion.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
-import { useProducts, toCardProduct, formatBRL, linhas, parseReviews } from "../lib/products.js";
+import { useProducts, toCardProduct, formatBRL, linhas, parseReviews, productUrl } from "../lib/products.js";
 import { useCategories } from "../lib/categories.js";
 
 const heroTrust = ["Você compra direto na loja oficial", "Garantia e nota fiscal do parceiro"];
@@ -142,7 +142,7 @@ export default function Home() {
             </div>
           </div>
           <div style={{ position: "relative" }}>
-            <Link to={heroProduct ? `/produto/${heroProduct.id}` : "/categoria"} style={{ aspectRatio: "4/3.4", maxWidth: 420, margin: "0 auto", borderRadius: 16, border: "1px solid #E2E8F0", overflow: "hidden", background: heroProduct?.image_url ? "#fff" : "repeating-linear-gradient(135deg,#F1F5F9 0 9px,#E9EFF5 9px 18px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: heroProduct?.image_url ? 0 : 24 }}>
+            <Link to={heroProduct ? productUrl(heroProduct.id, heroProduct.name) : "/categoria"} style={{ aspectRatio: "4/3.4", maxWidth: 420, margin: "0 auto", borderRadius: 16, border: "1px solid #E2E8F0", overflow: "hidden", background: heroProduct?.image_url ? "#fff" : "repeating-linear-gradient(135deg,#F1F5F9 0 9px,#E9EFF5 9px 18px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: heroProduct?.image_url ? 0 : 24 }}>
               {heroProduct?.image_url ? (
                 <img src={heroProduct.image_url} alt={heroProduct.name} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 24 }} />
               ) : heroProduct ? (
@@ -283,7 +283,7 @@ export default function Home() {
           </div>
           <div style={{ display: "grid", gap: 16 }}>
             {avaliacoesExibidas.length > 0 ? avaliacoesExibidas.map((a, i) => (
-              <Link key={i} to={`/produto/${a.produtoId}`} style={{ padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff", display: "block" }}>
+              <Link key={i} to={productUrl(a.produtoId, a.produto)} style={{ padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff", display: "block" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 10 }}>
                   <span style={{ font: "700 14px Montserrat", color: "#012746" }}>{a.nome}</span>
                   <span style={{ font: "600 13px Inter", color: "#F05A00", letterSpacing: ".08em" }}>{a.estrelas}</span>

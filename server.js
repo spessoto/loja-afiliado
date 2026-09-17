@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import fs from "node:fs/promises";
 import { pool, ensureSchema, hashPassword, verifyPassword, getSettings, setSettings } from "./db.js";
 import { generateFaq } from "./faq.js";
-import { getPageMeta, injectMeta, buildSitemapXml, SITE_URL } from "./seo.js";
+import { getPageMeta, injectMeta, buildSitemapXml, productUrl, SITE_URL } from "./seo.js";
 import { slugify } from "./slug.js";
 import { submitToIndexNow } from "./indexnow.js";
 
@@ -472,7 +472,7 @@ app.put("/api/settings", requireAdmin, async (req, res) => {
 });
 
 app.get("/sitemap.xml", async (_req, res) => {
-  const [products] = await pool.query("SELECT id, category, image_url, updated_at FROM products");
+  const [products] = await pool.query("SELECT id, name, category, image_url, updated_at FROM products");
   const [categories] = await pool.query("SELECT name FROM categories");
   const [posts] = await pool.query("SELECT slug, content, cover_image_url, updated_at FROM posts WHERE published = 1");
   const urls = [
@@ -484,7 +484,7 @@ app.get("/sitemap.xml", async (_req, res) => {
     { loc: `${SITE_URL}/politica-de-privacidade`, priority: 0.1, changefreq: "yearly" },
     { loc: `${SITE_URL}/politica-de-uso`, priority: 0.1, changefreq: "yearly" },
     ...categories.map(c => ({ loc: `${SITE_URL}/categoria?cat=${encodeURIComponent(c.name)}`, priority: 0.7, changefreq: "daily" })),
-    ...products.map(p => ({ loc: `${SITE_URL}/produto/${p.id}`, priority: 0.9, changefreq: "weekly", lastmod: new Date(p.updated_at).toISOString().slice(0, 10), image: p.image_url || undefined })),
+    ...products.map(p => ({ loc: productUrl(p), priority: 0.9, changefreq: "weekly", lastmod: new Date(p.updated_at).toISOString().slice(0, 10), image: p.image_url || undefined })),
     ...posts.map(p => {
       const inlineImages = [...(p.content || "").matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)].map(m => m[1]);
       const images = [p.cover_image_url, ...inlineImages].filter(Boolean);
@@ -503,11 +503,16 @@ app.get("*", async (req, res) => {
   let html = await fs.readFile(indexPath, "utf-8");
 
   const seoData = {};
-  const produtoMatch = req.path.match(/^\/produto\/(\d+)$/);
+  const produtoMatch = req.path.match(/^\/produto\/(?:.*-)?(\d+)$/);
   if (produtoMatch) {
     const [rows] = await pool.query("SELECT * FROM products WHERE id = ?", [produtoMatch[1]]);
-    if (rows[0]) seoData.product = rows[0];
-    else seoData.productNotFound = true;
+    if (rows[0]) {
+      const canonicalPath = productUrl(rows[0]).replace(SITE_URL, "");
+      if (req.path !== canonicalPath) return res.redirect(301, canonicalPath);
+      seoData.product = rows[0];
+    } else {
+      seoData.productNotFound = true;
+    }
   }
   const postMatch = req.path.match(/^\/blog\/([^/]+)$/);
   if (postMatch) {

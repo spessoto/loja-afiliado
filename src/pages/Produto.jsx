@@ -83,7 +83,8 @@ function parseSpecs(text) {
 }
 
 export default function Produto() {
-  const { id } = useParams();
+  const { slug } = useParams();
+  const id = (slug || "").match(/(\d+)$/)?.[0];
   const { product, loading } = useProduct(id);
   const { products: todosProdutos } = useProducts();
   const { categories } = useCategories();

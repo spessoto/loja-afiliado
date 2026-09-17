@@ -17,6 +17,7 @@ const Cadastro = lazy(() => import("./pages/Cadastro.jsx"));
 const Favoritos = lazy(() => import("./pages/Favoritos.jsx"));
 const Comparar = lazy(() => import("./pages/Comparar.jsx"));
 const Busca = lazy(() => import("./pages/Busca.jsx"));
+const NotFound = lazy(() => import("./pages/NotFound.jsx"));
 
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard.jsx"));
 const AdminProdutos = lazy(() => import("./pages/admin/AdminProdutos.jsx"));
@@ -40,7 +41,7 @@ export default function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<Post />} />
           <Route path="/produto" element={<Produto />} />
-          <Route path="/produto/:id" element={<Produto />} />
+          <Route path="/produto/:slug" element={<Produto />} />
           <Route path="/contato" element={<Contato />} />
           <Route path="/politica-de-cookies" element={<PoliticaCookies />} />
           <Route path="/politica-de-privacidade" element={<PoliticaPrivacidade />} />
@@ -60,6 +61,7 @@ export default function App() {
           <Route path="/favoritos" element={<Favoritos />} />
           <Route path="/comparar" element={<Comparar />} />
           <Route path="/busca" element={<Busca />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </FavoritesProvider>

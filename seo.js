@@ -1,3 +1,5 @@
+import { slugify } from "./slug.js";
+
 const SITE_URL = "https://promoaspiradores.com.br";
 const SITE_NAME = "Promo Aspiradores";
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
@@ -56,6 +58,10 @@ const STATIC_META = {
   "/busca": { title: `Busca — ${SITE_NAME}`, description: "Resultados de busca de aspiradores.", noindex: true }
 };
 
+export function productUrl(product) {
+  return `${SITE_URL}/produto/${slugify(product.name)}-${product.id}`;
+}
+
 function orgJsonLd() {
   return {
     "@context": "https://schema.org",
@@ -95,7 +101,7 @@ function itemListJsonLd(products) {
     itemListElement: products.map((p, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      url: `${SITE_URL}/produto/${p.id}`,
+      url: productUrl(p),
       name: p.name
     }))
   };
@@ -116,7 +122,7 @@ export function getPageMeta(pathname, query, data = {}) {
       return { title: `Produto não encontrado — ${SITE_NAME}`, description: DEFAULT_DESCRIPTION, noindex: true, notFound: true, canonical: `${SITE_URL}${pathname}`, jsonLd: [] };
     }
     if (product) {
-      const canonical = `${SITE_URL}/produto/${product.id}`;
+      const canonical = productUrl(product);
       const desc = truncate(product.description || `${product.name} — confira preço, especificações e avaliações reais.`, 155);
       const jsonLd = [orgJsonLd(), websiteJsonLd()];
       jsonLd.push(breadcrumbJsonLd([
@@ -244,12 +250,16 @@ export function getPageMeta(pathname, query, data = {}) {
     };
   }
 
-  return {
-    title: STATIC_META["/"].title,
-    description: DEFAULT_DESCRIPTION,
-    canonical: SITE_URL,
-    jsonLd: [orgJsonLd(), websiteJsonLd()]
-  };
+  if (pathname === "/") {
+    return {
+      title: STATIC_META["/"].title,
+      description: DEFAULT_DESCRIPTION,
+      canonical: SITE_URL,
+      jsonLd: [orgJsonLd(), websiteJsonLd()]
+    };
+  }
+
+  return { title: `Página não encontrada — ${SITE_NAME}`, description: DEFAULT_DESCRIPTION, noindex: true, notFound: true, canonical: `${SITE_URL}${pathname}`, jsonLd: [] };
 }
 
 export function injectMeta(html, meta) {
@@ -297,3 +307,4 @@ export function buildSitemapXml(urls) {
 }
 
 export { SITE_URL, SITE_NAME, DEFAULT_IMAGE, DEFAULT_DESCRIPTION };
+

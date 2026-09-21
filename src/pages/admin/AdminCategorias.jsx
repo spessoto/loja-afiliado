@@ -72,9 +72,9 @@ export default function AdminCategorias() {
       </form>
 
       {loading ? (
-        <p style={{ font: "400 14px Inter", color: "#94A3B8" }}>Carregando...</p>
+        <p style={{ font: "400 14px Inter", color: "#64748B" }}>Carregando...</p>
       ) : categories.length === 0 ? (
-        <p style={{ font: "400 14px Inter", color: "#94A3B8" }}>Nenhuma categoria cadastrada ainda.</p>
+        <p style={{ font: "400 14px Inter", color: "#64748B" }}>Nenhuma categoria cadastrada ainda.</p>
       ) : (
         <div style={{ display: "grid", gap: 10 }}>
           {categories.map(c => (

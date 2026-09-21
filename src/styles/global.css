@@ -10,7 +10,7 @@ a {
   text-decoration: none;
 }
 a:hover {
-  color: #F05A00;
+  color: #C84A00;
 }
 * {
   box-sizing: border-box;
@@ -41,18 +41,18 @@ summary {
 }
 
 .btn-search:hover {
-  background: #F05A00 !important;
+  background: #C84A00 !important;
 }
 
 .hover-orange:hover {
-  color: #F05A00 !important;
+  color: #C84A00 !important;
 }
 
 .card-hover {
   transition: all 0.18s;
 }
 .card-hover:hover {
-  border-color: #F05A00 !important;
+  border-color: #C84A00 !important;
   box-shadow: 0 8px 24px rgba(1, 39, 70, 0.1);
   transform: translateY(-3px);
 }
@@ -68,22 +68,22 @@ summary {
 
 .need-card:hover {
   background: #fff !important;
-  border-color: #F05A00 !important;
+  border-color: #C84A00 !important;
   box-shadow: 0 6px 20px rgba(1, 39, 70, 0.08);
 }
 
 .pill:hover {
-  border-color: #F05A00 !important;
-  color: #F05A00 !important;
+  border-color: #C84A00 !important;
+  color: #C84A00 !important;
 }
 
 .page-link:hover {
-  border-color: #F05A00 !important;
-  color: #F05A00 !important;
+  border-color: #C84A00 !important;
+  color: #C84A00 !important;
 }
 
 .input-field:focus {
-  border-color: #F05A00 !important;
+  border-color: #C84A00 !important;
 }
 
 @media (max-width: 860px) {

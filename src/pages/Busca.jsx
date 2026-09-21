@@ -38,7 +38,7 @@ export default function Busca() {
         {!loading && results.length === 0 && (
           <div style={{ padding: "48px 24px", textAlign: "center", border: "1px dashed #E2E8F0", borderRadius: 12 }}>
             <p style={{ margin: "0 0 16px", font: "400 15px Inter", color: "#475569" }}>Nenhum produto encontrado para essa busca.</p>
-            <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 46, padding: "0 24px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".04em" }}>VER TODOS OS PRODUTOS</Link>
+            <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 46, padding: "0 24px", borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".04em" }}>VER TODOS OS PRODUTOS</Link>
           </div>
         )}
       </main>

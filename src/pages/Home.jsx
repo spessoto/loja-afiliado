@@ -131,7 +131,7 @@ export default function Home() {
       />
 
       <main>
-      <section style={{ background: "linear-gradient(100deg,#F05A00,#FF7A00)", borderBottom: "1px solid #E2E8F0" }}>
+      <section style={{ background: "linear-gradient(100deg,#C84A00,#E05A00)", borderBottom: "1px solid #E2E8F0" }}>
         <div className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "44px 24px 48px", display: "grid", gridTemplateColumns: "minmax(0,1.05fr) minmax(0,.95fr)", gap: 40, alignItems: "center" }}>
           <div>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#fff", border: "1.5px solid rgba(255,255,255,.6)", borderRadius: 24, padding: "7px 16px 7px 8px", marginBottom: 24 }}>
@@ -164,18 +164,18 @@ export default function Home() {
                 <span style={{ font: "600 15px Montserrat", color: "#012746", maxWidth: 260 }}>{heroProduct.name}</span>
               ) : (
                 <>
-                  <span style={{ font: "500 12px ui-monospace,SFMono-Regular,monospace", letterSpacing: ".1em", color: "#94A3B8" }}>FOTO PRINCIPAL DO HERO</span>
-                  <span style={{ font: "400 12px ui-monospace,monospace", color: "#94A3B8", maxWidth: 260, lineHeight: 1.6 }}>Cadastre um produto para exibir aqui</span>
+                  <span style={{ font: "500 12px ui-monospace,SFMono-Regular,monospace", letterSpacing: ".1em", color: "#64748B" }}>FOTO PRINCIPAL DO HERO</span>
+                  <span style={{ font: "400 12px ui-monospace,monospace", color: "#64748B", maxWidth: 260, lineHeight: 1.6 }}>Cadastre um produto para exibir aqui</span>
                 </>
               )}
             </Link>
             {heroProduct && (
               <div style={{ position: "absolute", left: -16, bottom: 28, background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, padding: "14px 18px", boxShadow: "0 8px 28px rgba(1,39,70,.12)", maxWidth: 220 }}>
                 {heroDesconto > 0 && (
-                  <div style={{ display: "inline-block", background: "#F05A00", color: "#fff", font: "800 10.5px Montserrat", letterSpacing: ".06em", padding: "3px 8px", borderRadius: 4, marginBottom: 6 }}>-{heroDesconto}%</div>
+                  <div style={{ display: "inline-block", background: "#C84A00", color: "#fff", font: "800 10.5px Montserrat", letterSpacing: ".06em", padding: "3px 8px", borderRadius: 4, marginBottom: 6 }}>-{heroDesconto}%</div>
                 )}
                 <div style={{ font: "600 12.5px Inter", color: "#012746", marginBottom: 6, lineHeight: 1.3, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical" }}>{heroProduct.name}</div>
-                <div style={{ font: "800 21px Montserrat", color: "#F05A00", lineHeight: 1.15 }}>{formatBRL(heroProduct.price_to)}</div>
+                <div style={{ font: "800 21px Montserrat", color: "#C84A00", lineHeight: 1.15 }}>{formatBRL(heroProduct.price_to)}</div>
               </div>
             )}
           </div>
@@ -188,7 +188,7 @@ export default function Home() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 24 }}>
           {categorias.length > 0 ? categorias.map((c, i) => (
             <Link key={i} to={`/categoria?cat=${encodeURIComponent(c.nome)}`} className="card-hover" style={{ display: "flex", flexDirection: "column", gap: 14, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
-              <div style={{ aspectRatio: "1/1", borderRadius: 8, overflow: "hidden", background: c.image_url ? "#fff" : "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: c.image_url ? 0 : 12, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8" }}>
+              <div style={{ aspectRatio: "1/1", borderRadius: 8, overflow: "hidden", background: c.image_url ? "#fff" : "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: c.image_url ? 0 : 12, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#64748B" }}>
                 {c.image_url ? <img src={sizedImage(c.image_url, 250)} alt={`Aspiradores ${c.nome}`} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 14 }} /> : c.nome.toLowerCase()}
               </div>
               <div>
@@ -199,15 +199,15 @@ export default function Home() {
           )) : loading ? (
             <div style={{ minHeight: 250 }} />
           ) : (
-            <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto cadastrado ainda.</p>
+            <p style={{ font: "400 15px Inter", color: "#64748B" }}>Nenhum produto cadastrado ainda.</p>
           )}
         </div>
       </section>
 
       <section id="ofertas" style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px 0" }}>
-        <div style={{ background: "linear-gradient(100deg,#012746,#001B31)", borderRadius: 16, padding: "22px 26px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 20, marginBottom: 28 }}>
+        <div style={{ background: "#012746", borderRadius: 16, padding: "22px 26px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 20, marginBottom: 28 }}>
           <div>
-            <div style={{ display: "inline-block", background: "#F05A00", color: "#fff", font: "800 10.5px Montserrat", letterSpacing: ".1em", padding: "4px 10px", borderRadius: 4, marginBottom: 10 }}>OFERTA DO DIA</div>
+            <div style={{ display: "inline-block", background: "#C84A00", color: "#fff", font: "800 10.5px Montserrat", letterSpacing: ".1em", padding: "4px 10px", borderRadius: 4, marginBottom: 10 }}>OFERTA DO DIA</div>
             <h2 style={{ margin: 0, font: "800 25px Montserrat", color: "#fff", letterSpacing: "-.01em" }}>Descontos que acabam hoje</h2>
             <p style={{ margin: "6px 0 0", font: "400 14px Inter", color: "#B8C5D0" }}>Preços válidos enquanto durar o estoque de cada modelo.</p>
           </div>
@@ -223,7 +223,7 @@ export default function Home() {
         ) : loading ? (
           <div style={{ minHeight: 440 }} />
         ) : (
-          <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto com desconto ativo no momento.</p>
+          <p style={{ font: "400 15px Inter", color: "#64748B" }}>Nenhum produto com desconto ativo no momento.</p>
         )}
       </section>
 
@@ -233,7 +233,7 @@ export default function Home() {
         <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16 }}>
           {necessidades.map((n, i) => (
             <Link key={i} to={`/busca?q=${encodeURIComponent(n.q)}`} className="need-card" style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 20px", border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
-              <span style={{ flex: "none", width: 40, height: 40, borderRadius: 8, background: "#fff", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "center", font: "700 15px Montserrat", color: "#F05A00" }}>{n.i}</span>
+              <span style={{ flex: "none", width: 40, height: 40, borderRadius: 8, background: "#fff", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "center", font: "700 15px Montserrat", color: "#C84A00" }}>{n.i}</span>
               <span>
                 <span style={{ display: "block", font: "700 14.5px Montserrat", color: "#012746" }}>{n.t}</span>
                 <span style={{ display: "block", font: "400 12.5px Inter", color: "#475569", marginTop: 2 }}>{n.s}</span>
@@ -258,7 +258,7 @@ export default function Home() {
         ) : loading ? (
           <div style={{ minHeight: 440 }} />
         ) : (
-          <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto cadastrado ainda.</p>
+          <p style={{ font: "400 15px Inter", color: "#64748B" }}>Nenhum produto cadastrado ainda.</p>
         )}
       </section>
 
@@ -290,7 +290,7 @@ export default function Home() {
             <div style={{ display: "flex", alignItems: "center", gap: 16, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
               <div style={{ font: "800 34px Montserrat", color: "#012746", lineHeight: 1 }}>{totalAvaliacoes > 0 ? mediaGeral.toFixed(1).replace(".", ",") : "-"}</div>
               <div>
-                <div style={{ font: "600 16px Inter", color: "#F05A00", letterSpacing: ".1em" }}>{"★".repeat(Math.round(mediaGeral)) + "☆".repeat(Math.max(0, 5 - Math.round(mediaGeral)))}</div>
+                <div style={{ font: "600 16px Inter", color: "#C84A00", letterSpacing: ".1em" }}>{"★".repeat(Math.round(mediaGeral)) + "☆".repeat(Math.max(0, 5 - Math.round(mediaGeral)))}</div>
                 <div style={{ font: "400 13px Inter", color: "#475569", marginTop: 4 }}>{totalAvaliacoes > 0 ? `${recomendamPct}% avaliam com 4 ou 5 estrelas` : "Sem dados ainda"}</div>
               </div>
             </div>
@@ -300,13 +300,13 @@ export default function Home() {
               <Link key={i} to={productUrl(a.produtoId, a.produto)} style={{ padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff", display: "block" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 10 }}>
                   <span style={{ font: "700 14px Montserrat", color: "#012746" }}>{a.nome}</span>
-                  <span style={{ font: "600 13px Inter", color: "#F05A00", letterSpacing: ".08em" }}>{a.estrelas}</span>
+                  <span style={{ font: "600 13px Inter", color: "#C84A00", letterSpacing: ".08em" }}>{a.estrelas}</span>
                 </div>
                 <p style={{ margin: "0 0 8px", font: "400 14.5px/1.6 Inter", color: "#475569" }}>{a.texto}</p>
-                <span style={{ font: "500 12px Inter", color: "#94A3B8" }}>{a.meta} • {a.produto}</span>
+                <span style={{ font: "500 12px Inter", color: "#64748B" }}>{a.meta} • {a.produto}</span>
               </Link>
             )) : (
-              <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Ainda não há avaliações cadastradas.</p>
+              <p style={{ font: "400 15px Inter", color: "#64748B" }}>Ainda não há avaliações cadastradas.</p>
             )}
           </div>
         </div>

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import logoFundoEscuro from "../assets/logo-fundo-escuro.png";
+import logoFundoEscuro from "../assets/logo-fundo-escuro.webp";
 
 export function FooterFull({ columns }) {
   return (
-    <footer style={{ background: "linear-gradient(180deg,#012746,#001B31)", color: "#B8C5D0" }}>
+    <footer style={{ background: "#012746", color: "#B8C5D0" }}>
       <div className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "56px 24px 32px", display: "grid", gridTemplateColumns: `minmax(240px,1.2fr) repeat(${columns.length},minmax(0,1fr))`, gap: 40 }}>
         <div>
           <img src={logoFundoEscuro} alt="Promo Aspiradores" width="230" height="78" style={{ width: "100%", maxWidth: 230, height: "auto", display: "block", marginBottom: 20 }} />

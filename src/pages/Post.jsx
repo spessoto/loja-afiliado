@@ -30,9 +30,9 @@ function renderInline(text, keyPrefix) {
     const href = external ? url : url.replace(/^https?:\/\/[^/]+/, "");
     parts.push(
       external ? (
-        <a key={`${keyPrefix}-${i}`} href={href} target="_blank" rel="noopener noreferrer" style={{ color: "#F05A00", fontWeight: 600 }}>{label}</a>
+        <a key={`${keyPrefix}-${i}`} href={href} target="_blank" rel="noopener noreferrer" style={{ color: "#C84A00", fontWeight: 600 }}>{label}</a>
       ) : (
-        <a key={`${keyPrefix}-${i}`} href={href} style={{ color: "#F05A00", fontWeight: 600 }}>{label}</a>
+        <a key={`${keyPrefix}-${i}`} href={href} style={{ color: "#C84A00", fontWeight: 600 }}>{label}</a>
       )
     );
     last = match.index + match[0].length;
@@ -72,7 +72,7 @@ export default function Post() {
         {header}
         <div style={{ maxWidth: 640, margin: "80px auto", textAlign: "center", padding: "0 24px" }}>
           <h1 style={{ font: "800 26px Montserrat, sans-serif", color: "#012746" }}>Publicação não encontrada</h1>
-          <Link to="/blog" className="btn-primary" style={{ display: "inline-flex", marginTop: 16, height: 46, padding: "0 24px", alignItems: "center", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat" }}>Voltar para o blog</Link>
+          <Link to="/blog" className="btn-primary" style={{ display: "inline-flex", marginTop: 16, height: 46, padding: "0 24px", alignItems: "center", borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 14px Montserrat" }}>Voltar para o blog</Link>
         </div>
         <FooterFull columns={[categoriasCol, institucionalCol]} />
       </>
@@ -87,15 +87,15 @@ export default function Post() {
 
       <div style={{ borderBottom: "1px solid #F1F5F9", background: "#F8FAFC" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "11px 24px", display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", font: "400 13px Inter", color: "#475569" }}>
-          <Link to="/">Home</Link><span style={{ color: "#94A3B8" }}>/</span>
-          <Link to="/blog">Blog</Link><span style={{ color: "#94A3B8" }}>/</span>
+          <Link to="/">Home</Link><span style={{ color: "#64748B" }}>/</span>
+          <Link to="/blog">Blog</Link><span style={{ color: "#64748B" }}>/</span>
           <span style={{ color: "#012746", fontWeight: 500 }}>{post.title}</span>
         </div>
       </div>
 
       <main>
       <article style={{ maxWidth: 780, margin: "0 auto", padding: "40px 24px 64px" }}>
-        {post.category && <span style={{ display: "inline-block", font: "700 11.5px Montserrat", letterSpacing: ".12em", color: "#F05A00", marginBottom: 16 }}>{post.category.toUpperCase()}</span>}
+        {post.category && <span style={{ display: "inline-block", font: "700 11.5px Montserrat", letterSpacing: ".12em", color: "#C84A00", marginBottom: 16 }}>{post.category.toUpperCase()}</span>}
         <h1 style={{ margin: "0 0 16px", font: "800 32px/1.18 Montserrat", color: "#012746", letterSpacing: "-.02em", textWrap: "balance" }}>{post.title}</h1>
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10, marginBottom: 28, font: "400 13.5px Inter", color: "#64748B" }}>
           {post.author && <span style={{ fontWeight: 500, color: "#012746" }}>Por {post.author}</span>}

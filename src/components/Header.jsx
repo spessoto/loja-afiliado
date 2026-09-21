@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logoPrincipal from "../assets/logo-principal.png";
+import logoPrincipal from "../assets/logo-principal.webp";
 import { useFavorites } from "../lib/favorites.jsx";
 import { useCustomer } from "../lib/customer.js";
 
@@ -81,7 +81,7 @@ export default function Header({
     <>
       {marquee && marquee.length > 0 && (
         animated ? (
-          <div className="header-marquee" style={{ width: "100%", overflow: "hidden", background: "linear-gradient(90deg,#F05A00,#FF7A00)" }}>
+          <div className="header-marquee" style={{ width: "100%", overflow: "hidden", background: "linear-gradient(90deg,#C84A00,#E05A00)" }}>
             <div style={{ display: "flex", width: "200%", animation: "marqueeSlide 28s linear infinite" }}>
               {[0, 1].map((rep) => (
                 <div
@@ -95,7 +95,7 @@ export default function Header({
             </div>
           </div>
         ) : (
-          <div className="header-marquee" style={{ background: "linear-gradient(90deg,#F05A00,#FF7A00)" }}>
+          <div className="header-marquee" style={{ background: "linear-gradient(90deg,#C84A00,#E05A00)" }}>
             <div style={{ maxWidth: 1280, margin: "0 auto", padding: "6px 24px", display: "flex", flexWrap: "wrap", gap: "8px 40px", justifyContent: "center", font: "600 12px Inter", color: "#fff", letterSpacing: ".06em" }}>
               {marquee.map((m, i) => <span key={i}>{m}</span>)}
             </div>
@@ -122,7 +122,7 @@ export default function Header({
                   key={i}
                   to={item.to}
                   className={item.active ? "" : "hover-orange"}
-                  style={{ font: item.active ? "600 14px Inter" : "500 14px Inter", color: item.active ? "#F05A00" : "#475569" }}
+                  style={{ font: item.active ? "600 14px Inter" : "500 14px Inter", color: item.active ? "#C84A00" : "#475569" }}
                 >
                   {item.label}
                 </Link>
@@ -155,7 +155,7 @@ export default function Header({
                 <Link to="/favoritos" style={{ display: "flex", alignItems: "center", gap: 9, position: "relative" }}>
                   <IconHeart />
                   {favorites.length > 0 && (
-                    <span style={{ position: "absolute", top: -6, left: 12, minWidth: 16, height: 16, padding: "0 4px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 10px Inter", display: "flex", alignItems: "center", justifyContent: "center" }}>{favorites.length}</span>
+                    <span style={{ position: "absolute", top: -6, left: 12, minWidth: 16, height: 16, padding: "0 4px", borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 10px Inter", display: "flex", alignItems: "center", justifyContent: "center" }}>{favorites.length}</span>
                   )}
                   <span style={{ font: "500 12.5px Inter", lineHeight: 1.25, color: "#475569" }}>Lista de<br /><strong style={{ font: "700 13px Montserrat", color: "#012746" }}>Favoritos</strong></span>
                 </Link>
@@ -179,14 +179,14 @@ export default function Header({
               {categoriesNav.menu.map((item, i) => (
                 <NavA key={i} to={`${categoriesNav.itemTo || "/categoria"}?cat=${encodeURIComponent(item)}`} className="hover-orange" style={{ padding: "9px 0", font: "500 14px Inter", color: "#475569", whiteSpace: "nowrap" }}>{item}</NavA>
               ))}
-              <NavA to={categoriesNav.ofertaTo || categoriesNav.itemTo} style={{ marginLeft: "auto", padding: "9px 0", font: "800 13px Montserrat", letterSpacing: ".05em", color: "#F05A00", whiteSpace: "nowrap" }}>OFERTAS DA SEMANA</NavA>
+              <NavA to={categoriesNav.ofertaTo || categoriesNav.itemTo} style={{ marginLeft: "auto", padding: "9px 0", font: "800 13px Montserrat", letterSpacing: ".05em", color: "#C84A00", whiteSpace: "nowrap" }}>OFERTAS DA SEMANA</NavA>
             </div>
           </nav>
         )}
 
         {progress !== null && (
           <div style={{ height: 3, background: "#F1F5F9" }}>
-            <div style={{ height: "100%", width: progress, background: "#F05A00", transition: "width .1s linear" }}></div>
+            <div style={{ height: "100%", width: progress, background: "#C84A00", transition: "width .1s linear" }}></div>
           </div>
         )}
       </header>

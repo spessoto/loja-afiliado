@@ -77,7 +77,7 @@ export default function AdminAdministradores() {
       </form>
 
       {loading ? (
-        <p style={{ font: "400 14px Inter", color: "#94A3B8" }}>Carregando...</p>
+        <p style={{ font: "400 14px Inter", color: "#64748B" }}>Carregando...</p>
       ) : (
         <div style={{ display: "grid", gap: 10 }}>
           {admins.map(a => (

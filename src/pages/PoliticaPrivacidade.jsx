@@ -39,13 +39,13 @@ export default function PoliticaPrivacidade() {
             <Link to="/contato" className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 44, borderRadius: 8, background: "#012746", color: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".04em" }}>FALAR COM O DPO</Link>
           </div>
           <div style={{ display: "grid", gap: 8 }}>
-            <Link to="/politica-de-uso" style={{ font: "600 13.5px Inter", color: "#F05A00" }}>Política de Uso →</Link>
-            <Link to="/politica-de-cookies" style={{ font: "600 13.5px Inter", color: "#F05A00" }}>Cookies e Dados →</Link>
+            <Link to="/politica-de-uso" style={{ font: "600 13.5px Inter", color: "#C84A00" }}>Política de Uso →</Link>
+            <Link to="/politica-de-cookies" style={{ font: "600 13.5px Inter", color: "#C84A00" }}>Cookies e Dados →</Link>
           </div>
         </>
       }
     >
-      <div style={{ padding: "20px 24px", borderLeft: "3px solid #F05A00", background: "#FFF7F2", borderRadius: "0 12px 12px 0", marginBottom: 40 }}>
+      <div style={{ padding: "20px 24px", borderLeft: "3px solid #C84A00", background: "#FFF7F2", borderRadius: "0 12px 12px 0", marginBottom: 40 }}>
         <strong style={{ display: "block", font: "700 15px Montserrat", color: "#012746", marginBottom: 8 }}>Resumo em uma frase</strong>
         <span style={{ font: "400 15px/1.7 Inter", color: "#475569" }}>Coletamos o mínimo necessário para recomendar aspiradores, responder seus contatos e entender quais ofertas geram interesse. Não vendemos seus dados e você pode pedir a exclusão a qualquer momento.</span>
       </div>
@@ -70,7 +70,7 @@ export default function PoliticaPrivacidade() {
           </div>
           <div style={{ padding: 20, border: "1px solid #E2E8F0", borderRadius: 12 }}>
             <strong style={{ display: "block", font: "700 15.5px Montserrat", color: "#012746", marginBottom: 6 }}>Dados de cookies e identificadores</strong>
-            <span style={{ font: "400 15px/1.7 Inter", color: "#475569" }}>Identificadores anônimos gravados no seu navegador para medir audiência, lembrar preferências e atribuir corretamente as compras feitas por meio dos nossos links. Detalhes na <Link to="/politica-de-cookies" style={{ color: "#F05A00", textDecoration: "underline" }}>Política de Cookies e Dados</Link>.</span>
+            <span style={{ font: "400 15px/1.7 Inter", color: "#475569" }}>Identificadores anônimos gravados no seu navegador para medir audiência, lembrar preferências e atribuir corretamente as compras feitas por meio dos nossos links. Detalhes na <Link to="/politica-de-cookies" style={{ color: "#C84A00", textDecoration: "underline" }}>Política de Cookies e Dados</Link>.</span>
           </div>
         </div>
         <p style={p}>Não coletamos dados de pagamento. Cartão, Pix e boleto são processados inteiramente pela loja parceira onde a compra é finalizada.</p>
@@ -154,19 +154,19 @@ export default function PoliticaPrivacidade() {
         <div style={{ padding: 24, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
           <div style={{ display: "grid", gap: 14, marginBottom: 20 }}>
             <span>
-              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>RESPONSÁVEL PELO TRATAMENTO DE DADOS</span>
+              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#64748B", marginBottom: 3 }}>RESPONSÁVEL PELO TRATAMENTO DE DADOS</span>
               <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>Caio Cézares de Souza Spessoto — CPF 364.609.548-28</span>
             </span>
             <span>
-              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>E-MAIL DE CONTATO</span>
+              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#64748B", marginBottom: 3 }}>E-MAIL DE CONTATO</span>
               <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>contato@promoaspiradores.com.br</span>
             </span>
             <span>
-              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>LOCALIZAÇÃO</span>
+              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#64748B", marginBottom: 3 }}>LOCALIZAÇÃO</span>
               <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>Bragança Paulista/SP - Brasil</span>
             </span>
           </div>
-          <Link to="/contato" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 48, padding: "0 28px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14.5px Montserrat", letterSpacing: ".04em" }}>ABRIR UMA SOLICITAÇÃO</Link>
+          <Link to="/contato" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 48, padding: "0 28px", borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 14.5px Montserrat", letterSpacing: ".04em" }}>ABRIR UMA SOLICITAÇÃO</Link>
         </div>
       </section>
     </PolicyLayout>

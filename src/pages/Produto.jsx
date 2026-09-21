@@ -103,8 +103,8 @@ export default function Produto() {
   const imagens = productImages(product);
   const temGaleriaReal = imagens.length > 0;
   const galeria = temGaleriaReal
-    ? imagens.map((url, i) => ({ url, borda: foto === i ? "#F05A00" : "#E2E8F0", pick: () => setFoto(i) }))
-    : labels.map((label, i) => ({ label, borda: foto === i ? "#F05A00" : "#E2E8F0", pick: () => setFoto(i) }));
+    ? imagens.map((url, i) => ({ url, borda: foto === i ? "#C84A00" : "#E2E8F0", pick: () => setFoto(i) }))
+    : labels.map((label, i) => ({ label, borda: foto === i ? "#C84A00" : "#E2E8F0", pick: () => setFoto(i) }));
 
   const nome = product?.name || "Aspirador Vertical Sem Fio Vertax V12 Ciclônico 450W";
   const marca = product?.brand || "VERTAX";
@@ -158,7 +158,7 @@ export default function Produto() {
         />
         <div style={{ maxWidth: 640, margin: "80px auto", textAlign: "center", padding: "0 24px" }}>
           <h1 style={{ font: "800 28px Montserrat, sans-serif", color: "#012746" }}>Produto não encontrado</h1>
-          <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", marginTop: 16, height: 48, padding: "0 24px", alignItems: "center", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat" }}>Ver aspiradores</Link>
+          <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", marginTop: 16, height: 48, padding: "0 24px", alignItems: "center", borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 14px Montserrat" }}>Ver aspiradores</Link>
         </div>
         <FooterFull columns={[categoriasCol, institucionalCol]} />
       </>
@@ -173,9 +173,9 @@ export default function Produto() {
 
       <div style={{ borderBottom: "1px solid #F1F5F9", background: "#F8FAFC" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "11px 24px", display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", font: "400 13px Inter", color: "#475569" }}>
-          <Link to="/">Home</Link><span style={{ color: "#94A3B8" }}>/</span>
-          <Link to="/categoria">Aspiradores</Link><span style={{ color: "#94A3B8" }}>/</span>
-          <Link to="/categoria">{categoria}</Link><span style={{ color: "#94A3B8" }}>/</span>
+          <Link to="/">Home</Link><span style={{ color: "#64748B" }}>/</span>
+          <Link to="/categoria">Aspiradores</Link><span style={{ color: "#64748B" }}>/</span>
+          <Link to="/categoria">{categoria}</Link><span style={{ color: "#64748B" }}>/</span>
           <span style={{ color: "#012746", fontWeight: 500 }}>{nome}</span>
         </div>
       </div>
@@ -186,7 +186,7 @@ export default function Produto() {
           <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "64px minmax(0,1fr)", gap: 14, maxWidth: 460, margin: "0 auto" }}>
             <div className="gallery-thumbs" style={{ display: "flex", flexDirection: "column", gap: 12, maxHeight: galeria.length > 7 ? 492 : "none", overflowY: galeria.length > 7 ? "auto" : "visible", paddingRight: galeria.length > 7 ? 4 : 0 }}>
               {galeria.map((g, i) => (
-                <button key={i} onClick={g.pick} className="gallery-thumb" style={{ flex: "none", width: "100%", border: `1.5px solid ${g.borda}`, borderRadius: 8, background: g.url ? "#fff" : "repeating-linear-gradient(135deg,#F8FAFC 0 7px,#F1F5F9 7px 14px)", aspectRatio: "1/1", padding: g.url ? 0 : 6, cursor: "pointer", font: "400 8.5px ui-monospace,monospace", color: "#94A3B8", lineHeight: 1.3, textAlign: "center", overflow: "hidden" }}>
+                <button key={i} onClick={g.pick} className="gallery-thumb" style={{ flex: "none", width: "100%", border: `1.5px solid ${g.borda}`, borderRadius: 8, background: g.url ? "#fff" : "repeating-linear-gradient(135deg,#F8FAFC 0 7px,#F1F5F9 7px 14px)", aspectRatio: "1/1", padding: g.url ? 0 : 6, cursor: "pointer", font: "400 8.5px ui-monospace,monospace", color: "#64748B", lineHeight: 1.3, textAlign: "center", overflow: "hidden" }}>
                   {g.url ? <img src={sizedImage(g.url, 150)} alt={`${nome} — imagem ${i + 1}`} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} /> : g.label}
                 </button>
               ))}
@@ -199,15 +199,15 @@ export default function Produto() {
                   </div>
                 ) : (
                   <div style={{ aspectRatio: "1/1", background: "repeating-linear-gradient(135deg,#F8FAFC 0 10px,#F1F5F9 10px 20px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: 32 }}>
-                    <span style={{ font: "500 12px ui-monospace,monospace", letterSpacing: ".1em", color: "#94A3B8" }}>FOTO DO PRODUTO</span>
-                    <span style={{ font: "400 12px ui-monospace,monospace", color: "#94A3B8", maxWidth: 260, lineHeight: 1.6 }}>{fotos[foto]}</span>
+                    <span style={{ font: "500 12px ui-monospace,monospace", letterSpacing: ".1em", color: "#64748B" }}>FOTO DO PRODUTO</span>
+                    <span style={{ font: "400 12px ui-monospace,monospace", color: "#64748B", maxWidth: 260, lineHeight: 1.6 }}>{fotos[foto]}</span>
                   </div>
                 )}
               </div>
               <div className="gallery-tags" style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 16 }}>
                 {tagsExibidas.map((t, i) => (
                   <span key={i} style={{ display: "flex", alignItems: "center", gap: 7, padding: "8px 13px", border: "1px solid #E2E8F0", borderRadius: 24, background: "#F8FAFC", font: "500 12.5px Inter", color: "#012746" }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F05A00" strokeWidth="2.6" strokeLinecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C84A00" strokeWidth="2.6" strokeLinecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
                     {t}
                   </span>
                 ))}
@@ -217,10 +217,10 @@ export default function Produto() {
 
           <div className="product-info">
             <div className="product-title-block">
-              <div style={{ font: "600 11.5px Inter", letterSpacing: ".14em", color: "#94A3B8", marginBottom: 8 }}>{marca}</div>
+              <div style={{ font: "600 11.5px Inter", letterSpacing: ".14em", color: "#64748B", marginBottom: 8 }}>{marca}</div>
               <h1 style={{ margin: "0 0 12px", font: "800 26px/1.22 Montserrat", color: "#012746", letterSpacing: "-.01em", textWrap: "balance" }}>{nome}</h1>
               <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12, marginBottom: 20 }}>
-                <span style={{ font: "600 14px Inter", color: "#F05A00", letterSpacing: ".1em" }}>{estrelasStr(notaMedia)}</span>
+                <span style={{ font: "600 14px Inter", color: "#C84A00", letterSpacing: ".1em" }}>{estrelasStr(notaMedia)}</span>
                 <a href="#avaliacoes" style={{ font: "500 13px Inter", color: "#475569", textDecoration: "underline" }}>{String(notaMedia).replace(".", ",")} · {totalAvaliacoes.toLocaleString("pt-BR")} avaliações</a>
                 <span style={{ width: 1, height: 14, background: "#E2E8F0" }}></span>
                 <span style={{ font: "400 13px Inter", color: "#475569" }}>Cód. {product ? product.id : "8412-V12"}</span>
@@ -232,10 +232,10 @@ export default function Produto() {
                 {precoDe && <span style={{ font: "400 13.5px Inter", color: "#64748B", textDecoration: "line-through" }}>{precoDe}</span>}
               </div>
               <div style={{ display: "flex", alignItems: "flex-end", gap: 12, flexWrap: "wrap", marginBottom: 18 }}>
-                <span style={{ font: "800 32px Montserrat", color: "#F05A00", lineHeight: 1 }}>{precoPor}</span>
+                <span style={{ font: "800 32px Montserrat", color: "#C84A00", lineHeight: 1 }}>{precoPor}</span>
               </div>
 
-              <a {...buyProps} className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 48, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.3)" }}>
+              <a {...buyProps} className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 48, borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.3)" }}>
                 COMPRAR AGORA
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
               </a>
@@ -298,7 +298,7 @@ export default function Produto() {
                       <div style={{ display: "grid", gap: 10 }}>
                         {indicadoExibido.map((i2, i) => (
                           <span key={i} style={{ display: "flex", gap: 9, alignItems: "flex-start", font: "400 14px/1.5 Inter", color: "#475569" }}>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F05A00" strokeWidth="2.6" strokeLinecap="round" style={{ flex: "none", marginTop: 3 }}><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C84A00" strokeWidth="2.6" strokeLinecap="round" style={{ flex: "none", marginTop: 3 }}><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
                             {i2}
                           </span>
                         ))}
@@ -311,7 +311,7 @@ export default function Produto() {
                       <div style={{ display: "grid", gap: 10 }}>
                         {naoIndicadoExibido.map((i2, i) => (
                           <span key={i} style={{ display: "flex", gap: 9, alignItems: "flex-start", font: "400 14px/1.5 Inter", color: "#475569" }}>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2.6" strokeLinecap="round" style={{ flex: "none", marginTop: 3 }}><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"></path></svg>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" strokeWidth="2.6" strokeLinecap="round" style={{ flex: "none", marginTop: 3 }}><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"></path></svg>
                             {i2}
                           </span>
                         ))}
@@ -333,7 +333,7 @@ export default function Produto() {
                   <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 18 }}>
                     <span style={{ font: "800 34px Montserrat", color: "#012746", lineHeight: 1 }}>{String(notaMedia).replace(".", ",")}</span>
                     <span>
-                      <span style={{ display: "block", font: "600 15px Inter", color: "#F05A00", letterSpacing: ".1em" }}>{estrelasStr(notaMedia)}</span>
+                      <span style={{ display: "block", font: "600 15px Inter", color: "#C84A00", letterSpacing: ".1em" }}>{estrelasStr(notaMedia)}</span>
                       <span style={{ display: "block", font: "400 13px Inter", color: "#475569", marginTop: 4 }}>{totalAvaliacoes.toLocaleString("pt-BR")} avaliações</span>
                     </span>
                   </div>
@@ -341,8 +341,8 @@ export default function Produto() {
                     {distExibida.map((d, i) => (
                       <span key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
                         <span style={{ font: "500 12.5px Inter", color: "#475569", width: 26 }}>{d.n}★</span>
-                        <span style={{ flex: 1, height: 7, borderRadius: 4, background: "#E2E8F0", overflow: "hidden" }}><span style={{ display: "block", height: "100%", width: d.w, background: "#F05A00", borderRadius: 4 }}></span></span>
-                        <span style={{ font: "400 12px Inter", color: "#94A3B8", width: 34, textAlign: "right" }}>{d.p}</span>
+                        <span style={{ flex: 1, height: 7, borderRadius: 4, background: "#E2E8F0", overflow: "hidden" }}><span style={{ display: "block", height: "100%", width: d.w, background: "#C84A00", borderRadius: 4 }}></span></span>
+                        <span style={{ font: "400 12px Inter", color: "#64748B", width: 34, textAlign: "right" }}>{d.p}</span>
                       </span>
                     ))}
                   </div>
@@ -354,11 +354,11 @@ export default function Produto() {
                     <div key={i} style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 20 }}>
                       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 10, marginBottom: 10 }}>
                         <span style={{ font: "700 14.5px Montserrat", color: "#012746" }}>{r.nome}</span>
-                        <span style={{ font: "600 13px Inter", color: "#F05A00", letterSpacing: ".08em" }}>{r.estrelas}</span>
+                        <span style={{ font: "600 13px Inter", color: "#C84A00", letterSpacing: ".08em" }}>{r.estrelas}</span>
                       </div>
                       {r.texto && <p style={{ margin: "0 0 10px", font: "400 14.5px/1.65 Inter", color: "#475569" }}>{r.texto}</p>}
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 7, font: "500 12px Inter", color: "#94A3B8" }}>
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2.6" strokeLinecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: 7, font: "500 12px Inter", color: "#64748B" }}>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748B" strokeWidth="2.6" strokeLinecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
                         {r.meta}
                       </span>
                     </div>
@@ -403,11 +403,11 @@ export default function Produto() {
             <div style={{ minWidth: 0 }}>
               <div style={{ font: "600 13.5px Inter", color: "#1E293B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 340 }}>{nome}</div>
               <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                <span style={{ font: "800 18px Montserrat", color: "#F05A00" }}>{precoPor}</span>
+                <span style={{ font: "800 18px Montserrat", color: "#C84A00" }}>{precoPor}</span>
               </div>
             </div>
           </div>
-          <a {...buyProps} className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10, height: 44, padding: "0 28px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em" }}>
+          <a {...buyProps} className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10, height: 44, padding: "0 28px", borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em" }}>
             COMPRAR AGORA
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"></path></svg>
           </a>

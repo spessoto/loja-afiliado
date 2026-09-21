@@ -32,9 +32,9 @@ export default function AdminPosts() {
       </div>
 
       {loading ? (
-        <p style={{ font: "400 14px Inter", color: "#94A3B8" }}>Carregando...</p>
+        <p style={{ font: "400 14px Inter", color: "#64748B" }}>Carregando...</p>
       ) : posts.length === 0 ? (
-        <p style={{ font: "400 14px Inter", color: "#94A3B8" }}>Nenhuma publicação cadastrada ainda.</p>
+        <p style={{ font: "400 14px Inter", color: "#64748B" }}>Nenhuma publicação cadastrada ainda.</p>
       ) : (
         <div style={{ display: "grid", gap: 10 }}>
           {posts.map(p => (
@@ -42,11 +42,11 @@ export default function AdminPosts() {
               <div style={{ minWidth: 0, flex: 1 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <span style={{ font: "600 14px Inter", color: "#1E293B", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0, flex: 1 }}>{p.title}</span>
-                  <span style={{ font: "700 10.5px Montserrat", letterSpacing: ".05em", padding: "3px 8px", borderRadius: 4, color: p.published ? "#16A34A" : "#94A3B8", background: p.published ? "#F0FDF4" : "#F1F5F9" }}>
+                  <span style={{ font: "700 10.5px Montserrat", letterSpacing: ".05em", padding: "3px 8px", borderRadius: 4, color: p.published ? "#16A34A" : "#64748B", background: p.published ? "#F0FDF4" : "#F1F5F9" }}>
                     {p.published ? "PUBLICADO" : "RASCUNHO"}
                   </span>
                 </div>
-                <div style={{ font: "400 12.5px Inter", color: "#94A3B8" }}>/blog/{p.slug}</div>
+                <div style={{ font: "400 12.5px Inter", color: "#64748B" }}>/blog/{p.slug}</div>
               </div>
               <div style={{ display: "flex", gap: 8, flex: "none" }}>
                 <Link to={`/admin/blog/${p.id}/editar`} style={{ ...btnStyle, display: "inline-flex", alignItems: "center", textDecoration: "none" }}>Editar</Link>

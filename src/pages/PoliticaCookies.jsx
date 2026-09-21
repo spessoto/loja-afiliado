@@ -43,7 +43,7 @@ export default function PoliticaCookies() {
     const on = fixo ? true : state;
     return {
       t, s, fixo: !!fixo, on,
-      bg: on ? "#F05A00" : "#CBD5E1",
+      bg: on ? "#C84A00" : "#CBD5E1",
       dot: on ? 25 : 3,
       cursor: fixo ? "not-allowed" : "pointer",
       toggle: fixo ? (e) => e.preventDefault() : () => { setState((v) => !v); setSalvo(true); }
@@ -69,12 +69,12 @@ export default function PoliticaCookies() {
       toc={toc}
       sidebarExtra={
         <div style={{ display: "grid", gap: 8 }}>
-          <Link to="/politica-de-privacidade" style={{ font: "600 13.5px Inter", color: "#F05A00" }}>Política de Privacidade →</Link>
-          <Link to="/politica-de-uso" style={{ font: "600 13.5px Inter", color: "#F05A00" }}>Política de Uso →</Link>
+          <Link to="/politica-de-privacidade" style={{ font: "600 13.5px Inter", color: "#C84A00" }}>Política de Privacidade →</Link>
+          <Link to="/politica-de-uso" style={{ font: "600 13.5px Inter", color: "#C84A00" }}>Política de Uso →</Link>
         </div>
       }
     >
-      <div style={{ padding: "20px 24px", borderLeft: "3px solid #F05A00", background: "#FFF7F2", borderRadius: "0 12px 12px 0", marginBottom: 40 }}>
+      <div style={{ padding: "20px 24px", borderLeft: "3px solid #C84A00", background: "#FFF7F2", borderRadius: "0 12px 12px 0", marginBottom: 40 }}>
         <strong style={{ display: "block", font: "700 15px Montserrat", color: "#012746", marginBottom: 8 }}>Resumo</strong>
         <span style={{ font: "400 15px/1.7 Inter", color: "#475569" }}>Só os cookies essenciais funcionam sem a sua autorização. Os de audiência e de marketing dependem do seu aceite e podem ser desligados a qualquer momento no painel abaixo.</span>
       </div>
@@ -103,12 +103,12 @@ export default function PoliticaCookies() {
             </div>
           ))}
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center", padding: "20px 22px", background: "#F8FAFC" }}>
-            <button onClick={aceitarTodos} className="btn-primary" style={{ height: 48, padding: "0 26px", border: 0, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em", cursor: "pointer" }}>ACEITAR TODOS</button>
+            <button onClick={aceitarTodos} className="btn-primary" style={{ height: 48, padding: "0 26px", border: 0, borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em", cursor: "pointer" }}>ACEITAR TODOS</button>
             <button onClick={recusar} className="btn-outline-navy" style={{ height: 48, padding: "0 26px", border: "1.5px solid #012746", borderRadius: 8, background: "#fff", color: "#012746", font: "600 14px Montserrat", cursor: "pointer" }}>SÓ OS ESSENCIAIS</button>
-            <button onClick={salvarPreferencias} className="btn-outline-navy" style={{ height: 48, padding: "0 26px", border: "1.5px solid #F05A00", borderRadius: 8, background: "#fff", color: "#F05A00", font: "600 14px Montserrat", cursor: "pointer" }}>SALVAR PREFERÊNCIAS</button>
+            <button onClick={salvarPreferencias} className="btn-outline-navy" style={{ height: 48, padding: "0 26px", border: "1.5px solid #C84A00", borderRadius: 8, background: "#fff", color: "#C84A00", font: "600 14px Montserrat", cursor: "pointer" }}>SALVAR PREFERÊNCIAS</button>
             {salvo && (
               <span style={{ display: "flex", alignItems: "center", gap: 8, font: "600 13px Inter", color: "#012746" }}>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F05A00" strokeWidth="2.6" strokeLinecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C84A00" strokeWidth="2.6" strokeLinecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
                 Preferências salvas
               </span>
             )}
@@ -176,7 +176,7 @@ export default function PoliticaCookies() {
 
       <section id="c7" style={{ marginBottom: 36 }}>
         <h2 style={h2}>7. Dados coletados e a LGPD</h2>
-        <p style={p}>Os dados obtidos por cookies não essenciais são tratados com base no seu consentimento, que pode ser revogado a qualquer momento sem prejuízo à navegação. Os detalhes sobre finalidades, compartilhamento com operadores, prazos de guarda e seus direitos como titular estão na <Link to="/politica-de-privacidade" style={{ color: "#F05A00", textDecoration: "underline" }}>Política de Privacidade</Link>.</p>
+        <p style={p}>Os dados obtidos por cookies não essenciais são tratados com base no seu consentimento, que pode ser revogado a qualquer momento sem prejuízo à navegação. Os detalhes sobre finalidades, compartilhamento com operadores, prazos de guarda e seus direitos como titular estão na <Link to="/politica-de-privacidade" style={{ color: "#C84A00", textDecoration: "underline" }}>Política de Privacidade</Link>.</p>
       </section>
 
       <section id="c8">
@@ -184,19 +184,19 @@ export default function PoliticaCookies() {
         <div style={{ padding: 24, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
           <div style={{ display: "grid", gap: 14, marginBottom: 20 }}>
             <span>
-              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>RESPONSÁVEL PELO TRATAMENTO DE DADOS</span>
+              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#64748B", marginBottom: 3 }}>RESPONSÁVEL PELO TRATAMENTO DE DADOS</span>
               <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>Caio Cézares de Souza Spessoto — CPF 364.609.548-28</span>
             </span>
             <span>
-              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>E-MAIL DE CONTATO</span>
+              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#64748B", marginBottom: 3 }}>E-MAIL DE CONTATO</span>
               <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>contato@promoaspiradores.com.br</span>
             </span>
             <span>
-              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>LOCALIZAÇÃO</span>
+              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#64748B", marginBottom: 3 }}>LOCALIZAÇÃO</span>
               <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>Bragança Paulista/SP - Brasil</span>
             </span>
           </div>
-          <Link to="/contato" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 48, padding: "0 28px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14.5px Montserrat", letterSpacing: ".04em" }}>ABRIR UMA SOLICITAÇÃO</Link>
+          <Link to="/contato" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 48, padding: "0 28px", borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 14.5px Montserrat", letterSpacing: ".04em" }}>ABRIR UMA SOLICITAÇÃO</Link>
         </div>
       </section>
     </PolicyLayout>

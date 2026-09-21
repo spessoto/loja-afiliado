@@ -82,19 +82,19 @@ export default function Cadastro() {
             <span style={captionStyle}>Senha *</span>
             <input required type="password" minLength={4} value={form.password} onChange={set("password")} placeholder="Mínimo 4 caracteres" style={inputStyle} />
           </label>
-          <button disabled={loading} className="btn-primary" style={{ height: 46, border: 0, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em", cursor: loading ? "default" : "pointer", opacity: loading ? .7 : 1 }}>
+          <button disabled={loading} className="btn-primary" style={{ height: 46, border: 0, borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em", cursor: loading ? "default" : "pointer", opacity: loading ? .7 : 1 }}>
             {loading ? "Enviando..." : mode === "cadastro" ? "CRIAR CONTA" : "ENTRAR"}
           </button>
         </form>
 
         <p style={{ marginTop: 20, font: "400 14px Inter", color: "#475569" }}>
           {mode === "cadastro" ? "Já tem conta? " : "Ainda não tem conta? "}
-          <button type="button" onClick={() => { setError(""); setMode(mode === "cadastro" ? "login" : "cadastro"); }} style={{ border: 0, background: "transparent", padding: 0, font: "600 14px Inter", color: "#F05A00", cursor: "pointer", textDecoration: "underline" }}>
+          <button type="button" onClick={() => { setError(""); setMode(mode === "cadastro" ? "login" : "cadastro"); }} style={{ border: 0, background: "transparent", padding: 0, font: "600 14px Inter", color: "#C84A00", cursor: "pointer", textDecoration: "underline" }}>
             {mode === "cadastro" ? "Entrar" : "Criar conta"}
           </button>
         </p>
 
-        <p style={{ marginTop: 40 }}><Link to="/" style={{ font: "400 13.5px Inter", color: "#94A3B8" }}>← Voltar para a loja</Link></p>
+        <p style={{ marginTop: 40 }}><Link to="/" style={{ font: "400 13.5px Inter", color: "#64748B" }}>← Voltar para a loja</Link></p>
       </main>
 
       <FooterFull columns={[categoriasCol, institucionalCol]} />

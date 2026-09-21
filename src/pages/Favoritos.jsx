@@ -26,15 +26,15 @@ export default function Favoritos() {
         <h1 style={{ margin: "0 0 22px", font: "800 26px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Meus favoritos</h1>
 
         {loading ? (
-          <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Carregando...</p>
+          <p style={{ font: "400 15px Inter", color: "#64748B" }}>Carregando...</p>
         ) : favorites.length > 0 ? (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(232px,1fr))", gap: 24 }}>
             {favorites.map(toCardProduct).map((p) => <ProductCard key={p.id} p={p} />)}
           </div>
         ) : (
           <div style={{ padding: "48px 24px", textAlign: "center", border: "1px dashed #E2E8F0", borderRadius: 12 }}>
-            <p style={{ margin: "0 0 16px", font: "400 15px Inter", color: "#475569" }}>Você ainda não favoritou nenhum produto, ou precisa <Link to="/cadastro" style={{ color: "#F05A00", textDecoration: "underline" }}>entrar na sua conta</Link>.</p>
-            <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 46, padding: "0 24px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".04em" }}>VER PRODUTOS</Link>
+            <p style={{ margin: "0 0 16px", font: "400 15px Inter", color: "#475569" }}>Você ainda não favoritou nenhum produto, ou precisa <Link to="/cadastro" style={{ color: "#C84A00", textDecoration: "underline" }}>entrar na sua conta</Link>.</p>
+            <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 46, padding: "0 24px", borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".04em" }}>VER PRODUTOS</Link>
           </div>
         )}
       </main>

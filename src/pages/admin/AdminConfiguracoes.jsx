@@ -33,7 +33,7 @@ export default function AdminConfiguracoes() {
     setSaved(true);
   }
 
-  if (loading) return <AdminShell title="Configurações"><p style={{ font: "400 14px Inter", color: "#94A3B8" }}>Carregando...</p></AdminShell>;
+  if (loading) return <AdminShell title="Configurações"><p style={{ font: "400 14px Inter", color: "#64748B" }}>Carregando...</p></AdminShell>;
 
   return (
     <AdminShell title="Configurações">
@@ -49,7 +49,7 @@ export default function AdminConfiguracoes() {
             onChange={e => setForm({ ...form, ga_measurement_id: e.target.value.trim() })}
             style={inputStyle}
           />
-          <span style={{ font: "400 12px Inter", color: "#94A3B8" }}>Encontrado em Admin do GA4 → Fluxos de dados → seu fluxo web.</span>
+          <span style={{ font: "400 12px Inter", color: "#64748B" }}>Encontrado em Admin do GA4 → Fluxos de dados → seu fluxo web.</span>
         </label>
 
         <label style={{ display: "grid", gap: 6 }}>
@@ -60,7 +60,7 @@ export default function AdminConfiguracoes() {
             onChange={e => setForm({ ...form, search_console_meta: e.target.value.trim() })}
             style={inputStyle}
           />
-          <span style={{ font: "400 12px Inter", color: "#94A3B8" }}>
+          <span style={{ font: "400 12px Inter", color: "#64748B" }}>
             No Search Console, escolha verificação por "Tag HTML" e cole aqui apenas o valor do atributo <code>content</code>.
           </span>
         </label>

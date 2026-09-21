@@ -117,11 +117,11 @@ export default function Categoria() {
 
       <div style={{ borderBottom: "1px solid #F1F5F9", background: "#F8FAFC" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "11px 24px", display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", font: "400 13px Inter", color: "#475569" }}>
-          <Link to="/">Home</Link><span style={{ color: "#94A3B8" }}>/</span>
+          <Link to="/">Home</Link><span style={{ color: "#64748B" }}>/</span>
           <Link to="/categoria">Aspiradores</Link>
           {categoriaAtual && (
             <>
-              <span style={{ color: "#94A3B8" }}>/</span>
+              <span style={{ color: "#64748B" }}>/</span>
               <span style={{ color: "#012746", fontWeight: 500 }}>{breadcrumbLabel}</span>
             </>
           )}
@@ -144,9 +144,9 @@ export default function Categoria() {
                 className="pill"
                 style={{
                   display: "inline-flex", alignItems: "center", height: 40, padding: "0 18px", borderRadius: 24,
-                  border: cat.name === categoriaAtual ? "1.5px solid #F05A00" : "1.5px solid #E2E8F0",
+                  border: cat.name === categoriaAtual ? "1.5px solid #C84A00" : "1.5px solid #E2E8F0",
                   background: cat.name === categoriaAtual ? "#FFF7F2" : "#fff",
-                  font: "500 13.5px Inter", color: cat.name === categoriaAtual ? "#F05A00" : "#012746", whiteSpace: "nowrap"
+                  font: "500 13.5px Inter", color: cat.name === categoriaAtual ? "#C84A00" : "#012746", whiteSpace: "nowrap"
                 }}
               >
                 {cat.name}
@@ -162,7 +162,7 @@ export default function Categoria() {
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
             <span style={{ font: "700 16px Montserrat", color: "#012746" }}>Filtrar</span>
             {(temFiltro || preco !== null) && (
-              <button onClick={limpar} style={{ border: 0, background: "transparent", font: "500 13px Inter", color: "#F05A00", cursor: "pointer", textDecoration: "underline", padding: 0 }}>Limpar filtros</button>
+              <button onClick={limpar} style={{ border: 0, background: "transparent", font: "500 13px Inter", color: "#C84A00", cursor: "pointer", textDecoration: "underline", padding: 0 }}>Limpar filtros</button>
             )}
           </div>
 
@@ -171,7 +171,7 @@ export default function Categoria() {
               {ativos.map((a, i) => (
                 <button key={i} onClick={() => toggle(a.grupo, a.label)} style={{ display: "inline-flex", alignItems: "center", gap: 8, height: 32, padding: "0 12px", border: "1px solid #FFD9C2", borderRadius: 20, background: "#FFF7F2", font: "500 12.5px Inter", color: "#012746", cursor: "pointer" }}>
                   {a.label}
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#F05A00" strokeWidth="3" strokeLinecap="round"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"></path></svg>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#C84A00" strokeWidth="3" strokeLinecap="round"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"></path></svg>
                 </button>
               ))}
             </div>
@@ -181,14 +181,14 @@ export default function Categoria() {
             <details key={i} open style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: "16px 18px" }}>
               <summary style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, font: "700 14px Montserrat", color: "#012746", letterSpacing: ".03em" }}>
                 {g.titulo}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2.4" strokeLinecap="round" style={{ flex: "none" }}><path d="M6 10l6 5.5L18 10"></path></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" strokeWidth="2.4" strokeLinecap="round" style={{ flex: "none" }}><path d="M6 10l6 5.5L18 10"></path></svg>
               </summary>
               <div style={{ display: "grid", gap: 11, marginTop: 14 }}>
                 {g.opcoes.map((o, j) => (
                   <label key={j} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", font: "400 13.5px Inter", color: "#475569" }}>
-                    <input type="checkbox" checked={!!sel[g.titulo + "|" + o.label]} onChange={() => toggle(g.titulo, o.label)} style={{ width: 17, height: 17, accentColor: "#F05A00", cursor: "pointer", flex: "none" }} />
+                    <input type="checkbox" checked={!!sel[g.titulo + "|" + o.label]} onChange={() => toggle(g.titulo, o.label)} style={{ width: 17, height: 17, accentColor: "#C84A00", cursor: "pointer", flex: "none" }} />
                     <span style={{ flex: 1 }}>{o.label}</span>
-                    <span style={{ font: "400 12px Inter", color: "#94A3B8" }}>{o.qtd}</span>
+                    <span style={{ font: "400 12px Inter", color: "#64748B" }}>{o.qtd}</span>
                   </label>
                 ))}
               </div>
@@ -198,10 +198,10 @@ export default function Categoria() {
           {precosReais.length > 0 && precoMax > precoMin && (
             <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: "16px 18px" }}>
               <div style={{ font: "700 14px Montserrat", color: "#012746", letterSpacing: ".03em", marginBottom: 14 }}>FAIXA DE PREÇO</div>
-              <input type="range" min={precoMin} max={precoMax} step="10" value={precoAtual} onChange={(e) => setPreco(Number(e.target.value))} style={{ width: "100%", accentColor: "#F05A00", cursor: "pointer" }} />
+              <input type="range" min={precoMin} max={precoMax} step="10" value={precoAtual} onChange={(e) => setPreco(Number(e.target.value))} style={{ width: "100%", accentColor: "#C84A00", cursor: "pointer" }} />
               <div style={{ display: "flex", justifyContent: "space-between", marginTop: 10, font: "500 13px Inter", color: "#475569" }}>
                 <span>{formatBRL(precoMin)}</span>
-                <strong style={{ font: "700 13.5px Montserrat", color: "#F05A00" }}>até {formatBRL(precoAtual)}</strong>
+                <strong style={{ font: "700 13.5px Montserrat", color: "#C84A00" }}>até {formatBRL(precoAtual)}</strong>
               </div>
             </div>
           )}
@@ -219,18 +219,18 @@ export default function Categoria() {
           </div>
 
           {loading ? (
-            <p style={{ padding: "24px 0", font: "400 15px Inter", color: "#94A3B8" }}>Carregando produtos...</p>
+            <p style={{ padding: "24px 0", font: "400 15px Inter", color: "#64748B" }}>Carregando produtos...</p>
           ) : produtosExibidos.length > 0 ? (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(232px,1fr))", gap: 24, padding: "24px 0 0" }}>
               {produtosExibidos.map((p) => <ProductCard key={p.id} p={p} />)}
             </div>
           ) : naCategoria.length > 0 ? (
             <div style={{ padding: "40px 0", textAlign: "center" }}>
-              <p style={{ margin: "0 0 14px", font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto encontrado com esses filtros.</p>
-              <button onClick={limpar} style={{ border: 0, background: "transparent", font: "600 14px Inter", color: "#F05A00", cursor: "pointer", textDecoration: "underline" }}>Limpar filtros</button>
+              <p style={{ margin: "0 0 14px", font: "400 15px Inter", color: "#64748B" }}>Nenhum produto encontrado com esses filtros.</p>
+              <button onClick={limpar} style={{ border: 0, background: "transparent", font: "600 14px Inter", color: "#C84A00", cursor: "pointer", textDecoration: "underline" }}>Limpar filtros</button>
             </div>
           ) : (
-            <p style={{ padding: "24px 0", font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto cadastrado {categoriaAtual ? `em ${categoriaAtual}` : "ainda"}.</p>
+            <p style={{ padding: "24px 0", font: "400 15px Inter", color: "#64748B" }}>Nenhum produto cadastrado {categoriaAtual ? `em ${categoriaAtual}` : "ainda"}.</p>
           )}
         </div>
       </main>
@@ -244,7 +244,7 @@ export default function Categoria() {
           <div style={{ display: "grid", gap: 14 }}>
             {guia.map((g, i) => (
               <div key={i} style={{ display: "flex", gap: 16, padding: 20, background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12 }}>
-                <span style={{ flex: "none", width: 40, height: 40, borderRadius: 8, background: "#FFF1E8", display: "flex", alignItems: "center", justifyContent: "center", font: "800 15px Montserrat", color: "#F05A00" }}>{g.n}</span>
+                <span style={{ flex: "none", width: 40, height: 40, borderRadius: 8, background: "#FFF1E8", display: "flex", alignItems: "center", justifyContent: "center", font: "800 15px Montserrat", color: "#C84A00" }}>{g.n}</span>
                 <span>
                   <span style={{ display: "block", font: "700 15.5px Montserrat", color: "#012746", marginBottom: 5 }}>{g.t}</span>
                   <span style={{ display: "block", font: "400 14px/1.6 Inter", color: "#475569" }}>{g.s}</span>

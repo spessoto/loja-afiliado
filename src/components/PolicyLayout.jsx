@@ -14,7 +14,7 @@ export default function PolicyLayout({ title, description, updated = "Última at
 
       <div style={{ borderBottom: "1px solid #F1F5F9", background: "#F8FAFC" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "11px 24px", display: "flex", gap: 8, alignItems: "center", font: "400 13px Inter", color: "#475569" }}>
-          <Link to="/">Home</Link><span style={{ color: "#94A3B8" }}>/</span><span style={{ color: "#012746", fontWeight: 500 }}>{breadcrumbLabel}</span>
+          <Link to="/">Home</Link><span style={{ color: "#64748B" }}>/</span><span style={{ color: "#012746", fontWeight: 500 }}>{breadcrumbLabel}</span>
         </div>
       </div>
 

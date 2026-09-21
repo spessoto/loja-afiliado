@@ -87,7 +87,7 @@ export default function AdminShell({ title, children }) {
           </Link>
         ))}
         <Link to="/" style={{ display: "block", padding: "10px 12px", borderRadius: 8, font: "600 14px Inter, sans-serif", color: "#B8C5D0", textDecoration: "none" }}>Ver site</Link>
-        <button onClick={logout} style={{ marginTop: "auto", height: 40, border: 0, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 13px Montserrat, sans-serif", cursor: "pointer" }}>Sair</button>
+        <button onClick={logout} style={{ marginTop: "auto", height: 40, border: 0, borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 13px Montserrat, sans-serif", cursor: "pointer" }}>Sair</button>
       </aside>
       <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
         <div className="admin-topbar" style={{ display: "none", alignItems: "center", justifyContent: "space-between", padding: "14px 16px", background: "#012746" }}>

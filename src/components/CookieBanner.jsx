@@ -12,12 +12,12 @@ export default function CookieBanner() {
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "18px 24px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 20 }}>
         <p style={{ margin: 0, flex: 1, minWidth: 260, font: "400 14px/1.6 Inter", color: "#475569" }}>
           Usamos cookies essenciais para o site funcionar e, com sua autorização, cookies de audiência e marketing. Saiba mais na{" "}
-          <Link to="/politica-de-cookies" style={{ color: "#F05A00", textDecoration: "underline" }}>Política de Cookies</Link>.
+          <Link to="/politica-de-cookies" style={{ color: "#C84A00", textDecoration: "underline" }}>Política de Cookies</Link>.
         </p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
           <Link to="/politica-de-cookies" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", height: 46, padding: "0 22px", border: "1.5px solid #012746", borderRadius: 8, background: "#fff", color: "#012746", font: "600 13.5px Montserrat" }}>PERSONALIZAR</Link>
           <button onClick={recusar} className="btn-outline-navy" style={{ height: 46, padding: "0 22px", border: "1.5px solid #012746", borderRadius: 8, background: "#fff", color: "#012746", font: "600 13.5px Montserrat", cursor: "pointer" }}>SÓ OS ESSENCIAIS</button>
-          <button onClick={aceitarTodos} className="btn-primary" style={{ height: 46, padding: "0 26px", border: 0, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".04em", cursor: "pointer" }}>ACEITAR TODOS</button>
+          <button onClick={aceitarTodos} className="btn-primary" style={{ height: 46, padding: "0 26px", border: 0, borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".04em", cursor: "pointer" }}>ACEITAR TODOS</button>
         </div>
       </div>
     </div>

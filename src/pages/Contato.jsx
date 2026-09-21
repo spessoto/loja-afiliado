@@ -51,7 +51,7 @@ export default function Contato() {
 
       <div style={{ borderBottom: "1px solid #F1F5F9", background: "#F8FAFC" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "11px 24px", display: "flex", gap: 8, alignItems: "center", font: "400 13px Inter", color: "#475569" }}>
-          <Link to="/">Home</Link><span style={{ color: "#94A3B8" }}>/</span><span style={{ color: "#012746", fontWeight: 500 }}>Contato</span>
+          <Link to="/">Home</Link><span style={{ color: "#64748B" }}>/</span><span style={{ color: "#012746", fontWeight: 500 }}>Contato</span>
         </div>
       </div>
 
@@ -67,10 +67,10 @@ export default function Contato() {
           {canais.map((c, i) => (
             <a key={i} href={c.href} className="card-hover" style={{ display: "flex", flexDirection: "column", gap: 12, padding: 24, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
               <span style={{ width: 44, height: 44, borderRadius: 8, background: "#FFF1E8", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#F05A00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={c.d}></path></svg>
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#C84A00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={c.d}></path></svg>
               </span>
               <span style={{ font: "700 16px Montserrat", color: "#012746" }}>{c.t}</span>
-              <span style={{ font: "600 15px Inter", color: "#F05A00" }}>{c.v}</span>
+              <span style={{ font: "600 15px Inter", color: "#C84A00" }}>{c.v}</span>
               <span style={{ font: "400 13px/1.55 Inter", color: "#475569" }}>{c.s}</span>
             </a>
           ))}
@@ -83,7 +83,7 @@ export default function Contato() {
 
             {enviado && (
               <div style={{ display: "flex", gap: 14, alignItems: "flex-start", padding: 20, border: "1px solid #FFD9C2", background: "#FFF7F2", borderRadius: 12, marginBottom: 24 }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F05A00" strokeWidth="2.4" strokeLinecap="round" style={{ flex: "none", marginTop: 1 }}><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C84A00" strokeWidth="2.4" strokeLinecap="round" style={{ flex: "none", marginTop: 1 }}><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
                 <span>
                   <strong style={{ display: "block", font: "700 15px Montserrat", color: "#012746", marginBottom: 4 }}>Mensagem enviada</strong>
                   <span style={{ font: "400 14px/1.6 Inter", color: "#475569" }}>Recebemos seu contato e vamos responder no e-mail informado em até um dia útil.</span>
@@ -119,19 +119,19 @@ export default function Contato() {
                 <textarea rows="6" placeholder="Conte o tamanho da sua casa, tipo de piso e se tem animais. Assim conseguimos indicar o modelo certo." className="input-field" style={{ padding: "14px 16px", border: "1.5px solid #E2E8F0", borderRadius: 8, background: "#fff", font: "400 15px/1.6 Inter", color: "#1E293B", outline: "none", resize: "vertical" }}></textarea>
               </label>
               <label style={{ display: "flex", gap: 11, alignItems: "flex-start", cursor: "pointer" }}>
-                <input type="checkbox" style={{ width: 17, height: 17, accentColor: "#F05A00", cursor: "pointer", flex: "none", marginTop: 2 }} />
-                <span style={{ font: "400 13.5px/1.6 Inter", color: "#475569" }}>Concordo com o tratamento dos meus dados para responder este contato, conforme a <Link to="/politica-de-privacidade" style={{ color: "#F05A00", textDecoration: "underline" }}>Política de Privacidade</Link>.</span>
+                <input type="checkbox" style={{ width: 17, height: 17, accentColor: "#C84A00", cursor: "pointer", flex: "none", marginTop: 2 }} />
+                <span style={{ font: "400 13.5px/1.6 Inter", color: "#475569" }}>Concordo com o tratamento dos meus dados para responder este contato, conforme a <Link to="/politica-de-privacidade" style={{ color: "#C84A00", textDecoration: "underline" }}>Política de Privacidade</Link>.</span>
               </label>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 14, alignItems: "center" }}>
-                <button className="btn-primary" style={{ height: 46, padding: "0 28px", border: 0, borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em", cursor: "pointer", boxShadow: "0 8px 24px rgba(240,90,0,.28)" }}>ENVIAR MENSAGEM</button>
-                <span style={{ font: "400 13px Inter", color: "#94A3B8" }}>Não enviamos spam e não compartilhamos seus dados.</span>
+                <button className="btn-primary" style={{ height: 46, padding: "0 28px", border: 0, borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 14px Montserrat", letterSpacing: ".04em", cursor: "pointer", boxShadow: "0 8px 24px rgba(240,90,0,.28)" }}>ENVIAR MENSAGEM</button>
+                <span style={{ font: "400 13px Inter", color: "#64748B" }}>Não enviamos spam e não compartilhamos seus dados.</span>
               </div>
             </form>
           </div>
 
           <aside style={{ display: "grid", gap: 16 }}>
-            <div style={{ background: "linear-gradient(160deg,#012746,#001B31)", borderRadius: 16, padding: 24, color: "#fff" }}>
-              <div style={{ font: "700 11px Montserrat", letterSpacing: ".12em", color: "#F05A00", marginBottom: 14 }}>HORÁRIO DE ATENDIMENTO</div>
+            <div style={{ background: "#012746", borderRadius: 16, padding: 24, color: "#fff" }}>
+              <div style={{ font: "700 11px Montserrat", letterSpacing: ".12em", color: "#C84A00", marginBottom: 14 }}>HORÁRIO DE ATENDIMENTO</div>
               <div style={{ display: "grid", gap: 11 }}>
                 {horarios.map((h, i) => (
                   <span key={i} style={{ display: "flex", justifyContent: "space-between", gap: 16, font: "400 14px Inter", color: "#B8C5D0" }}>
@@ -147,7 +147,7 @@ export default function Contato() {
               <div style={{ display: "grid", gap: 12 }}>
                 {empresa.map((e, i) => (
                   <span key={i}>
-                    <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>{e.k}</span>
+                    <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#64748B", marginBottom: 3 }}>{e.k}</span>
                     <span style={{ display: "block", font: "400 14px/1.5 Inter", color: "#1E293B" }}>{e.v}</span>
                   </span>
                 ))}

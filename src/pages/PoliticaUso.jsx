@@ -37,13 +37,13 @@ export default function PoliticaUso() {
             <Link to="/contato" className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 44, borderRadius: 8, background: "#012746", color: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".04em" }}>FALAR COM A GENTE</Link>
           </div>
           <div style={{ display: "grid", gap: 8 }}>
-            <Link to="/politica-de-privacidade" style={{ font: "600 13.5px Inter", color: "#F05A00" }}>Política de Privacidade →</Link>
-            <Link to="/politica-de-cookies" style={{ font: "600 13.5px Inter", color: "#F05A00" }}>Cookies e Dados →</Link>
+            <Link to="/politica-de-privacidade" style={{ font: "600 13.5px Inter", color: "#C84A00" }}>Política de Privacidade →</Link>
+            <Link to="/politica-de-cookies" style={{ font: "600 13.5px Inter", color: "#C84A00" }}>Cookies e Dados →</Link>
           </div>
         </>
       }
     >
-      <div style={{ padding: "20px 24px", borderLeft: "3px solid #F05A00", background: "#FFF7F2", borderRadius: "0 12px 12px 0", marginBottom: 40 }}>
+      <div style={{ padding: "20px 24px", borderLeft: "3px solid #C84A00", background: "#FFF7F2", borderRadius: "0 12px 12px 0", marginBottom: 40 }}>
         <strong style={{ display: "block", font: "700 15px Montserrat", color: "#012746", marginBottom: 8 }}>O ponto mais importante</strong>
         <span style={{ font: "400 15px/1.7 Inter", color: "#475569" }}>A Promo Aspiradores recomenda e compara aspiradores. A compra é finalizada no site da loja parceira, que é responsável pelo pagamento, pela entrega e pela garantia do produto.</span>
       </div>
@@ -83,7 +83,7 @@ export default function PoliticaUso() {
       <section id="u5" style={{ marginBottom: 36 }}>
         <h2 style={h2}>5. Entrega, troca e garantia</h2>
         <p style={{ margin: "0 0 14px", font: "400 16px/1.75 Inter", color: "#475569" }}>A relação de consumo se estabelece entre você e a loja onde a compra foi concluída. Prazo de entrega, direito de arrependimento em até 7 dias (art. 49 do Código de Defesa do Consumidor), trocas, devoluções e acionamento da garantia do fabricante seguem as políticas dessa loja.</p>
-        <p style={p}>Mesmo sem ser parte da transação, nosso atendimento orienta você no processo e ajuda a acompanhar o caso com o parceiro até a resolução. Basta chamar pelo <Link to="/contato" style={{ color: "#F05A00", textDecoration: "underline" }}>canal de contato</Link> com o número do pedido.</p>
+        <p style={p}>Mesmo sem ser parte da transação, nosso atendimento orienta você no processo e ajuda a acompanhar o caso com o parceiro até a resolução. Basta chamar pelo <Link to="/contato" style={{ color: "#C84A00", textDecoration: "underline" }}>canal de contato</Link> com o número do pedido.</p>
       </section>
 
       <section id="u6" style={{ marginBottom: 36 }}>
@@ -119,19 +119,19 @@ export default function PoliticaUso() {
         <div style={{ padding: 24, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
           <div style={{ display: "grid", gap: 14, marginBottom: 20 }}>
             <span>
-              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>RESPONSÁVEL PELO SITE</span>
+              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#64748B", marginBottom: 3 }}>RESPONSÁVEL PELO SITE</span>
               <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>Caio Cézares de Souza Spessoto — CPF 364.609.548-28</span>
             </span>
             <span>
-              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>DÚVIDAS SOBRE ESTES TERMOS</span>
+              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#64748B", marginBottom: 3 }}>DÚVIDAS SOBRE ESTES TERMOS</span>
               <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>contato@promoaspiradores.com.br</span>
             </span>
             <span>
-              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#94A3B8", marginBottom: 3 }}>LOCALIZAÇÃO</span>
+              <span style={{ display: "block", font: "600 11.5px Inter", letterSpacing: ".1em", color: "#64748B", marginBottom: 3 }}>LOCALIZAÇÃO</span>
               <span style={{ display: "block", font: "400 15px Inter", color: "#1E293B" }}>Bragança Paulista/SP - Brasil</span>
             </span>
           </div>
-          <Link to="/contato" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 48, padding: "0 28px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 14.5px Montserrat", letterSpacing: ".04em" }}>FALAR COM O ATENDIMENTO</Link>
+          <Link to="/contato" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 48, padding: "0 28px", borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 14.5px Montserrat", letterSpacing: ".04em" }}>FALAR COM O ATENDIMENTO</Link>
         </div>
       </section>
     </PolicyLayout>

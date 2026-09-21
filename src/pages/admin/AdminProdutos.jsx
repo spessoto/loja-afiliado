@@ -33,9 +33,9 @@ export default function AdminProdutos() {
       </div>
 
       {loading ? (
-        <p style={{ font: "400 14px Inter", color: "#94A3B8" }}>Carregando...</p>
+        <p style={{ font: "400 14px Inter", color: "#64748B" }}>Carregando...</p>
       ) : products.length === 0 ? (
-        <p style={{ font: "400 14px Inter", color: "#94A3B8" }}>Nenhum produto cadastrado ainda.</p>
+        <p style={{ font: "400 14px Inter", color: "#64748B" }}>Nenhum produto cadastrado ainda.</p>
       ) : (
         <div style={{ display: "grid", gap: 10 }}>
           {products.map(p => (
@@ -48,7 +48,7 @@ export default function AdminProdutos() {
                 )}
                 <div style={{ minWidth: 0 }}>
                   <div style={{ font: "600 14px Inter", color: "#1E293B", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.name}</div>
-                  <div style={{ font: "400 12.5px Inter", color: "#94A3B8" }}>{p.brand} • {p.category || "sem categoria"} • {formatBRL(p.price_to) || "sem preço"}</div>
+                  <div style={{ font: "400 12.5px Inter", color: "#64748B" }}>{p.brand} • {p.category || "sem categoria"} • {formatBRL(p.price_to) || "sem preço"}</div>
                 </div>
               </div>
               <div style={{ display: "flex", gap: 8, flex: "none" }}>

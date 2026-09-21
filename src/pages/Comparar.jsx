@@ -32,16 +32,16 @@ export default function Comparar() {
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16, marginBottom: 20 }}>
           <h1 style={{ margin: 0, font: "800 24px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Comparar produtos</h1>
           {selected.length > 0 && (
-            <button onClick={clear} style={{ border: 0, background: "transparent", font: "600 13.5px Inter", color: "#F05A00", cursor: "pointer", textDecoration: "underline" }}>Limpar comparação</button>
+            <button onClick={clear} style={{ border: 0, background: "transparent", font: "600 13.5px Inter", color: "#C84A00", cursor: "pointer", textDecoration: "underline" }}>Limpar comparação</button>
           )}
         </div>
 
         {loading ? (
-          <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Carregando...</p>
+          <p style={{ font: "400 15px Inter", color: "#64748B" }}>Carregando...</p>
         ) : selected.length === 0 ? (
           <div style={{ padding: "48px 24px", textAlign: "center", border: "1px dashed #E2E8F0", borderRadius: 12 }}>
             <p style={{ margin: "0 0 16px", font: "400 15px Inter", color: "#475569" }}>Marque "Comparar" em pelo menos dois produtos para ver as diferenças lado a lado.</p>
-            <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 46, padding: "0 24px", borderRadius: 8, background: "#F05A00", color: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".04em" }}>VER PRODUTOS</Link>
+            <Link to="/categoria" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 46, padding: "0 24px", borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 13.5px Montserrat", letterSpacing: ".04em" }}>VER PRODUTOS</Link>
           </div>
         ) : (
           <div style={{ overflowX: "auto" }}>
@@ -54,7 +54,7 @@ export default function Comparar() {
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, textAlign: "center" }}>
                         {p.image_url && <img src={sizedImage(p.image_url, 250)} alt={p.name} loading="lazy" style={{ width: 100, height: 100, objectFit: "contain" }} />}
                         <Link to={productUrl(p.id, p.name)} style={{ font: "700 14px Montserrat", color: "#012746" }}>{p.name}</Link>
-                        <span style={{ font: "800 20px Montserrat", color: "#F05A00" }}>{formatBRL(p.price_to)}</span>
+                        <span style={{ font: "800 20px Montserrat", color: "#C84A00" }}>{formatBRL(p.price_to)}</span>
                         <button onClick={() => toggle(p.id)} style={{ border: "1px solid #E2E8F0", background: "#fff", borderRadius: 20, padding: "5px 12px", font: "600 12px Inter", color: "#475569", cursor: "pointer" }}>Remover</button>
                       </div>
                     </th>

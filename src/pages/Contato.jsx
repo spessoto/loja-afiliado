@@ -131,7 +131,7 @@ export default function Contato() {
 
           <aside style={{ display: "grid", gap: 16 }}>
             <div style={{ background: "#012746", borderRadius: 16, padding: 24, color: "#fff" }}>
-              <div style={{ font: "700 11px Montserrat", letterSpacing: ".12em", color: "#C84A00", marginBottom: 14 }}>HORÁRIO DE ATENDIMENTO</div>
+              <div style={{ font: "700 11px Montserrat", letterSpacing: ".12em", color: "#FF8A3D", marginBottom: 14 }}>HORÁRIO DE ATENDIMENTO</div>
               <div style={{ display: "grid", gap: 11 }}>
                 {horarios.map((h, i) => (
                   <span key={i} style={{ display: "flex", justifyContent: "space-between", gap: 16, font: "400 14px Inter", color: "#B8C5D0" }}>

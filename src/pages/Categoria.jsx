@@ -146,7 +146,7 @@ export default function Categoria() {
                   display: "inline-flex", alignItems: "center", height: 40, padding: "0 18px", borderRadius: 24,
                   border: cat.name === categoriaAtual ? "1.5px solid #C84A00" : "1.5px solid #E2E8F0",
                   background: cat.name === categoriaAtual ? "#FFF7F2" : "#fff",
-                  font: "500 13.5px Inter", color: cat.name === categoriaAtual ? "#C84A00" : "#012746", whiteSpace: "nowrap"
+                  font: "500 13.5px Inter", color: cat.name === categoriaAtual ? "#B84400" : "#012746", whiteSpace: "nowrap"
                 }}
               >
                 {cat.name}
@@ -244,7 +244,7 @@ export default function Categoria() {
           <div style={{ display: "grid", gap: 14 }}>
             {guia.map((g, i) => (
               <div key={i} style={{ display: "flex", gap: 16, padding: 20, background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12 }}>
-                <span style={{ flex: "none", width: 40, height: 40, borderRadius: 8, background: "#FFF1E8", display: "flex", alignItems: "center", justifyContent: "center", font: "800 15px Montserrat", color: "#C84A00" }}>{g.n}</span>
+                <span style={{ flex: "none", width: 40, height: 40, borderRadius: 8, background: "#FFF1E8", display: "flex", alignItems: "center", justifyContent: "center", font: "800 15px Montserrat", color: "#B84400" }}>{g.n}</span>
                 <span>
                   <span style={{ display: "block", font: "700 15.5px Montserrat", color: "#012746", marginBottom: 5 }}>{g.t}</span>
                   <span style={{ display: "block", font: "400 14px/1.6 Inter", color: "#475569" }}>{g.s}</span>

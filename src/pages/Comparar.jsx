@@ -6,6 +6,7 @@ import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useCategories } from "../lib/categories.js";
 import { useProducts, formatBRL, parseSpecs, productUrl } from "../lib/products.js";
 import { useCompare } from "../lib/compare.js";
+import { sizedImage } from "../../imageUrl.js";
 
 export default function Comparar() {
   const { ids, toggle, clear } = useCompare();
@@ -51,7 +52,7 @@ export default function Comparar() {
                   {selected.map(p => (
                     <th key={p.id} style={{ padding: "12px 16px", minWidth: 220, verticalAlign: "top", borderBottom: "2px solid #E2E8F0" }}>
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, textAlign: "center" }}>
-                        {p.image_url && <img src={p.image_url} alt={p.name} style={{ width: 100, height: 100, objectFit: "contain" }} />}
+                        {p.image_url && <img src={sizedImage(p.image_url, 250)} alt={p.name} loading="lazy" style={{ width: 100, height: 100, objectFit: "contain" }} />}
                         <Link to={productUrl(p.id, p.name)} style={{ font: "700 14px Montserrat", color: "#012746" }}>{p.name}</Link>
                         <span style={{ font: "800 20px Montserrat", color: "#F05A00" }}>{formatBRL(p.price_to)}</span>
                         <button onClick={() => toggle(p.id)} style={{ border: "1px solid #E2E8F0", background: "#fff", borderRadius: 20, padding: "5px 12px", font: "600 12px Inter", color: "#475569", cursor: "pointer" }}>Remover</button>

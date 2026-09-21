@@ -7,6 +7,7 @@ import FaqAccordion from "../components/FaqAccordion.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useProducts, toCardProduct, formatBRL, linhas, parseReviews, productUrl } from "../lib/products.js";
 import { useCategories } from "../lib/categories.js";
+import { sizedImage } from "../../imageUrl.js";
 
 const heroTrust = ["Você compra direto na loja oficial", "Garantia e nota fiscal do parceiro"];
 
@@ -55,9 +56,31 @@ function pad(n) {
   return String(n).padStart(2, "0");
 }
 
-export default function Home() {
+function Countdown() {
   const [left, setLeft] = useState(6 * 3600 + 42 * 60 + 15);
-  const { products } = useProducts();
+  useEffect(() => {
+    const t = setInterval(() => setLeft((s) => (s > 0 ? s - 1 : 0)), 1000);
+    return () => clearInterval(t);
+  }, []);
+  const units = [
+    { v: pad(Math.floor(left / 3600)), l: "HORAS" },
+    { v: pad(Math.floor(left / 60) % 60), l: "MIN" },
+    { v: pad(left % 60), l: "SEG" }
+  ];
+  return (
+    <div style={{ display: "flex", gap: 8 }}>
+      {units.map((u, i) => (
+        <div key={i} style={{ minWidth: 54, background: "rgba(255,255,255,.08)", border: "1px solid #1E3A4D", borderRadius: 8, padding: "8px 6px", textAlign: "center" }}>
+          <div style={{ font: "800 19px Montserrat", color: "#fff", lineHeight: 1 }}>{u.v}</div>
+          <div style={{ font: "500 10px Inter", letterSpacing: ".1em", color: "#94A3B8", marginTop: 4 }}>{u.l}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default function Home() {
+  const { products, loading } = useProducts();
   const { categories } = useCategories();
   const cards = products.map(toCardProduct);
   const categorias = categories
@@ -91,8 +114,6 @@ export default function Home() {
 
   useEffect(() => {
     document.title = "Promo Aspiradores — Encontre o aspirador ideal para sua casa";
-    const t = setInterval(() => setLeft((s) => (s > 0 ? s - 1 : 0)), 1000);
-    return () => clearInterval(t);
   }, []);
 
   useEffect(() => {
@@ -102,12 +123,6 @@ export default function Home() {
     );
     setAvaliacoesExibidas(shuffle(pool).slice(0, 3));
   }, [products, avaliacoesExibidas]);
-
-  const countdown = [
-    { v: pad(Math.floor(left / 3600)), l: "HORAS" },
-    { v: pad(Math.floor(left / 60) % 60), l: "MIN" },
-    { v: pad(left % 60), l: "SEG" }
-  ];
 
   return (
     <>
@@ -144,7 +159,7 @@ export default function Home() {
           <div style={{ position: "relative" }}>
             <Link to={heroProduct ? productUrl(heroProduct.id, heroProduct.name) : "/categoria"} style={{ aspectRatio: "4/3.4", maxWidth: 420, margin: "0 auto", borderRadius: 16, border: "1px solid #E2E8F0", overflow: "hidden", background: heroProduct?.image_url ? "#fff" : "repeating-linear-gradient(135deg,#F1F5F9 0 9px,#E9EFF5 9px 18px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: heroProduct?.image_url ? 0 : 24 }}>
               {heroProduct?.image_url ? (
-                <img src={heroProduct.image_url} alt={heroProduct.name} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 24 }} />
+                <img src={sizedImage(heroProduct.image_url, 700)} alt={heroProduct.name} fetchPriority="high" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 24 }} />
               ) : heroProduct ? (
                 <span style={{ font: "600 15px Montserrat", color: "#012746", maxWidth: 260 }}>{heroProduct.name}</span>
               ) : (
@@ -174,14 +189,16 @@ export default function Home() {
           {categorias.length > 0 ? categorias.map((c, i) => (
             <Link key={i} to={`/categoria?cat=${encodeURIComponent(c.nome)}`} className="card-hover" style={{ display: "flex", flexDirection: "column", gap: 14, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
               <div style={{ aspectRatio: "1/1", borderRadius: 8, overflow: "hidden", background: c.image_url ? "#fff" : "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: c.image_url ? 0 : 12, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8" }}>
-                {c.image_url ? <img src={c.image_url} alt={`Aspiradores ${c.nome}`} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 14 }} /> : c.nome.toLowerCase()}
+                {c.image_url ? <img src={sizedImage(c.image_url, 250)} alt={`Aspiradores ${c.nome}`} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 14 }} /> : c.nome.toLowerCase()}
               </div>
               <div>
                 <div style={{ font: "700 15px Montserrat", color: "#012746", marginBottom: 3 }}>{c.nome}</div>
                 <div style={{ font: "400 13px Inter", color: "#475569" }}>{c.qtd} modelo{c.qtd === 1 ? "" : "s"}</div>
               </div>
             </Link>
-          )) : (
+          )) : loading ? (
+            <div style={{ minHeight: 250 }} />
+          ) : (
             <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto cadastrado ainda.</p>
           )}
         </div>
@@ -196,20 +213,15 @@ export default function Home() {
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
             <span style={{ font: "600 12.5px Inter", color: "#B8C5D0", maxWidth: 96, lineHeight: 1.35 }}>Termina em</span>
-            <div style={{ display: "flex", gap: 8 }}>
-              {countdown.map((u, i) => (
-                <div key={i} style={{ minWidth: 54, background: "rgba(255,255,255,.08)", border: "1px solid #1E3A4D", borderRadius: 8, padding: "8px 6px", textAlign: "center" }}>
-                  <div style={{ font: "800 19px Montserrat", color: "#fff", lineHeight: 1 }}>{u.v}</div>
-                  <div style={{ font: "500 10px Inter", letterSpacing: ".1em", color: "#94A3B8", marginTop: 4 }}>{u.l}</div>
-                </div>
-              ))}
-            </div>
+            <Countdown />
           </div>
         </div>
         {ofertas.length > 0 ? (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(238px,1fr))", gap: 24 }}>
             {ofertas.map((p) => <ProductCard key={p.id} p={p} />)}
           </div>
+        ) : loading ? (
+          <div style={{ minHeight: 440 }} />
         ) : (
           <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto com desconto ativo no momento.</p>
         )}
@@ -243,6 +255,8 @@ export default function Home() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(238px,1fr))", gap: 24 }}>
             {vendidos.map((p) => <ProductCard key={p.id} p={p} priceColor="#012746" />)}
           </div>
+        ) : loading ? (
+          <div style={{ minHeight: 440 }} />
         ) : (
           <p style={{ font: "400 15px Inter", color: "#94A3B8" }}>Nenhum produto cadastrado ainda.</p>
         )}

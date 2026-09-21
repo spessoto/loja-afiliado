@@ -7,6 +7,7 @@ import { pool, ensureSchema, hashPassword, verifyPassword, getSettings, setSetti
 import { generateFaq } from "./faq.js";
 import { getPageMeta, injectMeta, buildSitemapXml, productUrl, SITE_URL } from "./seo.js";
 import { slugify } from "./slug.js";
+import { sizedImage } from "./imageUrl.js";
 import { submitToIndexNow } from "./indexnow.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -138,10 +139,12 @@ app.get("/api/me", (req, res) => {
   res.json(session ? { authenticated: true, name: session.name } : { authenticated: false });
 });
 
-app.get("/api/favorites", requireCustomer, async (req, res) => {
+app.get("/api/favorites", async (req, res) => {
+  const session = verifySession(getCookie(req, "customer_session"));
+  if (!session) return res.json([]);
   const [rows] = await pool.query(
     "SELECT p.* FROM favorites f JOIN products p ON p.id = f.product_id WHERE f.customer_id = ? ORDER BY f.created_at DESC",
-    [req.customerId]
+    [session.id]
   );
   res.json(rows);
 });
@@ -161,7 +164,7 @@ app.delete("/api/favorites/:productId", requireCustomer, async (req, res) => {
 const PRODUCT_LIST_FIELDS = "id, name, brand, category, description, image_url, affiliate_url, price_from, price_to, installment, badge, tags, specs, rating_avg, rating_count, rating_dist, reviews, created_at, updated_at";
 
 app.get("/api/products", async (_req, res) => {
-  const [rows] = await pool.query(`SELECT ${PRODUCT_LIST_FIELDS} FROM products ORDER BY created_at DESC`);
+  const [rows] = await pool.query(`SELECT ${PRODUCT_LIST_FIELDS} FROM products ORDER BY created_at DESC, id DESC`);
   res.set("Cache-Control", "public, max-age=60");
   res.json(rows);
 });
@@ -534,10 +537,27 @@ app.get("*", async (req, res) => {
   }
   if (settings.ga_measurement_id && /^[A-Za-z0-9-]+$/.test(settings.ga_measurement_id)) {
     const id = settings.ga_measurement_id;
+    // ponytail: gtag.js só carrega na 1ª interação ou 6s após o load (custava ~1s de CPU no carregamento); visitas que saem antes disso não são contadas
     html = html.replace(
       "</head>",
-      `  <script async src="https://www.googletagmanager.com/gtag/js?id=${id}"></script>\n  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","${id}");</script>\n</head>`
+      `  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","${id}");(function(){var l=0;function go(){if(l)return;l=1;var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=${id}";document.head.appendChild(s);}["scroll","pointerdown","keydown","touchstart"].forEach(function(e){addEventListener(e,go,{once:true,passive:true});});addEventListener("load",function(){setTimeout(go,6000);});})();</script>\n</head>`
     );
+  }
+  if (!req.path.startsWith("/admin")) {
+    const preloads = [];
+    const fetchPreload = (href) => `<link rel="preload" as="fetch" href="${href}" crossorigin="anonymous" />`;
+    if (!req.path.startsWith("/blog")) preloads.push(fetchPreload("/api/categories"));
+    if (["/", "/categoria", "/busca", "/comparar"].includes(req.path) || req.path.startsWith("/produto/")) preloads.push(fetchPreload("/api/products"));
+    if (seoData.product) {
+      preloads.push(fetchPreload(`/api/products/${seoData.product.id}`));
+      if (seoData.product.image_url) preloads.push(`<link rel="preload" as="image" href="${escapeAttr(sizedImage(seoData.product.image_url, 800))}" fetchpriority="high" />`);
+    }
+    if (req.path === "/") {
+      const [heroRows] = await pool.query("SELECT image_url FROM products ORDER BY created_at DESC, id DESC");
+      const hero = heroRows.length ? heroRows[Math.floor(Date.now() / 3600000) % heroRows.length] : null;
+      if (hero?.image_url) preloads.push(`<link rel="preload" as="image" href="${escapeAttr(sizedImage(hero.image_url, 700))}" fetchpriority="high" />`);
+    }
+    if (preloads.length && !meta.notFound) html = html.replace("</head>", `  ${preloads.join("\n  ")}\n</head>`);
   }
   res.status(meta.notFound ? 404 : 200).set("Content-Type", "text/html").send(html);
 });

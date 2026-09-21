@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useFavorites } from "../lib/favorites.jsx";
 import { useCompare } from "../lib/compare.js";
 import { productUrl } from "../lib/products.js";
+import { sizedImage } from "../../imageUrl.js";
 
 function HeartIcon({ filled }) {
   return (
@@ -57,7 +58,7 @@ export default function ProductCard({ p, priceColor = "#F05A00", to, showCompare
           )}
           {p.image_url ? (
             <div style={{ aspectRatio: "1/1", borderRadius: 8, overflow: "hidden", background: "#fff" }}>
-              <img src={p.image_url} alt={p.nome} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+              <img src={sizedImage(p.image_url, 500)} alt={p.nome} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
             </div>
           ) : (
             <div style={{ aspectRatio: "1/1", borderRadius: 8, background: "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: 16, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#94A3B8" }}>

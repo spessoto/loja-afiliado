@@ -3,4 +3,5 @@ item_list.txt
 pages/
 download_pages.sh
 download_log.txt
+scratch_*.json
 *.tmp

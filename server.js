@@ -14,6 +14,7 @@ import { submitToIndexNow } from "./indexnow.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, "dist");
 const port = process.env.PORT || 3000;
+const CLARITY_ID = "ymywelx09s";
 const SESSION_MAX_AGE_MS = 12 * 60 * 60 * 1000;
 
 const app = express();
@@ -564,6 +565,8 @@ app.get("*", async (req, res) => {
     );
   }
   if (!req.path.startsWith("/admin")) {
+    // Microsoft Clarity: só com consentimento de desempenho (pa_consent) e adiado como o gtag (interação ou 6s após o load)
+    html = html.replace("</head>", () => `  <script>(function(){var l=0;function ok(){try{var c=JSON.parse(localStorage.getItem("pa_consent"));return !!(c&&c.desempenho)}catch(e){return false}}function go(){if(l||!ok())return;l=1;(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${CLARITY_ID}");}["scroll","pointerdown","keydown","touchstart"].forEach(function(e){addEventListener(e,go,{once:true,passive:true});});addEventListener("load",function(){setTimeout(go,6000);});addEventListener("pa-consent",go);})();</script>\n</head>`);
     const preloads = [];
     const fetchPreload = (href) => `<link rel="preload" as="fetch" href="${href}" crossorigin="anonymous" />`;
     if (!req.path.startsWith("/blog")) preloads.push(fetchPreload("/api/categories"));

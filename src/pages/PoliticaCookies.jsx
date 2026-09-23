@@ -19,6 +19,7 @@ const tabela = [
   { n: "pa_consent", f: "Guarda suas preferências de cookies", p: "6 meses" },
   { n: "pa_filtros", f: "Lembra os filtros aplicados na categoria", p: "30 dias" },
   { n: "_ga / _ga_*", f: "Medição de audiência (Google Analytics)", p: "13 meses" },
+  { n: "_clck / _clsk", f: "Análise de comportamento e mapas de calor (Microsoft Clarity)", p: "1 ano / 1 dia" },
   { n: "pa_click_id", f: "Identifica o clique que originou a visita à loja parceira", p: "30 dias" },
   { n: "_fbp", f: "Medição de campanhas em redes sociais", p: "3 meses" }
 ];

@@ -15,6 +15,7 @@ function writeConsent(prefs) {
   try {
     localStorage.setItem(KEY, JSON.stringify({ ...prefs, essenciais: true, data: new Date().toISOString() }));
   } catch {}
+  window.dispatchEvent(new Event("pa-consent"));
 }
 
 export function useCookieConsent() {

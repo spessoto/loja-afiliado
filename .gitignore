@@ -1,0 +1,6 @@
+products.json
+item_list.txt
+pages/
+download_pages.sh
+download_log.txt
+*.tmp

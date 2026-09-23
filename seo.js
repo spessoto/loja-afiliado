@@ -134,7 +134,8 @@ export function getPageMeta(pathname, query, data = {}) {
         "@context": "https://schema.org",
         "@type": "Product",
         name: product.name,
-        image: [product.image_url].filter(Boolean),
+        sku: String(product.id),
+        image: [...new Set([product.image_url, ...String(product.images || "").split("\n").map(s => s.trim())].filter(Boolean))].slice(0, 6),
         description: desc,
         brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
         category: product.category || undefined,
@@ -142,7 +143,10 @@ export function getPageMeta(pathname, query, data = {}) {
           "@type": "Offer",
           url: canonical,
           priceCurrency: "BRL",
-          price: Number(product.price_to).toFixed(2)
+          price: Number(product.price_to).toFixed(2),
+          priceValidUntil: new Date(Date.now() + 14 * 86400000).toISOString().slice(0, 10),
+          availability: "https://schema.org/InStock",
+          itemCondition: "https://schema.org/NewCondition"
         } : undefined
       };
       if (product.rating_count > 0 && product.rating_avg) {

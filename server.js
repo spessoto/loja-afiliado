@@ -8,6 +8,7 @@ import { generateFaq } from "./faq.js";
 import { getPageMeta, injectMeta, buildSitemapXml, productUrl, SITE_URL } from "./seo.js";
 import { slugify } from "./slug.js";
 import { sizedImage } from "./imageUrl.js";
+import { productBlock, postBlock, listingBlock } from "./prerender.js";
 import { submitToIndexNow } from "./indexnow.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -243,12 +244,13 @@ app.delete("/api/products/:id", requireAdminOrPriceToken, async (req, res) => {
 });
 
 app.post("/api/products/:id/view", async (req, res) => {
-  await pool.query("UPDATE products SET view_count = view_count + 1 WHERE id = ?", [req.params.id]);
+  // updated_at = updated_at: contador não pode mexer no lastmod do sitemap (senão o Google passa a ignorá-lo)
+  await pool.query("UPDATE products SET view_count = view_count + 1, updated_at = updated_at WHERE id = ?", [req.params.id]);
   res.json({ ok: true });
 });
 
 app.post("/api/products/:id/click", async (req, res) => {
-  await pool.query("UPDATE products SET click_count = click_count + 1 WHERE id = ?", [req.params.id]);
+  await pool.query("UPDATE products SET click_count = click_count + 1, updated_at = updated_at WHERE id = ?", [req.params.id]);
   res.json({ ok: true });
 });
 
@@ -576,6 +578,25 @@ app.get("*", async (req, res) => {
       if (hero?.image_url) preloads.push(`<link rel="preload" as="image" href="${escapeAttr(sizedImage(hero.image_url, 700))}" fetchpriority="high" />`);
     }
     if (preloads.length && !meta.notFound) html = html.replace("</head>", `  ${preloads.join("\n  ")}\n</head>`);
+  }
+  if (!meta.notFound && !req.path.startsWith("/admin")) {
+    let block = "";
+    if (seoData.product) {
+      const p = seoData.product;
+      const [related] = await pool.query("SELECT id, name, price_to FROM products WHERE category <=> ? AND id != ? ORDER BY view_count DESC LIMIT 8", [p.category, p.id]);
+      block = productBlock(p, related);
+    } else if (seoData.post) {
+      block = postBlock(seoData.post);
+    } else if (req.path === "/" || req.path === "/categoria") {
+      const cat = req.path === "/categoria" && req.query.cat ? String(req.query.cat) : null;
+      const [prods] = await pool.query(`SELECT id, name, price_to FROM products ${cat ? "WHERE category = ?" : ""} ORDER BY created_at DESC, id DESC`, cat ? [cat] : []);
+      const [cats] = await pool.query("SELECT name FROM categories ORDER BY name");
+      block = listingBlock(meta.title, { categories: cats.map(c => c.name), products: prods });
+    } else if (req.path === "/blog") {
+      const [posts] = await pool.query("SELECT slug, title FROM posts WHERE published = 1 ORDER BY published_at DESC");
+      block = listingBlock(meta.title, { posts });
+    }
+    if (block) html = html.replace('<div id="root"></div>', () => `<div id="root">${block}</div>`);
   }
   res.status(meta.notFound ? 404 : 200).set("Content-Type", "text/html").send(html);
 });

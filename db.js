@@ -69,6 +69,7 @@ export async function ensureSchema() {
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS view_count INT DEFAULT 0`);
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS click_count INT DEFAULT 0`);
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS faq TEXT`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS analise TEXT`);
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS admin_users (
@@ -139,6 +140,20 @@ export async function ensureSchema() {
       deleted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
   `);
+
+  // Backfill único: produto 53 foi excluído pela rotina de preços antes do redirecionamento existir
+  await pool.query("INSERT IGNORE INTO product_redirects (product_id, category) VALUES (53, 'Robôs')");
+
+  // Backfill único da "Análise Promo Aspiradores": só preenche produtos que ainda não têm texto (não sobrescreve edições)
+  try {
+    const { readFile } = await import("node:fs/promises");
+    const analises = JSON.parse(await readFile(new URL("./analises.json", import.meta.url), "utf-8"));
+    for (const [id, texto] of Object.entries(analises)) {
+      await pool.query("UPDATE products SET analise = ? WHERE id = ? AND (analise IS NULL OR analise = '')", [texto, id]);
+    }
+  } catch (err) {
+    if (err.code !== "ENOENT") console.error("Backfill de análises falhou:", err.message);
+  }
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS posts (

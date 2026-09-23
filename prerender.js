@@ -25,6 +25,7 @@ export function productBlock(p, related = []) {
     price ? `<p>Preço: ${price}${from ? ` (de ${from})` : ""}</p>` : "",
     p.rating_avg && p.rating_count ? `<p>Nota ${esc(p.rating_avg)} de 5 em ${esc(p.rating_count)} avaliações.</p>` : "",
     paragraphs.map(t => `<p>${esc(t)}</p>`).join(""),
+    p.analise ? `<h2>Nossa análise</h2><p>${esc(p.analise)}</p>` : "",
     specs.length ? `<h2>Especificações técnicas</h2>${list(specs)}` : "",
     lines(p.indicado).length ? `<h2>Indicado para</h2>${list(lines(p.indicado).map(esc))}` : "",
     lines(p.nao_indicado).length ? `<h2>Não indicado para</h2>${list(lines(p.nao_indicado).map(esc))}` : "",

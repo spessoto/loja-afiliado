@@ -181,7 +181,7 @@ app.get("/api/products/:id", async (req, res) => {
   res.json(rows[0]);
 });
 
-const FIELDS = ["name", "brand", "category", "description", "image_url", "images", "affiliate_url", "price_from", "price_to", "installment", "badge", "tags", "specs", "indicado", "nao_indicado", "rating_avg", "rating_count", "rating_dist", "reviews", "frete", "garantia", "potencia", "voltagem"];
+const FIELDS = ["name", "brand", "category", "description", "image_url", "images", "affiliate_url", "price_from", "price_to", "installment", "badge", "tags", "specs", "indicado", "nao_indicado", "rating_avg", "rating_count", "rating_dist", "reviews", "frete", "garantia", "potencia", "voltagem", "analise"];
 
 // An empty string sent for a numeric column (price, rating...) gets silently
 // coerced to 0 by MySQL, which then renders as a fake "R$ 0,00" or "0 avaliações"

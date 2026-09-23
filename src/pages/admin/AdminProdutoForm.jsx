@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import AdminShell, { inputStyle, btnStyle } from "../../components/AdminShell.jsx";
 import { useCategories } from "../../lib/categories.js";
 
-const empty = { name: "", brand: "", category: "", description: "", image_url: "", images: "", affiliate_url: "", price_from: "", price_to: "", installment: "", badge: "", tags: "", specs: "", indicado: "", nao_indicado: "", rating_avg: "", rating_count: "", rating_dist: "", reviews: "", frete: "", garantia: "", potencia: "", voltagem: "" };
+const empty = { name: "", brand: "", category: "", description: "", image_url: "", images: "", affiliate_url: "", price_from: "", price_to: "", installment: "", badge: "", tags: "", specs: "", indicado: "", nao_indicado: "", rating_avg: "", rating_count: "", rating_dist: "", reviews: "", frete: "", garantia: "", potencia: "", voltagem: "", analise: "" };
 
 export default function AdminProdutoForm() {
   const { id } = useParams();
@@ -70,6 +70,7 @@ export default function AdminProdutoForm() {
           <input placeholder="Potência (ex: 450 W)" value={form.potencia} onChange={set("potencia")} style={inputStyle} />
           <input placeholder="Voltagem (ex: 127/220V)" value={form.voltagem} onChange={set("voltagem")} style={inputStyle} />
           <textarea placeholder="Descrição" value={form.description} onChange={set("description")} style={{ ...inputStyle, gridColumn: "1 / -1", height: 90 }} />
+          <textarea placeholder="Análise Promo Aspiradores (parágrafo próprio, ~80 a 110 palavras, tom do site)" value={form.analise} onChange={set("analise")} style={{ ...inputStyle, gridColumn: "1 / -1", height: 110 }} />
           <textarea placeholder="Tags (uma por linha, ex: Sem fio HEPA lavável)" value={form.tags} onChange={set("tags")} style={{ ...inputStyle, gridColumn: "1 / -1", height: 70 }} />
           <textarea placeholder="Especificações técnicas (uma por linha, formato: Chave: Valor)" value={form.specs} onChange={set("specs")} style={{ ...inputStyle, gridColumn: "1 / -1", height: 110 }} />
           <textarea placeholder="Indicado para (uma frase por linha)" value={form.indicado} onChange={set("indicado")} style={{ ...inputStyle, height: 90 }} />

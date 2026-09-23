@@ -22,6 +22,13 @@ Extraia TUDO da fonte, sem deixar nada de fora, e preencha:
   gerais, potência, bateria, dimensões, tecnologia, acessórios, materiais, dados
   técnicos da descrição), sem duplicar, formato "Chave: Valor" uma por linha
 - indicado / nao_indicado: derive do uso real do produto (não do texto genérico)
+- analise: parágrafo PRÓPRIO da Promo Aspiradores (70 a 100 palavras, texto corrido, sem
+  listas). Tom do site: direto, prático e honesto, sem papo de vendedor. Diga para
+  quem o produto faz sentido, 2 ou 3 dados concretos da ficha (potência, autonomia,
+  capacidade, filtro, tensão...) e UMA ressalva real (autonomia curta, bateria não
+  inclusa, tensão específica, poucas avaliações...). NÃO copie a descrição do
+  anúncio, NÃO cite preço, frete, parcelamento, garantia ou prazo, NÃO invente
+  dados que não estejam na fonte. Cada análise deve ser única (evite frases-molde).
 - rating_avg, rating_count, rating_dist (formato "estrela:percentual", uma
   linha por nota de 5 a 1) e reviews (5 depoimentos reais do anúncio, formato
   "Nome\nNota\nTexto\nMeta" separados por linha "---")
@@ -57,6 +64,7 @@ Regras de execução:
 | `tags` | 1 frase por linha |
 | `specs` | `Chave: Valor` por linha |
 | `indicado`, `nao_indicado` | 1 frase por linha |
+| `analise` | parágrafo próprio de 70 a 100 palavras (texto corrido, tom do site) |
 | `rating_avg` | ex: `4.8` |
 | `rating_count` | ex: `18429` |
 | `rating_dist` | `estrela:percentual` por linha, ex: `5:90.39` |

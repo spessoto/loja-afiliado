@@ -274,6 +274,15 @@ export default function Produto() {
               </>
             )}
 
+            {product?.analise && (
+              <div style={{ margin: "28px 0 0", padding: "18px 20px", background: "#F8FAFC", border: "1px solid #E2E8F0", borderLeft: "4px solid #C84A00", borderRadius: 12 }}>
+                <h3 style={{ margin: "0 0 10px", font: "700 17px Montserrat", color: "#012746" }}>Nossa análise</h3>
+                {paragrafos(product.analise).map((par, i) => (
+                  <p key={i} style={{ margin: i ? "10px 0 0" : 0, font: "400 14.5px/1.65 Inter", color: "#475569" }}>{par}</p>
+                ))}
+              </div>
+            )}
+
             {specsExibidas.length > 0 && (
               <>
                 <h3 style={{ margin: "32px 0 14px", font: "700 19px Montserrat", color: "#012746" }}>Especificações técnicas</h3>

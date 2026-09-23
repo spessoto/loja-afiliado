@@ -558,10 +558,10 @@ app.get("*", async (req, res) => {
   }
   if (settings.ga_measurement_id && /^[A-Za-z0-9-]+$/.test(settings.ga_measurement_id)) {
     const id = settings.ga_measurement_id;
-    // ponytail: gtag.js só carrega na 1ª interação ou 6s após o load (custava ~1s de CPU no carregamento); visitas que saem antes disso não são contadas
+    // ponytail: gtag.js só carrega com consentimento de desempenho (pa_consent) e na 1ª interação ou 6s após o load (custava ~1s de CPU); visitas que saem antes disso não são contadas
     html = html.replace(
       "</head>",
-      `  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","${id}");(function(){var l=0;function go(){if(l)return;l=1;var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=${id}";document.head.appendChild(s);}["scroll","pointerdown","keydown","touchstart"].forEach(function(e){addEventListener(e,go,{once:true,passive:true});});addEventListener("load",function(){setTimeout(go,6000);});})();</script>\n</head>`
+      `  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","${id}");(function(){var l=0;function ok(){try{var c=JSON.parse(localStorage.getItem("pa_consent"));return !!(c&&c.desempenho)}catch(e){return false}}function go(){if(l||!ok())return;l=1;var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=${id}";document.head.appendChild(s);}["scroll","pointerdown","keydown","touchstart"].forEach(function(e){addEventListener(e,go,{once:true,passive:true});});addEventListener("load",function(){setTimeout(go,6000);});addEventListener("pa-consent",go);})();</script>\n</head>`
     );
   }
   if (!req.path.startsWith("/admin")) {

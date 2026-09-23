@@ -71,6 +71,11 @@ function requireTokenEnv(envVar) {
 const requirePriceToken = requireTokenEnv("PRICE_AUTOMATION_TOKEN");
 const requireBlogToken = requireTokenEnv("BLOG_AUTOMATION_TOKEN");
 
+function requireAdminOrPriceToken(req, res, next) {
+  if (verifySession(getCookie(req, "admin_session"))) return next();
+  return requirePriceToken(req, res, next);
+}
+
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) return res.status(422).json({ error: "email and password are required" });
@@ -224,7 +229,7 @@ app.patch("/api/products/:id/price", requirePriceToken, async (req, res) => {
   res.json({ ok: true });
 });
 
-app.delete("/api/products/:id", requireAdmin, async (req, res) => {
+app.delete("/api/products/:id", requireAdminOrPriceToken, async (req, res) => {
   await pool.query("DELETE FROM products WHERE id = ?", [req.params.id]);
   submitToIndexNow(`/produto/${req.params.id}`);
   res.json({ ok: true });

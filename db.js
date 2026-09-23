@@ -133,6 +133,14 @@ export async function ensureSchema() {
   }
 
   await pool.query(`
+    CREATE TABLE IF NOT EXISTS product_redirects (
+      product_id INT PRIMARY KEY,
+      category VARCHAR(120),
+      deleted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+  `);
+
+  await pool.query(`
     CREATE TABLE IF NOT EXISTS posts (
       id INT AUTO_INCREMENT PRIMARY KEY,
       title VARCHAR(255) NOT NULL,

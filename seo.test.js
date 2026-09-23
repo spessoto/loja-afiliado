@@ -22,7 +22,7 @@ assert.ok(html2.includes('content="noindex,nofollow"'));
 const product = { id: 42, name: "Aspirador Teste X", brand: "TestBrand", category: "Robôs", image_url: "https://example.com/x.jpg", price_to: "699.9", rating_avg: "4.5", rating_count: 100, description: "Descrição do produto de teste com bastante texto para checar truncamento correto do resumo usado como meta description da página.", faq: JSON.stringify([{ q: "Pergunta?", a: "Resposta completa." }]) };
 const prodMeta = getPageMeta("/produto/42", {}, { product });
 assert.ok(prodMeta.title.includes("Aspirador Teste X"));
-assert.ok(prodMeta.canonical.endsWith("/produto/42"));
+assert.ok(prodMeta.canonical.endsWith("/produto/aspirador-teste-x-42"));
 assert.ok(prodMeta.jsonLd.some(x => x["@type"] === "Product"));
 assert.ok(prodMeta.jsonLd.some(x => x["@type"] === "FAQPage"));
 assert.ok(prodMeta.jsonLd.some(x => x["@type"] === "BreadcrumbList"));

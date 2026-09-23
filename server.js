@@ -197,7 +197,7 @@ app.post("/api/products", requireAdmin, async (req, res) => {
     `INSERT INTO products (${FIELDS.join(", ")}, faq) VALUES (${FIELDS.map(() => "?").join(", ")}, ?)`,
     [...values, faq]
   );
-  submitToIndexNow(`/produto/${result.insertId}`);
+  submitToIndexNow(productUrl({ id: result.insertId, name: req.body.name }));
   res.status(201).json({ id: result.insertId });
 });
 
@@ -210,7 +210,7 @@ app.put("/api/products/:id", requireAdmin, async (req, res) => {
     `UPDATE products SET ${FIELDS.map(f => `${f}=?`).join(", ")}, faq=? WHERE id=?`,
     [...values, faq, req.params.id]
   );
-  submitToIndexNow(`/produto/${req.params.id}`);
+  submitToIndexNow(productUrl({ id: req.params.id, name: req.body.name }));
   res.json({ ok: true });
 });
 
@@ -230,8 +230,15 @@ app.patch("/api/products/:id/price", requirePriceToken, async (req, res) => {
 });
 
 app.delete("/api/products/:id", requireAdminOrPriceToken, async (req, res) => {
+  const [rows] = await pool.query("SELECT id, name, category FROM products WHERE id = ?", [req.params.id]);
+  if (rows[0]) {
+    await pool.query(
+      "INSERT INTO product_redirects (product_id, category) VALUES (?, ?) ON DUPLICATE KEY UPDATE category = VALUES(category)",
+      [rows[0].id, rows[0].category]
+    );
+  }
   await pool.query("DELETE FROM products WHERE id = ?", [req.params.id]);
-  submitToIndexNow(`/produto/${req.params.id}`);
+  if (rows[0]) submitToIndexNow(productUrl(rows[0]));
   res.json({ ok: true });
 });
 
@@ -519,6 +526,12 @@ app.get("*", async (req, res) => {
       if (req.path !== canonicalPath) return res.redirect(301, canonicalPath);
       seoData.product = rows[0];
     } else {
+      // Produto excluído: 301 para a categoria dele (ou /categoria) em vez de 404, preservando o valor de SEO
+      const [gone] = await pool.query("SELECT category FROM product_redirects WHERE product_id = ?", [produtoMatch[1]]);
+      if (gone[0]) {
+        const [still] = gone[0].category ? await pool.query("SELECT 1 FROM products WHERE category = ? LIMIT 1", [gone[0].category]) : [[]];
+        return res.redirect(301, still.length ? `/categoria?cat=${encodeURIComponent(gone[0].category)}` : "/categoria");
+      }
       seoData.productNotFound = true;
     }
   }

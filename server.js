@@ -168,7 +168,7 @@ app.delete("/api/favorites/:productId", requireCustomer, async (req, res) => {
 
 // Colunas de listagem: exclui faq/images/indicado/nao_indicado, usados só na página de detalhe
 // do produto (que busca via /api/products/:id) — sozinhos eram ~39% do payload desta rota.
-const PRODUCT_LIST_FIELDS = "id, name, brand, category, description, image_url, affiliate_url, price_from, price_to, installment, badge, tags, specs, rating_avg, rating_count, rating_dist, reviews, created_at, updated_at";
+const PRODUCT_LIST_FIELDS = "id, name, brand, category, description, image_url, affiliate_url, price_from, price_to, installment, badge, tags, specs, rating_avg, rating_count, rating_dist, reviews, potencia, voltagem, created_at, updated_at";
 
 app.get("/api/products", async (_req, res) => {
   const [rows] = await pool.query(`SELECT ${PRODUCT_LIST_FIELDS} FROM products ORDER BY created_at DESC, id DESC`);

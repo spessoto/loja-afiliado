@@ -115,7 +115,7 @@ export default function Produto() {
   const descricao = product?.description;
   const afiliado = product?.affiliate_url || "#afiliado";
   const registrarClique = () => { if (product?.id) fetch(`/api/products/${product.id}/click`, { method: "POST" }); };
-  const buyProps = product ? { href: afiliado, target: "_blank", rel: "noopener noreferrer", onClick: registrarClique } : { href: "#afiliado" };
+  const buyProps = product ? { href: afiliado, target: "_blank", rel: "noopener noreferrer sponsored", onClick: registrarClique } : { href: "#afiliado" };
 
   const productTags = linhas(product?.tags);
   const tagsExibidas = productTags.length > 0 ? productTags : (product ? [] : tags);

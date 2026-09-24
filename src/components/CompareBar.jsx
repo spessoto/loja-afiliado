@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useCompare } from "../lib/compare.js";
 
 export default function CompareBar() {
   const { ids, clear } = useCompare();
-  if (ids.length === 0) return null;
+  const { pathname } = useLocation();
+  if (ids.length === 0 || pathname === "/comparar" || pathname.startsWith("/admin")) return null;
 
   return (
     <div style={{ position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 40, background: "#012746", boxShadow: "0 -8px 24px rgba(1,39,70,.25)" }}>

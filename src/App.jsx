@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { FavoritesProvider } from "./lib/favorites.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import CookieBanner from "./components/CookieBanner.jsx";
+import CompareBar from "./components/CompareBar.jsx";
 import Home from "./pages/Home.jsx";
 import Produto from "./pages/Produto.jsx";
 
@@ -34,6 +35,7 @@ export default function App() {
     <FavoritesProvider>
       <ScrollToTop />
       <CookieBanner />
+      <CompareBar />
       <Suspense fallback={null}>
         <Routes>
           <Route path="/" element={<Home />} />

@@ -3,7 +3,6 @@ import { Link, useSearchParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import ProductCard from "../components/ProductCard.jsx";
-import CompareBar from "../components/CompareBar.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useCategories } from "../lib/categories.js";
 import { useProducts, toCardProduct, searchProducts } from "../lib/products.js";
@@ -44,7 +43,6 @@ export default function Busca() {
       </main>
 
       <FooterFull columns={[categoriasCol, institucionalCol]} />
-      <CompareBar />
     </>
   );
 }

@@ -44,5 +44,12 @@ export function useCompare() {
     write([]);
   }
 
-  return { ids, isComparing, toggle, clear, max: MAX };
+  function retain(validIds) {
+    const set = new Set(validIds);
+    const atual = read();
+    const kept = atual.filter(id => set.has(id));
+    if (kept.length !== atual.length) write(kept);
+  }
+
+  return { ids, isComparing, toggle, clear, retain, max: MAX };
 }

@@ -37,7 +37,7 @@ function pick(product, specs, linha) {
 }
 
 export default function Comparar() {
-  const { ids, toggle, clear, retain, max } = useCompare();
+  const { ids, toggle, clear, max } = useCompare();
   const { products, loading } = useProducts();
   const { categories } = useCategories();
   const selected = ids.map(id => products.find(p => p.id === id)).filter(Boolean);
@@ -46,10 +46,6 @@ export default function Comparar() {
     document.title = "Comparar produtos — Promo Aspiradores";
   }, []);
 
-  // Remove da seleção produtos que foram excluídos (senão continuam contando no limite sem aparecer)
-  useEffect(() => {
-    if (!loading && products.length) retain(products.map(p => p.id));
-  }, [loading, products]);
 
   const specsByProduct = selected.map(p => parseSpecs(p.specs));
   const linhas = LINHAS

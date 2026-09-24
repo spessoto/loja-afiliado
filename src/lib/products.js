@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { slugify } from "../../slug.js";
+import { retainCompare } from "./compare.js";
 
 export function productUrl(id, name) {
   return id ? `/produto/${slugify(name)}-${id}` : "/produto";
@@ -12,7 +13,7 @@ export function useProducts() {
   useEffect(() => {
     fetch("/api/products")
       .then(res => res.json())
-      .then(data => setProducts(data))
+      .then(data => { retainCompare(data.map(x => x.id)); setProducts(data); })
       .finally(() => setLoading(false));
   }, []);
 

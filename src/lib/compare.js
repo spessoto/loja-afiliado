@@ -17,6 +17,14 @@ function write(ids) {
   window.dispatchEvent(new Event(EVENT));
 }
 
+// Remove da seleção produtos que foram excluídos (senão ocupam vaga do limite sem aparecer)
+export function retainCompare(validIds) {
+  const set = new Set(validIds);
+  const atual = read();
+  const kept = atual.filter(id => set.has(id));
+  if (kept.length !== atual.length) write(kept);
+}
+
 export function useCompare() {
   const [ids, setIds] = useState(read);
 
@@ -44,12 +52,6 @@ export function useCompare() {
     write([]);
   }
 
-  function retain(validIds) {
-    const set = new Set(validIds);
-    const atual = read();
-    const kept = atual.filter(id => set.has(id));
-    if (kept.length !== atual.length) write(kept);
-  }
 
-  return { ids, isComparing, toggle, clear, retain, max: MAX };
+  return { ids, isComparing, toggle, clear, max: MAX };
 }

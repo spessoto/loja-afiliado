@@ -8,8 +8,8 @@ import { useProducts, formatBRL, parseSpecs, productUrl } from "../lib/products.
 import { useCompare } from "../lib/compare.js";
 import { sizedImage } from "../../imageUrl.js";
 
-const cell = { padding: "12px 16px", textAlign: "center", font: "400 13.5px/1.5 Inter", color: "#475569", borderBottom: "1px solid #F1F5F9", verticalAlign: "top" };
-const labelCell = { padding: "12px 16px", font: "600 13px Inter", color: "#012746", borderBottom: "1px solid #F1F5F9", verticalAlign: "top", background: "#fff", position: "sticky", left: 0, minWidth: 120 };
+const cell = { padding: "12px 12px", textAlign: "center", font: "400 13.5px/1.5 Inter", color: "#475569", borderBottom: "1px solid #F1F5F9", verticalAlign: "top" };
+const labelCell = { padding: "12px 10px", font: "600 13px Inter", color: "#012746", borderBottom: "1px solid #F1F5F9", verticalAlign: "top", background: "#fff", position: "sticky", left: 0, minWidth: 96, width: 96, zIndex: 1 };
 
 // Linhas comparáveis: o mesmo dado aparece com rótulos diferentes em cada produto (Amazon x Mercado Livre),
 // então cada linha procura pelo primeiro rótulo que casa com o padrão.
@@ -89,12 +89,12 @@ export default function Comparar() {
               <p style={{ margin: "0 0 16px", font: "400 14px Inter", color: "#475569" }}>Selecione mais um produto para comparar. <Link to="/categoria" style={{ color: "#C84A00", fontWeight: 600 }}>Escolher outro</Link></p>
             )}
             <div style={{ overflowX: "auto", border: "1px solid #E2E8F0", borderRadius: 12 }}>
-              <table style={{ width: "100%", minWidth: 120 + selected.length * 240, borderCollapse: "separate", borderSpacing: 0 }}>
+              <table style={{ width: "100%", minWidth: 96 + selected.length * 200, borderCollapse: "separate", borderSpacing: 0 }}>
                 <thead>
                   <tr>
-                    <th style={{ width: 120, background: "#fff", position: "sticky", left: 0 }}></th>
+                    <th style={{ width: 96, minWidth: 96, background: "#fff", position: "sticky", left: 0, zIndex: 1 }}></th>
                     {selected.map((p, i) => (
-                      <th key={p.id} style={{ padding: "16px", minWidth: 220, verticalAlign: "top", borderBottom: "2px solid #E2E8F0" }}>
+                      <th key={p.id} style={{ padding: "16px 12px", minWidth: 184, verticalAlign: "top", borderBottom: "2px solid #E2E8F0" }}>
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, textAlign: "center" }}>
                           {p.image_url && <img src={sizedImage(p.image_url, 250)} alt={p.name} loading="lazy" style={{ width: 100, height: 100, objectFit: "contain" }} />}
                           <Link to={productUrl(p.id, p.name)} style={{ font: "700 13.5px/1.35 Montserrat", color: "#012746", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{p.name}</Link>
@@ -137,7 +137,7 @@ export default function Comparar() {
               <details style={{ marginTop: 20 }}>
                 <summary style={{ cursor: "pointer", font: "700 14px Montserrat", color: "#012746" }}>Ver todas as especificações ({outrasChaves.length})</summary>
                 <div style={{ overflowX: "auto", marginTop: 12, border: "1px solid #E2E8F0", borderRadius: 12 }}>
-                  <table style={{ width: "100%", minWidth: 120 + selected.length * 240, borderCollapse: "separate", borderSpacing: 0 }}>
+                  <table style={{ width: "100%", minWidth: 96 + selected.length * 200, borderCollapse: "separate", borderSpacing: 0 }}>
                     <tbody>
                       {outrasChaves.map(k => (
                         <tr key={k}>

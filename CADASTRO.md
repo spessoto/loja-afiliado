@@ -11,7 +11,11 @@ Fonte do produto: [anexe o PDF da página do Mercado Livre OU cole o link do an�
 
 Extraia TUDO da fonte, sem deixar nada de fora, e preencha:
 
-- name, brand, category (escolha uma das categorias já existentes no menu:
+- name: nome CURTO e limpo, de no máximo 60 caracteres, no formato Marca + Modelo +
+  1 ou 2 atributos-chave (ex: "Robô Aspirador Xiaomi S40 10.000Pa Bivolt"). NÃO cole o
+  título inteiro do anúncio (com "Ideal Pet", "Compatível com...", listas de recursos):
+  o name vira o H1, o <title> e a URL da página. Os recursos ficam em tags/specs.
+- brand, category (escolha uma das categorias já existentes no menu:
   Aspiradores, Robôs, Vertical, Portáteis, Extratoras, Profissionais, Acessórios),
   badge (ex: MAIS VENDIDO, se aplicável)
 - price_from (preço "de"), price_to (preço "por" à vista, sem Pix), installment
@@ -48,14 +52,23 @@ Regras de execução:
    antes de gravar dados que dependam de colunas novas.
 7. Confirme com GET que nada ficou null/vazio e que não há caracteres
    corrompidos (�) na resposta.
-8. Me avise com um resumo do que foi cadastrado e o link de /produto/:id.
+8. AJUSTE DE URL/TÍTULO (sempre): a URL e o <title> são gerados sozinhos a partir do name
+   (slug de até 60 caracteres + id, título de até 70 com a marca). Confira que o name
+   respeita o limite acima, abra a página cadastrada e verifique: (a) a URL final é
+   /produto/marca-modelo-atributos-ID e tem no máximo ~75 caracteres depois de
+   /produto/; (b) o <title> (curl -s URL | grep -o "<title>[^<]*") tem no máximo 70
+   caracteres e não repete o de outro produto (se repetir, o site acrescenta "(ref. ID)";
+   prefira diferenciar o name pelo modelo/variação, ex: cor ou voltagem). Nomes fora do
+   padrão devem ser corrigidos com PUT antes de avisar.
+9. Me avise com um resumo do que foi cadastrado e o link (URL já com o nome curto).
 ```
 
 ## Campos do produto (referência rápida)
 
 | Campo | Formato |
 |---|---|
-| `name`, `brand`, `category`, `badge` | texto simples |
+| `name` | texto simples, curto (máx. 60 caracteres, Marca + Modelo + atributos) |
+| `brand`, `category`, `badge` | texto simples |
 | `price_from`, `price_to` | número decimal, ex: `899.86` |
 | `installment` | texto livre, ex: `12x de R$ 52,99 sem juros` |
 | `image_url` | 1 URL |

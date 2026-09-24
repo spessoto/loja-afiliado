@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { slugify } from "../../slug.js";
+import { productSlug } from "../../slug.js";
 import { retainCompare } from "./compare.js";
 
 export function productUrl(id, name) {
-  return id ? `/produto/${slugify(name)}-${id}` : "/produto";
+  return id ? `/produto/${productSlug(name)}-${id}` : "/produto";
 }
 
 export function useProducts() {

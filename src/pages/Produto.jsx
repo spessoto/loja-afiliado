@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { sizedImage } from "../../imageUrl.js";
+import { shortName } from "../../slug.js";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
@@ -93,7 +94,7 @@ export default function Produto() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
-    document.title = product ? `${product.name} — Promo Aspiradores` : "Produto — Promo Aspiradores";
+    document.title = product ? `${shortName(product.name, 46)} — Promo Aspiradores` : "Produto — Promo Aspiradores";
   }, [product]);
 
   useEffect(() => {

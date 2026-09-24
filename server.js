@@ -6,7 +6,7 @@ import fs from "node:fs/promises";
 import { pool, ensureSchema, hashPassword, verifyPassword, getSettings, setSettings } from "./db.js";
 import { generateFaq } from "./faq.js";
 import { getPageMeta, injectMeta, buildSitemapXml, productUrl, SITE_URL } from "./seo.js";
-import { slugify } from "./slug.js";
+import { slugify, shortName } from "./slug.js";
 import { sizedImage } from "./imageUrl.js";
 import { productBlock, postBlock, listingBlock } from "./prerender.js";
 import { submitToIndexNow } from "./indexnow.js";
@@ -528,6 +528,8 @@ app.get("*", async (req, res) => {
       const canonicalPath = productUrl(rows[0]).replace(SITE_URL, "");
       if (req.path !== canonicalPath) return res.redirect(301, canonicalPath);
       seoData.product = rows[0];
+      const [antes] = await pool.query("SELECT name FROM products WHERE id < ?", [rows[0].id]);
+      seoData.duplicateTitle = antes.some(o => shortName(o.name, 46) === shortName(rows[0].name, 46));
     } else {
       // Produto excluído: 301 para a categoria dele (ou /categoria) em vez de 404, preservando o valor de SEO
       const [gone] = await pool.query("SELECT category FROM product_redirects WHERE product_id = ?", [produtoMatch[1]]);

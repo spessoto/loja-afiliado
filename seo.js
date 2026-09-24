@@ -1,4 +1,4 @@
-import { slugify } from "./slug.js";
+import { productSlug, shortName } from "./slug.js";
 
 const SITE_URL = "https://promoaspiradores.com.br";
 const SITE_NAME = "Promo Aspiradores";
@@ -58,8 +58,14 @@ const STATIC_META = {
   "/busca": { title: `Busca — ${SITE_NAME}`, description: "Resultados de busca de aspiradores.", noindex: true }
 };
 
+// Títulos acima de ~70 caracteres são cortados nos resultados: tira a marca do fim quando não cabe
+function withSite(t) {
+  const full = `${t} — ${SITE_NAME}`;
+  return full.length <= 70 ? full : shortName(t, 68);
+}
+
 export function productUrl(product) {
-  return `${SITE_URL}/produto/${slugify(product.name)}-${product.id}`;
+  return `${SITE_URL}/produto/${productSlug(product.name)}-${product.id}`;
 }
 
 function orgJsonLd() {
@@ -171,7 +177,7 @@ export function getPageMeta(pathname, query, data = {}) {
         });
       }
       return {
-        title: `${product.name} — ${SITE_NAME}`,
+        title: data.duplicateTitle ? `${shortName(product.name, 38)} (ref. ${product.id}) — ${SITE_NAME}` : `${shortName(product.name, 46)} — ${SITE_NAME}`,
         description: desc,
         image: product.image_url || DEFAULT_IMAGE,
         canonical,
@@ -193,7 +199,7 @@ export function getPageMeta(pathname, query, data = {}) {
       const canonical = `${SITE_URL}/blog/${post.slug}`;
       const desc = truncate(post.meta_description || post.excerpt || post.title, 155);
       return {
-        title: `${post.title} — ${SITE_NAME}`,
+        title: withSite(post.title),
         description: desc,
         image: post.cover_image_url || DEFAULT_IMAGE,
         canonical,

@@ -514,12 +514,11 @@ app.use(express.static(distDir, { index: false }));
 const escapeAttr = (s) => s.replace(/"/g, "&quot;");
 
 // SSR: mesma árvore React do cliente, renderizada aqui para o Google receber o conteúdo real no HTML inicial
+// Sem top-level await: o host carrega o server.js com require(), que não aceita módulos com await no topo
 let ssrRender = null;
-try {
-  ({ render: ssrRender } = await import(pathToFileURL(path.join(__dirname, "dist-server", "entry-server.js")).href));
-} catch (err) {
-  console.error("SSR indisponível (segue só com renderização no navegador):", err.message);
-}
+const ssrPronto = import(pathToFileURL(path.join(__dirname, "dist-server", "entry-server.js")).href)
+  .then((m) => { ssrRender = m.render; })
+  .catch((err) => { console.error("SSR indisponível (segue só com renderização no navegador):", err.message); });
 
 const PRODUCT_LIST_SLIM = PRODUCT_LIST_FIELDS.replace(" reviews,", "");
 const POST_LIST_FIELDS = "id, title, slug, excerpt, cover_image_url, author, category, published_at";
@@ -614,6 +613,7 @@ app.get("*", async (req, res) => {
   }
 
   // SSR nas páginas indexáveis (home, categorias, blog, post, produto). As demais seguem só no navegador.
+  await ssrPronto;
   let ssrHtml = "";
   let initial = null;
   if (ssrRender && !meta.notFound && !req.path.startsWith("/admin")) {

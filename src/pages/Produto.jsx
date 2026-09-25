@@ -250,6 +250,9 @@ export default function Produto() {
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round"><path d="M12 3.5l7 2.6v5.4c0 4.3-2.9 7.3-7 9-4.1-1.7-7-4.7-7-9V6.1l7-2.6z"></path></svg>
                 Você finaliza a compra no site oficial da loja parceira
               </div>
+              {/amazon|amzn|amzlinks/i.test(product?.affiliate_url || "") && (
+                <p style={{ margin: "-4px 0 12px", font: "400 12px/1.5 Inter", color: "#475569", textAlign: "center" }}>Como Associado da Amazon, ganho com compras qualificadas.</p>
+              )}
               <div style={{ height: 1, background: "#E2E8F0", margin: "16px 0" }}></div>
               <div style={{ display: "grid", gap: 14 }}>
                 <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>

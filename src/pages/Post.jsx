@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
+import ProductCard from "../components/ProductCard.jsx";
 import { useCategories } from "../lib/categories.js";
+import { usePost, usePosts } from "../lib/posts.js";
+import { useProducts, toCardProduct } from "../lib/products.js";
+import { categoriaDoPost, produtosDoPost, outrosPosts } from "../../related.js";
+import { categoryPath, withSiteTitle } from "../../slug.js";
 
 function formatDate(iso) {
   if (!iso) return "";
@@ -32,7 +37,7 @@ function renderInline(text, keyPrefix) {
       external ? (
         <a key={`${keyPrefix}-${i}`} href={href} target="_blank" rel="noopener noreferrer" style={{ color: "#C84A00", fontWeight: 600 }}>{label}</a>
       ) : (
-        <a key={`${keyPrefix}-${i}`} href={href} style={{ color: "#C84A00", fontWeight: 600 }}>{label}</a>
+        <Link key={`${keyPrefix}-${i}`} to={href} style={{ color: "#C84A00", fontWeight: 600 }}>{label}</Link>
       )
     );
     last = match.index + match[0].length;
@@ -45,19 +50,12 @@ function renderInline(text, keyPrefix) {
 export default function Post() {
   const { slug } = useParams();
   const { categories } = useCategories();
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { post, loading } = usePost(slug);
+  const { posts } = usePosts();
+  const { products } = useProducts();
 
   useEffect(() => {
-    setLoading(true);
-    fetch(`/api/posts/${slug}`)
-      .then(res => (res.ok ? res.json() : null))
-      .then(setPost)
-      .finally(() => setLoading(false));
-  }, [slug]);
-
-  useEffect(() => {
-    document.title = post ? `${post.title} — Promo Aspiradores` : "Publicação — Promo Aspiradores";
+    document.title = post ? withSiteTitle(post.title) : "Publicação — Promo Aspiradores";
   }, [post]);
 
   const header = (
@@ -80,6 +78,10 @@ export default function Post() {
   }
 
   if (loading || !post) return null;
+
+  const catDoPost = categoriaDoPost(post);
+  const relacionados = produtosDoPost(post, products).map(toCardProduct);
+  const leiaTambem = outrosPosts(post, posts);
 
   return (
     <>
@@ -127,6 +129,32 @@ export default function Post() {
           return <p key={i} style={{ margin: "0 0 18px", font: "400 16px/1.75 Inter", color: "#334155", whiteSpace: "pre-line" }}>{renderInline(block, `p-${i}`)}</p>;
         })}
       </article>
+
+      {relacionados.length > 0 && (
+        <section style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px 48px" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 12, marginBottom: 20 }}>
+            <h2 style={{ margin: 0, font: "700 24px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Modelos para você comparar</h2>
+            {catDoPost && <Link to={categoryPath(catDoPost)} style={{ font: "600 14px Inter", color: "#C84A00" }}>Ver todos os aspiradores da categoria {catDoPost} →</Link>}
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(232px,1fr))", gap: 24 }}>
+            {relacionados.map(p => <ProductCard key={p.id} p={p} />)}
+          </div>
+        </section>
+      )}
+
+      {leiaTambem.length > 0 && (
+        <section style={{ maxWidth: 780, margin: "0 auto", padding: "0 24px 64px" }}>
+          <h2 style={{ margin: "0 0 16px", font: "700 22px Montserrat", color: "#012746" }}>Leia também</h2>
+          <div style={{ display: "grid", gap: 12 }}>
+            {leiaTambem.map(p => (
+              <Link key={p.slug} to={`/blog/${p.slug}`} className="card-hover" style={{ display: "block", padding: "16px 18px", border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
+                <span style={{ display: "block", font: "700 16px/1.35 Montserrat", color: "#012746" }}>{p.title}</span>
+                {p.excerpt && <span style={{ display: "block", marginTop: 6, font: "400 13.5px/1.55 Inter", color: "#475569" }}>{p.excerpt.length > 130 ? p.excerpt.slice(0, 130).trimEnd() + "…" : p.excerpt}</span>}
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
       </main>
 
       <FooterFull columns={[categoriasCol, institucionalCol]} />

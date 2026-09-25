@@ -26,10 +26,11 @@ export function retainCompare(validIds) {
 }
 
 export function useCompare() {
-  const [ids, setIds] = useState(read);
+  const [ids, setIds] = useState([]);
 
   useEffect(() => {
     const sync = () => setIds(read());
+    sync();
     window.addEventListener(EVENT, sync);
     window.addEventListener("storage", sync);
     return () => {

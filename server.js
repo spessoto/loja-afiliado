@@ -1,14 +1,13 @@
 import express from "express";
 import path from "node:path";
 import crypto from "node:crypto";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import fs from "node:fs/promises";
 import { pool, ensureSchema, hashPassword, verifyPassword, getSettings, setSettings } from "./db.js";
 import { generateFaq } from "./faq.js";
 import { getPageMeta, injectMeta, buildSitemapXml, productUrl, SITE_URL } from "./seo.js";
-import { slugify, shortName } from "./slug.js";
+import { slugify, categoryPath } from "./slug.js";
 import { sizedImage } from "./imageUrl.js";
-import { productBlock, postBlock, listingBlock } from "./prerender.js";
 import { submitToIndexNow } from "./indexnow.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -182,7 +181,7 @@ app.get("/api/products/:id", async (req, res) => {
   res.json(rows[0]);
 });
 
-const FIELDS = ["name", "brand", "category", "description", "image_url", "images", "affiliate_url", "price_from", "price_to", "installment", "badge", "tags", "specs", "indicado", "nao_indicado", "rating_avg", "rating_count", "rating_dist", "reviews", "frete", "garantia", "potencia", "voltagem", "analise"];
+const FIELDS = ["name", "brand", "category", "description", "image_url", "images", "affiliate_url", "price_from", "price_to", "installment", "badge", "tags", "specs", "indicado", "nao_indicado", "rating_avg", "rating_count", "rating_dist", "reviews", "frete", "garantia", "potencia", "voltagem", "analise", "canonical_id"];
 
 // An empty string sent for a numeric column (price, rating...) gets silently
 // coerced to 0 by MySQL, which then renders as a fake "R$ 0,00" or "0 avaliações"
@@ -264,8 +263,8 @@ app.get("/api/categories", async (_req, res) => {
 app.post("/api/categories", requireAdmin, async (req, res) => {
   if (!req.body.name) return res.status(422).json({ error: "name is required" });
   const [result] = await pool.query(
-    "INSERT INTO categories (name, image_url) VALUES (?, ?)",
-    [req.body.name, req.body.image_url || null]
+    "INSERT INTO categories (name, image_url, seo_title, intro) VALUES (?, ?, ?, ?)",
+    [req.body.name, req.body.image_url || null, req.body.seo_title || null, req.body.intro || null]
   );
   res.status(201).json({ id: result.insertId });
 });
@@ -273,8 +272,8 @@ app.post("/api/categories", requireAdmin, async (req, res) => {
 app.put("/api/categories/:id", requireAdmin, async (req, res) => {
   if (!req.body.name) return res.status(422).json({ error: "name is required" });
   await pool.query(
-    "UPDATE categories SET name = ?, image_url = ? WHERE id = ?",
-    [req.body.name, req.body.image_url || null, req.params.id]
+    "UPDATE categories SET name = ?, image_url = ?, seo_title = COALESCE(?, seo_title), intro = COALESCE(?, intro) WHERE id = ?",
+    [req.body.name, req.body.image_url || null, req.body.seo_title ?? null, req.body.intro ?? null, req.params.id]
   );
   res.json({ ok: true });
 });
@@ -490,18 +489,16 @@ app.put("/api/settings", requireAdmin, async (req, res) => {
 });
 
 app.get("/sitemap.xml", async (_req, res) => {
-  const [products] = await pool.query("SELECT id, name, category, image_url, updated_at FROM products");
-  const [categories] = await pool.query("SELECT name FROM categories");
+  // Duplicatas (canonical_id) ficam de fora: só a página principal do produto deve ser indexada
+  const [products] = await pool.query("SELECT id, name, category, image_url, updated_at FROM products WHERE canonical_id IS NULL");
+  const [categories] = await pool.query("SELECT c.name FROM categories c WHERE EXISTS (SELECT 1 FROM products p WHERE p.category = c.name)");
   const [posts] = await pool.query("SELECT slug, content, cover_image_url, updated_at FROM posts WHERE published = 1");
   const urls = [
     { loc: `${SITE_URL}/`, priority: 1.0, changefreq: "daily" },
     { loc: `${SITE_URL}/categoria`, priority: 0.8, changefreq: "daily" },
     { loc: `${SITE_URL}/blog`, priority: 0.6, changefreq: "weekly" },
     { loc: `${SITE_URL}/contato`, priority: 0.3, changefreq: "monthly" },
-    { loc: `${SITE_URL}/politica-de-cookies`, priority: 0.1, changefreq: "yearly" },
-    { loc: `${SITE_URL}/politica-de-privacidade`, priority: 0.1, changefreq: "yearly" },
-    { loc: `${SITE_URL}/politica-de-uso`, priority: 0.1, changefreq: "yearly" },
-    ...categories.map(c => ({ loc: `${SITE_URL}/categoria?cat=${encodeURIComponent(c.name)}`, priority: 0.7, changefreq: "daily" })),
+    ...categories.map(c => ({ loc: `${SITE_URL}${categoryPath(c.name)}`, priority: 0.7, changefreq: "daily" })),
     ...products.map(p => ({ loc: productUrl(p), priority: 0.9, changefreq: "weekly", lastmod: new Date(p.updated_at).toISOString().slice(0, 10), image: p.image_url || undefined })),
     ...posts.map(p => {
       const inlineImages = [...(p.content || "").matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)].map(m => m[1]);
@@ -516,9 +513,46 @@ app.use(express.static(distDir, { index: false }));
 
 const escapeAttr = (s) => s.replace(/"/g, "&quot;");
 
+// SSR: mesma árvore React do cliente, renderizada aqui para o Google receber o conteúdo real no HTML inicial
+let ssrRender = null;
+try {
+  ({ render: ssrRender } = await import(pathToFileURL(path.join(__dirname, "dist-server", "entry-server.js")).href));
+} catch (err) {
+  console.error("SSR indisponível (segue só com renderização no navegador):", err.message);
+}
+
+const PRODUCT_LIST_SLIM = PRODUCT_LIST_FIELDS.replace(" reviews,", "");
+const POST_LIST_FIELDS = "id, title, slug, excerpt, cover_image_url, author, category, published_at";
+// JSON dentro de <script>: escapa < e os separadores de linha U+2028/2029
+const BARRA = String.fromCharCode(92);
+const safeJson = (o) => JSON.stringify(o)
+  .split("<").join(BARRA + "u003c")
+  .split(String.fromCharCode(0x2028)).join(BARRA + "u2028")
+  .split(String.fromCharCode(0x2029)).join(BARRA + "u2029");
+
+async function ssrData(req, seoData) {
+  const products = async (slim) => (await pool.query(`SELECT ${slim ? PRODUCT_LIST_SLIM : PRODUCT_LIST_FIELDS} FROM products ORDER BY created_at DESC, id DESC`))[0];
+  const categories = async () => (await pool.query("SELECT * FROM categories ORDER BY name ASC"))[0];
+  const posts = async () => (await pool.query(`SELECT ${POST_LIST_FIELDS} FROM posts WHERE published = 1 ORDER BY published_at DESC`))[0];
+  let data = null;
+  if (req.path === "/") data = { products: await products(false), categories: await categories(), posts: await posts() };
+  else if (req.path === "/categoria" || seoData.category) data = { products: await products(true), categories: await categories() };
+  else if (req.path === "/blog") data = { posts: await posts(), categories: await categories() };
+  else if (seoData.post) data = { post: seoData.post, posts: await posts(), products: await products(true), categories: await categories() };
+  else if (seoData.product) data = { product: seoData.product, products: await products(true), posts: await posts(), categories: await categories() };
+  return data && JSON.parse(JSON.stringify(data));
+}
+
 app.get("*", async (req, res) => {
   const indexPath = path.join(distDir, "index.html");
   let html = await fs.readFile(indexPath, "utf-8");
+
+  // Endereço antigo com filtro por parâmetro -> URL limpa da categoria
+  if (req.path === "/categoria" && req.query.cat) {
+    const [cats] = await pool.query("SELECT name FROM categories");
+    const alvo = cats.find(c => c.name.toLowerCase() === String(req.query.cat).toLowerCase());
+    return res.redirect(301, alvo ? categoryPath(alvo.name) : "/categoria");
+  }
 
   const seoData = {};
   const produtoMatch = req.path.match(/^\/produto\/(?:.*-)?(\d+)$/);
@@ -528,14 +562,17 @@ app.get("*", async (req, res) => {
       const canonicalPath = productUrl(rows[0]).replace(SITE_URL, "");
       if (req.path !== canonicalPath) return res.redirect(301, canonicalPath);
       seoData.product = rows[0];
-      const [antes] = await pool.query("SELECT name FROM products WHERE id < ?", [rows[0].id]);
-      seoData.duplicateTitle = antes.some(o => shortName(o.name, 46) === shortName(rows[0].name, 46));
+      [seoData.productsBefore] = await pool.query("SELECT id, name FROM products WHERE id < ?", [rows[0].id]);
+      if (rows[0].canonical_id) {
+        const [principal] = await pool.query("SELECT id, name FROM products WHERE id = ?", [rows[0].canonical_id]);
+        if (principal[0]) seoData.canonicalProduct = principal[0];
+      }
     } else {
       // Produto excluído: 301 para a categoria dele (ou /categoria) em vez de 404, preservando o valor de SEO
       const [gone] = await pool.query("SELECT category FROM product_redirects WHERE product_id = ?", [produtoMatch[1]]);
       if (gone[0]) {
         const [still] = gone[0].category ? await pool.query("SELECT 1 FROM products WHERE category = ? LIMIT 1", [gone[0].category]) : [[]];
-        return res.redirect(301, still.length ? `/categoria?cat=${encodeURIComponent(gone[0].category)}` : "/categoria");
+        return res.redirect(301, still.length ? categoryPath(gone[0].category) : "/categoria");
       }
       seoData.productNotFound = true;
     }
@@ -546,9 +583,14 @@ app.get("*", async (req, res) => {
     if (rows[0]) seoData.post = rows[0];
     else seoData.postNotFound = true;
   }
-  if (req.path === "/categoria" && req.query.cat) {
-    const [rows] = await pool.query("SELECT id, name FROM products WHERE category = ?", [req.query.cat]);
-    seoData.categoryProducts = rows;
+  const categoriaMatch = req.path.match(/^\/categoria\/([^/]+)$/);
+  if (categoriaMatch) {
+    const [cats] = await pool.query("SELECT * FROM categories");
+    const cat = cats.find(c => slugify(c.name) === categoriaMatch[1]);
+    if (cat) {
+      seoData.category = cat;
+      [seoData.categoryProducts] = await pool.query("SELECT id, name FROM products WHERE category = ?", [cat.name]);
+    }
   }
 
   const meta = getPageMeta(req.path, req.query, seoData);
@@ -569,39 +611,38 @@ app.get("*", async (req, res) => {
   if (!req.path.startsWith("/admin")) {
     // Microsoft Clarity: só com consentimento de desempenho (pa_consent) e adiado como o gtag (interação ou 6s após o load)
     html = html.replace("</head>", () => `  <script>(function(){var l=0;function ok(){try{var c=JSON.parse(localStorage.getItem("pa_consent"));return !!(c&&c.desempenho)}catch(e){return false}}function go(){if(l||!ok())return;l=1;(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${CLARITY_ID}");}["scroll","pointerdown","keydown","touchstart"].forEach(function(e){addEventListener(e,go,{once:true,passive:true});});addEventListener("load",function(){setTimeout(go,6000);});addEventListener("pa-consent",go);})();</script>\n</head>`);
-    const preloads = [];
-    const fetchPreload = (href) => `<link rel="preload" as="fetch" href="${href}" crossorigin="anonymous" />`;
-    if (!req.path.startsWith("/blog")) preloads.push(fetchPreload("/api/categories"));
-    if (["/", "/categoria", "/busca", "/comparar"].includes(req.path) || req.path.startsWith("/produto/")) preloads.push(fetchPreload("/api/products"));
-    if (seoData.product) {
-      preloads.push(fetchPreload(`/api/products/${seoData.product.id}`));
-      if (seoData.product.image_url) preloads.push(`<link rel="preload" as="image" href="${escapeAttr(sizedImage(seoData.product.image_url, 800))}" fetchpriority="high" />`);
-    }
-    if (req.path === "/") {
-      const [heroRows] = await pool.query("SELECT image_url FROM products ORDER BY created_at DESC, id DESC");
-      const hero = heroRows.length ? heroRows[Math.floor(Date.now() / 3600000) % heroRows.length] : null;
-      if (hero?.image_url) preloads.push(`<link rel="preload" as="image" href="${escapeAttr(sizedImage(hero.image_url, 700))}" fetchpriority="high" />`);
-    }
-    if (preloads.length && !meta.notFound) html = html.replace("</head>", `  ${preloads.join("\n  ")}\n</head>`);
   }
-  if (!meta.notFound && !req.path.startsWith("/admin")) {
-    let block = "";
-    if (seoData.product) {
-      const p = seoData.product;
-      const [related] = await pool.query("SELECT id, name, price_to FROM products WHERE category <=> ? AND id != ? ORDER BY view_count DESC LIMIT 8", [p.category, p.id]);
-      block = productBlock(p, related);
-    } else if (seoData.post) {
-      block = postBlock(seoData.post);
-    } else if (req.path === "/" || req.path === "/categoria") {
-      const cat = req.path === "/categoria" && req.query.cat ? String(req.query.cat) : null;
-      const [prods] = await pool.query(`SELECT id, name, price_to FROM products ${cat ? "WHERE category = ?" : ""} ORDER BY created_at DESC, id DESC`, cat ? [cat] : []);
-      const [cats] = await pool.query("SELECT name FROM categories ORDER BY name");
-      block = listingBlock(meta.title, { categories: cats.map(c => c.name), products: prods });
-    } else if (req.path === "/blog") {
-      const [posts] = await pool.query("SELECT slug, title FROM posts WHERE published = 1 ORDER BY published_at DESC");
-      block = listingBlock(meta.title, { posts });
+
+  // SSR nas páginas indexáveis (home, categorias, blog, post, produto). As demais seguem só no navegador.
+  let ssrHtml = "";
+  let initial = null;
+  if (ssrRender && !meta.notFound && !req.path.startsWith("/admin")) {
+    try {
+      initial = await ssrData(req, seoData);
+      if (initial) ssrHtml = await ssrRender(req.originalUrl, initial);
+    } catch (err) {
+      console.error("Falha no SSR de", req.path, err);
+      initial = null;
+      ssrHtml = "";
     }
-    if (block) html = html.replace('<div id="root"></div>', () => `<div id="root">${block}</div>`);
+  }
+  if (ssrHtml) {
+    html = html.replace('<div id="root"></div>', () => `<div id="root">${ssrHtml}</div><script>window.__INITIAL__=${safeJson(initial)}</script>`);
+  } else if (!req.path.startsWith("/admin") && !meta.notFound) {
+    const preloads = [`<link rel="preload" as="fetch" href="/api/categories" crossorigin="anonymous" />`];
+    if (["/busca", "/comparar"].includes(req.path)) preloads.push(`<link rel="preload" as="fetch" href="/api/products" crossorigin="anonymous" />`);
+    html = html.replace("</head>", `  ${preloads.join("\n  ")}\n</head>`);
+  }
+
+  // Imagem principal (LCP) pré-carregada na home e nos produtos
+  if (ssrHtml) {
+    let lcp = null;
+    if (seoData.product?.image_url) lcp = sizedImage(seoData.product.image_url, 800);
+    else if (req.path === "/" && initial?.products?.length) {
+      const hero = initial.products[Math.floor(Date.now() / 3600000) % initial.products.length];
+      if (hero?.image_url) lcp = sizedImage(hero.image_url, 700);
+    }
+    if (lcp) html = html.replace("</head>", `  <link rel="preload" as="image" href="${escapeAttr(lcp)}" fetchpriority="high" />\n</head>`);
   }
   res.status(meta.notFound ? 404 : 200).set("Content-Type", "text/html").send(html);
 });

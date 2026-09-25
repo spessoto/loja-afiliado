@@ -26,3 +26,20 @@ export function shortName(text, max) {
 export function productSlug(name) {
   return slugify(shortName(name, 60));
 }
+
+export function categoryPath(name) {
+  return `/categoria/${slugify(name)}`;
+}
+
+// Títulos acima de ~70 caracteres são cortados nos resultados: tira a marca do fim quando não cabe
+export function withSiteTitle(t, site = "Promo Aspiradores") {
+  const full = `${t} — ${site}`;
+  return full.length <= 70 ? full : shortName(t, 68);
+}
+
+export function productTitle(product, all = []) {
+  const dup = all.some(o => o.id < product.id && shortName(o.name, 46) === shortName(product.name, 46));
+  return dup
+    ? `${shortName(product.name, 38)} (ref. ${product.id}) — Promo Aspiradores`
+    : `${shortName(product.name, 46)} — Promo Aspiradores`;
+}

@@ -3,9 +3,9 @@ import { useCookieConsent } from "../lib/cookieConsent.js";
 
 export default function CookieBanner() {
   const location = useLocation();
-  const { consent, aceitarTodos, recusar } = useCookieConsent();
+  const { consent, ready, aceitarTodos, recusar } = useCookieConsent();
 
-  if (consent || location.pathname.startsWith("/admin")) return null;
+  if (!ready || consent || location.pathname.startsWith("/admin")) return null;
 
   return (
     <div style={{ position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 100, background: "#fff", borderTop: "1px solid #E2E8F0", boxShadow: "0 -6px 24px rgba(1,39,70,.12)" }}>

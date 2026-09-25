@@ -1,4 +1,4 @@
-import { productSlug, shortName } from "./slug.js";
+import { productSlug, productTitle, withSiteTitle, categoryPath } from "./slug.js";
 
 const SITE_URL = "https://promoaspiradores.com.br";
 const SITE_NAME = "Promo Aspiradores";
@@ -34,35 +34,29 @@ const STATIC_META = {
   },
   "/contato": {
     title: `Fale com a Gente — ${SITE_NAME}`,
-    description: "Tire dúvidas sobre qual aspirador escolher ou sobre um pedido. Atendimento especializado por e-mail e WhatsApp.",
+    description: "Tire dúvidas sobre qual aspirador escolher ou sobre um pedido. Atendimento por e-mail.",
     focusKeyword: "atendimento aspirador"
   },
   "/politica-de-cookies": {
     title: `Política de Cookies e Dados — ${SITE_NAME}`,
     description: "Saiba como a Promo Aspiradores usa cookies e trata seus dados pessoais.",
-    priority: 0.2
+    noindex: true
   },
   "/politica-de-privacidade": {
     title: `Política de Privacidade — ${SITE_NAME}`,
     description: "Conheça a política de privacidade da Promo Aspiradores e como protegemos seus dados.",
-    priority: 0.2
+    noindex: true
   },
   "/politica-de-uso": {
     title: `Política de Uso — ${SITE_NAME}`,
     description: "Termos de uso do site Promo Aspiradores.",
-    priority: 0.2
+    noindex: true
   },
   "/cadastro": { title: `Criar Conta — ${SITE_NAME}`, description: "Crie sua conta para salvar favoritos e comparar aspiradores.", noindex: true },
   "/favoritos": { title: `Meus Favoritos — ${SITE_NAME}`, description: "Seus aspiradores favoritos salvos.", noindex: true },
   "/comparar": { title: `Comparar Produtos — ${SITE_NAME}`, description: "Compare aspiradores lado a lado.", noindex: true },
   "/busca": { title: `Busca — ${SITE_NAME}`, description: "Resultados de busca de aspiradores.", noindex: true }
 };
-
-// Títulos acima de ~70 caracteres são cortados nos resultados: tira a marca do fim quando não cabe
-function withSite(t) {
-  const full = `${t} — ${SITE_NAME}`;
-  return full.length <= 70 ? full : shortName(t, 68);
-}
 
 export function productUrl(product) {
   return `${SITE_URL}/produto/${productSlug(product.name)}-${product.id}`;
@@ -117,7 +111,7 @@ function itemListJsonLd(products) {
  * data: { product, productNotFound, post, postNotFound, categoryProducts }
  */
 export function getPageMeta(pathname, query, data = {}) {
-  const { product, productNotFound, post, postNotFound, categoryProducts } = data;
+  const { product, productNotFound, post, postNotFound, categoryProducts, category } = data;
 
   if (pathname.startsWith("/admin")) {
     return { title: `Admin — ${SITE_NAME}`, description: "Painel administrativo.", noindex: true, canonical: `${SITE_URL}${pathname}`, jsonLd: [] };
@@ -128,12 +122,12 @@ export function getPageMeta(pathname, query, data = {}) {
       return { title: `Produto não encontrado — ${SITE_NAME}`, description: DEFAULT_DESCRIPTION, noindex: true, notFound: true, canonical: `${SITE_URL}${pathname}`, jsonLd: [] };
     }
     if (product) {
-      const canonical = productUrl(product);
+      const canonical = productUrl(data.canonicalProduct || product);
       const desc = truncate(product.description || `${product.name} — confira preço, especificações e avaliações reais.`, 155);
       const jsonLd = [orgJsonLd(), websiteJsonLd()];
       jsonLd.push(breadcrumbJsonLd([
         { name: "Home", item: SITE_URL },
-        { name: product.category || "Aspiradores", item: `${SITE_URL}/categoria?cat=${encodeURIComponent(product.category || "")}` },
+        { name: product.category || "Aspiradores", item: product.category ? `${SITE_URL}${categoryPath(product.category)}` : `${SITE_URL}/categoria` },
         { name: product.name, item: canonical }
       ]));
       const productLd = {
@@ -177,7 +171,7 @@ export function getPageMeta(pathname, query, data = {}) {
         });
       }
       return {
-        title: data.duplicateTitle ? `${shortName(product.name, 38)} (ref. ${product.id}) — ${SITE_NAME}` : `${shortName(product.name, 46)} — ${SITE_NAME}`,
+        title: productTitle(product, data.productsBefore || []),
         description: desc,
         image: product.image_url || DEFAULT_IMAGE,
         canonical,
@@ -199,7 +193,7 @@ export function getPageMeta(pathname, query, data = {}) {
       const canonical = `${SITE_URL}/blog/${post.slug}`;
       const desc = truncate(post.meta_description || post.excerpt || post.title, 155);
       return {
-        title: withSite(post.title),
+        title: withSiteTitle(post.title),
         description: desc,
         image: post.cover_image_url || DEFAULT_IMAGE,
         canonical,
@@ -223,8 +217,26 @@ export function getPageMeta(pathname, query, data = {}) {
     }
   }
 
+  if (pathname.startsWith("/categoria/")) {
+    if (!category) {
+      return { title: `Categoria não encontrada — ${SITE_NAME}`, description: DEFAULT_DESCRIPTION, noindex: true, notFound: true, canonical: `${SITE_URL}${pathname}`, jsonLd: [] };
+    }
+    const canonical = `${SITE_URL}${categoryPath(category.name)}`;
+    const primeiro = String(category.intro || "").split(/\n{2,}/).map(b => b.trim()).find(b => b && !b.startsWith("## ") && !b.startsWith("- "));
+    const jsonLd = [orgJsonLd(), websiteJsonLd(), breadcrumbJsonLd([{ name: "Home", item: SITE_URL }, { name: "Aspiradores", item: `${SITE_URL}/categoria` }, { name: category.name, item: canonical }])];
+    if (categoryProducts && categoryProducts.length > 0) jsonLd.push(itemListJsonLd(categoryProducts));
+    return {
+      title: category.seo_title || `Aspirador ${category.name} — Compare Modelos | ${SITE_NAME}`,
+      description: truncate(primeiro || `Confira os aspiradores da categoria ${category.name}: preços, avaliações reais e comparação lado a lado.`, 155),
+      canonical,
+      noindex: !(categoryProducts && categoryProducts.length > 0),
+      focusKeyword: `aspirador ${category.name}`.toLowerCase(),
+      jsonLd
+    };
+  }
+
   if (pathname === "/categoria") {
-    const cat = query.cat ? String(query.cat) : null;
+    const cat = null;
     const canonical = cat ? `${SITE_URL}/categoria?cat=${encodeURIComponent(cat)}` : `${SITE_URL}/categoria`;
     const jsonLd = [orgJsonLd(), websiteJsonLd()];
     if (cat) {

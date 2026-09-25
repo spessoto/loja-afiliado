@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useCategories } from "../lib/categories.js";
+import { usePosts } from "../lib/posts.js";
 
 function formatDate(iso) {
   if (!iso) return "";
@@ -17,15 +18,10 @@ function truncate(text, max) {
 
 export default function Blog() {
   const { categories } = useCategories();
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { posts, loading } = usePosts();
 
   useEffect(() => {
     document.title = "Guias de compra e dicas de limpeza — Blog Promo Aspiradores";
-    fetch("/api/posts")
-      .then(res => (res.ok ? res.json() : []))
-      .then(setPosts)
-      .finally(() => setLoading(false));
   }, []);
 
   return (

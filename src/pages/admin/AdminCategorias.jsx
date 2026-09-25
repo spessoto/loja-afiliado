@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AdminShell, { inputStyle, btnStyle } from "../../components/AdminShell.jsx";
 
-const empty = { name: "", image_url: "" };
+const empty = { name: "", image_url: "", seo_title: "", intro: "" };
 
 export default function AdminCategorias() {
   const [categories, setCategories] = useState([]);
@@ -25,7 +25,7 @@ export default function AdminCategorias() {
 
   function startEdit(c) {
     setEditingId(c.id);
-    setForm({ name: c.name, image_url: c.image_url || "" });
+    setForm({ name: c.name, image_url: c.image_url || "", seo_title: c.seo_title || "", intro: c.intro || "" });
   }
 
   function resetForm() {
@@ -65,6 +65,8 @@ export default function AdminCategorias() {
         {error && <p style={{ color: "#DC2626", gridColumn: "1 / -1", margin: 0 }}>{error}</p>}
         <input placeholder="Nome da categoria" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required style={inputStyle} />
         <input placeholder="URL da imagem" value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })} style={inputStyle} />
+        <input placeholder="Título SEO (até 70 caracteres, termina com | Promo Aspiradores)" value={form.seo_title} onChange={e => setForm({ ...form, seo_title: e.target.value })} maxLength={70} style={inputStyle} />
+        <textarea placeholder="Texto-guia da categoria (150 a 300 palavras). Use ## para títulos, - para listas e [texto](/produto/...) para links." value={form.intro} onChange={e => setForm({ ...form, intro: e.target.value })} style={{ ...inputStyle, height: 160 }} />
         <div style={{ gridColumn: "1 / -1", display: "flex", gap: 10 }}>
           <button type="submit" style={btnStyle}>{editingId ? "Salvar alterações" : "Adicionar categoria"}</button>
           {editingId && <button type="button" onClick={resetForm} style={{ ...btnStyle, background: "#64748B" }}>Cancelar</button>}

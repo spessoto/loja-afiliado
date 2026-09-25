@@ -33,9 +33,15 @@ const notFoundMeta = getPageMeta("/produto/999", {}, { productNotFound: true });
 assert.ok(notFoundMeta.notFound);
 assert.ok(notFoundMeta.noindex);
 
-const catMeta = getPageMeta("/categoria", { cat: "Robôs" }, { categoryProducts: [{ id: 1, name: "X" }] });
-assert.ok(catMeta.title.includes("Robôs"));
+const catMeta = getPageMeta("/categoria/robos", {}, { category: { name: "Robôs", seo_title: "Robô Aspirador: Modelos e Preços | Promo Aspiradores", intro: "## Título\n\nPrimeiro parágrafo do guia." }, categoryProducts: [{ id: 1, name: "X" }] });
+assert.ok(catMeta.title.includes("Robô Aspirador"));
+assert.ok(catMeta.canonical.endsWith("/categoria/robos"));
+assert.ok(catMeta.description.startsWith("Primeiro parágrafo"));
+assert.ok(!catMeta.noindex);
 assert.ok(catMeta.jsonLd.some(x => x["@type"] === "ItemList"));
+assert.ok(getPageMeta("/categoria/vazia", {}, { category: { name: "Vazia" }, categoryProducts: [] }).noindex);
+assert.ok(getPageMeta("/categoria/x", {}, {}).notFound);
+assert.ok(getPageMeta("/politica-de-cookies", {}, {}).noindex);
 
 const catAllMeta = getPageMeta("/categoria", {}, {});
 assert.ok(catAllMeta.title.includes("Todos os Aspiradores"));

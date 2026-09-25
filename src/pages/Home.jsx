@@ -7,7 +7,9 @@ import FaqAccordion from "../components/FaqAccordion.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useProducts, toCardProduct, formatBRL, linhas, parseReviews, productUrl } from "../lib/products.js";
 import { useCategories } from "../lib/categories.js";
+import { usePosts } from "../lib/posts.js";
 import { sizedImage } from "../../imageUrl.js";
+import { categoryPath } from "../../slug.js";
 
 const heroTrust = ["Você compra direto na loja oficial", "Garantia e nota fiscal do parceiro"];
 
@@ -82,6 +84,7 @@ function Countdown() {
 export default function Home() {
   const { products, loading } = useProducts();
   const { categories } = useCategories();
+  const { posts } = usePosts();
   const cards = products.map(toCardProduct);
   const categorias = categories
     .map(cat => {
@@ -159,7 +162,7 @@ export default function Home() {
           <div style={{ position: "relative" }}>
             <Link to={heroProduct ? productUrl(heroProduct.id, heroProduct.name) : "/categoria"} style={{ aspectRatio: "4/3.4", maxWidth: 420, margin: "0 auto", borderRadius: 16, border: "1px solid #E2E8F0", overflow: "hidden", background: heroProduct?.image_url ? "#fff" : "repeating-linear-gradient(135deg,#F1F5F9 0 9px,#E9EFF5 9px 18px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: heroProduct?.image_url ? 0 : 24 }}>
               {heroProduct?.image_url ? (
-                <img src={sizedImage(heroProduct.image_url, 700)} alt={heroProduct.name} fetchPriority="high" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 24 }} />
+                <img src={sizedImage(heroProduct.image_url, 700)} alt={heroProduct.name} fetchpriority="high" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 24 }} />
               ) : heroProduct ? (
                 <span style={{ font: "600 15px Montserrat", color: "#012746", maxWidth: 260 }}>{heroProduct.name}</span>
               ) : (
@@ -187,7 +190,7 @@ export default function Home() {
         <p style={{ margin: "0 0 24px", font: "400 14.5px Inter", color: "#475569" }}>Seis categorias, sem enrolação. Escolha pelo formato que combina com a sua casa.</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 24 }}>
           {categorias.length > 0 ? categorias.map((c, i) => (
-            <Link key={i} to={`/categoria?cat=${encodeURIComponent(c.nome)}`} className="card-hover" style={{ display: "flex", flexDirection: "column", gap: 14, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
+            <Link key={i} to={categoryPath(c.nome)} className="card-hover" style={{ display: "flex", flexDirection: "column", gap: 14, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
               <div style={{ aspectRatio: "1/1", borderRadius: 8, overflow: "hidden", background: c.image_url ? "#fff" : "repeating-linear-gradient(135deg,#F8FAFC 0 8px,#F1F5F9 8px 16px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: c.image_url ? 0 : 12, font: "400 10.5px ui-monospace,monospace", letterSpacing: ".06em", color: "#64748B" }}>
                 {c.image_url ? <img src={sizedImage(c.image_url, 250)} alt={`Aspiradores ${c.nome}`} loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 14 }} /> : c.nome.toLowerCase()}
               </div>
@@ -261,6 +264,27 @@ export default function Home() {
           <p style={{ font: "400 15px Inter", color: "#64748B" }}>Nenhum produto cadastrado ainda.</p>
         )}
       </section>
+
+      {posts.length > 0 && (
+        <section style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px 0" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 16, marginBottom: 24 }}>
+            <div>
+              <h2 style={{ margin: "0 0 6px", font: "700 26px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Guias e comparativos</h2>
+              <p style={{ margin: 0, font: "400 14.5px Inter", color: "#475569" }}>Conteúdo para escolher o aspirador certo antes de comprar.</p>
+            </div>
+            <Link to="/blog" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", height: 42, padding: "0 20px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 13px Montserrat" }}>VER TODOS OS ARTIGOS</Link>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 20 }}>
+            {posts.slice(0, 3).map(p => (
+              <Link key={p.slug} to={`/blog/${p.slug}`} className="card-hover" style={{ display: "block", padding: "18px 20px", border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
+                {p.category && <span style={{ display: "block", font: "600 11px Inter", letterSpacing: ".1em", color: "#B84400", marginBottom: 8 }}>{p.category.toUpperCase()}</span>}
+                <span style={{ display: "block", font: "700 16.5px/1.35 Montserrat", color: "#012746" }}>{p.title}</span>
+                {p.excerpt && <span style={{ display: "block", marginTop: 8, font: "400 13.5px/1.6 Inter", color: "#475569" }}>{p.excerpt.length > 130 ? p.excerpt.slice(0, 130).trimEnd() + "…" : p.excerpt}</span>}
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section style={{ margin: "48px 0 0", background: "#F8FAFC", borderTop: "1px solid #E2E8F0", borderBottom: "1px solid #E2E8F0" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "36px 24px", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 28 }}>

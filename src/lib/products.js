@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { productSlug } from "../../slug.js";
 import { retainCompare } from "./compare.js";
+import { useInitial } from "./initialData.jsx";
 
 export function productUrl(id, name) {
   return id ? `/produto/${productSlug(name)}-${id}` : "/produto";
 }
 
 export function useProducts() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const initial = useInitial("products");
+  const [products, setProducts] = useState(initial || []);
+  const [loading, setLoading] = useState(!initial);
 
   useEffect(() => {
+    if (initial) { retainCompare(initial.map(x => x.id)); return; }
     fetch("/api/products")
       .then(res => res.json())
       .then(data => { retainCompare(data.map(x => x.id)); setProducts(data); })
@@ -21,10 +24,13 @@ export function useProducts() {
 }
 
 export function useProduct(id) {
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const initial = useInitial("product");
+  const usaInitial = initial && String(initial.id) === String(id);
+  const [product, setProduct] = useState(usaInitial ? initial : null);
+  const [loading, setLoading] = useState(!usaInitial);
 
   useEffect(() => {
+    if (usaInitial && product?.id === initial.id) return;
     setLoading(true);
     fetch(`/api/products/${id}`)
       .then(res => (res.ok ? res.json() : null))

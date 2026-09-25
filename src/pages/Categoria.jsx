@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
 import { useProducts, toCardProduct, formatBRL } from "../lib/products.js";
 import { useCategories } from "../lib/categories.js";
+import RichText from "../components/RichText.jsx";
+import { slugify, categoryPath } from "../../slug.js";
 
 const guia = [
   { n: "01", t: "Potência real de sucção", s: "Não olhe só os watts do motor. Modelos ciclônicos mantêm a sucção constante mesmo com o reservatório cheio, o que faz mais diferença no dia a dia." },
@@ -35,18 +37,20 @@ function ordenar(lista, ordem) {
 }
 
 export default function Categoria() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const categoriaAtual = searchParams.get("cat") || "";
+  const { slug } = useParams();
   const [sel, setSel] = useState({});
   const [preco, setPreco] = useState(null);
   const [ordem, setOrdem] = useState(ORDENS[0]);
   const { products, loading } = useProducts();
-  const { categories } = useCategories();
+  const { categories, loading: carregandoCategorias } = useCategories();
+  const catRow = slug ? categories.find(c => slugify(c.name) === slug) : null;
+  const categoriaAtual = catRow?.name || "";
+  const categoriaInexistente = !!slug && !catRow && !carregandoCategorias;
 
   useEffect(() => {
-    document.title = categoriaAtual
+    document.title = catRow?.seo_title || (categoriaAtual
       ? `${categoriaAtual} — Promo Aspiradores`
-      : "Todos os aspiradores — Promo Aspiradores";
+      : "Todos os aspiradores — Promo Aspiradores");
   }, [categoriaAtual]);
 
   useEffect(() => {
@@ -139,7 +143,7 @@ export default function Categoria() {
             {categories.map((cat, i) => (
               <Link
                 key={i}
-                to={cat.name === categoriaAtual ? "/categoria" : `/categoria?cat=${encodeURIComponent(cat.name)}`}
+                to={cat.name === categoriaAtual ? "/categoria" : categoryPath(cat.name)}
                 className="pill"
                 style={{
                   display: "inline-flex", alignItems: "center", height: 40, padding: "0 18px", borderRadius: 24,
@@ -217,7 +221,9 @@ export default function Categoria() {
             </div>
           </div>
 
-          {loading ? (
+          {categoriaInexistente ? (
+            <p style={{ padding: "24px 0", font: "400 15px Inter", color: "#475569" }}>Categoria não encontrada. <Link to="/categoria" style={{ color: "#C84A00", fontWeight: 600 }}>Ver todos os aspiradores</Link></p>
+          ) : loading ? (
             <p style={{ padding: "24px 0", font: "400 15px Inter", color: "#64748B" }}>Carregando produtos...</p>
           ) : produtosExibidos.length > 0 ? (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(232px,1fr))", gap: 24, padding: "24px 0 0" }}>
@@ -233,6 +239,15 @@ export default function Categoria() {
           )}
         </div>
       </main>
+
+      {catRow?.intro && (
+        <section style={{ maxWidth: 1280, margin: "48px auto 0", padding: "0 24px" }}>
+          <div style={{ maxWidth: 860 }}>
+            <h2 style={{ margin: "0 0 14px", font: "700 23px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Guia de escolha: {categoriaAtual}</h2>
+            <RichText text={catRow.intro} p={{ margin: "0 0 14px", font: "400 15.5px/1.75 Inter", color: "#475569" }} h={{ margin: "22px 0 10px", font: "700 18px Montserrat", color: "#012746" }} />
+          </div>
+        </section>
+      )}
 
       <section style={{ margin: "48px 0 0", background: "#F8FAFC", borderTop: "1px solid #E2E8F0", borderBottom: "1px solid #E2E8F0" }}>
         <div className="stack-mobile" style={{ maxWidth: 1280, margin: "0 auto", padding: "36px 24px", display: "grid", gridTemplateColumns: "minmax(0,.8fr) minmax(0,1.2fr)", gap: 40 }}>

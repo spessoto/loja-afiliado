@@ -34,6 +34,13 @@ export default function PoliticaCookies() {
   const [desempenho, setDesempenho] = useState(consent ? consent.desempenho : true);
   const [funcionais, setFuncionais] = useState(consent ? consent.funcionais : true);
   const [marketing, setMarketing] = useState(consent ? consent.marketing : false);
+
+  useEffect(() => {
+    if (!consent) return;
+    setDesempenho(consent.desempenho);
+    setFuncionais(consent.funcionais);
+    setMarketing(consent.marketing);
+  }, [consent]);
   const [salvo, setSalvo] = useState(false);
 
   useEffect(() => {

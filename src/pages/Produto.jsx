@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { sizedImage } from "../../imageUrl.js";
-import { shortName } from "../../slug.js";
+import { productTitle, categoryPath } from "../../slug.js";
+import { postsDoProduto } from "../../related.js";
+import RichText from "../components/RichText.jsx";
+import { usePosts } from "../lib/posts.js";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
@@ -89,13 +92,14 @@ export default function Produto() {
   const id = (slug || "").match(/(\d+)$/)?.[0];
   const { product, loading } = useProduct(id);
   const { products: todosProdutos } = useProducts();
+  const { posts } = usePosts();
   const { categories } = useCategories();
   const [foto, setFoto] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
-    document.title = product ? `${shortName(product.name, 46)} — Promo Aspiradores` : "Produto — Promo Aspiradores";
-  }, [product]);
+    document.title = product ? productTitle(product, todosProdutos) : "Produto — Promo Aspiradores";
+  }, [product, todosProdutos]);
 
   useEffect(() => {
     if (product?.id) fetch(`/api/products/${product.id}/view`, { method: "POST" });
@@ -142,6 +146,8 @@ export default function Produto() {
     faqExibido = [];
   }
 
+  const guiasRelacionados = product ? postsDoProduto(product, posts) : [];
+
   const relacionadosExibidos = product
     ? (() => {
         const outros = todosProdutos.filter(p => p.id !== product.id);
@@ -176,7 +182,7 @@ export default function Produto() {
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "11px 24px", display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", font: "400 13px Inter", color: "#475569" }}>
           <Link to="/">Home</Link><span style={{ color: "#64748B" }}>/</span>
           <Link to="/categoria">Aspiradores</Link><span style={{ color: "#64748B" }}>/</span>
-          <Link to="/categoria">{categoria}</Link><span style={{ color: "#64748B" }}>/</span>
+          <Link to={product?.category ? categoryPath(product.category) : "/categoria"}>{categoria}</Link><span style={{ color: "#64748B" }}>/</span>
           <span style={{ color: "#012746", fontWeight: 500 }}>{nome}</span>
         </div>
       </div>
@@ -196,7 +202,7 @@ export default function Produto() {
               <div className="gallery-image" style={{ position: "relative", border: "1px solid #E2E8F0", borderRadius: 16, overflow: "hidden", background: "#fff" }}>
                 {temGaleriaReal ? (
                   <div style={{ aspectRatio: "1/1", cursor: "zoom-in" }} onClick={() => setLightboxOpen(true)}>
-                    <img src={sizedImage(imagens[foto] || imagens[0], 800)} alt={nome} fetchPriority="high" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+                    <img src={sizedImage(imagens[foto] || imagens[0], 800)} alt={nome} fetchpriority="high" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
                   </div>
                 ) : (
                   <div style={{ aspectRatio: "1/1", background: "repeating-linear-gradient(135deg,#F8FAFC 0 10px,#F1F5F9 10px 20px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center", padding: 32 }}>
@@ -278,9 +284,7 @@ export default function Produto() {
             {product?.analise && (
               <div style={{ margin: "28px 0 0", padding: "18px 20px", background: "#F8FAFC", border: "1px solid #E2E8F0", borderLeft: "4px solid #C84A00", borderRadius: 12 }}>
                 <h3 style={{ margin: "0 0 10px", font: "700 17px Montserrat", color: "#012746" }}>Nossa análise</h3>
-                {paragrafos(product.analise).map((par, i) => (
-                  <p key={i} style={{ margin: i ? "10px 0 0" : 0, font: "400 14.5px/1.65 Inter", color: "#475569" }}>{par}</p>
-                ))}
+                <RichText text={product.analise} p={{ margin: "0 0 12px", font: "400 14.5px/1.65 Inter", color: "#475569" }} h={{ margin: "18px 0 8px", font: "700 16px Montserrat", color: "#012746" }} />
               </div>
             )}
 
@@ -386,6 +390,20 @@ export default function Produto() {
           </section>
         )}
 
+        {product && guiasRelacionados.length > 0 && (
+          <section style={{ marginTop: 56 }}>
+            <h2 style={{ margin: "0 0 16px", font: "700 22px Montserrat", color: "#012746" }}>Guias para escolher melhor</h2>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 16 }}>
+              {guiasRelacionados.map(g => (
+                <Link key={g.slug} to={`/blog/${g.slug}`} className="card-hover" style={{ display: "block", padding: "16px 18px", border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff" }}>
+                  <span style={{ display: "block", font: "700 15.5px/1.35 Montserrat", color: "#012746" }}>{g.title}</span>
+                  {g.excerpt && <span style={{ display: "block", marginTop: 6, font: "400 13.5px/1.55 Inter", color: "#475569" }}>{g.excerpt.length > 120 ? g.excerpt.slice(0, 120).trimEnd() + "…" : g.excerpt}</span>}
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
         {relacionadosExibidos.length > 0 && (
           <section style={{ marginTop: 56, paddingBottom: 64 }}>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 16, marginBottom: 24 }}>
@@ -393,7 +411,7 @@ export default function Produto() {
                 <h2 style={{ margin: "0 0 6px", font: "700 22px Montserrat", color: "#012746" }}>Quem viu este, também comprou</h2>
                 <p style={{ margin: 0, font: "400 14px Inter", color: "#475569" }}>Outros modelos que podem te interessar.</p>
               </div>
-              <Link to="/categoria" className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", height: 42, padding: "0 20px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 13px Montserrat" }}>VER TODAS AS OFERTAS</Link>
+              <Link to={product?.category ? categoryPath(product.category) : "/categoria"} className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", height: 42, padding: "0 20px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 13px Montserrat" }}>VER TODAS AS OFERTAS</Link>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(238px,1fr))", gap: 24 }}>
               {relacionadosExibidos.map((p, i) => <ProductCard key={p.id || i} p={p} showCompare={false} />)}

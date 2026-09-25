@@ -70,6 +70,7 @@ export async function ensureSchema() {
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS click_count INT DEFAULT 0`);
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS faq TEXT`);
   await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS analise TEXT`);
+  await pool.query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS canonical_id INT NULL`);
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS admin_users (
@@ -113,6 +114,8 @@ export async function ensureSchema() {
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
   `);
+  await pool.query(`ALTER TABLE categories ADD COLUMN IF NOT EXISTS seo_title VARCHAR(160)`);
+  await pool.query(`ALTER TABLE categories ADD COLUMN IF NOT EXISTS intro TEXT`);
   const [existingCategories] = await pool.query("SELECT COUNT(*) AS n FROM categories");
   if (existingCategories[0].n === 0) {
     const seedNames = ["Aspiradores", "Robôs", "Vertical", "Portáteis", "Extratoras", "Profissionais", "Acessórios"];
@@ -144,6 +147,30 @@ export async function ensureSchema() {
   // Backfill único: produto 53 foi excluído pela rotina de preços antes do redirecionamento existir
   await pool.query("INSERT IGNORE INTO product_redirects (product_id, category) VALUES (53, 'Robôs')");
 
+  // Backfill único (guardado em settings para não desfazer edições futuras): produtos duplicados apontam para a página principal
+  try {
+    const [jaFeito] = await pool.query("SELECT 1 FROM settings WHERE setting_key = 'backfill_canonical_v1'");
+    if (!jaFeito.length) {
+      for (const [id, principal] of [[42, 9], [21, 11], [33, 20], [17, 46]]) {
+        await pool.query("UPDATE products SET canonical_id = ? WHERE id = ? AND canonical_id IS NULL AND EXISTS (SELECT 1 FROM (SELECT id FROM products WHERE id = ?) x)", [principal, id, principal]);
+      }
+      await pool.query("INSERT INTO settings (setting_key, setting_value) VALUES ('backfill_canonical_v1', '1')");
+    }
+  } catch (err) {
+    console.error("Backfill de canonicals falhou:", err.message);
+  }
+
+  // Backfill dos textos de categoria: só preenche o que ainda está vazio
+  try {
+    const { readFile } = await import("node:fs/promises");
+    const cats = JSON.parse(await readFile(new URL("./categorias.json", import.meta.url), "utf-8"));
+    for (const [nome, c] of Object.entries(cats)) {
+      await pool.query("UPDATE categories SET seo_title = ?, intro = ? WHERE name = ? AND (intro IS NULL OR intro = '')", [c.seo_title, c.intro, nome]);
+    }
+  } catch (err) {
+    if (err.code !== "ENOENT") console.error("Backfill de categorias falhou:", err.message);
+  }
+
   // Backfill único da "Análise Promo Aspiradores": só preenche produtos que ainda não têm texto (não sobrescreve edições)
   try {
     const { readFile } = await import("node:fs/promises");
@@ -153,6 +180,18 @@ export async function ensureSchema() {
     }
   } catch (err) {
     if (err.code !== "ENOENT") console.error("Backfill de análises falhou:", err.message);
+  }
+
+  // Versão longa (300+ palavras) dos produtos principais: só troca se o texto ainda for a versão curta original ou vazio
+  try {
+    const { readFile } = await import("node:fs/promises");
+    const longas = JSON.parse(await readFile(new URL("./analises-longas.json", import.meta.url), "utf-8"));
+    const curtas = JSON.parse(await readFile(new URL("./analises.json", import.meta.url), "utf-8"));
+    for (const [id, texto] of Object.entries(longas)) {
+      await pool.query("UPDATE products SET analise = ? WHERE id = ? AND (analise IS NULL OR analise = '' OR analise = ?)", [texto, id, curtas[id]]);
+    }
+  } catch (err) {
+    if (err.code !== "ENOENT") console.error("Backfill de análises longas falhou:", err.message);
   }
 
   await pool.query(`

@@ -26,6 +26,11 @@ Extraia TUDO da fonte, sem deixar nada de fora, e preencha:
   gerais, potência, bateria, dimensões, tecnologia, acessórios, materiais, dados
   técnicos da descrição), sem duplicar, formato "Chave: Valor" uma por linha
 - indicado / nao_indicado: derive do uso real do produto (não do texto genérico)
+- canonical_id (duplicados): ANTES de cadastrar, procure no catálogo (GET /api/products) se o mesmo
+  modelo já existe (outro anúncio, outro marketplace ou só muda voltagem/cor). Se existir, cadastre
+  normalmente mas preencha canonical_id com o ID do produto principal (o de mais avaliações): a
+  página continua no ar para o cliente comprar, mas aponta o canonical para a principal e sai do
+  sitemap, evitando páginas duplicadas. Modelos realmente diferentes (ex: S40 x S40C) NÃO são duplicados.
 - analise: parágrafo PRÓPRIO da Promo Aspiradores (70 a 100 palavras, texto corrido, sem
   listas). Tom do site: direto, prático e honesto, sem papo de vendedor. Diga para
   quem o produto faz sentido, 2 ou 3 dados concretos da ficha (potência, autonomia,

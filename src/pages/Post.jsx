@@ -133,7 +133,7 @@ export default function Post() {
       {relacionados.length > 0 && (
         <section style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px 48px" }}>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 12, marginBottom: 20 }}>
-            <h2 style={{ margin: 0, font: "700 24px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Modelos para você comparar</h2>
+            <h2 style={{ margin: 0, font: "700 24px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Modelos relacionados</h2>
             {catDoPost && <Link to={categoryPath(catDoPost)} style={{ font: "600 14px Inter", color: "#C84A00" }}>Ver todos os aspiradores da categoria {catDoPost} →</Link>}
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(232px,1fr))", gap: 24 }}>

@@ -19,7 +19,6 @@ export function generateFaq(p) {
   const filler = [
     { q: "Como faço para comprar?", a: "Clique em \"Comprar\" nesta página para ir até a loja parceira e finalizar a compra com segurança." },
     { q: "A compra é segura e com nota fiscal?", a: "Sim, a compra é processada diretamente na loja parceira, com nota fiscal e formas de pagamento seguras." },
-    { q: "Posso comparar com outros modelos antes de decidir?", a: "Sim, use o botão \"Comparar\" na página do produto para colocá-lo lado a lado com outros aspiradores do catálogo." },
     { q: "Onde posso tirar dúvidas sobre este produto?", a: "Fale com a nossa equipe pela página de Contato." },
     { q: "Como vocês escolhem os produtos do catálogo?", a: "Comparamos especificações, custo-benefício e uso indicado antes de incluir cada produto — confira os detalhes acima para decidir com segurança." }
   ];

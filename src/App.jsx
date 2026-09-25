@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import { FavoritesProvider } from "./lib/favorites.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import CookieBanner from "./components/CookieBanner.jsx";
-import CompareBar from "./components/CompareBar.jsx";
 import Home from "./pages/Home.jsx";
 import Produto from "./pages/Produto.jsx";
 
@@ -16,7 +15,6 @@ const PoliticaPrivacidade = lazy(() => import("./pages/PoliticaPrivacidade.jsx")
 const PoliticaUso = lazy(() => import("./pages/PoliticaUso.jsx"));
 const Cadastro = lazy(() => import("./pages/Cadastro.jsx"));
 const Favoritos = lazy(() => import("./pages/Favoritos.jsx"));
-const Comparar = lazy(() => import("./pages/Comparar.jsx"));
 const Busca = lazy(() => import("./pages/Busca.jsx"));
 const NotFound = lazy(() => import("./pages/NotFound.jsx"));
 
@@ -35,7 +33,6 @@ export default function App() {
     <FavoritesProvider>
       <ScrollToTop />
       <CookieBanner />
-      <CompareBar />
       <Suspense fallback={null}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -62,7 +59,6 @@ export default function App() {
           <Route path="/admin/blog/:id/editar" element={<AdminPostForm />} />
           <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/favoritos" element={<Favoritos />} />
-          <Route path="/comparar" element={<Comparar />} />
           <Route path="/busca" element={<Busca />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

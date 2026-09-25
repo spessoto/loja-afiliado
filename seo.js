@@ -52,9 +52,8 @@ const STATIC_META = {
     description: "Termos de uso do site Promo Aspiradores.",
     noindex: true
   },
-  "/cadastro": { title: `Criar Conta — ${SITE_NAME}`, description: "Crie sua conta para salvar favoritos e comparar aspiradores.", noindex: true },
+  "/cadastro": { title: `Criar Conta — ${SITE_NAME}`, description: "Crie sua conta para salvar seus aspiradores favoritos.", noindex: true },
   "/favoritos": { title: `Meus Favoritos — ${SITE_NAME}`, description: "Seus aspiradores favoritos salvos.", noindex: true },
-  "/comparar": { title: `Comparar Produtos — ${SITE_NAME}`, description: "Compare aspiradores lado a lado.", noindex: true },
   "/busca": { title: `Busca — ${SITE_NAME}`, description: "Resultados de busca de aspiradores.", noindex: true }
 };
 

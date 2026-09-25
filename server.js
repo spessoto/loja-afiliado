@@ -545,6 +545,9 @@ async function ssrData(req, seoData) {
   return data && JSON.parse(JSON.stringify(data));
 }
 
+// Recurso de comparação removido: quem ainda tiver o endereço vai para o catálogo
+app.get("/comparar", (_req, res) => res.redirect(301, "/categoria"));
+
 app.get("*", async (req, res) => {
   const indexPath = path.join(distDir, "index.html");
   let html = await fs.readFile(indexPath, "utf-8");
@@ -633,7 +636,7 @@ app.get("*", async (req, res) => {
     html = html.replace('<div id="root"></div>', () => `<div id="root">${ssrHtml}</div><script>window.__INITIAL__=${safeJson(initial)}</script>`);
   } else if (!req.path.startsWith("/admin") && !meta.notFound) {
     const preloads = [`<link rel="preload" as="fetch" href="/api/categories" crossorigin="anonymous" />`];
-    if (["/busca", "/comparar"].includes(req.path)) preloads.push(`<link rel="preload" as="fetch" href="/api/products" crossorigin="anonymous" />`);
+    if (["/busca"].includes(req.path)) preloads.push(`<link rel="preload" as="fetch" href="/api/products" crossorigin="anonymous" />`);
     html = html.replace("</head>", `  ${preloads.join("\n  ")}\n</head>`);
   }
 

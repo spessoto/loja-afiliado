@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { productSlug, lojaDe } from "../../slug.js";
 export { lojaDe };
-import { retainCompare } from "./compare.js";
 import { useInitial } from "./initialData.jsx";
 
 export function productUrl(id, name) {
@@ -14,10 +13,10 @@ export function useProducts() {
   const [loading, setLoading] = useState(!initial);
 
   useEffect(() => {
-    if (initial) { retainCompare(initial.map(x => x.id)); return; }
+    if (initial) return;
     fetch("/api/products")
       .then(res => res.json())
-      .then(data => { retainCompare(data.map(x => x.id)); setProducts(data); })
+      .then(data => setProducts(data))
       .finally(() => setLoading(false));
   }, []);
 

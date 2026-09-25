@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useFavorites } from "../lib/favorites.jsx";
-import { useCompare } from "../lib/compare.js";
 import { productUrl } from "../lib/products.js";
 import { sizedImage } from "../../imageUrl.js";
 
@@ -12,12 +11,10 @@ function HeartIcon({ filled }) {
   );
 }
 
-export default function ProductCard({ p, priceColor = "#C84A00", to, showCompare = true }) {
+export default function ProductCard({ p, priceColor = "#C84A00", to }) {
   const target = to || productUrl(p.id, p.nome);
   const { isFavorite, toggle: toggleFavorite } = useFavorites();
-  const { isComparing, toggle: toggleCompare, ids, max } = useCompare();
   const favorited = p.id ? isFavorite(p.id) : false;
-  const comparing = p.id ? isComparing(p.id) : false;
 
   return (
     <div className="product-card" style={{ position: "relative", display: "flex", flexDirection: "column", background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden" }}>
@@ -32,21 +29,6 @@ export default function ProductCard({ p, priceColor = "#C84A00", to, showCompare
           <HeartIcon filled={favorited} />
         </button>
       )}
-      {p.id && showCompare && p.loja !== "ml" && (
-        <label
-          onClick={(e) => e.stopPropagation()}
-          title={!comparing && ids.length >= max ? `Máximo de ${max} produtos na comparação` : "Comparar"}
-          style={{ position: "absolute", top: 54, right: 12, zIndex: 3, display: "flex", alignItems: "center", gap: 6, padding: "5px 9px", borderRadius: 20, background: "rgba(255,255,255,.95)", border: "1px solid #E2E8F0", font: "600 11px Inter", color: "#012746", cursor: !comparing && ids.length >= max ? "not-allowed" : "pointer" }}
-        >
-          <input
-            type="checkbox"
-            checked={comparing}
-            disabled={!comparing && ids.length >= max}
-            onChange={() => toggleCompare(p.id)}
-            style={{ width: 14, height: 14, accentColor: "#C84A00", cursor: "inherit" }}
-          />
-          Comparar
-        </label>
       )}
       <Link to={target} style={{ display: "contents" }}>
         <div style={{ position: "relative", padding: "16px 16px 0" }}>

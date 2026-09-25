@@ -56,7 +56,7 @@ export default function Cadastro() {
       <main style={{ maxWidth: 440, margin: "0 auto", padding: "44px 24px 64px" }}>
         <h1 style={{ margin: "0 0 8px", font: "800 24px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>{mode === "cadastro" ? "Criar minha conta" : "Entrar na minha conta"}</h1>
         <p style={{ margin: "0 0 22px", font: "400 14px/1.6 Inter", color: "#475569" }}>
-          {mode === "cadastro" ? "Salve seus favoritos e compare produtos com mais facilidade." : "Acesse para ver sua lista de favoritos."}
+          {mode === "cadastro" ? "Salve seus aspiradores favoritos com mais facilidade." : "Acesse para ver sua lista de favoritos."}
         </p>
 
         {error && <p style={{ margin: "0 0 18px", padding: "12px 16px", border: "1px solid #FCA5A5", background: "#FEF2F2", borderRadius: 8, font: "400 13.5px Inter", color: "#B91C1C" }}>{error}</p>}

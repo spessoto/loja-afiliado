@@ -19,4 +19,4 @@ Promo Aspiradores ajuda o usuário a encontrar o aspirador certo comparando mode
 ## Observações para agentes e crawlers
 
 - Preços e disponibilidade são definidos pela loja parceira no momento da compra; o preço exibido no marcado estruturado reflete o valor cadastrado no catálogo, não uma cotação em tempo real.
-- Páginas de conta do usuário (`/cadastro`, `/favoritos`, `/comparar`, `/busca`) e o painel administrativo (`/admin`) não fazem parte do conteúdo público indexável.
+- Páginas de conta do usuário (`/cadastro`, `/favoritos`, `/busca`) e o painel administrativo (`/admin`) não fazem parte do conteúdo público indexável.

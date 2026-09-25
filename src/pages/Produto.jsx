@@ -359,7 +359,7 @@ export default function Produto() {
               <Link to={product?.category ? categoryPath(product.category) : "/categoria"} className="btn-outline-navy" style={{ display: "inline-flex", alignItems: "center", height: 42, padding: "0 20px", borderRadius: 8, border: "1.5px solid #012746", color: "#012746", font: "600 13px Montserrat" }}>VER TODAS AS OFERTAS</Link>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(238px,1fr))", gap: 24 }}>
-              {relacionadosExibidos.map((p, i) => <ProductCard key={p.id || i} p={p} showCompare={false} />)}
+              {relacionadosExibidos.map((p, i) => <ProductCard key={p.id || i} p={p} />)}
             </div>
           </section>
         )}

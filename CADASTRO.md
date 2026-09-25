@@ -28,7 +28,7 @@ Extraia TUDO da fonte, sem deixar nada de fora, e preencha:
 - indicado / nao_indicado: derive do uso real do produto (não do texto genérico)
 - canonical_id (duplicados): ANTES de cadastrar, procure no catálogo (GET /api/products) se o mesmo
   modelo já existe (outro anúncio, outro marketplace ou só muda voltagem/cor). Se existir, cadastre
-  normalmente mas preencha canonical_id com o ID do produto principal (o de mais avaliações): a
+  normalmente mas preencha canonical_id com o ID do produto principal (o de melhor oferta): a
   página continua no ar para o cliente comprar, mas aponta o canonical para a principal e sai do
   sitemap, evitando páginas duplicadas. Modelos realmente diferentes (ex: S40 x S40C) NÃO são duplicados.
 - analise: parágrafo PRÓPRIO da Promo Aspiradores (70 a 100 palavras, texto corrido, sem
@@ -38,9 +38,10 @@ Extraia TUDO da fonte, sem deixar nada de fora, e preencha:
   inclusa, tensão específica, poucas avaliações...). NÃO copie a descrição do
   anúncio, NÃO cite preço, frete, parcelamento, garantia ou prazo, NÃO invente
   dados que não estejam na fonte. Cada análise deve ser única (evite frases-molde).
-- rating_avg, rating_count, rating_dist (formato "estrela:percentual", uma
-  linha por nota de 5 a 1) e reviews (5 depoimentos reais do anúncio, formato
-  "Nome\nNota\nTexto\nMeta" separados por linha "---")
+- rating_avg, rating_count, rating_dist e reviews: NÃO preencher (deixe vazios). Notas e
+  depoimentos da Amazon/Mercado Livre são conteúdo deles e não podem ser copiados nem exibidos.
+- Produtos Amazon: o preço fica no cadastro só como referência interna; o site não o exibe
+  (mostra "Ver preço atual"). Produtos Mercado Livre: exibidos com aviso "Publicidade" e sem comparação.
 
 Regras de execução:
 1. Busque o ADMIN_TOKEN nas env vars do app Node.js no Hostinger

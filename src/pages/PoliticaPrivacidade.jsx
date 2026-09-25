@@ -52,7 +52,7 @@ export default function PoliticaPrivacidade() {
 
       <section id="p1" style={{ marginBottom: 36 }}>
         <h2 style={h2}>1. Quem somos</h2>
-        <p style={{ margin: "0 0 14px", font: "400 16px/1.75 Inter", color: "#475569" }}>A Promo Aspiradores é um site de curadoria e comparação de aspiradores de pó. Selecionamos modelos, comparamos preço, potência e avaliações reais, e direcionamos o visitante para a compra nas lojas parceiras por meio de links de afiliado. Não vendemos produtos diretamente nem processamos pagamentos.</p>
+        <p style={{ margin: "0 0 14px", font: "400 16px/1.75 Inter", color: "#475569" }}>A Promo Aspiradores é um site de curadoria e comparação de aspiradores de pó. Selecionamos modelos, comparamos potência e características, e direcionamos o visitante para a compra nas lojas parceiras por meio de links de afiliado. Não vendemos produtos diretamente nem processamos pagamentos.</p>
         <p style={p}>O controlador dos dados tratados neste site é Caio Cézares de Souza Spessoto, CPF 364.609.548-28, com sede em Bragança Paulista/SP - Brasil.</p>
       </section>
 

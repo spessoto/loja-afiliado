@@ -10,7 +10,7 @@ const toc = [
   { href: "#u5", label: "5. Entrega, troca e garantia" },
   { href: "#u6", label: "6. Uso permitido e proibido" },
   { href: "#u7", label: "7. Conteúdo e propriedade" },
-  { href: "#u8", label: "8. Avaliações de clientes" },
+  { href: "#u8", label: "8. Preços e disponibilidade" },
   { href: "#u9", label: "9. Limitação de responsabilidade" },
   { href: "#u10", label: "10. Alterações e contato" }
 ];
@@ -77,7 +77,7 @@ export default function PoliticaUso() {
       <section id="u4" style={{ marginBottom: 36 }}>
         <h2 style={h2}>4. Links de afiliado</h2>
         <p style={{ margin: "0 0 14px", font: "400 16px/1.75 Inter", color: "#475569" }}>Os botões de compra levam a lojas parceiras por meio de links de afiliado. Se você comprar, recebemos uma comissão, sem qualquer custo adicional para você e sem alteração no preço do produto.</p>
-        <p style={p}>A comissão não define nossas recomendações. A curadoria considera reputação da marca, avaliações reais de compradores, ficha técnica e relação entre preço e desempenho.</p>
+        <p style={p}>A comissão não define nossas recomendações. A curadoria considera reputação da marca, ficha técnica e relação entre custo e desempenho.</p>
       </section>
 
       <section id="u5" style={{ marginBottom: 36 }}>
@@ -104,8 +104,8 @@ export default function PoliticaUso() {
       </section>
 
       <section id="u8" style={{ marginBottom: 36 }}>
-        <h2 style={h2}>8. Avaliações de clientes</h2>
-        <p style={p}>As avaliações exibidas vêm de compradores verificados e refletem a opinião individual de cada pessoa. Não editamos o conteúdo das opiniões, mas removemos textos com linguagem ofensiva, dados pessoais de terceiros, propaganda ou informação comprovadamente falsa.</p>
+        <h2 style={h2}>8. Preços e disponibilidade</h2>
+        <p style={p}>Não exibimos avaliações de compradores de outras lojas. Preços e disponibilidade mudam com frequência e são definidos pela loja parceira: o valor válido é sempre o exibido no site da loja no momento da compra. Quando um preço aparece aqui, ele é apenas uma referência e pode estar desatualizado.</p>
       </section>
 
       <section id="u9" style={{ marginBottom: 36 }}>

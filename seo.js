@@ -1,9 +1,9 @@
-import { productSlug, productTitle, withSiteTitle, categoryPath } from "./slug.js";
+import { productSlug, productTitle, withSiteTitle, categoryPath, lojaDe } from "./slug.js";
 
 const SITE_URL = "https://promoaspiradores.com.br";
 const SITE_NAME = "Promo Aspiradores";
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
-const DEFAULT_DESCRIPTION = "Compare os melhores aspiradores de pó, robôs aspiradores e verticais com curadoria de especialistas. Preço competitivo, avaliações reais e compra segura.";
+const DEFAULT_DESCRIPTION = "Compare os melhores aspiradores de pó, robôs aspiradores e verticais com curadoria de especialistas. Preço competitivo, curadoria e compra segura.";
 
 export function escapeAttr(s) {
   return String(s ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -24,7 +24,7 @@ const STATIC_META = {
   },
   "/categoria": {
     title: `Todos os Aspiradores — Compare Modelos e Preços | ${SITE_NAME}`,
-    description: "Veja todos os aspiradores disponíveis: verticais, robôs, portáteis, extratoras e profissionais. Compare preços e avaliações antes de comprar.",
+    description: "Veja todos os aspiradores disponíveis: verticais, robôs, portáteis, extratoras e profissionais. Compare preços e características antes de comprar.",
     focusKeyword: "comprar aspirador"
   },
   "/blog": {
@@ -123,7 +123,7 @@ export function getPageMeta(pathname, query, data = {}) {
     }
     if (product) {
       const canonical = productUrl(data.canonicalProduct || product);
-      const desc = truncate(product.description || `${product.name} — confira preço, especificações e avaliações reais.`, 155);
+      const desc = truncate(product.description || `${product.name} — confira especificações, análise e onde comprar.`, 155);
       const jsonLd = [orgJsonLd(), websiteJsonLd()];
       jsonLd.push(breadcrumbJsonLd([
         { name: "Home", item: SITE_URL },
@@ -139,7 +139,7 @@ export function getPageMeta(pathname, query, data = {}) {
         description: desc,
         brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
         category: product.category || undefined,
-        offers: product.price_to ? {
+        offers: product.price_to && lojaDe(product.affiliate_url) !== "amazon" ? {
           "@type": "Offer",
           url: canonical,
           priceCurrency: "BRL",
@@ -149,13 +149,6 @@ export function getPageMeta(pathname, query, data = {}) {
           itemCondition: "https://schema.org/NewCondition"
         } : undefined
       };
-      if (product.rating_count > 0 && product.rating_avg) {
-        productLd.aggregateRating = {
-          "@type": "AggregateRating",
-          ratingValue: Number(product.rating_avg),
-          reviewCount: Number(product.rating_count)
-        };
-      }
       jsonLd.push(productLd);
       let faq = [];
       try { faq = product.faq ? JSON.parse(product.faq) : []; } catch { faq = []; }
@@ -227,7 +220,7 @@ export function getPageMeta(pathname, query, data = {}) {
     if (categoryProducts && categoryProducts.length > 0) jsonLd.push(itemListJsonLd(categoryProducts));
     return {
       title: category.seo_title || `Aspirador ${category.name} — Compare Modelos | ${SITE_NAME}`,
-      description: truncate(primeiro || `Confira os aspiradores da categoria ${category.name}: preços, avaliações reais e comparação lado a lado.`, 155),
+      description: truncate(primeiro || `Confira os aspiradores da categoria ${category.name}: análises e especificações lado a lado.`, 155),
       canonical,
       noindex: !(categoryProducts && categoryProducts.length > 0),
       focusKeyword: `aspirador ${category.name}`.toLowerCase(),
@@ -247,7 +240,7 @@ export function getPageMeta(pathname, query, data = {}) {
     }
     return cat ? {
       title: `Aspirador ${cat} — Compare os Melhores Modelos | ${SITE_NAME}`,
-      description: `Confira os melhores aspiradores da categoria ${cat}: preços, avaliações reais e comparação lado a lado para você escolher com segurança.`,
+      description: `Confira os melhores aspiradores da categoria ${cat}: análises e especificações lado a lado para você escolher com segurança.`,
       canonical,
       focusKeyword: `aspirador ${cat}`.toLowerCase(),
       jsonLd

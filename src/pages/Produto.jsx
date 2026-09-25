@@ -8,7 +8,7 @@ import { usePosts } from "../lib/posts.js";
 import Header from "../components/Header.jsx";
 import { FooterFull } from "../components/Footer.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
-import { useProduct, useProducts, toCardProduct, formatBRL, productImages, linhas, estrelasStr, parseDist, parseReviews } from "../lib/products.js";
+import { useProduct, useProducts, toCardProduct, formatBRL, productImages, linhas, lojaDe } from "../lib/products.js";
 import { useCategories } from "../lib/categories.js";
 import ImageLightbox from "../components/ImageLightbox.jsx";
 import FaqAccordion from "../components/FaqAccordion.jsx";
@@ -49,20 +49,6 @@ const naoIndicado = [
   "Limpeza de líquidos ou obra (use pó e água)",
   "Áreas acima de 150 m² em uma única carga",
   "Uso profissional contínuo"
-];
-
-const distribuicao = [
-  { n: 5, w: "82%", p: "82%" },
-  { n: 4, w: "12%", p: "12%" },
-  { n: 3, w: "4%", p: "4%" },
-  { n: 2, w: "1%", p: "1%" },
-  { n: 1, w: "1%", p: "1%" }
-];
-
-const reviews = [
-  { nome: "Camila R. — Belo Horizonte, MG", estrelas: "★★★★★", texto: "Tenho dois gatos e o pelo era um problema no sofá. Esse resolveu. Leve, fácil de esvaziar e a bateria dá conta do apartamento todo de uma vez.", meta: "Compra verificada • há 2 semanas" },
-  { nome: "Rodrigo M. — Curitiba, PR", estrelas: "★★★★★", texto: "Custo-benefício muito bom. Comparei com dois modelos mais caros e a sucção é praticamente a mesma. Chegou antes do prazo.", meta: "Compra verificada • há 1 mês" },
-  { nome: "Fernanda L. — Recife, PE", estrelas: "★★★★☆", texto: "Ótimo para o dia a dia. Só senti falta de uma bateria extra, porque em dia de limpeza pesada acaba antes de eu terminar.", meta: "Compra verificada • há 1 mês" }
 ];
 
 const relacionados = [
@@ -114,8 +100,10 @@ export default function Produto() {
   const nome = product?.name || "Aspirador Vertical Sem Fio Vertax V12 Ciclônico 450W";
   const marca = product?.brand || "VERTAX";
   const categoria = product?.category || "Vertical sem fio";
-  const precoDe = product ? formatBRL(product.price_from) : "R$ 1.029,90";
-  const precoPor = product ? formatBRL(product.price_to) || "R$ 699,90" : "R$ 699,90";
+  const loja = lojaDe(product?.affiliate_url);
+  const semPreco = loja === "amazon";
+  const precoDe = semPreco ? "" : product ? formatBRL(product.price_from) : "R$ 1.029,90";
+  const precoPor = semPreco ? "" : product ? formatBRL(product.price_to) || "R$ 699,90" : "R$ 699,90";
   const garantiaExibida = product ? product.garantia : "12 meses";
   const descricao = product?.description;
   const afiliado = product?.affiliate_url || "#afiliado";
@@ -131,13 +119,6 @@ export default function Produto() {
   const productNaoIndicado = linhas(product?.nao_indicado);
   const naoIndicadoExibido = productNaoIndicado.length > 0 ? productNaoIndicado : (product ? [] : naoIndicado);
 
-  const notaMedia = product?.rating_avg ? Number(product.rating_avg) : 4.8;
-  const totalAvaliacoes = product?.rating_count ? Number(product.rating_count) : 1284;
-  const productDist = parseDist(product?.rating_dist).map(d => ({ ...d, w: d.p }));
-  const distExibida = productDist.length > 0 ? productDist : (product ? [] : distribuicao);
-  const productReviews = parseReviews(product?.reviews);
-  const reviewsExibidos = productReviews.length > 0 ? productReviews : (product ? [] : reviews);
-  const temAvaliacoes = distExibida.length > 0 || reviewsExibidos.length > 0;
 
   let faqExibido = [];
   try {
@@ -227,8 +208,6 @@ export default function Produto() {
               <div style={{ font: "600 11.5px Inter", letterSpacing: ".14em", color: "#64748B", marginBottom: 8 }}>{marca}</div>
               <h1 style={{ margin: "0 0 12px", font: "800 26px/1.22 Montserrat", color: "#012746", letterSpacing: "-.01em", textWrap: "balance" }}>{nome}</h1>
               <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12, marginBottom: 20 }}>
-                <span style={{ font: "600 14px Inter", color: "#C84A00", letterSpacing: ".1em" }}>{estrelasStr(notaMedia)}</span>
-                <a href="#avaliacoes" style={{ font: "500 13px Inter", color: "#475569", textDecoration: "underline" }}>{String(notaMedia).replace(".", ",")} · {totalAvaliacoes.toLocaleString("pt-BR")} avaliações</a>
                 <span style={{ width: 1, height: 14, background: "#E2E8F0" }}></span>
                 <span style={{ font: "400 13px Inter", color: "#475569" }}>Cód. {product ? product.id : "8412-V12"}</span>
               </div>
@@ -239,8 +218,13 @@ export default function Produto() {
                 {precoDe && <span style={{ font: "400 13.5px Inter", color: "#64748B", textDecoration: "line-through" }}>{precoDe}</span>}
               </div>
               <div style={{ display: "flex", alignItems: "flex-end", gap: 12, flexWrap: "wrap", marginBottom: 18 }}>
-                <span style={{ font: "800 32px Montserrat", color: "#C84A00", lineHeight: 1 }}>{precoPor}</span>
+                {precoPor
+                  ? <span style={{ font: "800 32px Montserrat", color: "#C84A00", lineHeight: 1 }}>{precoPor}</span>
+                  : <span style={{ font: "700 17px/1.3 Montserrat", color: "#012746" }}>Confira o preço atual na Amazon</span>}
               </div>
+              {loja === "ml" && precoPor && (
+                <p style={{ margin: "-8px 0 14px", font: "400 12px/1.5 Inter", color: "#64748B" }}>Preço de referência, sujeito a alteração. Confirme o valor final no Mercado Livre.</p>
+              )}
 
               <a {...buyProps} className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 48, borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.3)" }}>
                 COMPRAR AGORA
@@ -250,8 +234,11 @@ export default function Produto() {
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#012746" strokeWidth="2" strokeLinecap="round"><path d="M12 3.5l7 2.6v5.4c0 4.3-2.9 7.3-7 9-4.1-1.7-7-4.7-7-9V6.1l7-2.6z"></path></svg>
                 Você finaliza a compra no site oficial da loja parceira
               </div>
-              {/amazon|amzn|amzlinks/i.test(product?.affiliate_url || "") && (
+              {loja === "amazon" && (
                 <p style={{ margin: "-4px 0 12px", font: "400 12px/1.5 Inter", color: "#475569", textAlign: "center" }}>Como Associado da Amazon, ganho com compras qualificadas.</p>
+              )}
+              {loja === "ml" && (
+                <p style={{ margin: "-4px 0 12px", font: "400 12px/1.5 Inter", color: "#475569", textAlign: "center" }}><strong style={{ font: "600 12px Inter" }}>Publicidade.</strong> Link de afiliado do Mercado Livre: podemos receber comissão por compras feitas por ele, sem custo extra para você.</p>
               )}
               <div style={{ height: 1, background: "#E2E8F0", margin: "16px 0" }}></div>
               <div style={{ display: "grid", gap: 14 }}>
@@ -341,51 +328,6 @@ export default function Produto() {
           </div>
         </section>
 
-        {temAvaliacoes && (
-          <section id="avaliacoes" style={{ marginTop: 56 }}>
-            <h2 style={{ margin: "0 0 20px", font: "700 22px Montserrat", color: "#012746" }}>Avaliações de quem comprou</h2>
-            <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(260px,.55fr) minmax(0,1.45fr)", gap: 32, alignItems: "start" }}>
-              {distExibida.length > 0 && (
-                <div style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 20, background: "#F8FAFC" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 18 }}>
-                    <span style={{ font: "800 34px Montserrat", color: "#012746", lineHeight: 1 }}>{String(notaMedia).replace(".", ",")}</span>
-                    <span>
-                      <span style={{ display: "block", font: "600 15px Inter", color: "#C84A00", letterSpacing: ".1em" }}>{estrelasStr(notaMedia)}</span>
-                      <span style={{ display: "block", font: "400 13px Inter", color: "#475569", marginTop: 4 }}>{totalAvaliacoes.toLocaleString("pt-BR")} avaliações</span>
-                    </span>
-                  </div>
-                  <div style={{ display: "grid", gap: 9 }}>
-                    {distExibida.map((d, i) => (
-                      <span key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                        <span style={{ font: "500 12.5px Inter", color: "#475569", width: 26 }}>{d.n}★</span>
-                        <span style={{ flex: 1, height: 7, borderRadius: 4, background: "#E2E8F0", overflow: "hidden" }}><span style={{ display: "block", height: "100%", width: d.w, background: "#C84A00", borderRadius: 4 }}></span></span>
-                        <span style={{ font: "400 12px Inter", color: "#64748B", width: 34, textAlign: "right" }}>{d.p}</span>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {reviewsExibidos.length > 0 && (
-                <div style={{ display: "grid", gap: 16 }}>
-                  {reviewsExibidos.map((r, i) => (
-                    <div key={i} style={{ border: "1px solid #E2E8F0", borderRadius: 12, padding: 20 }}>
-                      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 10, marginBottom: 10 }}>
-                        <span style={{ font: "700 14.5px Montserrat", color: "#012746" }}>{r.nome}</span>
-                        <span style={{ font: "600 13px Inter", color: "#C84A00", letterSpacing: ".08em" }}>{r.estrelas}</span>
-                      </div>
-                      {r.texto && <p style={{ margin: "0 0 10px", font: "400 14.5px/1.65 Inter", color: "#475569" }}>{r.texto}</p>}
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 7, font: "500 12px Inter", color: "#64748B" }}>
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748B" strokeWidth="2.6" strokeLinecap="round"><path d="M4.5 12.5l4.5 4.5L19.5 6.5"></path></svg>
-                        {r.meta}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </section>
-        )}
-
         {faqExibido.length > 0 && (
           <section style={{ marginTop: 56 }}>
             <h2 style={{ margin: "0 0 20px", font: "700 22px Montserrat", color: "#012746" }}>Perguntas frequentes</h2>
@@ -434,7 +376,9 @@ export default function Produto() {
             <div style={{ minWidth: 0 }}>
               <div style={{ font: "600 13.5px Inter", color: "#1E293B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 340 }}>{nome}</div>
               <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                <span style={{ font: "800 18px Montserrat", color: "#C84A00" }}>{precoPor}</span>
+                {precoPor
+                  ? <span style={{ font: "800 18px Montserrat", color: "#C84A00" }}>{precoPor}</span>
+                  : <span style={{ font: "600 13px Inter", color: "#475569" }}>Preço atual na Amazon</span>}
               </div>
             </div>
           </div>

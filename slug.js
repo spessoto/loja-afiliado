@@ -43,3 +43,11 @@ export function productTitle(product, all = []) {
     ? `${shortName(product.name, 38)} (ref. ${product.id}) — Promo Aspiradores`
     : `${shortName(product.name, 46)} — Promo Aspiradores`;
 }
+
+// Loja do link de afiliado: Amazon não permite exibir preço copiado; Mercado Livre exige identificar publicidade e restringe comparativos.
+export function lojaDe(url) {
+  const u = String(url || "");
+  if (/amazon|amzn|amzlinks/i.test(u)) return "amazon";
+  if (/mercadolivre|mercadolibre|meli\.la|mlstatic/i.test(u)) return "ml";
+  return "";
+}

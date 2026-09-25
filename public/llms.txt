@@ -1,8 +1,8 @@
 # Promo Aspiradores
 
-> Loja especializada em aspiradores de pó para casa e uso profissional, com curadoria de especialistas, comparação de preços e avaliações reais.
+> Loja especializada em aspiradores de pó para casa e uso profissional, com curadoria de especialistas e comparação de especificações.
 
-Promo Aspiradores ajuda o usuário a encontrar o aspirador certo comparando modelos verticais, robôs, portáteis, extratoras e profissionais por preço, especificações técnicas e avaliações reais de compradores. Os links de compra levam a lojas parceiras (Amazon, Mercado Livre).
+Promo Aspiradores ajuda o usuário a encontrar o aspirador certo comparando modelos verticais, robôs, portáteis, extratoras e profissionais por especificações técnicas e análise editorial. Os links de compra levam a lojas parceiras (Amazon, Mercado Livre).
 
 ## Páginas principais
 
@@ -14,7 +14,7 @@ Promo Aspiradores ajuda o usuário a encontrar o aspirador certo comparando mode
 ## Dados estruturados
 
 - [sitemap.xml](https://promoaspiradores.com.br/sitemap.xml): lista completa de páginas, produtos e publicações do blog.
-- Cada página de produto (`/produto/{id}`) inclui dados estruturados Schema.org (Product, Offer, AggregateRating, FAQPage) com preço, marca, categoria, avaliações e perguntas frequentes reais sobre o item.
+- Cada página de produto (`/produto/{id}`) inclui dados estruturados Schema.org (Product, FAQPage) com marca, categoria e perguntas frequentes sobre o item.
 
 ## Observações para agentes e crawlers
 

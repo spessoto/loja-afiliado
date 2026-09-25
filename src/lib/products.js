@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { productSlug } from "../../slug.js";
+import { productSlug, lojaDe } from "../../slug.js";
+export { lojaDe };
 import { retainCompare } from "./compare.js";
 import { useInitial } from "./initialData.jsx";
 
@@ -94,7 +95,9 @@ export function searchProducts(products, query) {
 }
 
 export function toCardProduct(p) {
-  const hasDiscount = p.price_from && p.price_to && Number(p.price_from) > Number(p.price_to);
+  const loja = lojaDe(p.affiliate_url);
+  const semPreco = loja === "amazon";
+  const hasDiscount = !semPreco && p.price_from && p.price_to && Number(p.price_from) > Number(p.price_to);
   const desconto = hasDiscount ? "-" + Math.round((1 - p.price_to / p.price_from) * 100) + "%" : "";
   return {
     id: p.id,
@@ -102,11 +105,10 @@ export function toCardProduct(p) {
     nome: p.name,
     desconto,
     selo: p.badge || "",
-    estrelas: "★★★★★",
-    avaliacoes: "",
+    loja,
     de: hasDiscount ? formatBRL(p.price_from) : "",
-    por: formatBRL(p.price_to),
-    parcela: p.installment || "",
+    por: semPreco ? "" : formatBRL(p.price_to),
+    parcela: semPreco ? "" : p.installment || "",
     image_url: p.image_url
   };
 }

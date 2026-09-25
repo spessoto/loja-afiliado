@@ -167,7 +167,10 @@ app.delete("/api/favorites/:productId", requireCustomer, async (req, res) => {
 
 // Colunas de listagem: exclui faq/images/indicado/nao_indicado, usados só na página de detalhe
 // do produto (que busca via /api/products/:id) — sozinhos eram ~39% do payload desta rota.
-const PRODUCT_LIST_FIELDS = "id, name, brand, category, description, image_url, affiliate_url, price_from, price_to, installment, badge, tags, specs, rating_avg, rating_count, rating_dist, reviews, potencia, voltagem, created_at, updated_at";
+// Notas e depoimentos copiados de Amazon/Mercado Livre não são redistribuídos: só o admin logado recebe esses campos.
+const semAvaliacoes = (row) => { const { rating_avg, rating_count, rating_dist, reviews, ...resto } = row; return resto; };
+
+const PRODUCT_LIST_FIELDS = "id, name, brand, category, description, image_url, affiliate_url, price_from, price_to, installment, badge, tags, specs, potencia, voltagem, created_at, updated_at";
 
 app.get("/api/products", async (_req, res) => {
   const [rows] = await pool.query(`SELECT ${PRODUCT_LIST_FIELDS} FROM products ORDER BY created_at DESC, id DESC`);
@@ -178,7 +181,7 @@ app.get("/api/products", async (_req, res) => {
 app.get("/api/products/:id", async (req, res) => {
   const [rows] = await pool.query("SELECT * FROM products WHERE id = ?", [req.params.id]);
   if (!rows.length) return res.status(404).json({ error: "not found" });
-  res.json(rows[0]);
+  res.json(verifySession(getCookie(req, "admin_session")) ? rows[0] : semAvaliacoes(rows[0]));
 });
 
 const FIELDS = ["name", "brand", "category", "description", "image_url", "images", "affiliate_url", "price_from", "price_to", "installment", "badge", "tags", "specs", "indicado", "nao_indicado", "rating_avg", "rating_count", "rating_dist", "reviews", "frete", "garantia", "potencia", "voltagem", "analise", "canonical_id"];
@@ -520,7 +523,7 @@ const ssrPronto = import(pathToFileURL(path.join(__dirname, "dist-server", "entr
   .then((m) => { ssrRender = m.render; })
   .catch((err) => { console.error("SSR indisponível (segue só com renderização no navegador):", err.message); });
 
-const PRODUCT_LIST_SLIM = PRODUCT_LIST_FIELDS.replace(" reviews,", "");
+const PRODUCT_LIST_SLIM = PRODUCT_LIST_FIELDS;
 const POST_LIST_FIELDS = "id, title, slug, excerpt, cover_image_url, author, category, published_at";
 // JSON dentro de <script>: escapa < e os separadores de linha U+2028/2029
 const BARRA = String.fromCharCode(92);
@@ -538,7 +541,7 @@ async function ssrData(req, seoData) {
   else if (req.path === "/categoria" || seoData.category) data = { products: await products(true), categories: await categories() };
   else if (req.path === "/blog") data = { posts: await posts(), categories: await categories() };
   else if (seoData.post) data = { post: seoData.post, posts: await posts(), products: await products(true), categories: await categories() };
-  else if (seoData.product) data = { product: seoData.product, products: await products(true), posts: await posts(), categories: await categories() };
+  else if (seoData.product) data = { product: semAvaliacoes(seoData.product), products: await products(true), posts: await posts(), categories: await categories() };
   return data && JSON.parse(JSON.stringify(data));
 }
 

@@ -32,7 +32,7 @@ export default function ProductCard({ p, priceColor = "#C84A00", to, showCompare
           <HeartIcon filled={favorited} />
         </button>
       )}
-      {p.id && showCompare && (
+      {p.id && showCompare && p.loja !== "ml" && (
         <label
           onClick={(e) => e.stopPropagation()}
           title={!comparing && ids.length >= max ? `Máximo de ${max} produtos na comparação` : "Comparar"}
@@ -69,14 +69,13 @@ export default function ProductCard({ p, priceColor = "#C84A00", to, showCompare
         <div style={{ padding: "12px 14px 16px", display: "flex", flexDirection: "column", flex: 1 }}>
           <div style={{ font: "600 10.5px Inter", letterSpacing: ".1em", color: "#64748B", marginBottom: 4 }}>{p.marca}</div>
           <div style={{ font: "600 13.5px/1.4 Inter", color: "#1E293B", marginBottom: 8, minHeight: 38 }}>{p.nome}</div>
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}>
-            <span style={{ font: "600 11.5px Inter", color: "#C84A00", letterSpacing: ".08em" }}>{p.estrelas}</span>
-            <span style={{ font: "400 11.5px Inter", color: "#64748B" }}>{p.avaliacoes}</span>
-          </div>
           <div style={{ marginTop: "auto" }}>
             {p.de && <div style={{ font: "400 12.5px Inter", color: "#64748B", textDecoration: "line-through" }}>{p.de}</div>}
-            <div style={{ font: "800 20px Montserrat", color: priceColor, lineHeight: 1.15, marginBottom: 12 }}>{p.por}</div>
-            <span style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 40, borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 12.5px Montserrat", letterSpacing: ".06em" }}>COMPRAR</span>
+            {p.por
+              ? <div style={{ font: "800 20px Montserrat", color: priceColor, lineHeight: 1.15, marginBottom: p.loja === "ml" ? 4 : 12 }}>{p.por}</div>
+              : <div style={{ font: "600 13.5px Inter", color: "#475569", lineHeight: 1.15, marginBottom: 12 }}>Ver preço atual na loja</div>}
+            {p.loja === "ml" && <div style={{ font: "500 10.5px Inter", color: "#64748B", marginBottom: 8 }}>Publicidade · preço sujeito a alteração</div>}
+            <span style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 40, borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 12.5px Montserrat", letterSpacing: ".06em" }}>{p.por ? "COMPRAR" : "VER OFERTA"}</span>
           </div>
         </div>
       </Link>

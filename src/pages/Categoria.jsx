@@ -19,14 +19,13 @@ function linhas(text) {
   return (text || "").split("\n").map(s => s.trim()).filter(Boolean);
 }
 
-const ORDENS = ["Mais relevantes", "Menor preço", "Maior preço", "Melhor avaliados", "Maior desconto"];
+const ORDENS = ["Mais relevantes", "Menor preço", "Maior preço", "Maior desconto"];
 
 function ordenar(lista, ordem) {
   const copia = [...lista];
   switch (ordem) {
     case "Menor preço": return copia.sort((a, b) => (Number(a.price_to) || Infinity) - (Number(b.price_to) || Infinity));
     case "Maior preço": return copia.sort((a, b) => (Number(b.price_to) || 0) - (Number(a.price_to) || 0));
-    case "Melhor avaliados": return copia.sort((a, b) => (Number(b.rating_avg) || 0) - (Number(a.rating_avg) || 0));
     case "Maior desconto": return copia.sort((a, b) => {
       const dA = a.price_from && a.price_to ? 1 - a.price_to / a.price_from : 0;
       const dB = b.price_from && b.price_to ? 1 - b.price_to / b.price_from : 0;

@@ -5,7 +5,7 @@ import { FooterFull } from "../components/Footer.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import FaqAccordion from "../components/FaqAccordion.jsx";
 import { categoriasCol, institucionalCol } from "../data/footerColumns.js";
-import { useProducts, toCardProduct, formatBRL, linhas, parseReviews, productUrl } from "../lib/products.js";
+import { useProducts, toCardProduct, formatBRL, lojaDe, productUrl } from "../lib/products.js";
 import { useCategories } from "../lib/categories.js";
 import { usePosts } from "../lib/posts.js";
 import { sizedImage } from "../../imageUrl.js";
@@ -23,29 +23,12 @@ const necessidades = [
 ];
 
 const beneficios = [
-  { t: "Curadoria de verdade", s: "Cada produto é escolhido a dedo, comparando potência, preço e avaliações reais antes de entrar no site.", d: "M12 3.5l7 2.6v5.4c0 4.3-2.9 7.3-7 9-4.1-1.7-7-4.7-7-9V6.1l7-2.6z" },
+  { t: "Curadoria de verdade", s: "Cada produto é escolhido a dedo, analisando potência, características e uso indicado antes de entrar no site.", d: "M12 3.5l7 2.6v5.4c0 4.3-2.9 7.3-7 9-4.1-1.7-7-4.7-7-9V6.1l7-2.6z" },
   { t: "Você compra na loja oficial", s: "Ao clicar em comprar, você finaliza o pedido direto no site do parceiro (Amazon, Mercado Livre e outras), com a garantia, nota fiscal e entrega deles.", d: "M3 7.5h11v9H3zM14 10.5h4l3 3v3h-7zM7 19a1.6 1.6 0 100-3.2A1.6 1.6 0 007 19zM17.5 19a1.6 1.6 0 100-3.2 1.6 1.6 0 000 3.2z" },
   { t: "Comparação sem enrolação", s: "Reunimos preço, especificações e nota de quem já comprou para você decidir em minutos.", d: "M12 3v3M5 8h14M5 8l-2.5 5a2.5 2.5 0 005 0zM19 8l-2.5 5a2.5 2.5 0 005 0zM9 21h6M12 6v15" },
   { t: "Conteúdo pra ajudar a escolher", s: "Guias e comparativos pensados para quem quer entender o produto antes de comprar, sem papo de vendedor.", d: "M6 3h8l4 4v14H6zM14 3v4h4M9 11h6M9 14.5h6M9 18h4" }
 ];
 
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-function parseDistMap(text) {
-  const map = {};
-  linhas(text).forEach(line => {
-    const [n, pct] = line.split(":");
-    map[Number(n)] = Number(pct);
-  });
-  return map;
-}
 
 const faq = [
   { q: "Qual aspirador serve para pelos de animais?", a: "Modelos verticais sem fio com escova antiemaranhado e filtro HEPA são os mais indicados. Na página de cada produto indicamos se ele é recomendado para pets." },
@@ -98,34 +81,13 @@ export default function Home() {
   const heroProduct = products.length > 0
     ? products[Math.floor(Date.now() / 3600000) % products.length]
     : null;
-  const heroDesconto = heroProduct?.price_from && heroProduct?.price_to && Number(heroProduct.price_from) > Number(heroProduct.price_to)
+  const heroSemPreco = lojaDe(heroProduct?.affiliate_url) === "amazon";
+  const heroDesconto = !heroSemPreco && heroProduct?.price_from && heroProduct?.price_to && Number(heroProduct.price_from) > Number(heroProduct.price_to)
     ? Math.round((1 - heroProduct.price_to / heroProduct.price_from) * 100)
     : 0;
-
-  const totalAvaliacoes = products.reduce((s, p) => s + (Number(p.rating_count) || 0), 0);
-  const somaEstrelas = products.reduce((s, p) => s + (Number(p.rating_count) || 0) * (Number(p.rating_avg) || 0), 0);
-  const mediaGeral = totalAvaliacoes > 0 ? somaEstrelas / totalAvaliacoes : 0;
-  const somaPct45 = products.reduce((s, p) => {
-    const count = Number(p.rating_count) || 0;
-    if (!count) return s;
-    const dist = parseDistMap(p.rating_dist);
-    return s + count * ((dist[5] || 0) + (dist[4] || 0));
-  }, 0);
-  const recomendamPct = totalAvaliacoes > 0 ? Math.round(somaPct45 / totalAvaliacoes) : 0;
-
-  const [avaliacoesExibidas, setAvaliacoesExibidas] = useState([]);
-
   useEffect(() => {
     document.title = "Promo Aspiradores — Encontre o aspirador ideal para sua casa";
   }, []);
-
-  useEffect(() => {
-    if (products.length === 0 || avaliacoesExibidas.length > 0) return;
-    const pool = products.flatMap(p =>
-      parseReviews(p.reviews).map(r => ({ ...r, produto: p.name, produtoId: p.id }))
-    );
-    setAvaliacoesExibidas(shuffle(pool).slice(0, 3));
-  }, [products, avaliacoesExibidas]);
 
   return (
     <>
@@ -178,7 +140,7 @@ export default function Home() {
                   <div style={{ display: "inline-block", background: "#C84A00", color: "#fff", font: "800 10.5px Montserrat", letterSpacing: ".06em", padding: "3px 8px", borderRadius: 4, marginBottom: 6 }}>-{heroDesconto}%</div>
                 )}
                 <div style={{ font: "600 12.5px Inter", color: "#012746", marginBottom: 6, lineHeight: 1.3, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical" }}>{heroProduct.name}</div>
-                <div style={{ font: "800 21px Montserrat", color: "#C84A00", lineHeight: 1.15 }}>{formatBRL(heroProduct.price_to)}</div>
+                {heroSemPreco ? <div style={{ font: "600 12.5px Inter", color: "#475569" }}>Ver preço atual na loja</div> : <div style={{ font: "800 21px Montserrat", color: "#C84A00", lineHeight: 1.15 }}>{formatBRL(heroProduct.price_to)}</div>}
               </div>
             )}
           </div>
@@ -299,40 +261,6 @@ export default function Home() {
               </span>
             </div>
           ))}
-        </div>
-      </section>
-
-      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px 0" }}>
-        <div className="stack-mobile" style={{ display: "grid", gridTemplateColumns: "minmax(0,.85fr) minmax(0,1.15fr)", gap: 40 }}>
-          <div>
-            <h2 style={{ margin: "0 0 8px", font: "700 26px Montserrat", color: "#012746", letterSpacing: "-.01em" }}>Quem comprou, aprovou</h2>
-            <p style={{ margin: "0 0 20px", font: "400 14.5px Inter", color: "#475569" }}>
-              {totalAvaliacoes > 0
-                ? <>Média de {mediaGeral.toFixed(1).replace(".", ",")} em {totalAvaliacoes.toLocaleString("pt-BR")} avaliações verificadas de clientes que receberam o produto.</>
-                : "Ainda não há avaliações suficientes."}
-            </p>
-            <div style={{ display: "flex", alignItems: "center", gap: 16, padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#F8FAFC" }}>
-              <div style={{ font: "800 34px Montserrat", color: "#012746", lineHeight: 1 }}>{totalAvaliacoes > 0 ? mediaGeral.toFixed(1).replace(".", ",") : "-"}</div>
-              <div>
-                <div style={{ font: "600 16px Inter", color: "#C84A00", letterSpacing: ".1em" }}>{"★".repeat(Math.round(mediaGeral)) + "☆".repeat(Math.max(0, 5 - Math.round(mediaGeral)))}</div>
-                <div style={{ font: "400 13px Inter", color: "#475569", marginTop: 4 }}>{totalAvaliacoes > 0 ? `${recomendamPct}% avaliam com 4 ou 5 estrelas` : "Sem dados ainda"}</div>
-              </div>
-            </div>
-          </div>
-          <div style={{ display: "grid", gap: 16 }}>
-            {avaliacoesExibidas.length > 0 ? avaliacoesExibidas.map((a, i) => (
-              <Link key={i} to={productUrl(a.produtoId, a.produto)} style={{ padding: 20, border: "1px solid #E2E8F0", borderRadius: 12, background: "#fff", display: "block" }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 10 }}>
-                  <span style={{ font: "700 14px Montserrat", color: "#012746" }}>{a.nome}</span>
-                  <span style={{ font: "600 13px Inter", color: "#C84A00", letterSpacing: ".08em" }}>{a.estrelas}</span>
-                </div>
-                <p style={{ margin: "0 0 8px", font: "400 14.5px/1.6 Inter", color: "#475569" }}>{a.texto}</p>
-                <span style={{ font: "500 12px Inter", color: "#64748B" }}>{a.meta} • {a.produto}</span>
-              </Link>
-            )) : (
-              <p style={{ font: "400 15px Inter", color: "#64748B" }}>Ainda não há avaliações cadastradas.</p>
-            )}
-          </div>
         </div>
       </section>
 

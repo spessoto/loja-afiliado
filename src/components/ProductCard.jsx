@@ -29,7 +29,6 @@ export default function ProductCard({ p, priceColor = "#C84A00", to }) {
           <HeartIcon filled={favorited} />
         </button>
       )}
-      )}
       <Link to={target} style={{ display: "contents" }}>
         <div style={{ position: "relative", padding: "16px 16px 0" }}>
           {(p.desconto || p.selo) && (

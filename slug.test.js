@@ -24,3 +24,11 @@ console.log("slug.test.js (shortName): ok");
   assert.strictEqual(sizedImage("https://http2.mlstatic.com/D_NQ_NP_1-MLA2_062026-O.webp", 300), "https://http2.mlstatic.com/D_NQ_NP_1-MLA2_062026-V.webp");
   assert.strictEqual(sizedImage("https://http2.mlstatic.com/D_NQ_NP_1-MLA2_062026-O.webp", 500), "https://http2.mlstatic.com/D_NQ_NP_1-MLA2_062026-O.webp");
 }
+
+// lojaDe: Awin é checado antes (o link carrega a loja de destino no parâmetro ued)
+{
+  const { lojaDe } = await import("./slug.js");
+  assert.strictEqual(lojaDe("https://www.awin1.com/cread.php?awinmid=1&ued=https%3A%2F%2Fwww.mercadolivre.com.br%2Fx"), "awin");
+  assert.strictEqual(lojaDe("https://link.amazon/B0x"), "amazon");
+  assert.strictEqual(lojaDe("https://meli.la/abc"), "ml");
+}

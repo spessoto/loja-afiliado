@@ -53,9 +53,9 @@ export default function ProductCard({ p, priceColor = "#C84A00", to }) {
           <div style={{ marginTop: "auto" }}>
             {p.de && <div style={{ font: "400 12.5px Inter", color: "#64748B", textDecoration: "line-through" }}>{p.de}</div>}
             {p.por
-              ? <div style={{ font: "800 20px Montserrat", color: priceColor, lineHeight: 1.15, marginBottom: p.loja === "ml" ? 4 : 12 }}>{p.por}</div>
+              ? <div style={{ font: "800 20px Montserrat", color: priceColor, lineHeight: 1.15, marginBottom: p.loja === "ml" || p.loja === "awin" ? 4 : 12 }}>{p.por}</div>
               : <div style={{ font: "600 13.5px Inter", color: "#475569", lineHeight: 1.15, marginBottom: 12 }}>Ver preço atual na loja</div>}
-            {p.loja === "ml" && <div style={{ font: "500 10.5px Inter", color: "#64748B", marginBottom: 8 }}>Publicidade · preço sujeito a alteração</div>}
+            {(p.loja === "ml" || p.loja === "awin") && <div style={{ font: "500 10.5px Inter", color: "#64748B", marginBottom: 8 }}>Publicidade · preço sujeito a alteração{p.loja === "awin" ? " e a estoque" : ""}</div>}
             <span style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 40, borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 12.5px Montserrat", letterSpacing: ".06em" }}>{p.por ? "COMPRAR" : "VER OFERTA"}</span>
           </div>
         </div>

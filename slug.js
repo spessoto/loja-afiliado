@@ -47,6 +47,7 @@ export function productTitle(product, all = []) {
 // Loja do link de afiliado: Amazon não permite exibir preço copiado; Mercado Livre exige identificar publicidade e restringe comparativos.
 export function lojaDe(url) {
   const u = String(url || "");
+  if (/awin1.com|dwin1.com|awin.com/i.test(u)) return "awin"; // antes das demais: o link Awin leva a loja de destino no parâmetro ued
   if (/amazon|amzn|amzlinks/i.test(u)) return "amazon";
   if (/mercadolivre|mercadolibre|meli\.la|mlstatic/i.test(u)) return "ml";
   return "";

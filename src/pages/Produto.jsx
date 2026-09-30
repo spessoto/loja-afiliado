@@ -225,6 +225,9 @@ export default function Produto() {
               {loja === "ml" && precoPor && (
                 <p style={{ margin: "-8px 0 14px", font: "400 12px/1.5 Inter", color: "#64748B" }}>Preço de referência, sujeito a alteração. Confirme o valor final no Mercado Livre.</p>
               )}
+              {loja === "awin" && precoPor && (
+                <p style={{ margin: "-8px 0 14px", font: "400 12px/1.5 Inter", color: "#64748B" }}>Preço de referência, sujeito a alteração e à disponibilidade de estoque. Confirme o valor final no site da loja.</p>
+              )}
 
               <a {...buyProps} className="btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, height: 48, borderRadius: 8, background: "#C84A00", color: "#fff", font: "700 15px Montserrat", letterSpacing: ".04em", boxShadow: "0 8px 24px rgba(240,90,0,.3)" }}>
                 COMPRAR AGORA
@@ -236,6 +239,9 @@ export default function Produto() {
               </div>
               {loja === "amazon" && (
                 <p style={{ margin: "-4px 0 12px", font: "400 12px/1.5 Inter", color: "#475569", textAlign: "center" }}>Como Associado da Amazon, ganho com compras qualificadas.</p>
+              )}
+              {loja === "awin" && (
+                <p style={{ margin: "-4px 0 12px", font: "400 12px/1.5 Inter", color: "#475569", textAlign: "center" }}><strong style={{ font: "600 12px Inter" }}>Publicidade.</strong> Link de afiliado (rede Awin): podemos receber comissão por compras feitas por ele, sem custo extra para você.</p>
               )}
               {loja === "ml" && (
                 <p style={{ margin: "-4px 0 12px", font: "400 12px/1.5 Inter", color: "#475569", textAlign: "center" }}><strong style={{ font: "600 12px Inter" }}>Publicidade.</strong> Link de afiliado do Mercado Livre: podemos receber comissão por compras feitas por ele, sem custo extra para você.</p>

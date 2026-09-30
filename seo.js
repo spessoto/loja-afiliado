@@ -37,6 +37,11 @@ const STATIC_META = {
     description: "Tire dúvidas sobre qual aspirador escolher ou sobre um pedido. Atendimento por e-mail.",
     focusKeyword: "atendimento aspirador"
   },
+  "/sobre": {
+    title: `Sobre a ${SITE_NAME} — Quem Somos`,
+    description: "Como escolhemos os produtos, escrevemos as análises e como o site se sustenta com links de afiliado.",
+    focusKeyword: "sobre promo aspiradores"
+  },
   "/politica-de-cookies": {
     title: `Política de Cookies e Dados — ${SITE_NAME}`,
     description: "Saiba como a Promo Aspiradores usa cookies e trata seus dados pessoais.",

@@ -11,7 +11,7 @@ function inline(text, prefix, linkStyle) {
     const [, label, url] = m;
     const key = `${prefix}-${i++}`;
     const externo = /^https?:\/\//.test(url) && !url.includes("promoaspiradores.com.br");
-    if (externo) parts.push(<a key={key} href={url} target="_blank" rel="noopener noreferrer" style={linkStyle}>{label}</a>);
+    if (externo) parts.push(<a key={key} href={url} target="_blank" rel="nofollow noopener noreferrer" style={linkStyle}>{label}</a>);
     else parts.push(<Link key={key} to={url.replace(/^https?:\/\/[^/]+/, "")} style={linkStyle}>{label}</Link>);
     last = m.index + m[0].length;
   }

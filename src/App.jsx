@@ -10,6 +10,7 @@ const Categoria = lazy(() => import("./pages/Categoria.jsx"));
 const Blog = lazy(() => import("./pages/Blog.jsx"));
 const Post = lazy(() => import("./pages/Post.jsx"));
 const Contato = lazy(() => import("./pages/Contato.jsx"));
+const Sobre = lazy(() => import("./pages/Sobre.jsx"));
 const PoliticaCookies = lazy(() => import("./pages/PoliticaCookies.jsx"));
 const PoliticaPrivacidade = lazy(() => import("./pages/PoliticaPrivacidade.jsx"));
 const PoliticaUso = lazy(() => import("./pages/PoliticaUso.jsx"));
@@ -43,6 +44,7 @@ export default function App() {
           <Route path="/produto" element={<Produto />} />
           <Route path="/produto/:slug" element={<Produto />} />
           <Route path="/contato" element={<Contato />} />
+          <Route path="/sobre" element={<Sobre />} />
           <Route path="/politica-de-cookies" element={<PoliticaCookies />} />
           <Route path="/politica-de-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/politica-de-uso" element={<PoliticaUso />} />

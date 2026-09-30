@@ -495,14 +495,15 @@ app.put("/api/settings", requireAdmin, async (req, res) => {
 app.get("/sitemap.xml", async (_req, res) => {
   // Duplicatas (canonical_id) ficam de fora: só a página principal do produto deve ser indexada
   const [products] = await pool.query("SELECT id, name, category, image_url, updated_at FROM products WHERE canonical_id IS NULL");
-  const [categories] = await pool.query("SELECT c.name FROM categories c WHERE EXISTS (SELECT 1 FROM products p WHERE p.category = c.name)");
+  const [categories] = await pool.query("SELECT c.name, c.updated_at FROM categories c WHERE EXISTS (SELECT 1 FROM products p WHERE p.category = c.name)");
   const [posts] = await pool.query("SELECT slug, content, cover_image_url, updated_at FROM posts WHERE published = 1");
   const urls = [
     { loc: `${SITE_URL}/`, priority: 1.0, changefreq: "daily" },
     { loc: `${SITE_URL}/categoria`, priority: 0.8, changefreq: "daily" },
     { loc: `${SITE_URL}/blog`, priority: 0.6, changefreq: "weekly" },
     { loc: `${SITE_URL}/contato`, priority: 0.3, changefreq: "monthly" },
-    ...categories.map(c => ({ loc: `${SITE_URL}${categoryPath(c.name)}`, priority: 0.7, changefreq: "daily" })),
+    { loc: `${SITE_URL}/sobre`, priority: 0.4, changefreq: "monthly" },
+    ...categories.map(c => ({ loc: `${SITE_URL}${categoryPath(c.name)}`, priority: 0.7, changefreq: "daily", lastmod: c.updated_at ? new Date(c.updated_at).toISOString().slice(0, 10) : undefined })),
     ...products.map(p => ({ loc: productUrl(p), priority: 0.9, changefreq: "weekly", lastmod: new Date(p.updated_at).toISOString().slice(0, 10), image: p.image_url || undefined })),
     ...posts.map(p => {
       const inlineImages = [...(p.content || "").matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)].map(m => m[1]);
@@ -541,6 +542,7 @@ async function ssrData(req, seoData) {
   if (req.path === "/") data = { products: await products(false), categories: await categories(), posts: await posts() };
   else if (req.path === "/categoria" || seoData.category) data = { products: await products(true), categories: await categories() };
   else if (req.path === "/blog") data = { posts: await posts(), categories: await categories() };
+  else if (req.path === "/sobre") data = { categories: await categories() };
   else if (seoData.post) data = { post: seoData.post, posts: await posts(), products: await products(true), categories: await categories() };
   else if (seoData.product) data = { product: semAvaliacoes(seoData.product), products: await products(true), posts: await posts(), categories: await categories() };
   return data && JSON.parse(JSON.stringify(data));

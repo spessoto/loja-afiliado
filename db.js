@@ -116,6 +116,7 @@ export async function ensureSchema() {
   `);
   await pool.query(`ALTER TABLE categories ADD COLUMN IF NOT EXISTS seo_title VARCHAR(160)`);
   await pool.query(`ALTER TABLE categories ADD COLUMN IF NOT EXISTS intro TEXT`);
+  await pool.query(`ALTER TABLE categories ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`);
   const [existingCategories] = await pool.query("SELECT COUNT(*) AS n FROM categories");
   if (existingCategories[0].n === 0) {
     const seedNames = ["Aspiradores", "Robôs", "Vertical", "Portáteis", "Extratoras", "Profissionais", "Acessórios"];

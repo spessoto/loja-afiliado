@@ -14,6 +14,7 @@ export const categoriasCol = {
 export const institucionalCol = {
   t: "INSTITUCIONAL",
   links: [
+    { t: "Sobre nós", to: "/sobre" },
     { t: "Blog", to: "/blog" },
     { t: "Contato", to: "/contato" },
     { t: "Política de privacidade", to: "/politica-de-privacidade" },

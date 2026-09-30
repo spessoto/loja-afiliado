@@ -9,6 +9,7 @@ import { usePost, usePosts } from "../lib/posts.js";
 import { useProducts, toCardProduct } from "../lib/products.js";
 import { categoriaDoPost, produtosDoPost, outrosPosts } from "../../related.js";
 import { categoryPath, withSiteTitle } from "../../slug.js";
+import { sizedImage } from "../../imageUrl.js";
 
 function formatDate(iso) {
   if (!iso) return "";
@@ -106,7 +107,7 @@ export default function Post() {
 
         {post.cover_image_url && (
           <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid #E2E8F0", marginBottom: 32, aspectRatio: "16/9", background: "#F1F5F9" }}>
-            <img src={post.cover_image_url} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            <img src={sizedImage(post.cover_image_url, 800)} alt={post.title} fetchpriority="high" decoding="async" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
           </div>
         )}
 

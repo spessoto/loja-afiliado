@@ -15,3 +15,12 @@ assert.ok(shortName("Aspirador de Pó Vertical Sem Fio com Filtro HEPA e Cabo Lo
 assert.ok(!/\s(com|de|e)$/i.test(shortName("Aspirador de Pó Vertical Sem Fio com Filtro HEPA e Cabo Longo", 40)));
 assert.ok(productSlug("Robô Aspirador Anker eufy X10 Pro 4 em 1 Sucção 8000Pa IA Evita Obstáculos Mapeamento AI.Map 3.0 Lava Seca").length <= 60);
 console.log("slug.test.js (shortName): ok");
+
+// sizedImage: Amazon troca _AC_SL; Mercado Livre troca o sufixo -O só para imagens pequenas
+{
+  const { sizedImage } = await import("./imageUrl.js");
+  assert.strictEqual(sizedImage("https://m.media-amazon.com/images/I/x._AC_SL1500_.jpg", 800), "https://m.media-amazon.com/images/I/x._AC_SL800_.jpg");
+  assert.strictEqual(sizedImage("https://http2.mlstatic.com/D_NQ_NP_1-MLA2_062026-O.webp", 150), "https://http2.mlstatic.com/D_NQ_NP_1-MLA2_062026-E.webp");
+  assert.strictEqual(sizedImage("https://http2.mlstatic.com/D_NQ_NP_1-MLA2_062026-O.webp", 300), "https://http2.mlstatic.com/D_NQ_NP_1-MLA2_062026-V.webp");
+  assert.strictEqual(sizedImage("https://http2.mlstatic.com/D_NQ_NP_1-MLA2_062026-O.webp", 500), "https://http2.mlstatic.com/D_NQ_NP_1-MLA2_062026-O.webp");
+}

@@ -77,6 +77,8 @@ console.log("seo.test.js: ok");
 ### P?
 
 R.").length, 1);
+
+R.").length, 1);
   assert.deepStrictEqual(faqFromMarkdown("sem faq"), []);
   assert.strictEqual(truncateSentence("Primeira frase completa aqui. Segunda frase que passa do limite do corte total.", 45), "Primeira frase completa aqui.");
 }

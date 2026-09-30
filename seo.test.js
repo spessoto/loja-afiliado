@@ -72,13 +72,7 @@ console.log("seo.test.js: ok");
   const { faqFromMarkdown, truncateSentence } = await import("./seo.js");
   const faq = faqFromMarkdown("## Intro\n\ntexto\n\n## Perguntas frequentes\n\n### Vale a pena?\n\nSim, veja o [modelo](/produto/1).\n\n### E o preço?\n\nDepende.\n\n## Fim\n\nx");
   assert.deepStrictEqual(faq, [{ q: "Vale a pena?", a: "Sim, veja o modelo." }, { q: "E o preço?", a: "Depende." }]);
-  assert.strictEqual(faqFromMarkdown("## Perguntas frequentes sobre pet
-
-### P?
-
-R.").length, 1);
-
-R.").length, 1);
+  assert.strictEqual(faqFromMarkdown("## Perguntas frequentes sobre pet\n\n### P?\n\nR.").length, 1);
   assert.deepStrictEqual(faqFromMarkdown("sem faq"), []);
   assert.strictEqual(truncateSentence("Primeira frase completa aqui. Segunda frase que passa do limite do corte total.", 45), "Primeira frase completa aqui.");
 }

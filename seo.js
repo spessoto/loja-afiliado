@@ -3,7 +3,7 @@ import { productSlug, productTitle, withSiteTitle, categoryPath, lojaDe } from "
 const SITE_URL = "https://promoaspiradores.com.br";
 const SITE_NAME = "Promo Aspiradores";
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
-const DEFAULT_DESCRIPTION = "Compare os melhores aspiradores de pó, robôs aspiradores e verticais com curadoria de especialistas. Preço competitivo, curadoria e compra segura.";
+const DEFAULT_DESCRIPTION = "Aspiradores de pó, robôs, verticais e portáteis com análise própria de especificações e uso indicado, antes de você decidir onde comprar.";
 
 export function escapeAttr(s) {
   return String(s ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -122,7 +122,7 @@ export function getPageMeta(pathname, query, data = {}) {
     }
     if (product) {
       const canonical = productUrl(data.canonicalProduct || product);
-      const desc = truncate(product.description || `${product.name} — confira especificações, análise e onde comprar.`, 155);
+      const desc = truncate(product.analise || product.description || `${product.name} — confira especificações, análise e onde comprar.`, 155);
       const jsonLd = [orgJsonLd(), websiteJsonLd()];
       jsonLd.push(breadcrumbJsonLd([
         { name: "Home", item: SITE_URL },

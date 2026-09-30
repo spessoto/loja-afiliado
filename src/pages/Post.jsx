@@ -35,7 +35,7 @@ function renderInline(text, keyPrefix) {
     const href = external ? url : url.replace(/^https?:\/\/[^/]+/, "");
     parts.push(
       external ? (
-        <a key={`${keyPrefix}-${i}`} href={href} target="_blank" rel="noopener noreferrer" style={{ color: "#C84A00", fontWeight: 600 }}>{label}</a>
+        <a key={`${keyPrefix}-${i}`} href={href} target="_blank" rel="nofollow noopener noreferrer" style={{ color: "#C84A00", fontWeight: 600 }}>{label}</a>
       ) : (
         <Link key={`${keyPrefix}-${i}`} to={href} style={{ color: "#C84A00", fontWeight: 600 }}>{label}</Link>
       )

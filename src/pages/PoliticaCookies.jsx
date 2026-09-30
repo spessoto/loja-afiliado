@@ -21,7 +21,8 @@ const tabela = [
   { n: "_ga / _ga_*", f: "Medição de audiência (Google Analytics)", p: "13 meses" },
   { n: "_clck / _clsk", f: "Análise de comportamento e mapas de calor (Microsoft Clarity)", p: "1 ano / 1 dia" },
   { n: "pa_click_id", f: "Identifica o clique que originou a visita à loja parceira", p: "30 dias" },
-  { n: "_fbp", f: "Medição de campanhas em redes sociais", p: "3 meses" }
+  { n: "_fbp", f: "Medição de campanhas em redes sociais", p: "3 meses" },
+  { n: "AWIN_*", f: "Atribuição de vendas de afiliado (rede Awin)", p: "30 dias" }
 ];
 
 const navegadores = ["Google Chrome", "Safari", "Microsoft Edge", "Mozilla Firefox", "Samsung Internet"];
@@ -170,6 +171,7 @@ export default function PoliticaCookies() {
         <h2 style={h2}>5. Cookies de afiliado</h2>
         <p style={{ margin: "0 0 14px", font: "400 16px/1.75 Inter", color: "#475569" }}>Quando você clica em um botão de compra, a loja parceira grava um cookie que registra que a visita veio da Promo Aspiradores. Esse registro dura entre 24 horas e 30 dias, conforme a regra de cada parceiro, e é o que garante o repasse da comissão.</p>
         <p style={p}>Esse cookie é de responsabilidade da loja e não nos dá acesso ao seu carrinho, aos seus dados de pagamento ou ao conteúdo do pedido. Se você recusar os cookies de marketing, os links continuam funcionando normalmente.</p>
+        <p style={p}>Também usamos a tag da rede de afiliados Awin, que confirma que a compra feita na loja parceira partiu de um link nosso, para garantir o repasse da comissão. Ela só é carregada se você aceitar os cookies de marketing.</p>
       </section>
 
       <section id="c6" style={{ marginBottom: 36 }}>

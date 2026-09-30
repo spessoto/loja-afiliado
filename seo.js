@@ -89,9 +89,9 @@ export function truncateSentence(text, maxLen) {
 // Seção "## Perguntas frequentes" do post (### pergunta + resposta) -> itens de FAQPage
 export function faqFromMarkdown(content) {
   const text = String(content || "").replace(/\r\n/g, "\n");
-  const start = text.search(/^## Perguntas frequentes\s*$/m);
+  const start = text.search(/^## Perguntas frequentes[^\n]*$/m);
   if (start < 0) return [];
-  let body = text.slice(start).replace(/^## Perguntas frequentes\s*\n/, "");
+  let body = text.slice(start).replace(/^## Perguntas frequentes[^\n]*\n/, "");
   const next = body.search(/^## /m);
   if (next >= 0) body = body.slice(0, next);
   const plain = s => s.replace(/!\[[^\]]*\]\([^)]*\)/g, "").replace(/\[([^\]]+)\]\([^)]*\)/g, "$1").replace(/\s+/g, " ").trim();

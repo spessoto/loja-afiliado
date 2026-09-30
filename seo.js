@@ -72,8 +72,33 @@ function orgJsonLd() {
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
-    logo: DEFAULT_IMAGE
+    logo: `${SITE_URL}/favicon.png`,
+    contactPoint: { "@type": "ContactPoint", contactType: "customer support", email: "contato@promoaspiradores.com.br", availableLanguage: "pt-BR" }
   };
+}
+
+// Descrição longa para o schema: corta no fim de uma frase (sem "…" no meio do texto)
+export function truncateSentence(text, maxLen) {
+  const clean = String(text || "").replace(/\s+/g, " ").trim();
+  if (clean.length <= maxLen) return clean;
+  const cut = clean.slice(0, maxLen);
+  const end = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("! "), cut.lastIndexOf("? "));
+  return end > maxLen * 0.4 ? cut.slice(0, end + 1) : truncate(clean, maxLen);
+}
+
+// Seção "## Perguntas frequentes" do post (### pergunta + resposta) -> itens de FAQPage
+export function faqFromMarkdown(content) {
+  const text = String(content || "").replace(/\r\n/g, "\n");
+  const start = text.search(/^## Perguntas frequentes\s*$/m);
+  if (start < 0) return [];
+  let body = text.slice(start).replace(/^## Perguntas frequentes\s*\n/, "");
+  const next = body.search(/^## /m);
+  if (next >= 0) body = body.slice(0, next);
+  const plain = s => s.replace(/!\[[^\]]*\]\([^)]*\)/g, "").replace(/\[([^\]]+)\]\([^)]*\)/g, "$1").replace(/\s+/g, " ").trim();
+  return body.split(/^### /m).slice(1).map(b => {
+    const [q, ...rest] = b.split("\n");
+    return { q: plain(q), a: plain(rest.join(" ")) };
+  }).filter(f => f.q && f.a);
 }
 
 function websiteJsonLd() {
@@ -140,7 +165,7 @@ export function getPageMeta(pathname, query, data = {}) {
         name: product.name,
         sku: String(product.id),
         image: [...new Set([product.image_url, ...String(product.images || "").split("\n").map(s => s.trim())].filter(Boolean))].slice(0, 6),
-        description: desc,
+        description: truncateSentence(product.analise || product.description || desc, 300),
         brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
         category: product.category || undefined,
         offers: product.price_to && lojaDe(product.affiliate_url) !== "amazon" ? {
@@ -189,6 +214,7 @@ export function getPageMeta(pathname, query, data = {}) {
     if (post) {
       const canonical = `${SITE_URL}/blog/${post.slug}`;
       const desc = truncate(post.meta_description || post.excerpt || post.title, 155);
+      const postFaq = faqFromMarkdown(post.content);
       return {
         title: withSiteTitle(post.title),
         description: desc,
@@ -209,7 +235,11 @@ export function getPageMeta(pathname, query, data = {}) {
           datePublished: post.published_at ? new Date(post.published_at).toISOString() : undefined,
           dateModified: post.updated_at ? new Date(post.updated_at).toISOString() : undefined,
           mainEntityOfPage: canonical
-        }]
+        }, ...(postFaq.length ? [{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: postFaq.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } }))
+        }] : [])]
       };
     }
   }

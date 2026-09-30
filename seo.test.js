@@ -66,3 +66,12 @@ assert.ok(xml.includes("<image:image>"));
 assert.ok(xml.includes('xmlns:image='));
 
 console.log("seo.test.js: ok");
+
+// FAQPage dos posts: "## Perguntas frequentes" + "### pergunta" + resposta (links viram texto; para no próximo "##")
+{
+  const { faqFromMarkdown, truncateSentence } = await import("./seo.js");
+  const faq = faqFromMarkdown("## Intro\n\ntexto\n\n## Perguntas frequentes\n\n### Vale a pena?\n\nSim, veja o [modelo](/produto/1).\n\n### E o preço?\n\nDepende.\n\n## Fim\n\nx");
+  assert.deepStrictEqual(faq, [{ q: "Vale a pena?", a: "Sim, veja o modelo." }, { q: "E o preço?", a: "Depende." }]);
+  assert.deepStrictEqual(faqFromMarkdown("sem faq"), []);
+  assert.strictEqual(truncateSentence("Primeira frase completa aqui. Segunda frase que passa do limite do corte total.", 45), "Primeira frase completa aqui.");
+}

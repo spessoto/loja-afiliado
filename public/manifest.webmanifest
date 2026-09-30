@@ -1,0 +1,10 @@
+{
+  "name": "Promo Aspiradores",
+  "short_name": "Promo Aspiradores",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#012746",
+  "icons": [{ "src": "/favicon.png", "sizes": "400x400", "type": "image/png" }]
+}
